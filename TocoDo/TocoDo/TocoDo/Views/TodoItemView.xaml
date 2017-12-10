@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="TocoDo.Views.TodoItemView"
+			 xmlns:tint="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
+			 xmlns:views="clr-namespace:TocoDo.Views;assembly=TocoDo"
+			 xmlns:customRenderers="clr-namespace:TocoDo.CustomRenderers;assembly=TocoDo"
+			 xmlns:converters="clr-namespace:TocoDo.Converters;assembly=TocoDo"
+			 xmlns:markupExtensions="clr-namespace:TocoDo.MarkupExtensions;assembly=TocoDo">
+	<ContentView.Resources>
+		<ResourceDictionary>
+			<Style TargetType="tint:TintedImage">
+				<Setter Property="Aspect" Value="AspectFit"/>
+				<Setter Property="IsOpaque" Value="True"/>
+			</Style>
+			<Style TargetType="Label">
+				<Setter Property="HorizontalTextAlignment" Value="Start"/>
+				<Setter Property="VerticalTextAlignment" Value="Center"/>
+				<Setter Property="VerticalOptions" Value="FillAndExpand"/>
+				<Setter Property="LineBreakMode" Value="WordWrap"/>
+			</Style>
+			<converters:CheckConverter x:Key="CheckConverter" />
+			<converters:IsNotNullConverter x:Key="IsNotNullConverter" />
+			<converters:IsNotNullOrWhitespaceConverter x:Key="IsNotNullOrWhitespaceConverter" />
+			<converters:DateToTextConverter x:Key="DateToTextConverter" />
+			<x:Double x:Key="TaskAttributeTextSize">11</x:Double>
+		</ResourceDictionary>
+	</ContentView.Resources>
+	<ContentView.Content>
+		<Grid Padding="0,9,0,9">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="Auto"/>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+
+			<!--Check box-->
+			<views:TodoBoxView x:Name="TodoBoxView" IsChecked="{Binding Done, Mode=OneWay, Converter={StaticResource CheckConverter}}" CheckCommand="{Binding CheckCommand}"/>
+
+			<Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Column="1" Grid.Row="0" RowSpacing="3" Padding="0,3,0,0">
+				<Grid.GestureRecognizers>
+					<TapGestureRecognizer Tapped="TapTitle_OnTapped"/>
+				</Grid.GestureRecognizers>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+
+				<!--Title label-->
+				<customRenderers:CrossedLabel x:Name="LabelTitle" Text="{Binding Title}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center" IsStrikeThrough="{Binding Done, Mode=OneWay, Converter={StaticResource IsNotNullConverter}}"/>
+
+				<!-- Task attributes -->
+				<Grid Grid.Row="1" HorizontalOptions="Start" IsVisible="{Binding HasAttribute}" Opacity="0.7" ColumnSpacing="0">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+					</Grid.ColumnDefinitions>
+
+					<!-- Deadline attribute -->
+					<Grid ColumnSpacing="4" IsVisible="{Binding Deadline, Converter={StaticResource IsNotNullConverter}}" Padding="0,0,5,0">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<tint:TintedImage Grid.Column="0" Source="{markupExtensions:PathResolver 'ic_whatshot_white_24dp'}" TintColor="{StaticResource DeadlineColor}" HeightRequest="15"/>
+						<Label Grid.Column="1" FontSize="{StaticResource TaskAttributeTextSize}" Text="{Binding Deadline, Converter={StaticResource DateToTextConverter}}" TextColor="{StaticResource DeadlineColor}" />
+					</Grid>
+
+					<!-- Reminder attribute -->
+					<StackLayout Grid.Column="1" Padding="0,0,5,0" IsVisible="{Binding Reminder, Converter={StaticResource IsNotNullConverter}}">
+						<tint:TintedImage  Source="{markupExtensions:PathResolver 'ic_notifications_active_white_24dp'}"  TintColor="{StaticResource ReminderColor}" HeightRequest="15" />
+					</StackLayout>
+					
+					<!-- Description attribute -->
+					<tint:TintedImage Grid.Column="2" Source="{markupExtensions:PathResolver 'ic_mode_edit_white_24dp'}" IsVisible="{Binding Description, Converter={StaticResource IsNotNullOrWhitespaceConverter}}" TintColor="{StaticResource DescriptionColor}" HeightRequest="15" />
+				</Grid>
+			</Grid>
+
+			<StackLayout x:Name="LayoutCalendar" Grid.Column="2" Grid.Row="0" IsVisible="False">
+				<StackLayout.GestureRecognizers>
+					<TapGestureRecognizer Tapped="TapCalendar_OnTapped"/>
+				</StackLayout.GestureRecognizers>
+
+				<tint:TintedImage x:Name="ImageCalendar" Source="ic_today_white_24dp.png" TintColor="Firebrick" IsVisible="{Binding IsCalendarVisible}"/>
+			</StackLayout>
+		</Grid>
+	</ContentView.Content>
+</ContentView>

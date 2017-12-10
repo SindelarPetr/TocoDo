@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:customRenderers="clr-namespace:TocoDo.CustomRenderers;assembly=TocoDo"
+			 xmlns:markupExtensions="clr-namespace:TocoDo.MarkupExtensions;assembly=TocoDo"
+			 xmlns:views="clr-namespace:TocoDo.Views;assembly=TocoDo"
+			 xmlns:converters="clr-namespace:TocoDo.Converters;assembly=TocoDo"
+			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
+			 x:Class="TocoDo.Pages.ModifyTaskPage"
+			 BackgroundColor="{StaticResource BackgroundColor}"
+			 Title="Modify the task">
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<Style TargetType="Label">
+				<Setter Property="FontSize" Value="Small" />
+				<Setter Property="TextColor" Value="Gray" />
+			</Style>
+			<converters:ModifyPageBottmPanelTextConverter x:Key="ModifyPageBottmPanelTextConverter" />
+			<converters:IsNotNullConverter x:Key="IsNotNullConverter" />
+			<converters:NoteTextConverter x:Key="NoteTextConverter" />
+			<converters:CheckConverter x:Key="CheckConverter" />
+			<converters:DeadlineConverter x:Key="DeadlineConverter" />
+			<converters:DeadlineToColorConverter x:Key="DeadlineToColorConverter" />
+			<converters:DescriptionToColorConverter x:Key="DescriptionToColorConverter" />
+			<converters:ReminderConverter x:Key="ReminderConverter"/>
+			<converters:ReminderToColorConverter x:Key="ReminderToColorConverter" />
+			<converters:ScheduleDateConverter x:Key="ScheduleDateConverter" />
+			<converters:ScheduleDateToColorConverter x:Key="ScheduleDateToColorConverter" />
+		</ResourceDictionary>
+	</ContentPage.Resources>
+	<ContentPage.Content>
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
+			
+			<!--Top Panel-->
+			<Frame Margin="0" CornerRadius="0" HasShadow="False" Padding="0,5,0,0" OutlineColor="{DynamicResource BarColor}"
+				   BackgroundColor="{DynamicResource BarColor}">
+				<Grid HorizontalOptions="FillAndExpand" Padding="10,0,10,0" BackgroundColor="#30000000">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+
+					<views:TodoBoxView x:Name="TodoBoxView" IsBackgroundVisible="True" IsChecked="{Binding Done, Mode=OneWay, Converter={StaticResource CheckConverter}}" CheckCommand="{Binding CheckCommand}" BackgroundImageColor="WhiteSmoke" />
+					<customRenderers:NoLineEntry x:Name="EntryTitle" Text="{Binding Title}" Grid.Column="1" Grid.Row="0" HorizontalOptions="FillAndExpand" TextColor="White" Unfocused="EntryTitle_OnCompleted" />
+				</Grid>
+			</Frame>
+
+			<!--Edit attributes-->
+			<Grid Grid.Row="1" Grid.Column="0" Padding="10,10,10,30" VerticalOptions="FillAndExpand" RowSpacing="10">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+				<Frame Margin="0" >
+					<StackLayout Spacing="10">
+						<!--Schedule date-->
+						<views:IconButton ImageSource="{markupExtensions:PathResolver 'ic_today_white_24dp'}" 
+						                  ClickCommand="{Binding SelectScheduleDateCommand}" 
+						                  IsRemoveButtonVisible="{Binding ScheduleDate, Converter={StaticResource IsNotNullConverter}}"           Text="{Binding ScheduleDate, Converter={StaticResource ScheduleDateConverter}}"                           RemoveCommand="{Binding RemoveScheduleDateCommand}" 
+						                  Color="{Binding ScheduleDate, Converter={StaticResource ScheduleDateToColorConverter}}"/>
+
+						<!--Deadline-->
+						<views:IconButton ImageSource="{markupExtensions:PathResolver 'ic_whatshot_white_24dp'}" 
+						                  ClickCommand="{Binding SelectDeadlineDateCommand}" 
+						                  IsRemoveButtonVisible="{Binding Deadline, Converter={StaticResource IsNotNullConverter}}"               Text="{Binding Deadline, Converter={StaticResource DeadlineConverter}}"                           RemoveCommand="{Binding RemoveDeadlineCommand}"
+						                  Color="{Binding Deadline, Converter={StaticResource DeadlineToColorConverter}}"/>
+
+						<!--Reminder-->
+						<views:IconButton ImageSource="{markupExtensions:PathResolver 'ic_notifications_active_white_24dp'}" 
+						                  ClickCommand="{Binding SelectReminderCommand}" 
+						                  IsRemoveButtonVisible="{Binding Reminder, Converter={StaticResource IsNotNullConverter}}"               Text="{Binding Reminder, Converter={StaticResource ReminderConverter}}"                           RemoveCommand="{Binding RemoveReminderCommand}" 
+						                  Color="{Binding Reminder, Converter={StaticResource ReminderToColorConverter}}"/>
+					</StackLayout>
+				</Frame>
+
+				<!--Note panel-->
+				<Frame Grid.Row="1" Grid.Column="0" Margin="0" VerticalOptions="FillAndExpand">
+					<ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+						<StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+							<StackLayout.GestureRecognizers>
+								<TapGestureRecognizer Command="{Binding EditDescriptionCommand}"/>
+							</StackLayout.GestureRecognizers>
+							<Label Text="{Binding Description, Converter={StaticResource NoteTextConverter}}" VerticalTextAlignment="Start" HorizontalTextAlignment="Start" TextColor="{Binding Description, Converter={StaticResource DescriptionToColorConverter}}"/>
+						</StackLayout>
+					</ScrollView>
+				</Frame>
+			</Grid>
+
+			<!--Bottom panel-->
+			<Frame Grid.Row="2" Grid.Column="0" CornerRadius="0" Margin="0" Padding="15, 0, 15, 0">
+				<StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Padding="0">
+					<Label Text="{Binding ., Converter={StaticResource ModifyPageBottmPanelTextConverter}}" HorizontalOptions="FillAndExpand"
+						   VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" />
+					<abstractions:TintedImage x:Name="ButtonRemove" Source="{markupExtensions:PathResolver 'ic_delete_white_24dp.png'}" HeightRequest="42" WidthRequest="25" TintColor="Gray">
+						<Image.GestureRecognizers>
+							<TapGestureRecognizer Command="{Binding RemoveCommand}"/>
+						</Image.GestureRecognizers>
+					</abstractions:TintedImage>
+				</StackLayout>
+			</Frame>
+		</Grid>
+	</ContentPage.Content>
+</ContentPage>

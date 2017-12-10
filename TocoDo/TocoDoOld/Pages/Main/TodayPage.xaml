@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:oxy="clr-namespace:OxyPlot.Xamarin.Forms;assembly=OxyPlot.Xamarin.Forms"
+			 xmlns:views="clr-namespace:TocoDo.Views;assembly=TocoDo"
+			 x:Class="TocoDo.Pages.Main.TodayPage"
+			 BackgroundColor="Transparent">
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<Style x:Key="GraphNotes" TargetType="Label">
+				<Setter Property="FontSize" Value="9" />
+				<Setter Property="TextColor" Value="Gray"/>
+			</Style>
+		</ResourceDictionary>
+	</ContentPage.Resources>
+	<ContentPage.Content>
+		<AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+			<!--<BoxView AbsoluteLayout.LayoutBounds="0,0,1,75" AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional" HorizontalOptions="FillAndExpand" Color="Gray"/>-->
+			<ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+				<StackLayout Style="{StaticResource PageStackLayout}">
+					<!-- Progress -->
+					<Label Text="Progress" Style="{StaticResource FrameTitle}" />
+					<Frame HorizontalOptions="FillAndExpand" HeightRequest="110" Padding="10">
+						<StackLayout Padding="0,0,0,0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+							<StackLayout Padding="-40,0,-20,-30" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+								<oxy:PlotView x:Name="ProductivityPlot" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" />
+							</StackLayout>
+							<StackLayout Orientation="Horizontal" Padding="15,0,15,0" VerticalOptions="End">
+								<Label Style="{StaticResource GraphNotes}" Text="2630 completed" HorizontalOptions="FillAndExpand"
+								       HorizontalTextAlignment="Start" />
+								<Label Style="{StaticResource GraphNotes}" Text="Average 6.2 task a day" />
+							</StackLayout>
+						</StackLayout>
+					</Frame>
+
+					<!-- TODAY -->
+					<Label Text="Today" Style="{StaticResource FrameTitle}" />
+					<Frame>
+						<StackLayout x:Name="LayoutTodayTasks" Spacing="0">
+							<!--<Label Text="Completed 4/9" HorizontalOptions="End"/>-->
+						</StackLayout>
+					</Frame>
+				</StackLayout>
+			</ScrollView>
+			<AbsoluteLayout HorizontalOptions="FillAndExpand" HeightRequest="60" IsVisible="False">
+				<BoxView BackgroundColor="WhiteSmoke" AbsoluteLayout.LayoutBounds="0,1,1,0.5" AbsoluteLayout.LayoutFlags="All"/>
+				<Frame HorizontalOptions="FillAndExpand" Padding="10, 0 , 0, 0" CornerRadius="0" HasShadow="False" Margin="0,0,0,0" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+					<StackLayout Orientation="Horizontal">
+						<Entry HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" Placeholder="Add a new task..." />
+						<Button BorderWidth="0" BorderColor="Transparent" BorderRadius="0" BackgroundColor="Transparent" Text="Add"/>
+					</StackLayout>
+				</Frame>
+			</AbsoluteLayout>
+			</AbsoluteLayout>
+	</ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:oxy="clr-namespace:OxyPlot.Xamarin.Forms;assembly=OxyPlot.Xamarin.Forms"
+			 xmlns:views="clr-namespace:TocoDo.Views;assembly=TocoDo"
+			 xmlns:markupExtensions="clr-namespace:TocoDo.MarkupExtensions;assembly=TocoDo"
+			 xmlns:services="clr-namespace:TocoDo.Services;assembly=TocoDo"
+			 x:Class="TocoDo.Pages.Main.TodayPage"
+			 BackgroundColor="Transparent"
+			 x:Name="This">
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<Style x:Key="GraphNotes" TargetType="Label">
+				<Setter Property="FontSize" Value="9" />
+				<Setter Property="TextColor" Value="Gray"/>
+			</Style>
+		</ResourceDictionary>
+	</ContentPage.Resources>
+	<ContentPage.Content>
+		<AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BindingContext="{x:Reference This}">
+			<ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+				<StackLayout Style="{StaticResource PageStackLayout}">
+					<!-- Progress -->
+					<Label Text="Progress" Style="{StaticResource FrameTitle}" />
+					<Frame HorizontalOptions="FillAndExpand" HeightRequest="110" Padding="10">
+						<StackLayout Padding="0,0,0,0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+							<StackLayout Padding="-40,0,-20,-30" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+								<oxy:PlotView x:Name="ProductivityPlot" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" />
+							</StackLayout>
+							<StackLayout Orientation="Horizontal" Padding="15,0,15,0" VerticalOptions="End">
+								<Label Style="{StaticResource GraphNotes}" Text="2630 completed" HorizontalOptions="FillAndExpand"
+								       HorizontalTextAlignment="Start" />
+								<Label Style="{StaticResource GraphNotes}" Text="Average 6.2 task a day" />
+							</StackLayout>
+						</StackLayout>
+					</Frame>
+
+					<!-- TODAY -->
+					<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+						<Label Text="Today" Style="{StaticResource FrameTitle}" HorizontalOptions="FillAndExpand" />
+						<Image x:Name="ButtonAddToday" Style="{StaticResource ButtonAdd}">
+							<Image.GestureRecognizers>
+								<TapGestureRecognizer Tapped="ButtonAddToday_OnClicked"/>
+							</Image.GestureRecognizers>
+						</Image>
+					</StackLayout>
+					<Frame>
+						<views:TodoSetView x:Name="TodayTodoSetView" TasksSource="{x:Static services:StorageService.TodayTasks}"/>
+					</Frame>
+				</StackLayout>
+			</ScrollView>
+			<views:NewTaskView x:Name="NewTaskView" AbsoluteLayout.LayoutBounds="1,1,1,50" AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"/>
+			<DatePicker x:Name="GlobalDatePicker" IsVisible="False" MinimumDate="{x:Static x:DateTime.Today}" DateSelected="GlobalDatePicker_DateSelected"/>
+			<TimePicker x:Name="GlobalTimePicker" IsVisible="False" Time="{Binding SelectedTime}" PropertyChanged="GlobalTimePicker_OnPropertyChanged"/>
+		</AbsoluteLayout>
+	</ContentPage.Content>
+</ContentPage>

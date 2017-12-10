@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="TocoDo.Views.ChallengeItemView">
+	<StackLayout Spacing="7">
+		<Label Text="Meditation" Style="{StaticResource TitleInFrame}" TextColor="DarkBlue" Margin="0"/>
+		<StackLayout Spacing="5" Padding="10,0,0,0">
+			<Label Text="5.11.2017 - 21.11.2017 daily 2 times" FontSize="11" TextColor="Gray"/>
+			<Label Text="Sit every day for 15 minutes on some quiet place, stay calm and focus on the breath. Have a completely clear mind from all thoughts" TextColor="Black"/>
+		</StackLayout>
+	</StackLayout>
+</ContentView>

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:views="clr-namespace:TocoDo.Views;assembly=TocoDo"
+			 x:Class="TocoDo.Pages.Main.TasksPage">
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<Style x:Key="TaskTitleInFrame" TargetType="Label" BasedOn="{StaticResource TitleInFrame}">
+				<Setter Property="TextColor" Value="#8e0000"/>
+			</Style>
+		</ResourceDictionary>
+	</ContentPage.Resources>
+	<ContentPage.Content>
+		<ScrollView >
+		<StackLayout Style="{StaticResource PageStackLayout}">
+				<!-- SOMEDAY -->
+				<Label Text="Someday" Style="{StaticResource FrameTitle}" />
+				<Frame>
+					<StackLayout x:Name="LayoutSomeday" Spacing="0" />
+				</Frame>
+
+				<!-- UPCOMMING -->
+				<Label Text="Upcomming" Style="{StaticResource FrameTitle}" />
+				<Frame>
+					<StackLayout x:Name="LayoutUpcomming" Spacing="0" />
+				</Frame>
+			</StackLayout>
+		</ScrollView>
+	</ContentPage.Content>
+</ContentPage>
