@@ -7,11 +7,11 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="ef71aef1-714a-4e4d-b081-84daff97a538"
+    Name="27236f0a-af03-4a4c-b8bf-4963605efcde"
     Publisher="CN=petrs"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="ef71aef1-714a-4e4d-b081-84daff97a538" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="27236f0a-af03-4a4c-b8bf-4963605efcde" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>TocoDo.UWP</DisplayName>

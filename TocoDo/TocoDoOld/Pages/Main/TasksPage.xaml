@@ -1,30 +1,37 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:views="clr-namespace:TocoDo.Views;assembly=TocoDo"
+			 xmlns:services="clr-namespace:TocoDo.Services;assembly=TocoDo"
 			 x:Class="TocoDo.Pages.Main.TasksPage">
-	<ContentPage.Resources>
-		<ResourceDictionary>
-			<Style x:Key="TaskTitleInFrame" TargetType="Label" BasedOn="{StaticResource TitleInFrame}">
-				<Setter Property="TextColor" Value="#8e0000"/>
-			</Style>
-		</ResourceDictionary>
-	</ContentPage.Resources>
-	<ContentPage.Content>
-		<ScrollView >
-		<StackLayout Style="{StaticResource PageStackLayout}">
-				<!-- SOMEDAY -->
-				<Label Text="Someday" Style="{StaticResource FrameTitle}" />
-				<Frame>
-					<StackLayout x:Name="LayoutSomeday" Spacing="0" />
-				</Frame>
 
-				<!-- UPCOMMING -->
-				<Label Text="Upcomming" Style="{StaticResource FrameTitle}" />
-				<Frame>
-					<StackLayout x:Name="LayoutUpcomming" Spacing="0" />
-				</Frame>
-			</StackLayout>
-		</ScrollView>
+	<ContentPage.Content>
+		<AbsoluteLayout>
+			<ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+				<StackLayout Style="{StaticResource PageStackLayout}">
+					
+					<!-- Someday -->
+					<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+						<Label Text="Someday" Style="{StaticResource FrameTitle}" HorizontalOptions="FillAndExpand" />
+						<Image x:Name="ButtonAddSomeday" Style="{StaticResource ButtonAdd}">
+							<Image.GestureRecognizers>
+								<TapGestureRecognizer Tapped="ButtonAddSomeday_OnClicked" />
+							</Image.GestureRecognizers>
+						</Image>
+					</StackLayout>
+					<Frame>
+						<views:TodoSetView x:Name="SomedayTodoSetView" IsCalendarVisible="True" TasksSource="{x:Static services:StorageService.SomedayTasks}" />
+					</Frame>
+
+					<!-- Scheduled -->
+					<Label Text="Scheduled" Style="{StaticResource FrameTitle}" HorizontalOptions="FillAndExpand" />
+					<Frame>
+						<views:ScheduledTasksView TasksSource="{x:Static services:StorageService.ScheduledTasks}"/>
+					</Frame>
+				</StackLayout>
+			</ScrollView>
+			<views:NewTaskView x:Name="NewTaskView" AbsoluteLayout.LayoutBounds="1,1,1,50"
+							   AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional" />
+		</AbsoluteLayout>
 	</ContentPage.Content>
 </ContentPage>

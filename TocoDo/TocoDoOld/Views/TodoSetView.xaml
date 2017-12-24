@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="TocoDo.Views.TodoSetView"
+			 x:Name="This"
+			 >
+	<ContentView.Content>
+		<StackLayout Spacing="-3" BindingContext="{x:Reference This}">
+			<Label Text="{Binding HeaderText}" BackgroundColor="{Binding HeaderBackgroundColor}" FontSize="{Binding HeaderTextSize}" IsVisible="{Binding IsHeaderVisible}" TextColor="Black" FontAttributes="Bold"/>
+			<StackLayout x:Name="LayoutTodo" Spacing="0" />
+		</StackLayout>
+	</ContentView.Content>
+</ContentView>

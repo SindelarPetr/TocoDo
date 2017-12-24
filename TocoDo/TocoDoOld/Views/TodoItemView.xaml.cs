@@ -1,6 +1,10 @@
 ﻿
 using System;
-using TocoDo.Models;
+using System.Diagnostics;
+using TocoDo.Pages;
+using TocoDo.Pages.Main;
+using TocoDo.Services;
+using TocoDo.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -9,85 +13,62 @@ namespace TocoDo.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class TodoItemView : ContentView
 	{
-		#region Text
-		public static readonly BindableProperty TextProperty = BindableProperty.Create(
-			propertyName: "Text",
-			returnType: typeof(string),
-			declaringType: typeof(string),
-			defaultValue: "Beautiful checkbox");
-		public string Text
+		public TaskViewModel TaskViewModel
 		{
-			get => (string)GetValue(TextProperty);
-			set => SetValue(TextProperty, value);
-		}
-		#endregion
-
-		#region IsChecked
-		public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(
-	propertyName: "IsChecked",
-	returnType: typeof(bool),
-	declaringType: typeof(bool),
-	defaultValue: false);
-		public bool IsChecked
-		{
-			get => (bool)GetValue(IsCheckedProperty);
-			set
-			{
-				SetValue(IsCheckedProperty, value);
-
-				if (value) AnimateCheck();
-				else AnimateUncheck();
-			}
+			get => (TaskViewModel)BindingContext;
+			set => BindingContext = value;
 		}
 
-		#endregion
-
-		public TodoItemView()
-		{
-			BindingContext = new TaskModel
-			{
-				Title = "This is placeholder title",
-				Deadline = DateTime.Now,
-				Description = "This is placeholder description.",
-			};
-
-			InitializeComponent();
-		}
-		public TodoItemView(TaskModel model)
+		public TodoItemView(TaskViewModel model)
 		{
 			BindingContext = model;
 
 			InitializeComponent();
 		}
 
-		private void TapGestureRecognizer_OnTapped(object sender, EventArgs e)
-		{
-			IsChecked = !IsChecked;
-		}
 
+
+		#region Animations
 		private void AnimateCheck()
 		{
-			ImageUnchecked.FadeTo(0);
-			ImageChecked.FadeTo(1);
-			LabelText.FadeTo(0.4);
-			//BackgroundColor = Color.MediumSeaGreen;
-			//LabelCrossed.FadeTo(1);
-			//CrossBox.FadeTo(1);
+			//LabelTitle.FadeTo(0.4);
 		}
 
 		private void AnimateUncheck()
 		{
-			ImageUnchecked.FadeTo(1);
-			ImageChecked.FadeTo(0);
-			LabelText.FadeTo(1);
-			//BackgroundColor = Color.Transparent;
-			//LabelCrossed.FadeTo(0);
-			//CrossBox.FadeTo(0);
+			//LabelTitle.FadeTo(1);
+		}
+		#endregion
+
+		private async void TapTitle_OnTapped(object sender, EventArgs e)
+		{
+			var page = new ModifyTaskPage(TaskViewModel);
+
+			await Navigation.PushAsync(page);
 		}
 
-		private void PinchGestureRecognizer_OnPinchUpdated(object sender, PinchGestureUpdatedEventArgs e)
+		private void TapCalendar_OnTapped(object sender, EventArgs e)
 		{
+			TodayPage.Instance.ShowGlobalDatePicker(TaskViewModel.Deadline ?? DateTime.Today, d => ChangeDate(d));
+		}
 
+		private void ChangeDate(DateTime? date)
+		{
+			try
+			{
+				Debug.WriteLine("Started ChangeDate");
+				if (date == TaskViewModel.Deadline)
+					return;
+				DateTime? originDateTime = TaskViewModel.Deadline;
+				TaskViewModel.Deadline = date;
+				StorageService.UpdateTask(TaskViewModel);
+				//TODO: OnDateChanged?.Invoke(this, originDateTime);
+				Debug.WriteLine("Ended ChangeDate");
+			}
+			catch (Exception e)
+			{
+				Debug.WriteLine("Through exception with details: " + e.Message);
+			}
 		}
 	}
 }

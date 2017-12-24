@@ -2,6 +2,7 @@
 using Android.Graphics;
 using TocoDo.CustomRenderers;
 using TocoDo.Droid.CustomRenderers;
+using TocoDo.CustomRenderers;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 

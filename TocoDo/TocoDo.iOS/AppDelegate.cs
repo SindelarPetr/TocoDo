@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
-using Plugin.CrossPlatformTintedImage.iOS;
 using UIKit;
 
 namespace TocoDo.iOS
@@ -24,8 +23,6 @@ namespace TocoDo.iOS
 		public override bool FinishedLaunching(UIApplication app, NSDictionary options)
 		{
 			global::Xamarin.Forms.Forms.Init();
-			OxyPlot.Xamarin.Forms.Platform.iOS.PlotViewRenderer.Init();
-			TintedImageRenderer.Init();
 			LoadApplication(new App());
 
 			return base.FinishedLaunching(app, options);

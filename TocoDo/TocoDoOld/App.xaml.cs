@@ -7,58 +7,56 @@ namespace TocoDo
 	public partial class App : Application
 	{
 		public static Action BarColorChanged;
+		private readonly TabbedPage _tabbed;
 
-		private TabbedPage _tabbed;
 		public App()
 		{
 			InitializeComponent();
+
 			var main = new MainPage();
+
 			_tabbed = main.TabbedPage;
-			var page = new NavigationPage(main)
-			{
-				Title = "Toco Do"
-			};
-
-
-			page.SetDynamicResource(NavigationPage.BarBackgroundColorProperty, "BarColor");
+			_tabbed.BarBackgroundColor = Color.Blue;
 
 			_tabbed.CurrentPageChanged += MainTabbedPage_OnCurrentPageChanged;
 
-			MainPage = page;
+			MainPage = main;
+
 			MainTabbedPage_OnCurrentPageChanged(null, null);
 		}
+
 		private void MainTabbedPage_OnCurrentPageChanged(object sender, EventArgs e)
 		{
 			Color colorToGo;
-			double colorValue = 0.25;
 			switch (_tabbed.Children.IndexOf(_tabbed.CurrentPage))
 			{
 				case 0:
-					colorToGo = new Color(colorValue, 0, 0);
+					colorToGo = (Color)Current.Resources["TasksPageColor"];
 					break;
 				case 1:
-					colorToGo = new Color(0, colorValue, 0);
+					colorToGo = (Color)Current.Resources["TodayPageColor"];
 					break;
-				case 2:
 				default:
-					colorToGo = new Color(0, 0, colorValue);
+					colorToGo = (Color)Current.Resources["ChallengesPageColor"];
 					break;
 			}
-			var originColor = (Color)App.Current.Resources["BarColor"];
+			var originColor = (Color)Current.Resources["BarColor"];
 
 			var animation = new Animation(n =>
 			{
-				App.Current.Resources["BarColor"] = new Color((colorToGo.R - originColor.R) * n + originColor.R,
+				Current.Resources["BarColor"] = new Color((colorToGo.R - originColor.R) * n + originColor.R,
 					(colorToGo.G - originColor.G) * n + originColor.G, (colorToGo.B - originColor.B) * n + originColor.B);
 				BarColorChanged?.Invoke();
 			}, 0, 1, Easing.CubicOut);
 
 			animation.Commit(MainPage, "BarColorChange");
+
+
 		}
 
-		protected override void OnStart()
+		protected override async void OnStart()
 		{
-			// Handle when your app starts
+			//await StorageService.Init();
 		}
 
 		protected override void OnSleep()

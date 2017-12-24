@@ -2,15 +2,19 @@
 <MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:main="clr-namespace:TocoDo.Pages.Main;assembly=TocoDo"
+			 xmlns:m="clr-namespace:TocoDo.Pages;assembly=TocoDo"
 			 x:Class="TocoDo.Pages.Main.MainPage"
-	  IsPresented="False"
-				  Title="Toco Do">
+				  Title="Toco Do"
+				  >
 
 	<MasterDetailPage.Master>
-		<main:MainMasterPage />
+		<main:MainMasterPage Title="Toco Do"/>
 	</MasterDetailPage.Master>
 	<MasterDetailPage.Detail>
-		<main:MainTabbedPage />
+		<NavigationPage BarBackgroundColor="Red" HasNavigationBar="False">
+			<x:Arguments>
+				<main:MainTabbedPage Title="Toco Do" BarBackgroundColor="Black"/>
+			</x:Arguments>
+		</NavigationPage>
 	</MasterDetailPage.Detail>
-
 </MasterDetailPage>

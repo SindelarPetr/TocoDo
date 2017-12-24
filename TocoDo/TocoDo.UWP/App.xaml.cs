@@ -14,7 +14,6 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Plugin.CrossPlatformTintedImage.UWP;
 
 namespace TocoDo.UWP
 {
@@ -42,10 +41,10 @@ namespace TocoDo.UWP
 		{
 
 #if DEBUG
-			if (System.Diagnostics.Debugger.IsAttached)
-			{
-				this.DebugSettings.EnableFrameRateCounter = true;
-			}
+            if (System.Diagnostics.Debugger.IsAttached)
+            {
+                this.DebugSettings.EnableFrameRateCounter = true;
+            }
 #endif
 
 			Frame rootFrame = Window.Current.Content as Frame;
@@ -60,8 +59,6 @@ namespace TocoDo.UWP
 				rootFrame.NavigationFailed += OnNavigationFailed;
 
 				Xamarin.Forms.Forms.Init(e);
-				OxyPlot.Xamarin.Forms.Platform.UWP.PlotViewRenderer.Init();
-				TintedImageRenderer.Init();
 
 				if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
 				{
