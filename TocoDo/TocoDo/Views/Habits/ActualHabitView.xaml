@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="TocoDo.Views.Habits.ActualHabitView">
+  <ContentView.Content>
+		<StackLayout>
+			<!-- This button should increase the counter of the habit - if the habit is all day, then it increases the counter of violences and if the task is type of unit, then it increases the count of how many times it has been done -->
+		  <Button Text="TODO"/>
+		</StackLayout>
+  </ContentView.Content>
+</ContentView>

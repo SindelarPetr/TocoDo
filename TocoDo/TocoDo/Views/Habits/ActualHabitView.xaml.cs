@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace TocoDo
+namespace TocoDo.Views.Habits
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class Page1 : ContentPage
+	public partial class ActualHabitView : ContentView
 	{
-		public Page1 ()
+		public ActualHabitView ()
 		{
 			InitializeComponent ();
 		}

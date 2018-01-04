@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
+using Android.Content;
 using Android.Graphics;
 using TocoDo.CustomRenderers;
 using TocoDo.Droid.CustomRenderers;
-using TocoDo.CustomRenderers;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -11,6 +11,12 @@ namespace TocoDo.Droid.CustomRenderers
 {
 	public class CrossedLabelRenderer : LabelRenderer
 	{
+
+		public CrossedLabelRenderer(Context con): base(con)
+		{
+			
+		}
+
 		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			base.OnElementPropertyChanged(sender, e);

@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using TocoDo.Pages;
 using TocoDo.Pages.Main;
+using TocoDo.Pages.Tasks;
 using TocoDo.Services;
 using TocoDo.ViewModels;
 using Xamarin.Forms;
@@ -42,9 +43,15 @@ namespace TocoDo.Views
 
 		private async void TapTitle_OnTapped(object sender, EventArgs e)
 		{
+			Debug.WriteLine("------- Called TapTitle_OnTapped.");
+
 			var page = new ModifyTaskPage(TaskViewModel);
 
-			await Navigation.PushAsync(page);
+			Debug.WriteLine("------- Created instance of ModifyTaskPage in TapTitle_OnTapped.");
+
+			await PageService.PushAsync(page);
+
+			Debug.WriteLine("------- Finished calling of TapTitle_OnTapped.");
 		}
 
 		private void TapCalendar_OnTapped(object sender, EventArgs e)

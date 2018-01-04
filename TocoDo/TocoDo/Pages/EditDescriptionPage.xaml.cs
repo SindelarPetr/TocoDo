@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Diagnostics;
 using TocoDo.ViewModels;
 using Xamarin.Forms;
@@ -9,7 +10,6 @@ namespace TocoDo.Pages
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class EditDescriptionPage : ContentPage
 	{
-		private readonly TaskViewModel _taskViewModel;
 
 		private EditDescriptionViewModel Vm
 		{
@@ -17,17 +17,15 @@ namespace TocoDo.Pages
 			set => BindingContext = value;
 		}
 
-		public EditDescriptionPage(TaskViewModel taskViewModel)
+		public EditDescriptionPage(string title, string description, Action<string> setDescriptionAction)
 		{
 			Debug.Write("----------------- EditDescriptionPage constructor called.");
-			_taskViewModel = taskViewModel;
 
 			Debug.Write("-------------------- Before InitializeComponent.");
-
 			InitializeComponent();
 			Debug.Write("-------------------- After InitializeComponent.");
 
-			Vm = new EditDescriptionViewModel(taskViewModel);
+			Vm = new EditDescriptionViewModel(title, description, setDescriptionAction);
 			Debug.Write("----------------- Finished calling EditDescriptionPage constructor.");
 		}
 
@@ -37,7 +35,7 @@ namespace TocoDo.Pages
 			base.OnAppearing();
 
 			// In case there is no description focus the Edit
-			if (string.IsNullOrWhiteSpace(_taskViewModel.Description))
+			if (string.IsNullOrWhiteSpace(Vm.Description))
 				EditorNote.Focus();
 			Debug.Write("----------------- Finished calling of OnAppearing of EditDescriptionPage.");
 		}

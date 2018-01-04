@@ -2,15 +2,17 @@
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:markupExtensions="clr-namespace:TocoDo.MarkupExtensions;assembly=TocoDo"
+			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
 			 x:Class="TocoDo.App">
 	<Application.Resources>
 		<ResourceDictionary>
 			<Color x:Key="BarColor">#444444</Color>
+
 			<Color x:Key="BackgroundColor" >#303030</Color>
-			
-			<Color x:Key="TasksPageColor" >#ce7542</Color>
-			<Color x:Key="TodayPageColor" >#30ba5e</Color>
-			<Color x:Key="ChallengesPageColor" >#4d6dc6</Color>
+
+			<Color x:Key="TasksPageColor" >#3F51B5</Color>
+			<Color x:Key="TodayPageColor" >#3F51B5</Color>
+			<Color x:Key="ChallengesPageColor" >#3F51B5</Color>
 
 			<Color x:Key="UnsetValueColor">DarkGray</Color>
 			<Color x:Key="DeadlineColor">Red</Color>
@@ -34,11 +36,12 @@
 			<Style x:Key="TitleInFrame" TargetType="Label">
 				<Setter Property="FontSize" Value="Medium"/>
 			</Style>
-			<Style x:Key="ButtonAdd" TargetType="Image">
+			<Style x:Key="ButtonAdd" TargetType="abstractions:TintedImage">
 				<Setter Property="Source" Value="{markupExtensions:PathResolver 'ic_add_circle_outline_white_24dp.png'}"/>
 				<Setter Property="BackgroundColor" Value="Transparent" />
 				<Setter Property="WidthRequest" Value="26"/>
 				<Setter Property="HeightRequest" Value="26"/>
+				<Setter Property="TintColor" Value="Orange"/>
 			</Style>
 		</ResourceDictionary>
 	</Application.Resources>

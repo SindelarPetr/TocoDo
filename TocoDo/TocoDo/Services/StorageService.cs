@@ -10,17 +10,10 @@ using TocoDo.ViewModels;
 
 namespace TocoDo.Services
 {
-	public class StorageService
+	public static class StorageService
 	{
-		private static List<ChallengeModel> _fakeChallenges = new List<ChallengeModel>
-		{
-			new ChallengeModel
-			{
-				ChallengeType = ChallengeType.Daylong,
-				DaysCount = 12,
-			}
-		};
-
+		#region Collections
+		#region Tasks
 		/// <summary>
 		/// Dont add tasks to this list, call InsertTask to insert it also to the database.
 		/// </summary>
@@ -29,10 +22,21 @@ namespace TocoDo.Services
 		public static ObservableCollection<TaskViewModel> TodayTasks { get; } = new ObservableCollection<TaskViewModel>();
 		public static ObservableCollection<TaskViewModel> SomedayTasks { get; } = new ObservableCollection<TaskViewModel>();
 		public static ObservableCollection<TaskViewModel> ScheduledTasks { get; } = new ObservableCollection<TaskViewModel>();
+		#endregion
+
+		#region Habits
+		public static ObservableCollection<HabitViewModel> AllHabits { get; } = new ObservableCollection<HabitViewModel>();
+
+		public static ObservableCollection<HabitViewModel> CurrentHabits { get; } = new ObservableCollection<HabitViewModel>();
+		public static ObservableCollection<HabitViewModel> ScheduledHabits { get; } = new ObservableCollection<HabitViewModel>();
+		public static ObservableCollection<HabitViewModel> UnscheduledHabits { get; } = new ObservableCollection<HabitViewModel>();
+		public static ObservableCollection<HabitViewModel> RecommendedHabits { get; } = new ObservableCollection<HabitViewModel>();
+		#endregion
+		#endregion
 
 		private static SQLiteAsyncConnection _connection;
 
-		#region Init + CRUD
+		#region Set up connection
 		/// <summary>
 		/// Initialize the database.
 		/// </summary>
@@ -41,34 +45,40 @@ namespace TocoDo.Services
 			Debug.WriteLine("---------- Init method of StorageService called.");
 			if (_connection != null) return;
 
+			await InitDb();
+			await LoadFromDb();
+
+			Debug.WriteLine("---------- Finished call of Init method of StorageService.");
+		}
+
+		private static async Task InitDb()
+		{
 			try
 			{
 				Debug.WriteLine("---------- Before getting path.");
-				//string path = Path.Combine(PathServiceProvider.GetPath(), "MySQLite.db3");//AppStrings.DatabaseName);
-				string path = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "MySQLite.db3");//AppStrings.DatabaseName);
-																																		//path = System.IO.Path.GetFullPath("Mysql");
+				string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "MySQLite.db3");
+
 				Debug.WriteLine($"---------------- Creating a new database connection on path: \"{path}\"");
 				_connection = new SQLiteAsyncConnection(path);
 				Debug.WriteLine("Created a new database connection.");
 
 
-				//_connection.Table<TaskModel>().ToListAsync().Result.ForEach(async t => await _connection.DeleteAsync(t));
-				////Debug.WriteLine("Creating a new database table.");
-				//await Task.Delay(3000);
-				//await _connection.DropTableAsync<TaskModel>();
-				//Debug.WriteLine("Before Create");
-
-				await _connection.CreateTableAsync<TaskModel>();
+				await InitTasks();
+				await InitHabits();
 			}
 			catch (Exception e)
 			{
 				Debug.Write("------------- Exception thrown while setting up the database: " + e.Message);
 				throw;
 			}
+		}
 
+		private static async Task LoadFromDb()
+		{
 			try
 			{
 				await LoadTasks();
+				await LoadHabits();
 			}
 			catch (Exception e)
 			{
@@ -76,8 +86,21 @@ namespace TocoDo.Services
 				Debug.Write(e.StackTrace);
 				throw;
 			}
-			Debug.WriteLine("---------- Finished call of Init method of StorageService.");
 		}
+		#endregion
+
+		#region Tasks
+		private static async Task InitTasks()
+		{
+			//_connection.Table<TaskModel>().ToListAsync().Result.ForEach(async t => await _connection.DeleteAsync(t));
+			////Debug.WriteLine("Creating a new database table.");
+			//await Task.Delay(3000);
+			//await _connection.DropTableAsync<TaskModel>();
+			//Debug.WriteLine("Before Create");
+
+			await _connection.CreateTableAsync<TaskModel>();
+		}
+
 		public static async Task<TaskViewModel> InsertTask(string title, DateTime? scheduleDate)
 		{
 			var newTask = new TaskModel
@@ -106,29 +129,6 @@ namespace TocoDo.Services
 			RemoveTaskFromTheList(task);
 			UnbindTask(task);
 		}
-
-		public static async Task<Dictionary<DateTime, List<TaskViewModel>>> GetUpcommingTasks()
-		{
-			Dictionary<DateTime, List<TaskViewModel>> upcomming = new Dictionary<DateTime, List<TaskViewModel>>();
-
-			(await _connection.Table<TaskModel>().Where(t => t.Deadline != null && t.Deadline != DateTime.Today).ToListAsync()).ForEach(t =>
-			{
-				if (t.ScheduleDate != null && t.ScheduleDate.Value.Date >= DateTime.Today + TimeSpan.FromDays(1))
-				{
-					if (upcomming.ContainsKey(t.ScheduleDate.Value.Date))
-					{
-						upcomming[t.ScheduleDate.Value.Date].Add(new TaskViewModel(t));
-					}
-					else
-					{
-						upcomming[t.ScheduleDate.Value.Date] = new List<TaskViewModel> { new TaskViewModel(t) };
-					}
-				}
-			});
-
-			return upcomming;
-		}
-		#endregion
 
 		private static async Task LoadTasks()
 		{
@@ -210,5 +210,55 @@ namespace TocoDo.Services
 			}
 			Debug.Write("------------- Finished inserting task");
 		}
+		#endregion
+
+		#region Habits
+		static async Task InitHabits()
+		{
+			//await _connection.CreateTableAsync<HabitModel>();
+		}
+		static async Task LoadHabits()
+		{
+			int id = 0;
+			CurrentHabits.Add(new HabitViewModel(new HabitModel
+			{
+				DailyFillingCount = 3,
+				Description = "This is an example of a habit.",
+				Filling = new Dictionary<DateTime, int>
+				{
+					{ DateTime.Today - TimeSpan.FromDays(4), 2 },
+					{ DateTime.Today - TimeSpan.FromDays(3), 3 },
+					{ DateTime.Today - TimeSpan.FromDays(2), 1 },
+					{ DateTime.Today - TimeSpan.FromDays(1), 2 },
+					{ DateTime.Today, 1 },
+				},
+				HabitType = HabitType.Unit,
+				Id = id++,
+				IsRecommended = false,
+				RepeatType = RepeatType.Days,
+				RepeatNumber = 10,
+				StartDate = DateTime.Today - TimeSpan.FromDays(4),
+				Title = "Example habit"
+			}));
+		}
+
+		public static async void UpdateHabit(HabitViewModel habit)
+		{
+			await _connection.UpdateAsync(habit.GetHabitModel());
+		}
+
+		public static async void DeleteHabit(HabitViewModel habit)
+		{
+			await _connection.DeleteAsync(habit.GetHabitModel());
+		}
+
+		public static async HabitViewModel InsertHabit(string title)
+		{
+			var model = habit.GetHabitModel();
+			await _connection.InsertAsync(model);
+			habit.ModelId = model.Id;
+		}
+		#endregion
+
 	}
 }

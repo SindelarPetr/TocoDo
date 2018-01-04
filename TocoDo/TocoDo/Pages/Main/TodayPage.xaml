@@ -5,6 +5,7 @@
 			 xmlns:markupExtensions="clr-namespace:TocoDo.MarkupExtensions;assembly=TocoDo"
 			 xmlns:services="clr-namespace:TocoDo.Services;assembly=TocoDo"
 			 xmlns:system1="clr-namespace:System;assembly=netstandard"
+			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
 			 x:Class="TocoDo.Pages.Main.TodayPage"
 			 BackgroundColor="Transparent"
 			 x:Name="This">
@@ -38,14 +39,14 @@
 					 <!--TODAY--> 
 					<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
 						<Label Text="Today" Style="{StaticResource FrameTitle}" HorizontalOptions="FillAndExpand" />
-						<Image x:Name="ButtonAddToday" Style="{StaticResource ButtonAdd}">
-							<Image.GestureRecognizers>
+						<abstractions:TintedImage x:Name="ButtonAddToday" Style="{StaticResource ButtonAdd}">
+							<abstractions:TintedImage.GestureRecognizers>
 								<TapGestureRecognizer Tapped="ButtonAddToday_OnClicked"/>
-							</Image.GestureRecognizers>
-						</Image>
+							</abstractions:TintedImage.GestureRecognizers>
+						</abstractions:TintedImage>
 					</StackLayout>
 					<Frame>
-						<views:TodoSetView x:Name="TodayTodoSetView" TasksSource="{x:Static services:StorageService.TodayTasks}"/>
+						<views:TodoSetView TasksSource="{x:Static services:StorageService.TodayTasks}"/>
 					</Frame>
 				</StackLayout>
 			</ScrollView>

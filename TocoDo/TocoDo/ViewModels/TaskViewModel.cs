@@ -31,7 +31,6 @@ namespace TocoDo.ViewModels
 
 		#region Backing fields
 		private DateTime? _deadline;
-		private DateTime? _scheduleDate;
 		private DateTime _creationTime;
 		private string _description;
 		private string _title;
@@ -288,7 +287,7 @@ namespace TocoDo.ViewModels
 		private async void EditDescription()
 		{
 			Debug.Write("------------- Edit description called.");
-			await PageService.PushModalAsync(new EditDescriptionPage(this));
+			await PageService.PushModalAsync(new EditDescriptionPage(Title, Description, d => Description = d));
 			Debug.Write("------------- Stopped calling edit description.");
 		}
 	}

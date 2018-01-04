@@ -2,6 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:views="clr-namespace:TocoDo.Views;assembly=TocoDo"
+			 xmlns:habits="clr-namespace:TocoDo.Views.Habits;assembly=TocoDo"
+			 xmlns:services="clr-namespace:TocoDo.Services;assembly=TocoDo"
 			 x:Class="TocoDo.Pages.Main.HabitsPage">
 	<ContentPage.Content>
 		<ScrollView>
@@ -9,28 +11,27 @@
 				<!-- Current -->
 				<Label Text="Current" Style="{StaticResource FrameTitle}"/>
 				<Frame>
-					<StackLayout Spacing="0">
-						<views:ActualChallengeItemView />
-					</StackLayout>
+					<habits:HabitSetView x:Name="CurrentHabitSetView" HabitsSource="{x:Static services:StorageService.CurrentHabits}" />
 				</Frame>
 				
 				<!-- Scheduled -->
 				<Label Text="Scheduled" Style="{StaticResource FrameTitle}" />
 				<Frame>
 					<StackLayout Spacing="6">
-						<views:ChallengeItemView />
-						<views:ChallengeItemView />
-						<views:ChallengeItemView />
 					</StackLayout>
 				</Frame>
-				
+
+				<!-- Unscheduled -->
+						<Label Text="Unscheduled" Style="{StaticResource FrameTitle}" />
+				<Frame>
+					<StackLayout Spacing="6">
+					</StackLayout>
+				</Frame>
+					
 				<!-- Recommended -->
 				<Label Text="Recommended" Style="{StaticResource FrameTitle}" />
 				<Frame>
 					<StackLayout Spacing="6">
-						<views:ChallengeItemView />
-						<views:ChallengeItemView />
-						<views:ChallengeItemView />
 					</StackLayout>
 				</Frame>
 			</StackLayout>

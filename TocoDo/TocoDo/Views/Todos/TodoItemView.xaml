@@ -51,7 +51,8 @@
 				</Grid.RowDefinitions>
 
 				<!--Title label-->
-				<customRenderers:CrossedLabel x:Name="LabelTitle" Text="{Binding Title}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center" IsStrikeThrough="{Binding Done, Mode=OneWay, Converter={StaticResource IsNotNullConverter}}"/>
+				<customRenderers:CrossedLabel x:Name="LabelTitle" Text="{Binding Title}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center" IsStrikeThrough="{Binding Done, Mode=OneWay, Converter={StaticResource IsNotNullConverter}}" TextColor="Gray"/>
+				<!--<Label Text="{Binding Title}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center" />-->
 
 				<!-- Task attributes -->
 				<Grid Grid.Row="1" HorizontalOptions="Start" IsVisible="{Binding HasAttribute}" Opacity="0.7" ColumnSpacing="0">

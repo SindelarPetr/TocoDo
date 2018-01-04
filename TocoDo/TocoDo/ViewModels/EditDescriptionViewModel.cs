@@ -1,5 +1,5 @@
-﻿using System.Windows.Input;
-using TocoDo.Properties;
+﻿using System;
+using System.Windows.Input;
 using TocoDo.Services;
 using Xamarin.Forms;
 
@@ -7,25 +7,26 @@ namespace TocoDo.ViewModels
 {
 	public class EditDescriptionViewModel : BaseViewModel
 	{
-		private readonly TaskViewModel _taskViewModel;
+		private readonly Action<string> _setDescriptionAction;
 		public string Title { get; set; }
+		private readonly string _originalDescription;
 		public string Description { get; set; }
 
 		public ICommand DiscardCommand { get; set; }
 		public ICommand SaveCommand { get; set; }
 
-		public EditDescriptionViewModel(TaskViewModel taskViewModel)
+		public EditDescriptionViewModel(string title, string description, Action<string> setDescriptionAction)
 		{
-			_taskViewModel = taskViewModel;
-			Title = taskViewModel.Title;
-			Description = taskViewModel.Description;
+			_setDescriptionAction = setDescriptionAction;
+			Title = title;
+			_originalDescription = Description = description;
 			DiscardCommand = new Command(Discard);
-			SaveCommand = new Command(() => Save(_taskViewModel));
+			SaveCommand = new Command(Save);
 		}
 
 		private async void Discard()
 		{
-			if (Description != _taskViewModel.Description)
+			if (Description != _originalDescription)
 			{
 				var result = await PageService.DisplayAlert(Resources.Warning, Resources.AreYouSureDescardChanges,
 					Resources.Yes, Resources.No);
@@ -36,10 +37,10 @@ namespace TocoDo.ViewModels
 			await PageService.PopModalAsync();
 		}
 
-		private async void Save(TaskViewModel task)
+		private async void Save()
 		{
-			task.Description = Description.Trim();
-			StorageService.UpdateTask(task);
+			_setDescriptionAction?.Invoke(Description.Trim());
+			//StorageService.UpdateTask(task);
 			await PageService.PopModalAsync();
 		}
 	}

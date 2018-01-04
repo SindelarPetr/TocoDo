@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:customRenderers="clr-namespace:TocoDo.CustomRenderers;assembly=TocoDo"
+			 xmlns:views="clr-namespace:TocoDo.Views;assembly=TocoDo"
+			 x:Class="TocoDo.Pages.Habits.ModifyHabitPage">
+	<ContentPage.Content>
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
+
+			<!--Top Panel-->
+			<Frame Margin="0" CornerRadius="0" HasShadow="False" Padding="0,5,0,0" OutlineColor="{DynamicResource BarColor}"
+				   BackgroundColor="{DynamicResource BarColor}">
+				<customRenderers:NoLineEntry x:Name="EntryTitle" Text="{Binding Title}" HorizontalOptions="FillAndExpand" TextColor="White" Unfocused="EntryTitle_OnUnfocused" />
+			</Frame>
+		</Grid>
+	</ContentPage.Content>
+</ContentPage>

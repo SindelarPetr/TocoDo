@@ -1,4 +1,5 @@
-﻿using TocoDo.CustomRenderers;
+﻿using Android.Content;
+using TocoDo.CustomRenderers;
 using TocoDo.Droid.CustomRenderers;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
@@ -10,6 +11,8 @@ namespace TocoDo.Droid.CustomRenderers
 {
 	public class NoBorderButtonRenderer : ButtonRenderer
 	{
+		public NoBorderButtonRenderer(Context context) : base(context)
+		{ }
 
 		protected override void OnElementChanged(ElementChangedEventArgs<Button> e)
 		{

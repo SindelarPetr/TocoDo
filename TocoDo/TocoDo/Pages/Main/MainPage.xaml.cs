@@ -13,7 +13,7 @@ namespace TocoDo.Pages.Main
 		{
 			InitializeComponent();
 
-			TabbedPage = (TabbedPage)((NavigationPage)Detail).CurrentPage;
+			TabbedPage = ((TabbedPage)Detail);
 		}
 
 		protected override async void OnAppearing()

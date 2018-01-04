@@ -11,10 +11,6 @@
 		<main:MainMasterPage Title="Toco Do"/>
 	</MasterDetailPage.Master>
 	<MasterDetailPage.Detail>
-		<NavigationPage BarBackgroundColor="{DynamicResource BarColor}">
-			<x:Arguments>
-				<main:MainTabbedPage Title="Toco Do" BarBackgroundColor="{DynamicResource BarColor}"/>
-			</x:Arguments>
-		</NavigationPage>
+		<main:MainTabbedPage Title="Toco Do" BarBackgroundColor="{DynamicResource BarColor}"/>
 	</MasterDetailPage.Detail>
 </MasterDetailPage>

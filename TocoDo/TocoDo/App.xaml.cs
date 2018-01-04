@@ -19,8 +19,11 @@ namespace TocoDo
 
 			_tabbed.CurrentPageChanged += MainTabbedPage_OnCurrentPageChanged;
 
-			MainPage = main;
+			var navigationPage = new NavigationPage(main);
 
+			navigationPage.SetDynamicResource(NavigationPage.BarBackgroundColorProperty, "BarColor");
+
+			MainPage = navigationPage;
 			MainTabbedPage_OnCurrentPageChanged(null, null);
 		}
 

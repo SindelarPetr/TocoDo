@@ -12,7 +12,7 @@ namespace TocoDo.Views
 	{
 		#region TasksSource
 		public BindableProperty TasksSourceProperty = BindableProperty.Create("TasksSource", typeof(ObservableCollection<TaskViewModel>),
-			typeof(ObservableCollection<TaskViewModel>), null);
+			typeof(ObservableCollection<TaskViewModel>));
 
 		public ObservableCollection<TaskViewModel> TasksSource
 		{
@@ -108,7 +108,7 @@ namespace TocoDo.Views
 		}
 		#endregion
 
-		public StackLayout MainLayout => LayoutTodo;
+		protected StackLayout MainLayout => LayoutTodo;
 
 		public TodoSetView()
 		{

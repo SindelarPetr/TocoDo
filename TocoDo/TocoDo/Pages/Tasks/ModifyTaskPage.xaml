@@ -6,7 +6,7 @@
 			 xmlns:views="clr-namespace:TocoDo.Views;assembly=TocoDo"
 			 xmlns:converters="clr-namespace:TocoDo.Converters;assembly=TocoDo"
 			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
-			 x:Class="TocoDo.Pages.ModifyTaskPage"
+			 x:Class="TocoDo.Pages.Tasks.ModifyTaskPage"
 			 BackgroundColor="{StaticResource BackgroundColor}"
 			 Title="Modify the task">
 	<ContentPage.Resources>
@@ -35,7 +35,7 @@
 				<RowDefinition Height="*"/>
 				<RowDefinition Height="Auto"/>
 			</Grid.RowDefinitions>
-			
+
 			<!--Top Panel-->
 			<Frame Margin="0" CornerRadius="0" HasShadow="False" Padding="0,5,0,0" OutlineColor="{DynamicResource BarColor}"
 				   BackgroundColor="{DynamicResource BarColor}">
