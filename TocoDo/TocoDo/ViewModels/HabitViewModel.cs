@@ -104,6 +104,7 @@ namespace TocoDo.ViewModels
 
 		public HabitViewModel()
 		{
+			ModelFilling = new ObservableDictionary<DateTime, int>();
 			IsEditTitleMode = true;
 
 			SetupCommands();
@@ -129,13 +130,15 @@ namespace TocoDo.ViewModels
 
 		private void SetupCommands()
 		{
-			InsertCommand = new Command(async () => await InsertToStorage());
+			InsertCommand = new Command<string>(async s => await InsertToStorage(s));
 		}
 
-		private async Task InsertToStorage()
+		public async Task InsertToStorage(string title)
 		{
+			_modelTitle = title;
 			IsEditTitleMode = false;
 			await StorageService.InsertHabit(this);
+			OnPropertyChanged(nameof(ModelTitle));
 		}
 
 		public HabitModel GetHabitModel()

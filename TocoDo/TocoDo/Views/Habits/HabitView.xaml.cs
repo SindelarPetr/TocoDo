@@ -1,4 +1,5 @@
-﻿using TocoDo.ViewModels;
+﻿using System.Diagnostics;
+using TocoDo.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -19,9 +20,13 @@ namespace TocoDo.Views.Habits
 			InitializeComponent();
 		}
 
-		private void EditTitle_OnUnfocused(object sender, FocusEventArgs e)
+		private async void EditTitle_OnUnfocused(object sender, FocusEventArgs e)
 		{
-			HabitViewModel.InsertCommand?.Execute(null);
+			Debug.WriteLine("---------- Onunfocused of EditTitle called");
+			var title = ((Entry)e.VisualElement).Text;
+			Debug.WriteLine("-------------- Got title of the Entry: " + title);
+			await HabitViewModel.InsertToStorage(title);
+			Debug.WriteLine("---------- Finished calling of EditTitle");
 		}
 	}
 }

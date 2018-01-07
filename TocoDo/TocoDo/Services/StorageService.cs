@@ -258,9 +258,17 @@ namespace TocoDo.Services
 		/// <param name="habit">The habit which will be inserted to the database.</param>
 		public static async Task InsertHabit(HabitViewModel habit)
 		{
-			var model = habit.GetHabitModel();
-			await _connection.InsertAsync(model);
-			habit.SetModelId(model.Id);
+			try
+			{
+				var model = habit.GetHabitModel();
+				//await _connection.InsertAsync(model);
+				habit.SetModelId(1); //model.Id);
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine($"---------- Exception thrown during Inserting a habit: \"{ ex.Message }\"");
+				Debug.WriteLine($"And the stack trace: \"{ ex.StackTrace }\"");
+			}
 		}
 
 		public static void AddHabitToTheList(HabitViewModel habit)
