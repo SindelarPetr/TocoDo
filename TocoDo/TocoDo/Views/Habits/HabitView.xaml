@@ -12,7 +12,7 @@
 	</ContentView.Resources>
 	<ContentView.Content>
 		<StackLayout Spacing="0">
-			<Entry Text="{Binding ModelTitle, Mode=OneWay}" IsVisible="{Binding IsEditTitleMode}" Unfocused="EditTitle_OnUnfocused" FontSize="Large" FontAttributes="Bold" TextColor="Black"/>
+			<Entry x:Name="EntryEditTitle" Text="{Binding ModelTitle, Mode=OneWay}" IsVisible="{Binding IsEditTitleMode}" Unfocused="EditTitle_OnUnfocused" FontSize="Large" FontAttributes="Bold" TextColor="Black"/>
 			<Label Text="{Binding ModelTitle}" IsVisible="{Binding IsEditTitleMode, Converter={StaticResource BoolReverseConverter}}" FontSize="Large" FontAttributes="Bold" TextColor="Black" />
 			<StackLayout Padding="10,0,0,0">
 				<Label Text="Schedule time" FontSize="12"/>

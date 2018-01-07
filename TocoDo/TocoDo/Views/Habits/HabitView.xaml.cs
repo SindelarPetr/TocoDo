@@ -20,6 +20,16 @@ namespace TocoDo.Views.Habits
 			InitializeComponent();
 		}
 
+		protected override void OnParentSet()
+		{
+			Debug.WriteLine("------------ OnParentSet of a habit called.");
+			base.OnParentSet();
+
+			//if (HabitViewModel.IsEditTitleMode)
+			//	EntryEditTitle.Focus();
+			Debug.WriteLine("------------ Finished calling of OnParentSet of a habit.");
+		}
+
 		private async void EditTitle_OnUnfocused(object sender, FocusEventArgs e)
 		{
 			Debug.WriteLine("---------- Onunfocused of EditTitle called");
@@ -27,6 +37,11 @@ namespace TocoDo.Views.Habits
 			Debug.WriteLine("-------------- Got title of the Entry: " + title);
 			await HabitViewModel.InsertToStorage(title);
 			Debug.WriteLine("---------- Finished calling of EditTitle");
+		}
+
+		public void FocusEditTitleEntry()
+		{
+			EntryEditTitle.Focus();
 		}
 	}
 }

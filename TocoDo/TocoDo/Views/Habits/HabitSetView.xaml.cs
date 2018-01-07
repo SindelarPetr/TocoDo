@@ -62,8 +62,10 @@ namespace TocoDo.Views.Habits
 
 		private void AddHabit(HabitViewModel habit)
 		{
-			var todoItem = new HabitView(habit);
-			MainLayout.Children.Add(todoItem);
+			var habitView = new HabitView(habit);
+			MainLayout.Children.Add(habitView);
+			if(habit.IsEditTitleMode)
+				habitView.FocusEditTitleEntry();
 		}
 
 		private void RemoveHabit(HabitViewModel habit)
