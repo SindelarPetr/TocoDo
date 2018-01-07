@@ -10,16 +10,14 @@ namespace TocoDo.Views.Habits
 	public partial class HabitSetView : ContentView
 	{
 		#region HabitsSource
-		public static BindableProperty HabitsSourceProperty = BindableProperty.Create("HabitsSource",
-			typeof(ObservableCollection<HabitViewModel>), typeof(ObservableCollection<HabitViewModel>));
-
+		private ObservableCollection<HabitViewModel> _habitSetView;
 		public ObservableCollection<HabitViewModel> HabitsSource
 		{
-			get => (ObservableCollection<HabitViewModel>)GetValue(HabitsSourceProperty);
+			get => _habitSetView;
 			set
 			{
 				UnbindSource();
-				SetValue(HabitsSourceProperty, value);
+				_habitSetView = value;
 				BindSource();
 			}
 		}

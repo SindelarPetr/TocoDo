@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using TocoDo.Models;
 using TocoDo.Services;
+using Xamarin.Forms;
 
 namespace TocoDo.ViewModels
 {
@@ -25,7 +27,13 @@ namespace TocoDo.ViewModels
 		#endregion
 
 		#region Properties
-		public int ModelId { get; }
+		public int ModelId { get; private set; }
+
+		/// <summary>
+		/// Is used for explicit setting of ModelId, so there is no possibility of setting ModelId accidentally.
+		/// </summary>
+		/// <param name="id">New id which will be assigned to the ModelId property.</param>
+		public void SetModelId(int id) => ModelId = id;
 
 		public bool ModelIsRecommended
 		{
@@ -78,9 +86,28 @@ namespace TocoDo.ViewModels
 		}
 		#endregion
 
-		#region Commands
-		public ICommand UpdateCommand { get; }
+		#region IsEditTitleMode
+		public static BindableProperty IsEditTitleModeProperty = BindableProperty.Create("IsEditTitleMode",
+			typeof(bool), typeof(bool), false);
+
+		public bool IsEditTitleMode
+		{
+			get => (bool)GetValue(IsEditTitleModeProperty);
+			set => SetValue(IsEditTitleModeProperty, value);
+		}
 		#endregion
+
+		#region Commands
+		public ICommand UpdateCommand { get; private set; }
+		public ICommand InsertCommand { get; private set; }
+		#endregion
+
+		public HabitViewModel()
+		{
+			IsEditTitleMode = true;
+
+			SetupCommands();
+		}
 
 		public HabitViewModel(HabitModel model)
 		{
@@ -94,7 +121,21 @@ namespace TocoDo.ViewModels
 			_modelTitle = model.Title;
 			_modelDailyFillingCount = model.DailyFillingCount;
 			_modelIsRecommended = model.IsRecommended;
+
+			SetupCommands();
+
 			_updateOnPropertyChange = true;
+		}
+
+		private void SetupCommands()
+		{
+			InsertCommand = new Command(async () => await InsertToStorage());
+		}
+
+		private async Task InsertToStorage()
+		{
+			IsEditTitleMode = false;
+			await StorageService.InsertHabit(this);
 		}
 
 		public HabitModel GetHabitModel()
@@ -118,7 +159,7 @@ namespace TocoDo.ViewModels
 		{
 			base.OnPropertyChanged(propertyName);
 
-			if (_updateOnPropertyChange)
+			if (_updateOnPropertyChange && propertyName != nameof(IsEditTitleMode))
 				StorageService.UpdateHabit(this);
 		}
 	}

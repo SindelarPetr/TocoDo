@@ -4,14 +4,21 @@
 			 xmlns:views="clr-namespace:TocoDo.Views;assembly=TocoDo"
 			 xmlns:habits="clr-namespace:TocoDo.Views.Habits;assembly=TocoDo"
 			 xmlns:services="clr-namespace:TocoDo.Services;assembly=TocoDo"
-			 x:Class="TocoDo.Pages.Main.HabitsPage">
+			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
+			 x:Class="TocoDo.Pages.Main.HabitsPage"
+			 x:Name="This">
 	<ContentPage.Content>
-		<ScrollView>
+		<ScrollView BindingContext="{x:Reference This}">
 			<StackLayout Style="{StaticResource PageStackLayout}">
+				<abstractions:TintedImage Style="{StaticResource ButtonAdd}">
+					<abstractions:TintedImage.GestureRecognizers>
+						<TapGestureRecognizer Tapped="AddButton_OnTapped"/>
+					</abstractions:TintedImage.GestureRecognizers>
+				</abstractions:TintedImage>
 				<!-- Current -->
 				<Label Text="Current" Style="{StaticResource FrameTitle}"/>
 				<Frame>
-					<habits:HabitSetView x:Name="CurrentHabitSetView" HabitsSource="{x:Static services:StorageService.CurrentHabits}" />
+					<habits:HabitSetView HabitsSource="{x:Static services:StorageService.CurrentHabits}" />
 				</Frame>
 				
 				<!-- Scheduled -->
@@ -24,8 +31,7 @@
 				<!-- Unscheduled -->
 						<Label Text="Unscheduled" Style="{StaticResource FrameTitle}" />
 				<Frame>
-					<StackLayout Spacing="6">
-					</StackLayout>
+					<habits:HabitSetView x:Name="UnscheduledHabitSetView" HabitsSource="{x:Static services:StorageService.UnscheduledHabits}" />
 				</Frame>
 					
 				<!-- Recommended -->

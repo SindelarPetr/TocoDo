@@ -18,5 +18,10 @@ namespace TocoDo.Views.Habits
 			HabitViewModel = habit;
 			InitializeComponent();
 		}
+
+		private void EditTitle_OnUnfocused(object sender, FocusEventArgs e)
+		{
+			HabitViewModel.InsertCommand?.Execute(null);
+		}
 	}
 }

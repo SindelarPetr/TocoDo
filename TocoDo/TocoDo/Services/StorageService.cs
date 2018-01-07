@@ -252,11 +252,20 @@ namespace TocoDo.Services
 			await _connection.DeleteAsync(habit.GetHabitModel());
 		}
 
-		public static async HabitViewModel InsertHabit(string title)
+		/// <summary>
+		/// Inserts the given habit to the database and fills his ModelId.
+		/// </summary>
+		/// <param name="habit">The habit which will be inserted to the database.</param>
+		public static async Task InsertHabit(HabitViewModel habit)
 		{
 			var model = habit.GetHabitModel();
 			await _connection.InsertAsync(model);
-			habit.ModelId = model.Id;
+			habit.SetModelId(model.Id);
+		}
+
+		public static void AddHabitToTheList(HabitViewModel habit)
+		{
+			UnscheduledHabits.Add(habit);
 		}
 		#endregion
 

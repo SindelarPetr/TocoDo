@@ -41,7 +41,7 @@
 				<Setter Property="BackgroundColor" Value="Transparent" />
 				<Setter Property="WidthRequest" Value="26"/>
 				<Setter Property="HeightRequest" Value="26"/>
-				<Setter Property="TintColor" Value="Orange"/>
+				<Setter Property="TintColor" Value="White"/>
 			</Style>
 		</ResourceDictionary>
 	</Application.Resources>

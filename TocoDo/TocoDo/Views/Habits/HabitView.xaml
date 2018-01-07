@@ -1,11 +1,19 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:converters="clr-namespace:TocoDo.Converters;assembly=TocoDo"
 			 x:Class="TocoDo.Views.Habits.HabitView"
-			 x:Name="This">
+			 x:Name="This"
+			 x:Key="This">
+	<ContentView.Resources>
+		<ResourceDictionary>
+			<converters:BoolReverseConverter x:Key="BoolReverseConverter"/>
+		</ResourceDictionary>
+	</ContentView.Resources>
 	<ContentView.Content>
 		<StackLayout Spacing="0">
-			<Label Text="{Binding ModelTitle}" FontSize="Large" FontAttributes="Bold" TextColor="Black"/>
+			<Entry Text="{Binding ModelTitle, Mode=OneWay}" IsVisible="{Binding IsEditTitleMode}" Unfocused="EditTitle_OnUnfocused"/>
+			<Label Text="{Binding ModelTitle}" IsVisible="{Binding IsEditTitleMode, Converter={StaticResource BoolReverseConverter}}" FontSize="Large" FontAttributes="Bold" TextColor="Black" />
 			<StackLayout Padding="10,0,0,0">
 				<Label Text="Schedule time" FontSize="12"/>
 				<Label Text="{Binding ModelDescription}" FontSize="Small" />

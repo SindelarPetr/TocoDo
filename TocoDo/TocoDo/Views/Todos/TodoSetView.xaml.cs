@@ -11,16 +11,15 @@ namespace TocoDo.Views
 	public partial class TodoSetView : ContentView
 	{
 		#region TasksSource
-		public BindableProperty TasksSourceProperty = BindableProperty.Create("TasksSource", typeof(ObservableCollection<TaskViewModel>),
-			typeof(ObservableCollection<TaskViewModel>));
 
+		private ObservableCollection<TaskViewModel> _taskSource;
 		public ObservableCollection<TaskViewModel> TasksSource
 		{
-			get => (ObservableCollection<TaskViewModel>)GetValue(TasksSourceProperty);
+			get => _taskSource;
 			set
 			{
 				UnbindSource();
-				SetValue(TasksSourceProperty, value);
+				_taskSource = value;
 				BindSource();
 			}
 		}

@@ -39,7 +39,7 @@
 					 <!--TODAY--> 
 					<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
 						<Label Text="Today" Style="{StaticResource FrameTitle}" HorizontalOptions="FillAndExpand" />
-						<abstractions:TintedImage x:Name="ButtonAddToday" Style="{StaticResource ButtonAdd}">
+						<abstractions:TintedImage Style="{StaticResource ButtonAdd}">
 							<abstractions:TintedImage.GestureRecognizers>
 								<TapGestureRecognizer Tapped="ButtonAddToday_OnClicked"/>
 							</abstractions:TintedImage.GestureRecognizers>

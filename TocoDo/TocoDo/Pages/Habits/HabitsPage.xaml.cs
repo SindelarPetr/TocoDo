@@ -1,5 +1,7 @@
 ﻿
+using System;
 using TocoDo.Services;
+using TocoDo.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,7 +13,12 @@ namespace TocoDo.Pages.Main
 		public HabitsPage()
 		{
 			InitializeComponent();
-			CurrentHabitSetView.HabitsSource = StorageService.CurrentHabits;
+		}
+
+		private void AddButton_OnTapped(object sender, EventArgs e)
+		{
+			var habit = new HabitViewModel();
+			StorageService.AddHabitToTheList(habit);
 		}
 	}
 }
