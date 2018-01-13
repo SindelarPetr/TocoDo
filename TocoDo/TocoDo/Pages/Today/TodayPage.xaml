@@ -45,9 +45,11 @@
 
 					<!--TODAY-->
 					<Label Grid.Row="1" Grid.Column="0" Text="Today" Style="{StaticResource FrameTitle}" HorizontalOptions="FillAndExpand" />
-					<Frame Grid.Row="2" Grid.Column="0">
-						<views:TodoSetView TasksSource="{x:Static services:StorageService.TodayTasks}" VerticalOptions="Start"/>
-					</Frame>
+					<StackLayout Grid.Row="2" Grid.Column="0">
+						<Frame>
+							<views:TodoSetView TasksSource="{x:Static services:StorageService.TodayTasks}" VerticalOptions="Start"/>
+						</Frame>
+					</StackLayout>
 				</Grid>
 			</ScrollView>
 
