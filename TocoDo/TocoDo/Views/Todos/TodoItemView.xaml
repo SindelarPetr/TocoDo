@@ -28,7 +28,7 @@
 		</ResourceDictionary>
 	</ContentView.Resources>
 	<ContentView.Content>
-		<Grid Padding="0,9,0,9" Opacity="{Binding Done, Converter={StaticResource DoneOpacityConverter}}">
+		<Grid Padding="0,10,0,10" Opacity="{Binding Done, Converter={StaticResource DoneOpacityConverter}}">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="Auto"/>
 				<ColumnDefinition Width="*"/>

@@ -14,13 +14,13 @@
 
 					<!-- Someday -->
 					<Label Text="Someday" Style="{StaticResource FrameTitle}" HorizontalOptions="FillAndExpand" />
-					<Frame>
+					<Frame Style="{StaticResource TaskFrame}">
 						<views:TodoSetView x:Name="SomedayTodoSetView" IsCalendarVisible="True" TasksSource="{x:Static services:StorageService.SomedayTasks}" />
 					</Frame>
 
 					<!-- Scheduled -->
 					<Label Text="Scheduled" Style="{StaticResource FrameTitle}" HorizontalOptions="FillAndExpand" />
-					<Frame>
+					<Frame Style="{StaticResource TaskFrame}">
 						<views:ScheduledTasksView TasksSource="{x:Static services:StorageService.ScheduledTasks}"/>
 					</Frame>
 				</StackLayout>

@@ -45,7 +45,8 @@ namespace TocoDo.Views
 				IsHeaderVisible = true,
 				HeaderText = scheduleDate.ToString((scheduleDate < DateTime.Today + TimeSpan.FromDays(7) ? "ddd, " : "") + "d'" + scheduleDate.GetDayExtension() + "' MMMM" + ((DateTime.Today.Year != scheduleDate.Year) ? " YYYY" : "")),
 				HeaderBackgroundColor = Color.Transparent,
-				HeaderTextSize = 13
+				HeaderTextSize = 13,
+				Padding = new Thickness(0,0,0,0)
 			};
 
 			int index = InsertCollection(scheduleDate, collection);
