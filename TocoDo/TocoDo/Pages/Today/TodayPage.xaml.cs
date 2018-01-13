@@ -142,13 +142,13 @@ namespace TocoDo.Pages.Main
 
 		public void ShowGlobalDatePicker(DateTime showDate, Action<DateTime> pickedAction)
 		{
-			//GlobalDatePicker.Date = showDate;
+			GlobalDatePicker.Date = showDate;
 			ShowGlobalDatePicker(pickedAction);
 		}
 		public void ShowGlobalDatePicker(Action<DateTime> pickedAction)
 		{
 			_globalDatePickerAction = pickedAction;
-			//GlobalDatePicker.Focus();
+			GlobalDatePicker.Focus();
 		}
 		#endregion
 
@@ -156,15 +156,15 @@ namespace TocoDo.Pages.Main
 		public void ShowGlobalTimePicker(Action<TimeSpan> timePickedAction)
 		{
 			_selectedTimeAction = timePickedAction;
-			//GlobalTimePicker.Focus();
+			GlobalTimePicker.Focus();
 		}
 
 		private void GlobalTimePicker_OnPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
-			//if (e.PropertyName == nameof(GlobalTimePicker.Time))
-			//{
-			//	SelectedTime = SelectedTime.Date + GlobalTimePicker.Time;
-			//}
+			if (e.PropertyName == nameof(GlobalTimePicker.Time))
+			{
+				SelectedTime = SelectedTime.Date + GlobalTimePicker.Time;
+			}
 		}
 		#endregion
 
