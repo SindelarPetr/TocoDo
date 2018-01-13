@@ -46,7 +46,7 @@
 					</Grid.ColumnDefinitions>
 
 					<views:TodoBoxView x:Name="TodoBoxView" IsBackgroundVisible="True" IsChecked="{Binding Done, Mode=OneWay, Converter={StaticResource CheckConverter}}" CheckCommand="{Binding CheckCommand}" BackgroundImageColor="WhiteSmoke" />
-					<customRenderers:NoLineEntry x:Name="EntryTitle" Text="{Binding Title}" Grid.Column="1" Grid.Row="0" HorizontalOptions="FillAndExpand" TextColor="White" Unfocused="EntryTitle_OnCompleted" />
+					<customRenderers:NoLineEntry x:Name="EntryTitle" Text="{Binding Title, Mode=OneWay}" Grid.Column="1" Grid.Row="0" HorizontalOptions="FillAndExpand" TextColor="White" Unfocused="EntryTitle_OnCompleted" />
 				</Grid>
 			</Frame>
 

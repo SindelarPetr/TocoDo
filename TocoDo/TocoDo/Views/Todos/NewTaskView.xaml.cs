@@ -23,11 +23,12 @@ namespace TocoDo.Views
 
 		private async void ButtonConfirm_OnClicked(object sender, EventArgs e)
 		{
-			if (string.IsNullOrWhiteSpace(EntryTaskTitle.Text)) return;
+			var title = EntryTaskTitle.Text.Trim();
+			if (string.IsNullOrWhiteSpace(title)) return;
 
 			IsVisible = false;
 
-			var task = await StorageService.InsertTask(EntryTaskTitle.Text, DefaulDateTime);
+			var task = await StorageService.InsertTask(title, DefaulDateTime);
 			EntryTaskTitle.Text = "";
 
 			OnNewTaskCreated?.Invoke(task);

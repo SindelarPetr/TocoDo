@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using TocoDo.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -32,7 +27,21 @@ namespace TocoDo.Pages.Tasks
 
 		private void EntryTitle_OnCompleted(object sender, FocusEventArgs e)
 		{
+			var newTitle = EntryTitle.Text.Trim();
+
+			if (string.IsNullOrWhiteSpace(newTitle))
+			{
+				ResetEntryTitle();
+				return;
+			}
+
+			TaskViewModel.Title = newTitle;
 			TaskViewModel.UpdateCommand.Execute(sender);
+		}
+
+		private void ResetEntryTitle()
+		{
+			EntryTitle.Text = TaskViewModel.Title;
 		}
 	}
 }
