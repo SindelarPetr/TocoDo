@@ -53,6 +53,15 @@ namespace TocoDo.Pages.Main
 
 			InitializeComponent();
 
+			SetupProgressChart();
+
+			Instance = this;
+
+			Debug.WriteLine("---------- Finished calling of constructor of TodayPage");
+		}
+
+		private void SetupProgressChart()
+		{
 			var workDayColor = SKColor.Parse("#CFD8DC");
 			var weekendColor = ((Color)App.Current.Resources["ColorPrimaryLight"]).ToSKColor();//SKColor.Parse("#26A69A");
 			var entries = new[]
@@ -117,10 +126,6 @@ namespace TocoDo.Pages.Main
 			chart.Entries = entries;
 			chart.BackgroundColor = Color.Transparent.ToSKColor();
 			ChartProgress.Chart = chart;
-
-			Instance = this;
-
-			Debug.WriteLine("---------- Finished calling of constructor of TodayPage");
 		}
 
 		#region Global date picker
@@ -160,29 +165,11 @@ namespace TocoDo.Pages.Main
 		}
 		#endregion
 
-		//private void ApplyAxisStyle(LinearAxis axis)
-		//{
-		//	axis.MinorGridlineThickness = 1;
-		//	axis.MinorStep = 2;
-		//	axis.MajorStep = 2;
-		//	//axis.MinorGridlineColor = Color.GreenYellow.ToOxyColor();
-		//	axis.AxislineColor = Color.SpringGreen.ToOxyColor();
-		//	axis.MajorGridlineColor = Color.Transparent.ToOxyColor();
-		//	//axis.TicklineColor = OxyColor.FromArgb(0, 100, 100, 100);
-		//	axis.TextColor = Color.Transparent.ToOxyColor();
-
-		//	axis.ExtraGridlineColor = Color.Yellow.ToOxyColor();
-		//	axis.MinimumPadding = 0.1;
-		//	axis.MaximumPadding = 0.1;
-
-		//	axis.IsZoomEnabled = false;
-		//}
-
 		private void ButtonAddToday_OnClicked(object sender, EventArgs e)
 		{
-			//NewTaskView.IsVisible = true;
-			//NewTaskView.Focus();
-			//NewTaskView.DefaulDateTime = DateTime.Today;
+			NewTaskView.IsVisible = true;
+			NewTaskView.Focus();
+			NewTaskView.DefaulDateTime = DateTime.Today;
 		}
 	}
 }
