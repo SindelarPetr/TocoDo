@@ -39,7 +39,7 @@
 			<!--Top Panel-->
 			<Frame Margin="0" CornerRadius="0" HasShadow="False" Padding="0,5,0,0" OutlineColor="{DynamicResource ColorPrimaryLight}"
 				   BackgroundColor="{DynamicResource ColorPrimaryLight}">
-				<Grid HorizontalOptions="FillAndExpand" Padding="16,0,10,0" BackgroundColor="Transparent">
+				<Grid HorizontalOptions="FillAndExpand" Padding="16,0,10,0" BackgroundColor="Transparent" ColumnSpacing="30">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="Auto" />
 						<ColumnDefinition Width="*" />
