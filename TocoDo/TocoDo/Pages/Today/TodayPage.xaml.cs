@@ -66,17 +66,17 @@ namespace TocoDo.Pages.Main
 			var weekendColor = ((Color)App.Current.Resources["ColorPrimaryLight"]).ToSKColor();//SKColor.Parse("#26A69A");
 			var entries = new[]
 			{
-				new Entry(5)
+				new Entry(2)
 				{
 					Label = "Sun",
-					ValueLabel = "1",
+					ValueLabel = "2",
 					Color = weekendColor,
 					TextColor = weekendColor
 				},
-				new Entry(5)
+				new Entry(6)
 				{
 					Label = "Mon",
-					ValueLabel = "5",
+					ValueLabel = "6",
 					Color = workDayColor,
 					TextColor = workDayColor
 				},
@@ -90,41 +90,44 @@ namespace TocoDo.Pages.Main
 				new Entry(10)
 				{
 					Label = "Wed",
-					ValueLabel = "3",
+					ValueLabel = "10",
 					Color = workDayColor,
 					TextColor = workDayColor
 				},
 				new Entry(8)
 				{
 					Label = "Thu",
-					ValueLabel = "3",
+					ValueLabel = "8",
 					Color = workDayColor,
 					TextColor = workDayColor
 				},
 				new Entry(13)
 				{
 					Label = "Fri",
-					ValueLabel = "3",
+					ValueLabel = "13",
 					Color = workDayColor,
 					TextColor = workDayColor
 				},
 				new Entry(4)
 				{
 					Label = "Sat",
-					ValueLabel = "3",
+					ValueLabel = "4",
 					Color = weekendColor,
 					TextColor = weekendColor
 				},
 			};
 
-			var chart = new LineChart();
-			chart.LineAreaAlpha = 80;
-			chart.LineMode = LineMode.Spline;
-			chart.PointSize = 25;
-			chart.LabelTextSize = 24;
-			chart.LineSize = 15;
-			chart.Entries = entries;
-			chart.BackgroundColor = Color.Transparent.ToSKColor();
+			var chart = new LineChart
+			{
+				LineAreaAlpha = 80,
+				LineMode = LineMode.Spline,
+				PointSize = 25,
+				LabelTextSize = 24,
+				LineSize = 15,
+				Entries = entries,
+				BackgroundColor = Color.Transparent.ToSKColor()
+			};
+
 			ChartProgress.Chart = chart;
 		}
 
