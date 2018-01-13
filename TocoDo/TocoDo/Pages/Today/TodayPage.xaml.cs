@@ -1,14 +1,13 @@
-﻿using System;
+﻿using Microcharts;
+using SkiaSharp;
+using SkiaSharp.Views.Forms;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
-using Microcharts;
-using SkiaSharp;
 using TocoDo.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using Microcharts.Forms;
-using SkiaSharp.Views.Forms;
 using Entry = Microcharts.Entry;
 
 namespace TocoDo.Pages.Main
@@ -55,7 +54,7 @@ namespace TocoDo.Pages.Main
 			InitializeComponent();
 
 			var workDayColor = SKColor.Parse("#CFD8DC");
-			var weekendColor = SKColor.Parse("#26A69A");
+			var weekendColor = ((Color)App.Current.Resources["ColorPrimaryLight"]).ToSKColor();//SKColor.Parse("#26A69A");
 			var entries = new[]
 			{
 				new Entry(5)
@@ -111,7 +110,7 @@ namespace TocoDo.Pages.Main
 
 			var chart = new LineChart();
 			chart.LineAreaAlpha = 80;
-			chart.LineMode = LineMode.Straight;
+			chart.LineMode = LineMode.Spline;
 			chart.PointSize = 25;
 			chart.LabelTextSize = 24;
 			chart.LineSize = 15;
@@ -120,7 +119,7 @@ namespace TocoDo.Pages.Main
 			ChartProgress.Chart = chart;
 
 			Instance = this;
-			
+
 			Debug.WriteLine("---------- Finished calling of constructor of TodayPage");
 		}
 
@@ -130,7 +129,7 @@ namespace TocoDo.Pages.Main
 			_globalDatePickerAction?.Invoke(e.NewDate);
 			_globalDatePickerAction = null;
 
-			
+
 		}
 
 		public void ShowGlobalDatePicker(DateTime showDate, Action<DateTime> pickedAction)
