@@ -7,6 +7,7 @@
 			 xmlns:system1="clr-namespace:System;assembly=netstandard"
 			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
 			 xmlns:customRenderers="clr-namespace:TocoDo.CustomRenderers;assembly=TocoDo"
+			 xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
 			 x:Class="TocoDo.Pages.Main.TodayPage"
 			 x:Name="This">
 	<ContentPage.Resources>
@@ -20,28 +21,34 @@
 	<ContentPage.Content>
 		<AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BindingContext="{x:Reference This}">
 			<ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
-				<StackLayout Style="{StaticResource PageStackLayout}">
+				<Grid Style="{StaticResource PageGrid}">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="*"/>
+					</Grid.RowDefinitions>
 					<!--Progress-->
-					<Label Text="Progress" Style="{StaticResource FrameTitle}" />
-					<Frame HorizontalOptions="FillAndExpand" HeightRequest="110" Padding="10">
-						<StackLayout Padding="0,0,0,0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-							<StackLayout Padding="-40,0,-20,-30" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-								<!--<oxy:PlotView x:Name="ProductivityPlot" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" />-->
+					<!--<Label Text="Progress" Style="{StaticResource FrameTitle}" />-->
+					<StackLayout Padding="-10,0,-10,0" VerticalOptions="FillAndExpand" HeightRequest="150">
+								<microcharts:ChartView x:Name="ChartProgress" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" Margin="0"/>
 							</StackLayout>
+					<!--<Frame HorizontalOptions="FillAndExpand" HeightRequest="110" Padding="0">
+						<StackLayout Padding="0,0,0,0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+							
 							<StackLayout Orientation="Horizontal" Padding="15,0,15,0" VerticalOptions="End">
 								<Label Style="{StaticResource GraphNotes}" Text="2630 completed" HorizontalOptions="FillAndExpand"
 								       HorizontalTextAlignment="Start" />
 								<Label Style="{StaticResource GraphNotes}" Text="Average 6.2 task a day" />
 							</StackLayout>
 						</StackLayout>
-					</Frame>
+					</Frame>-->
 
 					<!--TODAY-->
-					<Label Text="Today" Style="{StaticResource FrameTitle}" HorizontalOptions="FillAndExpand" />
-					<Frame>
-						<views:TodoSetView TasksSource="{x:Static services:StorageService.TodayTasks}" />
+					<Label Grid.Row="1" Grid.Column="0" Text="Today" Style="{StaticResource FrameTitle}" HorizontalOptions="FillAndExpand" />
+					<Frame Grid.Row="2" Grid.Column="0">
+						<views:TodoSetView TasksSource="{x:Static services:StorageService.TodayTasks}" VerticalOptions="Start"/>
 					</Frame>
-				</StackLayout>
+				</Grid>
 			</ScrollView>
 
 			<customRenderers:FloatingAddButton AbsoluteLayout.LayoutBounds="1,1,88,88" AbsoluteLayout.LayoutFlags="PositionProportional" Margin="16" Clicked="ButtonAddToday_OnClicked" />

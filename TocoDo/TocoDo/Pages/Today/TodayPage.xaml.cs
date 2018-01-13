@@ -2,9 +2,14 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using Microcharts;
+using SkiaSharp;
 using TocoDo.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Microcharts.Forms;
+using SkiaSharp.Views.Forms;
+using Entry = Microcharts.Entry;
 
 namespace TocoDo.Pages.Main
 {
@@ -46,69 +51,73 @@ namespace TocoDo.Pages.Main
 		public TodayPage()
 		{
 			Debug.WriteLine("---------- Called constructor of TodayPage");
-			//#region Plot
-			//List<DataPoint> points = new List<DataPoint>
-			//{
-			//	new DataPoint(1, 1),
-			//	new DataPoint(2, 3),
-			//	new DataPoint(3, 2),
-			//	new DataPoint(4, 4),
-			//	new DataPoint(5, 5)
-			//};
-
-			//var leftAxis = new LinearAxis
-			//{
-			//	Position = AxisPosition.Left,
-			//	AbsoluteMinimum = 0,
-			//	IsPanEnabled = false,
-			//};
-			//ApplyAxisStyle(leftAxis);
-
-			//var bottomAxis = new LinearAxis
-			//{
-			//	Position = AxisPosition.Bottom,
-			//};
-			//ApplyAxisStyle(bottomAxis);
-
-			//var model = new PlotModel
-			//{
-			//	PlotAreaBorderColor = Color.Transparent.ToOxyColor(),
-			//	PlotAreaBorderThickness = new OxyThickness(0),
-			//	//Title = "Progress",
-			//	PlotType = PlotType.XY,
-			//	LegendBorderThickness = 0,
-
-			//};
-			//model.Axes.Clear();
-			//model.Axes.Add(leftAxis);
-			//model.Axes.Add(bottomAxis);
-			//model.TitleHorizontalAlignment = TitleHorizontalAlignment.CenteredWithinView;
-
-
-			//var series = new AreaSeries
-			//{
-			//	Color = Color.Green.ToOxyColor(),
-			//	ItemsSource = points,
-			//	Selectable = false,
-			//	LineStyle = LineStyle.Solid,
-			//	MarkerType = MarkerType.Circle,
-			//	//Color = OxyColors.White,
-			//	//Color2 = OxyColors.Red,
-			//	//MarkerSize = 5,
-			//	//MarkerStrokeThickness = 5,
-			//	MarkerFill = OxyColors.Green,
-			//	MarkerStroke = OxyColors.Black,
-			//	//StrokeThickness = 5,
-			//	//Smooth = true,
-			//	MarkerResolution = 1,
-
-			//};
-
-			//model.Series.Add(series);
-			//model.PlotAreaBorderColor = OxyColor.FromArgb(0, 0, 0, 0);
-			//#endregion
 
 			InitializeComponent();
+
+			var workDayColor = SKColor.Parse("#CFD8DC");
+			var weekendColor = SKColor.Parse("#26A69A");
+			var entries = new[]
+			{
+				new Entry(5)
+				{
+					Label = "Sun",
+					ValueLabel = "1",
+					Color = weekendColor,
+					TextColor = weekendColor
+				},
+				new Entry(5)
+				{
+					Label = "Mon",
+					ValueLabel = "5",
+					Color = workDayColor,
+					TextColor = workDayColor
+				},
+				new Entry(7)
+				{
+					Label = "Tue",
+					ValueLabel = "7",
+					Color = workDayColor,
+					TextColor = workDayColor
+				},
+				new Entry(10)
+				{
+					Label = "Wed",
+					ValueLabel = "3",
+					Color = workDayColor,
+					TextColor = workDayColor
+				},
+				new Entry(8)
+				{
+					Label = "Thu",
+					ValueLabel = "3",
+					Color = workDayColor,
+					TextColor = workDayColor
+				},
+				new Entry(13)
+				{
+					Label = "Fri",
+					ValueLabel = "3",
+					Color = workDayColor,
+					TextColor = workDayColor
+				},
+				new Entry(4)
+				{
+					Label = "Sat",
+					ValueLabel = "3",
+					Color = weekendColor,
+					TextColor = weekendColor
+				},
+			};
+
+			var chart = new LineChart();
+			chart.LineAreaAlpha = 80;
+			chart.LineMode = LineMode.Straight;
+			chart.PointSize = 25;
+			chart.LabelTextSize = 24;
+			chart.LineSize = 15;
+			chart.Entries = entries;
+			chart.BackgroundColor = Color.Transparent.ToSKColor();
+			ChartProgress.Chart = chart;
 
 			Instance = this;
 			
@@ -172,9 +181,9 @@ namespace TocoDo.Pages.Main
 
 		private void ButtonAddToday_OnClicked(object sender, EventArgs e)
 		{
-			NewTaskView.IsVisible = true;
-			NewTaskView.Focus();
-			NewTaskView.DefaulDateTime = DateTime.Today;
+			//NewTaskView.IsVisible = true;
+			//NewTaskView.Focus();
+			//NewTaskView.DefaulDateTime = DateTime.Today;
 		}
 	}
 }
