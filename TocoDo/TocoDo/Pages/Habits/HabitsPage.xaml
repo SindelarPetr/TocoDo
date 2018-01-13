@@ -32,11 +32,11 @@
 					</Frame>
 
 					<!-- Recommended -->
-					<Label Text="Recommended" Style="{StaticResource FrameTitle}" />
+					<!--<Label Text="Recommended" Style="{StaticResource FrameTitle}" />
 					<Frame>
 						<StackLayout Spacing="6">
 						</StackLayout>
-					</Frame>
+					</Frame>-->
 				</StackLayout>
 			</ScrollView>
 
