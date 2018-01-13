@@ -21,6 +21,10 @@ namespace TocoDo.Services
 
 		public static async Task PushAsync(Page page)
 		{
+			var stack = NavigationPage.Navigation.NavigationStack;
+			if (stack.Count != 0 && stack[stack.Count - 1].GetType() == page.GetType())
+				return;
+
 			Debug.Write("----------- Before PushAsync");
 			var nav = NavigationPage;
 			var navi = NavigationPage.Navigation;
@@ -30,6 +34,11 @@ namespace TocoDo.Services
 
 		public static async Task PushModalAsync(Page page)
 		{
+			var stack = NavigationPage.Navigation.ModalStack;
+			Debug.WriteLine("-------------- Stack count is: " + stack.Count);
+			if (stack.Count != 0 && stack[stack.Count - 1].GetType() == page.GetType())
+				return;
+
 			Debug.Write("----------- Before PushModalAsync");
 			await NavigationPage.Navigation.PushModalAsync(page, true);
 			Debug.Write("----------- After PushModalAsync");
