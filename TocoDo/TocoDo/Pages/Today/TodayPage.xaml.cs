@@ -64,6 +64,14 @@ namespace TocoDo.Pages.Main
 		{
 			var workDayColor = SKColor.Parse("#CFD8DC");
 			var weekendColor = ((Color)App.Current.Resources["ColorPrimaryLight"]).ToSKColor();//SKColor.Parse("#26A69A");
+
+			var todayEntry = new Entry(4)
+			{
+				Label = "Sat",
+				ValueLabel = "4",
+				Color = weekendColor,
+				TextColor = weekendColor
+			};
 			var entries = new[]
 			{
 				new Entry(2)
@@ -108,13 +116,7 @@ namespace TocoDo.Pages.Main
 					Color = workDayColor,
 					TextColor = workDayColor
 				},
-				new Entry(4)
-				{
-					Label = "Sat",
-					ValueLabel = "4",
-					Color = weekendColor,
-					TextColor = weekendColor
-				},
+				todayEntry,
 			};
 
 			var chart = new LineChart

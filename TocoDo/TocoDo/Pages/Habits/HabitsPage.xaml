@@ -21,8 +21,7 @@
 					<!-- Scheduled -->
 					<Label Text="Scheduled" Style="{StaticResource FrameTitle}" />
 					<Frame>
-						<StackLayout Spacing="6">
-						</StackLayout>
+						<habits:HabitSetView x:Name="ScheduledHabitSetView" HabitsSource="{x:Static services:StorageService.ScheduledHabits}" />
 					</Frame>
 
 					<!-- Unscheduled -->

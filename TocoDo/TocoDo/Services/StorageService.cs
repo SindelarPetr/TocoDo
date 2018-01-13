@@ -223,7 +223,8 @@ namespace TocoDo.Services
 			CurrentHabits.Add(new HabitViewModel(new HabitModel
 			{
 				DailyFillingCount = 3,
-				Description = "This is an example of a habit.",
+				Title = "Meditation",
+				Description = "Sit somewhere where its quiet and calm down all thoughts for 20 minutes.",
 				Filling = new Dictionary<DateTime, int>
 				{
 					{ DateTime.Today - TimeSpan.FromDays(4), 2 },
@@ -235,10 +236,30 @@ namespace TocoDo.Services
 				HabitType = HabitType.Unit,
 				Id = id++,
 				IsRecommended = false,
-				RepeatType = RepeatType.Days,
+				RepeatType = RepeatType.Weeks - 1,
 				RepeatNumber = 10,
-				StartDate = DateTime.Today - TimeSpan.FromDays(4),
-				Title = "Example habit"
+				StartDate = DateTime.Today - TimeSpan.FromDays(4)
+			}));
+
+			ScheduledHabits.Add(new HabitViewModel(new HabitModel
+			{
+				DailyFillingCount = 3,
+				Title = "Morning push ups",
+				Description = "Every morning make 40 push ups in 2 iterations (20 in each).",
+				Filling = new Dictionary<DateTime, int>
+				{
+					{ DateTime.Today - TimeSpan.FromDays(4), 2 },
+					{ DateTime.Today - TimeSpan.FromDays(3), 3 },
+					{ DateTime.Today - TimeSpan.FromDays(2), 1 },
+					{ DateTime.Today - TimeSpan.FromDays(1), 2 },
+					{ DateTime.Today, 1 },
+				},
+				HabitType = HabitType.Unit,
+				Id = id++,
+				IsRecommended = false,
+				RepeatType = RepeatType.Weeks - 1,
+				RepeatNumber = 10,
+				StartDate = DateTime.Today - TimeSpan.FromDays(4)
 			}));
 		}
 
