@@ -6,8 +6,8 @@
 			 xmlns:services="clr-namespace:TocoDo.Services;assembly=TocoDo"
 			 xmlns:system1="clr-namespace:System;assembly=netstandard"
 			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
+			 xmlns:customRenderers="clr-namespace:TocoDo.CustomRenderers;assembly=TocoDo"
 			 x:Class="TocoDo.Pages.Main.TodayPage"
-			 BackgroundColor="Transparent"
 			 x:Name="This">
 	<ContentPage.Resources>
 		<ResourceDictionary>
@@ -21,7 +21,7 @@
 		<AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BindingContext="{x:Reference This}">
 			<ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
 				<StackLayout Style="{StaticResource PageStackLayout}">
-					 <!--Progress--> 
+					<!--Progress-->
 					<Label Text="Progress" Style="{StaticResource FrameTitle}" />
 					<Frame HorizontalOptions="FillAndExpand" HeightRequest="110" Padding="10">
 						<StackLayout Padding="0,0,0,0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
@@ -36,20 +36,16 @@
 						</StackLayout>
 					</Frame>
 
-					 <!--TODAY--> 
-					<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-						<Label Text="Today" Style="{StaticResource FrameTitle}" HorizontalOptions="FillAndExpand" />
-						<abstractions:TintedImage Style="{StaticResource ButtonAdd}">
-							<abstractions:TintedImage.GestureRecognizers>
-								<TapGestureRecognizer Tapped="ButtonAddToday_OnClicked"/>
-							</abstractions:TintedImage.GestureRecognizers>
-						</abstractions:TintedImage>
-					</StackLayout>
+					<!--TODAY-->
+					<Label Text="Today" Style="{StaticResource FrameTitle}" HorizontalOptions="FillAndExpand" />
 					<Frame>
-						<views:TodoSetView TasksSource="{x:Static services:StorageService.TodayTasks}"/>
+						<views:TodoSetView TasksSource="{x:Static services:StorageService.TodayTasks}" />
 					</Frame>
 				</StackLayout>
 			</ScrollView>
+
+			<customRenderers:FloatingAddButton AbsoluteLayout.LayoutBounds="1,1,88,88" AbsoluteLayout.LayoutFlags="PositionProportional" Margin="16" Clicked="ButtonAddToday_OnClicked" />
+
 			<views:NewTaskView x:Name="NewTaskView" AbsoluteLayout.LayoutBounds="1,1,1,50" AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"/>
 			<DatePicker x:Name="GlobalDatePicker" IsVisible="False"  DateSelected="GlobalDatePicker_DateSelected" />
 			<TimePicker x:Name="GlobalTimePicker" IsVisible="False" Time="{Binding SelectedTime}" PropertyChanged="GlobalTimePicker_OnPropertyChanged"/>

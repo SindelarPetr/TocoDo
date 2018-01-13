@@ -5,42 +5,43 @@
 			 xmlns:habits="clr-namespace:TocoDo.Views.Habits;assembly=TocoDo"
 			 xmlns:services="clr-namespace:TocoDo.Services;assembly=TocoDo"
 			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
+			 xmlns:customRenderers="clr-namespace:TocoDo.CustomRenderers;assembly=TocoDo"
 			 x:Class="TocoDo.Pages.Main.HabitsPage"
 			 x:Name="This">
 	<ContentPage.Content>
-		<ScrollView BindingContext="{x:Reference This}">
-			<StackLayout Style="{StaticResource PageStackLayout}">
-				<abstractions:TintedImage Style="{StaticResource ButtonAdd}">
-					<abstractions:TintedImage.GestureRecognizers>
-						<TapGestureRecognizer Tapped="AddButton_OnTapped"/>
-					</abstractions:TintedImage.GestureRecognizers>
-				</abstractions:TintedImage>
-				<!-- Current -->
-				<Label Text="Current" Style="{StaticResource FrameTitle}"/>
-				<Frame>
-					<habits:HabitSetView HabitsSource="{x:Static services:StorageService.CurrentHabits}" />
-				</Frame>
-				
-				<!-- Scheduled -->
-				<Label Text="Scheduled" Style="{StaticResource FrameTitle}" />
-				<Frame>
-					<StackLayout Spacing="6">
-					</StackLayout>
-				</Frame>
+		<AbsoluteLayout>
+			<ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" BindingContext="{x:Reference This}">
+				<StackLayout Style="{StaticResource PageStackLayout}">
+					<!-- Current -->
+					<Label Text="Current" Style="{StaticResource FrameTitle}"/>
+					<Frame>
+						<habits:HabitSetView HabitsSource="{x:Static services:StorageService.CurrentHabits}" />
+					</Frame>
 
-				<!-- Unscheduled -->
-						<Label Text="Unscheduled" Style="{StaticResource FrameTitle}" />
-				<Frame>
-					<habits:HabitSetView x:Name="UnscheduledHabitSetView" HabitsSource="{x:Static services:StorageService.UnscheduledHabits}" />
-				</Frame>
-					
-				<!-- Recommended -->
-				<Label Text="Recommended" Style="{StaticResource FrameTitle}" />
-				<Frame>
-					<StackLayout Spacing="6">
-					</StackLayout>
-				</Frame>
-			</StackLayout>
-		</ScrollView>
+					<!-- Scheduled -->
+					<Label Text="Scheduled" Style="{StaticResource FrameTitle}" />
+					<Frame>
+						<StackLayout Spacing="6">
+						</StackLayout>
+					</Frame>
+
+					<!-- Unscheduled -->
+					<Label Text="Unscheduled" Style="{StaticResource FrameTitle}" />
+					<Frame>
+						<habits:HabitSetView x:Name="UnscheduledHabitSetView" HabitsSource="{x:Static services:StorageService.UnscheduledHabits}" />
+					</Frame>
+
+					<!-- Recommended -->
+					<Label Text="Recommended" Style="{StaticResource FrameTitle}" />
+					<Frame>
+						<StackLayout Spacing="6">
+						</StackLayout>
+					</Frame>
+				</StackLayout>
+			</ScrollView>
+
+			<customRenderers:FloatingAddButton AbsoluteLayout.LayoutBounds="1,1,88,88" AbsoluteLayout.LayoutFlags="PositionProportional" Margin="16" Clicked="AddButton_OnTapped"/>
+		</AbsoluteLayout>
+
 	</ContentPage.Content>
 </ContentPage>

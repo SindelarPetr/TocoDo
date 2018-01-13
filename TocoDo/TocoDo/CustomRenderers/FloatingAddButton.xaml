@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Button xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:markupExtensions="clr-namespace:TocoDo.MarkupExtensions;assembly=TocoDo"
+             x:Class="TocoDo.CustomRenderers.FloatingAddButton"
+        Image="{markupExtensions:PathResolver ic_add_white_24dp}" WidthRequest="50" HeightRequest="50">
+</Button>

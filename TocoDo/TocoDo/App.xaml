@@ -6,13 +6,19 @@
 			 x:Class="TocoDo.App">
 	<Application.Resources>
 		<ResourceDictionary>
-			<Color x:Key="BarColor">#444444</Color>
+			<Color x:Key="ColorPrimary">#3F51B5</Color>
+			<Color x:Key="ColorPrimaryDark">#283593</Color>
+			<Color x:Key="ColorPrimaryLight">#58a5f0</Color>
 
+			<Color x:Key="ColorSecondary">#795548</Color>
+			<Color x:Key="ColorSecondaryDark">#4b2c20</Color>
+			<Color x:Key="ColorSecondaryLight">#a98274</Color>
+
+
+			<Color x:Key="BarColor">#3F51B5</Color>
+			<!--<Color x:Key="BackgroundColor" >#4b2c20</Color>-->
 			<Color x:Key="BackgroundColor" >#303030</Color>
-
-			<Color x:Key="TasksPageColor" >#3F51B5</Color>
-			<Color x:Key="TodayPageColor" >#3F51B5</Color>
-			<Color x:Key="ChallengesPageColor" >#3F51B5</Color>
+			<!--<Color x:Key="BackgroundColor" >#c0c0c0</Color>-->
 
 			<Color x:Key="UnsetValueColor">DarkGray</Color>
 			<Color x:Key="DeadlineColor">Red</Color>

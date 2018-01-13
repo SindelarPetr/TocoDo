@@ -275,6 +275,11 @@ namespace TocoDo.Services
 		{
 			UnscheduledHabits.Add(habit);
 		}
+
+		public static void RemoveHabitFromTheList(HabitViewModel habit)
+		{
+			UnscheduledHabits.Remove(habit);
+		}
 		#endregion
 
 	}

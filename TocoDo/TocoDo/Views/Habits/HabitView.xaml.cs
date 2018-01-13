@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics;
+using System.Threading.Tasks;
+using TocoDo.Services;
 using TocoDo.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -20,22 +22,22 @@ namespace TocoDo.Views.Habits
 			InitializeComponent();
 		}
 
-		protected override void OnParentSet()
-		{
-			Debug.WriteLine("------------ OnParentSet of a habit called.");
-			base.OnParentSet();
-
-			//if (HabitViewModel.IsEditTitleMode)
-			//	EntryEditTitle.Focus();
-			Debug.WriteLine("------------ Finished calling of OnParentSet of a habit.");
-		}
-
-		private async void EditTitle_OnUnfocused(object sender, FocusEventArgs e)
+		private void EditTitle_OnUnfocused(object sender, FocusEventArgs e)
 		{
 			Debug.WriteLine("---------- Onunfocused of EditTitle called");
+
+			Debug.WriteLine("---------- Getting the title of entry element in EditTitle_OnUnfocused");
 			var title = ((Entry)e.VisualElement).Text;
+			// If user left the entry blank, then remove the habit from collection
+			if (string.IsNullOrWhiteSpace(title))
+			{
+				StorageService.RemoveHabitFromTheList(HabitViewModel);
+				return;
+			}
+
+			
 			Debug.WriteLine("-------------- Got title of the Entry: " + title);
-			await HabitViewModel.InsertToStorage(title);
+			HabitViewModel.InsertToStorage(title).Wait();
 			Debug.WriteLine("---------- Finished calling of EditTitle");
 		}
 

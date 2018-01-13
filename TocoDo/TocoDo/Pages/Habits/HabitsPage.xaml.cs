@@ -11,8 +11,11 @@ namespace TocoDo.Pages.Main
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class HabitsPage : ContentPage
 	{
+		public static HabitsPage Instance { get; set; }
+
 		public HabitsPage()
 		{
+			Instance = this;
 			InitializeComponent();
 		}
 

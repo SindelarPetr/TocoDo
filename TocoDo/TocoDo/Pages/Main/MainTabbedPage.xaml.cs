@@ -20,7 +20,8 @@ namespace TocoDo.Pages.Main
 
 			Instance = this;
 
-			CurrentPage = Children[1];
+			if (Children.Count >= 2)
+				CurrentPage = Children[1];
 		}
 
 		protected override void OnAppearing()

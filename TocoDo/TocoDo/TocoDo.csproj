@@ -40,6 +40,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="CustomRenderers\FloatingAddButton.xaml.cs">
+	    <SubType>Code</SubType>
+	  </Compile>
 	  <Compile Update="Pages\Habits\ModifyHabitPage.xaml.cs">
 	    <SubType>Code</SubType>
 	  </Compile>
@@ -84,6 +87,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <EmbeddedResource Update="CustomRenderers\FloatingAddButton.xaml">
+	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+	  </EmbeddedResource>
 	  <EmbeddedResource Update="Pages\Habits\ModifyHabitPage.xaml">
 	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 	  </EmbeddedResource>

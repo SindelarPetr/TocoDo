@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using TocoDo.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -44,7 +45,7 @@ namespace TocoDo.Pages.Main
 
 		public TodayPage()
 		{
-
+			Debug.WriteLine("---------- Called constructor of TodayPage");
 			//#region Plot
 			//List<DataPoint> points = new List<DataPoint>
 			//{
@@ -110,8 +111,8 @@ namespace TocoDo.Pages.Main
 			InitializeComponent();
 
 			Instance = this;
-
-			//ProductivityPlot.Model = model;
+			
+			Debug.WriteLine("---------- Finished calling of constructor of TodayPage");
 		}
 
 		#region Global date picker

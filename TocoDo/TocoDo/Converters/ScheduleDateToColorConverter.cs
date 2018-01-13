@@ -8,7 +8,7 @@ namespace TocoDo.Converters
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			return value == null ? App.Current.Resources["UnsetValueColor"] : App.Current.Resources["TasksPageColor"];
+			return value == null ? App.Current.Resources["UnsetValueColor"] : App.Current.Resources["ColorPrimary"];
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

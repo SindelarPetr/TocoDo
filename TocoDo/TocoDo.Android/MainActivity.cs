@@ -31,17 +31,20 @@ namespace TocoDo.Droid
 
 			App.BarColorChanged += () =>
 			{
-				var color = (Color)App.Current.Resources["BarColor"];
+				//var colorPrimary = (Color)App.Current.Resources["ColorPrimary"];
+				//var colorPrimaryDark = (Color)App.Current.Resources["ColorPrimaryDark"];
+
 				var multiply = 0.7;
-				color = new Color(color.R * multiply, color.G * multiply, color.B * multiply);
-				Window.SetStatusBarColor(color.ToAndroid());
+				//color = new Color(color.R * multiply, color.G * multiply, color.B * multiply);
+				//Window.SetStatusBarColor(colorPrimaryDark.ToAndroid());
+				//Window.SetNavigationBarColor(colorPrimary.ToAndroid());
 			};
 
 			if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
 			{
-				Window.ClearFlags(WindowManagerFlags.TranslucentStatus);
-				Window.AddFlags(WindowManagerFlags.DrawsSystemBarBackgrounds);
-				Window.SetStatusBarColor(Android.Graphics.Color.Blue);
+				//Window.ClearFlags(WindowManagerFlags.TranslucentStatus);
+				//Window.AddFlags(WindowManagerFlags.DrawsSystemBarBackgrounds);
+				//Window.SetStatusBarColor(Android.Graphics.Color.Blue);
 			}
 
 			if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
@@ -58,7 +61,7 @@ namespace TocoDo.Droid
 			}
 
 			var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
-
+			//toolbar.SetPadding(16, 38, 16, 16);
 			//Toolbar will now take on default actionbar characteristics
 			SetSupportActionBar(toolbar);
 		}

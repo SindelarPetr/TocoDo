@@ -6,13 +6,15 @@ using Xamarin.Forms.Platform.Android;
 using Button = Xamarin.Forms.Button;
 using Color = Android.Graphics.Color;
 
-[assembly: ExportRenderer(typeof(NoBorderButton), typeof(NoBorderButtonRenderer))]
+[assembly: ExportRenderer(typeof(FloatingAddButton), typeof(FloatingAddButtonRenderer))]
 namespace TocoDo.Droid.CustomRenderers
 {
-	public class NoBorderButtonRenderer : ButtonRenderer
+	public class FloatingAddButtonRenderer : ButtonRenderer
 	{
-		public NoBorderButtonRenderer(Context context) : base(context)
-		{ }
+		public FloatingAddButtonRenderer(Context context) : base(context)
+		{
+
+		}
 
 		protected override void OnElementChanged(ElementChangedEventArgs<Button> e)
 		{
@@ -20,9 +22,10 @@ namespace TocoDo.Droid.CustomRenderers
 
 			if (Control == null) return;
 
-			//Control.SetShadowLayer(0, 0, 0, Color.Transparent);
-			//Control.SetFadingEdgeLength(0);
-			//Control.SetBackground(Context.GetDrawable("NoBorderButton"));
+			var draw = Context.GetDrawable("CircleShape");
+			Control.SetBackground(draw);
+			Control.Elevation = 15;
+			Control.TranslationZ = 15;
 		}
 	}
 }
