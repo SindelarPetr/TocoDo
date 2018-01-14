@@ -4,8 +4,7 @@
 
 ## Gallery
 
-![gallery](Documentation/Images/Screenshots/TodayPage.png)
-![gallery](Documentation/Images/Screenshots/HabitsPage.png)
+![gallery](Documentation/Images/Gallery.png)
 
 ## About
 
