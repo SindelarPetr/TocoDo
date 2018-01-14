@@ -4,7 +4,8 @@
 
 ## Gallery
 
-
+![gallery](Documentation/Images/Screenshots/TodayPage.png)
+![gallery](Documentation/Images/Screenshots/HabitsPage.png)
 
 ## About
 
@@ -19,8 +20,6 @@ Which platforms will be supported
 Which technologies I used.
 
 Xamarin.Forms
-
-
 
 ## To-do
 
