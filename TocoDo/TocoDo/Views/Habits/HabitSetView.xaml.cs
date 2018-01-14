@@ -72,16 +72,12 @@ namespace TocoDo.Views.Habits
 		private void RemoveHabit(HabitViewModel habit)
 		{
 			HabitView habitItem = FindHabitItem(habit.ModelId);
-			if (habitItem == null) return;
 
-			habitItem.FadeTo(0).ContinueWith(r =>
+			habitItem?.FadeTo(0).ContinueWith(r =>
 			{
 				Debug.WriteLine("------------ Before removing the habitItem from layout");
 				MainLayout.Children.Remove(habitItem);
 				Debug.WriteLine("------------ After removing the habitItem from layout");
-				//MainLayout.Layout(Rectangle.Zero);
-				//MainLayout.ForceLayout();
-				//HabitsPage.Instance.Focus();
 			});
 		}
 
