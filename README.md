@@ -1,24 +1,29 @@
 # TocoDo
 
-**TocoDo** is a perfect tool for organising daily tasks ..........
+**TocoDo** is the perfect tool for organising and scheduling your daily tasks.
 
 ## Gallery
 
 ![gallery](Documentation/Images/Gallery.png)
 
-## About
-
-Why do I make this app.
-
 ## Platforms
 
-Which platforms will be supported
+- **Android**
+- **iOS** 
+- **Windows**
 
 ## Technologies
 
-Which technologies I used.
+App itself is made in **Xamarin Forms** with a few custom renderers adjusting UI on each platform. The code between platforms is shared in a **.NET Standard 2.0** library. 
 
-Xamarin.Forms
+**Sqlite** is used for managing internal storage.
+https://www.nuget.org/packages/sqlite-net-pcl/1.4.118
+
+**TintedImage** - for displaying images with tinted color.
+https://www.nuget.org/packages/Plugin.CrossPlatformTintedImage/
+
+**Microcharts** is used for diplaying graphs.
+https://www.nuget.org/packages/Microcharts.Forms/
 
 ## To-do
 
