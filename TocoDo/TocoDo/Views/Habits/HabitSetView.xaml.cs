@@ -1,8 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Diagnostics;
-using System.Threading.Tasks;
-using TocoDo.Pages.Main;
 using TocoDo.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -76,16 +74,15 @@ namespace TocoDo.Views.Habits
 			HabitView habitItem = FindHabitItem(habit.ModelId);
 			if (habitItem == null) return;
 
-			//todoItem.FadeTo(0).ContinueWith(r =>
+			habitItem.FadeTo(0).ContinueWith(r =>
 			{
 				Debug.WriteLine("------------ Before removing the habitItem from layout");
 				MainLayout.Children.Remove(habitItem);
 				Debug.WriteLine("------------ After removing the habitItem from layout");
-
 				//MainLayout.Layout(Rectangle.Zero);
 				//MainLayout.ForceLayout();
 				//HabitsPage.Instance.Focus();
-			}//);
+			});
 		}
 
 		private HabitView FindHabitItem(int id)
