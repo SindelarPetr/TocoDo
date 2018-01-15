@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TocoDo.Models;
+using TocoDo.Pages.Habits;
 using TocoDo.Services;
 using Xamarin.Forms;
 
@@ -98,6 +99,7 @@ namespace TocoDo.ViewModels
 		#endregion
 
 		#region Commands
+		public ICommand EditCommand { get; private set; }
 		public ICommand UpdateCommand { get; private set; }
 		public ICommand InsertCommand { get; private set; }
 		#endregion
@@ -131,6 +133,7 @@ namespace TocoDo.ViewModels
 		private void SetupCommands()
 		{
 			InsertCommand = new Command<string>(async s => await InsertToStorage(s));
+			EditCommand = new Command(async () => await PageService.PushAsync(new ModifyHabitPage(this)));
 		}
 
 		public async Task InsertToStorage(string title)

@@ -22,7 +22,7 @@ namespace TocoDo.Pages.Tasks
 		{
 			Debug.Write("------------ OnApeearing of ModifyTaskPage called.");
 			base.OnAppearing();
-			Debug.Write("------------ Finished calling  OnApeearing of ModifyTaskPage.");
+			Debug.Write("------------ Finished calling  OnApearing of ModifyTaskPage.");
 		}
 
 		private void EntryTitle_OnCompleted(object sender, FocusEventArgs e)

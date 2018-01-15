@@ -265,12 +265,12 @@ namespace TocoDo.Services
 
 		public static async void UpdateHabit(HabitViewModel habit)
 		{
-			await _connection.UpdateAsync(habit.GetHabitModel());
+			//await _connection.UpdateAsync(habit.GetHabitModel());
 		}
 
 		public static async void DeleteHabit(HabitViewModel habit)
 		{
-			await _connection.DeleteAsync(habit.GetHabitModel());
+			//await _connection.DeleteAsync(habit.GetHabitModel());
 		}
 
 		/// <summary>

@@ -21,7 +21,12 @@ namespace TocoDo.Pages.Habits
 
 		private void EntryTitle_OnUnfocused(object sender, FocusEventArgs e)
 		{
+			var title = EntryTitle.Text.Trim();
 
+			if (string.IsNullOrWhiteSpace(title))
+				return;
+
+			Habit.ModelTitle = title;
 		}
 	}
 }

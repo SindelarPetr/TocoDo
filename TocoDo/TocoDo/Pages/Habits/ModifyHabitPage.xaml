@@ -15,7 +15,7 @@
 			<!--Top Panel-->
 			<Frame Margin="0" CornerRadius="0" HasShadow="False" Padding="0,5,0,0" OutlineColor="{DynamicResource BarColor}"
 				   BackgroundColor="{DynamicResource BarColor}">
-				<customRenderers:NoLineEntry x:Name="EntryTitle" Text="{Binding Title}" HorizontalOptions="FillAndExpand" TextColor="White" Unfocused="EntryTitle_OnUnfocused" />
+				<customRenderers:NoLineEntry x:Name="EntryTitle" Text="{Binding ModelTitle, Mode=OneWay}" HorizontalOptions="FillAndExpand" TextColor="White" Unfocused="EntryTitle_OnUnfocused" />
 			</Frame>
 		</Grid>
 	</ContentPage.Content>
