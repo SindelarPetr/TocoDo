@@ -22,7 +22,7 @@ namespace TocoDo.Droid
 
 			TintedImageRenderer.Init();
 
-			var res = TocoDo.Resources.AreYouSureDescardChanges;
+			var res = TocoDo.Properties.Resources.AreYouSureDescardChanges;
 
 			global::Xamarin.Forms.Forms.Init(this, bundle);
 
