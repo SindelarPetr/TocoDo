@@ -71,23 +71,24 @@ namespace TocoDo.Views.Habits
 
 		private void RemoveHabit(HabitViewModel habit)
 		{
-			HabitView habitItem = FindHabitItem(habit.ModelId);
-
-			habitItem?.FadeTo(0).ContinueWith(r =>
-			{
-				Debug.WriteLine("------------ Before removing the habitItem from layout");
-				MainLayout.Children.Remove(habitItem);
-				Debug.WriteLine("------------ After removing the habitItem from layout");
-			});
+			HabitView habitItem = FindHabitItem(habit);
+			habitItem.IsVisible = false;
+			//habitItem?.FadeTo(0).ContinueWith(r =>
+			//{
+			//	Debug.WriteLine("------------ Before removing the habitItem from layout");
+			//	//
+				
+			//	Debug.WriteLine("------------ After removing the habitItem from layout");
+			//});
 		}
 
-		private HabitView FindHabitItem(int id)
+		private HabitView FindHabitItem(HabitViewModel id)
 		{
 			foreach (var child in MainLayout.Children)
 			{
 				var habit = child as HabitView;
 
-				if (habit?.HabitViewModel.ModelId == id)
+				if (habit?.HabitViewModel == id)
 					return habit;
 			}
 

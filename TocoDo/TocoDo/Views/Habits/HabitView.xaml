@@ -5,7 +5,8 @@
 			 xmlns:habits="clr-namespace:TocoDo.Converters.Habits;assembly=TocoDo"
 			 x:Class="TocoDo.Views.Habits.HabitView"
 			 x:Name="This"
-			 x:Key="This">
+			 x:Key="This"
+             BackgroundColor="Blue">
 	<ContentView.Resources>
 		<ResourceDictionary>
 			<converters:BoolReverseConverter x:Key="BoolReverseConverter"/>
@@ -15,13 +16,13 @@
 	</ContentView.Resources>
 
 	<ContentView.Content>
-		<StackLayout Spacing="0">
+		<StackLayout Spacing="0" Padding="0">
 			<StackLayout.GestureRecognizers>
 				<TapGestureRecognizer Command="{Binding EditCommand}" />
 			</StackLayout.GestureRecognizers>
-			<Entry x:Name="EntryEditTitle" Text="{Binding ModelTitle, Mode=OneWay}" IsVisible="{Binding IsEditTitleMode}" Unfocused="EditTitle_OnUnfocused" FontSize="Large" FontAttributes="Bold" TextColor="Black"/>
-			<Label Text="{Binding ModelTitle}" IsVisible="{Binding IsEditTitleMode, Converter={StaticResource BoolReverseConverter}}" FontSize="Large" FontAttributes="Bold" TextColor="Black" />
-			<Label Text="{Binding ., Converter={StaticResource HabitDateConverter}}" Margin="10, 0, 0, 0" FontSize="12" IsVisible="{Binding StartDate, Converter={StaticResource IsNotNullConverter}}"/>
+			<Entry x:Name="EntryEditTitle" Text="{Binding ModelTitle, Mode=OneWay}" IsVisible="{Binding IsEditTitleMode}" Unfocused="EditTitle_OnUnfocused" FontSize="Large" FontAttributes="Bold" TextColor="Black" BackgroundColor="Chocolate"/>
+			<Label Text="{Binding ModelTitle}" IsVisible="{Binding IsEditTitleMode, Converter={StaticResource BoolReverseConverter}}" FontSize="Large" FontAttributes="Bold" TextColor="Black" BackgroundColor="Aqua"/>
+			<Label Text="{Binding ., Converter={StaticResource HabitDateConverter}}" Margin="10, 0, 0, 0" FontSize="12" IsVisible="{Binding ModelStartDate, Converter={StaticResource IsNotNullConverter}}"/>
 		</StackLayout>
 	</ContentView.Content>
 </ContentView>

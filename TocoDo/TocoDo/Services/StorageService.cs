@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using TocoDo.Helpers;
 using TocoDo.Models;
 using TocoDo.ViewModels;
 
@@ -234,7 +235,7 @@ namespace TocoDo.Services
 					{ DateTime.Today, 1 },
 				},
 				HabitType = HabitType.Unit,
-				Id = 1,
+				Id = FakeIdGenerator.GetId(),
 				IsRecommended = false,
 				RepeatType = RepeatType.Days - 1,
 				RepeatNumber = 10,
@@ -261,7 +262,7 @@ namespace TocoDo.Services
 					{ DateTime.Today, 1 },
 				},
 				HabitType = HabitType.Unit,
-				Id = id++,
+				Id = FakeIdGenerator.GetId(),
 				IsRecommended = false,
 				RepeatType = RepeatType.Days - 1,
 				RepeatNumber = 10,
@@ -289,7 +290,7 @@ namespace TocoDo.Services
 			{
 				var model = habit.GetHabitModel();
 				//await _connection.InsertAsync(model);
-				habit.SetModelId(1); //model.Id);
+				habit.SetModelId(FakeIdGenerator.GetId()); //model.Id);
 			}
 			catch (Exception ex)
 			{
