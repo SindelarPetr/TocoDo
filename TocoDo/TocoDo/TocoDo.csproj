@@ -24,21 +24,16 @@
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.121934" />
   </ItemGroup>
 
-	<ItemGroup>
-		<!-- https://bugzilla.xamarin.com/show_bug.cgi?id=55591 -->
+	<!--<ItemGroup>
+		--><!-- https://bugzilla.xamarin.com/show_bug.cgi?id=55591 --><!--
 		<None Remove="**\*.xaml" />
 
 		<Compile Update="**\*.xaml.cs" DependentUpon="%(Filename)" />
 		<EmbeddedResource Include="**\*.xaml" SubType="Designer" Generator="MSBuild:UpdateDesignTimeXaml" />
-	</ItemGroup>
+	</ItemGroup>-->
 
 	<ItemGroup>
 	  <Compile Remove="Properties\Resources2.Designer.cs" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Remove="Properties\AppStrings.resx" />
-	  <None Remove="Properties\Resources.resx" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -51,10 +46,15 @@
 	  <Compile Update="Pages\Tasks\ModifyTaskPage.xaml.cs">
 	    <SubType>Code</SubType>
 	  </Compile>
-	  <Compile Update="Resources.Designer.cs">
+	  <Compile Update="Properties\Resources.Designer.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>Resources.resx</DependentUpon>
+	  </Compile>
+	  <Compile Update="Properties\AppStrings.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>AppStrings.resx</DependentUpon>
 	  </Compile>
 	  <Compile Update="Views\Habits\ActualHabitView.xaml.cs">
 	    <SubType>Code</SubType>
@@ -70,22 +70,18 @@
 	  </Compile>
 	</ItemGroup>
 	
-	<ItemGroup>
+	<!--<ItemGroup>
 		<EmbeddedResource Include="Resources.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>
 			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
-	</ItemGroup>
+	</ItemGroup>-->
 
 	<ItemGroup>
 	  <None Update="Resources.resx">
 	    <Generator>PublicResXFileCodeGenerator</Generator>
 	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
 	  </None>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Properties\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -97,6 +93,14 @@
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Pages\Tasks\ModifyTaskPage.xaml">
 	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Properties\Resources.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Properties\AppStrings.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>AppStrings.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Views\Habits\HabitSetView.xaml">
 	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
