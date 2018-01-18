@@ -3,10 +3,10 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:converters="clr-namespace:TocoDo.Converters;assembly=TocoDo"
 			 xmlns:habits="clr-namespace:TocoDo.Converters.Habits;assembly=TocoDo"
+			 xmlns:customRenderers="clr-namespace:TocoDo.CustomRenderers;assembly=TocoDo"
 			 x:Class="TocoDo.Views.Habits.HabitView"
 			 x:Name="This"
-			 x:Key="This"
-             BackgroundColor="Blue">
+			 x:Key="This">
 	<ContentView.Resources>
 		<ResourceDictionary>
 			<converters:BoolReverseConverter x:Key="BoolReverseConverter"/>
@@ -20,8 +20,8 @@
 			<StackLayout.GestureRecognizers>
 				<TapGestureRecognizer Command="{Binding EditCommand}" />
 			</StackLayout.GestureRecognizers>
-			<Entry x:Name="EntryEditTitle" Text="{Binding ModelTitle, Mode=OneWay}" IsVisible="{Binding IsEditTitleMode}" Unfocused="EditTitle_OnUnfocused" FontSize="Large" FontAttributes="Bold" TextColor="Black" BackgroundColor="Chocolate"/>
-			<Label Text="{Binding ModelTitle}" IsVisible="{Binding IsEditTitleMode, Converter={StaticResource BoolReverseConverter}}" FontSize="Large" FontAttributes="Bold" TextColor="Black" BackgroundColor="Aqua"/>
+			<customRenderers:NoLineEntry x:Name="EntryEditTitle" Text="{Binding ModelTitle, Mode=OneWay}" IsVisible="{Binding IsEditTitleMode}" Unfocused="EditTitle_OnUnfocused" FontSize="Large" FontAttributes="Bold" TextColor="Black" />
+			<Label Text="{Binding ModelTitle}" IsVisible="{Binding IsEditTitleMode, Converter={StaticResource BoolReverseConverter}}" FontSize="Large" FontAttributes="Bold" TextColor="Black"/>
 			<Label Text="{Binding ., Converter={StaticResource HabitDateConverter}}" Margin="10, 0, 0, 0" FontSize="12" IsVisible="{Binding ModelStartDate, Converter={StaticResource IsNotNullConverter}}"/>
 		</StackLayout>
 	</ContentView.Content>
