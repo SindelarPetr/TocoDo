@@ -18,7 +18,6 @@ namespace TocoDo.ViewModels
 		private bool _updateOnPropertyChange;
 
 		#region Backing fields
-
 		private bool _modelIsRecommended;
 		private int _modelDailyFillingCount;
 		private HabitType _modelHabitType;
@@ -27,7 +26,7 @@ namespace TocoDo.ViewModels
 		private string _modelTitle;
 		private RepeatType _modelRepeatType;
 		private string _modelDescription;
-
+		private short _modelRepeatsADay;
 		#endregion
 
 		#region Properties
@@ -96,6 +95,12 @@ namespace TocoDo.ViewModels
 		public static BindableProperty IsEditTitleModeProperty = BindableProperty.Create("IsEditTitleMode",
 			typeof(bool), typeof(bool), false);
 
+		public short ModelRepeatsADay
+		{
+			get { return _modelRepeatsADay; }
+			set => SetValue(ref _modelRepeatsADay, value);
+		}
+
 		public bool IsEditTitleMode
 		{
 			get => (bool)GetValue(IsEditTitleModeProperty);
@@ -129,8 +134,7 @@ namespace TocoDo.ViewModels
 			_modelTitle = model.Title;
 			_modelDailyFillingCount = model.DailyFillingCount;
 			_modelIsRecommended = model.IsRecommended;
-
-
+			_modelRepeatsADay = model.RepeatsADay;
 
 			SetupCommands();
 
@@ -164,7 +168,8 @@ namespace TocoDo.ViewModels
 				StartDate = ModelStartDate,
 				Title = ModelTitle,
 				DailyFillingCount = ModelDailyFillingCount,
-				IsRecommended = ModelIsRecommended
+				IsRecommended = ModelIsRecommended,
+				RepeatsADay = ModelRepeatsADay
 			};
 		}
 

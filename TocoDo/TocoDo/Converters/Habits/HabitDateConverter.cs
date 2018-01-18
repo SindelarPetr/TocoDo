@@ -21,14 +21,17 @@ namespace TocoDo.Converters.Habits
 			    return string.Empty;
 
 		    string startDate = DateToTextConverter.Convert(date);
-		    string repeatText = GetRepeatText(habit.ModelRepeatType, habit.ModelRepeatNumber);
-		    return $"From { startDate } - { repeatText }";
+			string repeatText = GetRepeatText(habit.ModelRepeatType, habit.ModelRepeatNumber);
+		    string dayAmountText = habit.ModelHabitType == HabitType.Daylong
+			    ? $"{Resources.AllDay.ToLower()}"
+			    : $"{Resources.TimesADay.ToLower()}";
+		    return $"From { startDate } - { repeatText } {dayAmountText }";
 		}
 
 	    private string GetRepeatText(RepeatType habitModelRepeatType, short modelRepeatNumber)
 	    {
 		    if (habitModelRepeatType.HasFlag(RepeatType.Days))
-			    return $"{Resources.EveryDayFor} {modelRepeatNumber} {Resources.Days}";
+			    return string.Format(Resources.ForNumDays, modelRepeatNumber);
 
 		    if (habitModelRepeatType.HasFlag(RepeatType.Months))
 			    return $"{Resources.For} {modelRepeatNumber} {Resources.Months}";

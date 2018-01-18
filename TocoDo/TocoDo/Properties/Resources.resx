@@ -123,6 +123,9 @@
   <data name="AddDeadline" xml:space="preserve">
     <value>Add deadline</value>
   </data>
+  <data name="AllDay" xml:space="preserve">
+    <value>All day</value>
+  </data>
   <data name="AreYouSureDescardChanges" xml:space="preserve">
     <value>Are you sure you want to discard the changes?</value>
   </data>
@@ -179,6 +182,9 @@
   </data>
   <data name="For" xml:space="preserve">
     <value>For</value>
+  </data>
+  <data name="ForNumDays" xml:space="preserve">
+    <value>For {0} days</value>
   </data>
   <data name="Fri" xml:space="preserve">
     <value>Fri</value>
@@ -245,6 +251,9 @@
   </data>
   <data name="Thu" xml:space="preserve">
     <value>Thu</value>
+  </data>
+  <data name="TimesADay" xml:space="preserve">
+    <value>Times a day</value>
   </data>
   <data name="Today" xml:space="preserve">
     <value>Today</value>

@@ -10,6 +10,7 @@
 		<ResourceDictionary>
 			<converters:BoolReverseConverter x:Key="BoolReverseConverter"/>
 			<habits:HabitDateConverter x:Key="HabitDateConverter"/>
+			<converters:IsNotNullConverter x:Key="IsNotNullConverter"/>
 		</ResourceDictionary>
 	</ContentView.Resources>
 
@@ -20,10 +21,7 @@
 			</StackLayout.GestureRecognizers>
 			<Entry x:Name="EntryEditTitle" Text="{Binding ModelTitle, Mode=OneWay}" IsVisible="{Binding IsEditTitleMode}" Unfocused="EditTitle_OnUnfocused" FontSize="Large" FontAttributes="Bold" TextColor="Black"/>
 			<Label Text="{Binding ModelTitle}" IsVisible="{Binding IsEditTitleMode, Converter={StaticResource BoolReverseConverter}}" FontSize="Large" FontAttributes="Bold" TextColor="Black" />
-			<StackLayout Padding="10,0,0,0">
-				<Label Text="{Binding ., Converter={StaticResource HabitDateConverter}}" FontSize="12"/>
-				<Label Text="{Binding ModelDescription}" FontSize="Small" />
-			</StackLayout>
+			<Label Text="{Binding ., Converter={StaticResource HabitDateConverter}}" Margin="10, 0, 0, 0" FontSize="12" IsVisible="{Binding StartDate, Converter={StaticResource IsNotNullConverter}}"/>
 		</StackLayout>
 	</ContentView.Content>
 </ContentView>

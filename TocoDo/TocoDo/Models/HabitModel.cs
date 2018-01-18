@@ -37,6 +37,11 @@ namespace TocoDo.Models
 		/// Specifies how many times should be the task repeated.
 		/// </summary>
 		public short RepeatNumber { get; set; }
+
+		/// <summary>
+		/// How many times should be a unit task made per day
+		/// </summary>
+		public short RepeatsADay { get; set; }
 		#endregion
 
 		public int DailyFillingCount { get; set; }

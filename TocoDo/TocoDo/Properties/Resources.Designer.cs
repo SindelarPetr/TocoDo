@@ -79,6 +79,15 @@ namespace TocoDo.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All day.
+        /// </summary>
+        public static string AllDay {
+            get {
+                return ResourceManager.GetString("AllDay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to discard the changes?.
         /// </summary>
         public static string AreYouSureDescardChanges {
@@ -246,6 +255,15 @@ namespace TocoDo.Properties {
         public static string For {
             get {
                 return ResourceManager.GetString("For", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to For {0} days.
+        /// </summary>
+        public static string ForNumDays {
+            get {
+                return ResourceManager.GetString("ForNumDays", resourceCulture);
             }
         }
         
@@ -444,6 +462,15 @@ namespace TocoDo.Properties {
         public static string Thu {
             get {
                 return ResourceManager.GetString("Thu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Times a day.
+        /// </summary>
+        public static string TimesADay {
+            get {
+                return ResourceManager.GetString("TimesADay", resourceCulture);
             }
         }
         
