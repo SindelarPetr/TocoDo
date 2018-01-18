@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using TocoDo.Models;
 using TocoDo.Pages.Habits;
+using TocoDo.Properties;
 using TocoDo.Services;
 using Xamarin.Forms;
 
@@ -85,6 +86,8 @@ namespace TocoDo.ViewModels
 			get => _modelDescription;
 			set => SetValue(ref _modelDescription, value);
 		}
+
+		public string DateText { get; set; }
 		#endregion
 
 		#region IsEditTitleMode
@@ -125,9 +128,18 @@ namespace TocoDo.ViewModels
 			_modelDailyFillingCount = model.DailyFillingCount;
 			_modelIsRecommended = model.IsRecommended;
 
+
+
 			SetupCommands();
 
 			_updateOnPropertyChange = true;
+		}
+
+		private string GetDateText()
+		{
+			//if(Resources.)
+			//string startDate = ModelStartDate
+			return "Test";
 		}
 
 		private void SetupCommands()

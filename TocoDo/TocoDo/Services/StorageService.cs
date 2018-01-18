@@ -217,10 +217,10 @@ namespace TocoDo.Services
 		{
 			//await _connection.CreateTableAsync<HabitModel>();
 		}
-		static async Task LoadHabits()
+
+		public static HabitViewModel GetExampleHabitViewModel()
 		{
-			int id = 0;
-			CurrentHabits.Add(new HabitViewModel(new HabitModel
+			return new HabitViewModel(new HabitModel
 			{
 				DailyFillingCount = 3,
 				Title = "Meditation",
@@ -234,13 +234,19 @@ namespace TocoDo.Services
 					{ DateTime.Today, 1 },
 				},
 				HabitType = HabitType.Unit,
-				Id = id++,
+				Id = 1,
 				IsRecommended = false,
 				RepeatType = RepeatType.Weeks - 1,
 				RepeatNumber = 10,
 				StartDate = DateTime.Today - TimeSpan.FromDays(4)
-			}));
+			});
+		}
 
+		static async Task LoadHabits()
+		{
+			CurrentHabits.Add(GetExampleHabitViewModel());
+
+			int id = 2;
 			ScheduledHabits.Add(new HabitViewModel(new HabitModel
 			{
 				DailyFillingCount = 3,

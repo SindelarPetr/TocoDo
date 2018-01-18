@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
+using TocoDo.Properties;
 using TocoDo.Services;
 using Xamarin.Forms;
 

@@ -1,5 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
+using TocoDo.Models;
 using TocoDo.Services;
 using TocoDo.ViewModels;
 using Xamarin.Forms;
@@ -14,6 +17,14 @@ namespace TocoDo.Views.Habits
 		{
 			get => (HabitViewModel)BindingContext;
 			set => BindingContext = value;
+		}
+
+		[Obsolete("Creates example HabitView")]
+		public HabitView()
+		{
+			HabitViewModel = StorageService.GetExampleHabitViewModel();
+
+			InitializeComponent();
 		}
 
 		public HabitView(HabitViewModel habit)
