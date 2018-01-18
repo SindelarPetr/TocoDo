@@ -11,7 +11,7 @@ namespace TocoDo.Models
 	public enum HabitType { Daylong, Unit }
 
 	[Flags]
-	public enum RepeatType { Mon = 1, Tue = 2, Wed = 4, Thu = 8, Fri = 16, Sat = 32, Sun = 64, Weeks = 128, Months = 256, Years = 512 }
+	public enum RepeatType { Mon = 1, Tue = 2, Wed = 4, Thu = 8, Fri = 16, Sat = 32, Sun = 64, Days = 128, Months = 256, Years = 512 }
 
 	public class HabitModel
 	{

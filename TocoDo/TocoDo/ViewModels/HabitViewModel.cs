@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using TocoDo.Converters;
 using TocoDo.Models;
 using TocoDo.Pages.Habits;
 using TocoDo.Properties;
@@ -133,13 +135,6 @@ namespace TocoDo.ViewModels
 			SetupCommands();
 
 			_updateOnPropertyChange = true;
-		}
-
-		private string GetDateText()
-		{
-			//if(Resources.)
-			//string startDate = ModelStartDate
-			return "Test";
 		}
 
 		private void SetupCommands()

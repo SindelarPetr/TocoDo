@@ -21,9 +21,6 @@ namespace TocoDo.Droid
 			base.OnCreate(bundle);
 
 			TintedImageRenderer.Init();
-
-			var res = TocoDo.Properties.Resources.AreYouSureDescardChanges;
-
 			global::Xamarin.Forms.Forms.Init(this, bundle);
 
 			var app = new App();

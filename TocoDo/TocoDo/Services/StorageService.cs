@@ -236,7 +236,7 @@ namespace TocoDo.Services
 				HabitType = HabitType.Unit,
 				Id = 1,
 				IsRecommended = false,
-				RepeatType = RepeatType.Weeks - 1,
+				RepeatType = RepeatType.Days - 1,
 				RepeatNumber = 10,
 				StartDate = DateTime.Today - TimeSpan.FromDays(4)
 			});
@@ -263,7 +263,7 @@ namespace TocoDo.Services
 				HabitType = HabitType.Unit,
 				Id = id++,
 				IsRecommended = false,
-				RepeatType = RepeatType.Weeks - 1,
+				RepeatType = RepeatType.Days - 1,
 				RepeatNumber = 10,
 				StartDate = DateTime.Today - TimeSpan.FromDays(4)
 			}));

@@ -153,6 +153,9 @@
   <data name="Created" xml:space="preserve">
     <value>Created</value>
   </data>
+  <data name="Days" xml:space="preserve">
+    <value>days</value>
+  </data>
   <data name="DaysAgo" xml:space="preserve">
     <value>days ago</value>
   </data>
@@ -162,8 +165,23 @@
   <data name="DeleteToDo" xml:space="preserve">
     <value>Delete to-do</value>
   </data>
+  <data name="Every" xml:space="preserve">
+    <value>Every</value>
+  </data>
+  <data name="EveryDay" xml:space="preserve">
+    <value>Every day</value>
+  </data>
+  <data name="EveryDayFor" xml:space="preserve">
+    <value>Every day for</value>
+  </data>
   <data name="Finished" xml:space="preserve">
     <value>Finished</value>
+  </data>
+  <data name="For" xml:space="preserve">
+    <value>For</value>
+  </data>
+  <data name="Fri" xml:space="preserve">
+    <value>Fri</value>
   </data>
   <data name="HrsAgo" xml:space="preserve">
     <value>hours ago</value>
@@ -180,8 +198,20 @@
   <data name="ModifyTask" xml:space="preserve">
     <value>Modify task</value>
   </data>
+  <data name="Mon" xml:space="preserve">
+    <value>Mon</value>
+  </data>
+  <data name="Months" xml:space="preserve">
+    <value>months</value>
+  </data>
   <data name="NewTask" xml:space="preserve">
     <value>New task</value>
+  </data>
+  <data name="NextMonths" xml:space="preserve">
+    <value>next months</value>
+  </data>
+  <data name="NextYears" xml:space="preserve">
+    <value>next years</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
@@ -195,6 +225,9 @@
   <data name="Reminder" xml:space="preserve">
     <value>Reminder</value>
   </data>
+  <data name="Sat" xml:space="preserve">
+    <value>Sat</value>
+  </data>
   <data name="Schedule" xml:space="preserve">
     <value>Schedule</value>
   </data>
@@ -204,8 +237,14 @@
   <data name="ScheduledTo" xml:space="preserve">
     <value>Scheduled to</value>
   </data>
+  <data name="Sun" xml:space="preserve">
+    <value>Sun</value>
+  </data>
   <data name="TheDayAfterTomorrow" xml:space="preserve">
     <value>The day after tomorrow</value>
+  </data>
+  <data name="Thu" xml:space="preserve">
+    <value>Thu</value>
   </data>
   <data name="Today" xml:space="preserve">
     <value>Today</value>
@@ -213,8 +252,14 @@
   <data name="Tomorrow" xml:space="preserve">
     <value>Tomorrow</value>
   </data>
+  <data name="Tue" xml:space="preserve">
+    <value>Tue</value>
+  </data>
   <data name="Warning" xml:space="preserve">
     <value>Warning</value>
+  </data>
+  <data name="Wed" xml:space="preserve">
+    <value>Wed</value>
   </data>
   <data name="Yeasterday" xml:space="preserve">
     <value>Yeasterday</value>

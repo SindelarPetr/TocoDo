@@ -7,10 +7,8 @@ namespace TocoDo.Converters
 {
 	public class DateToTextConverter : IValueConverter
 	{
-		public virtual object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		public static string Convert(DateTime? date)
 		{
-			DateTime? date = value as DateTime?;
-
 			if (date == null)
 				return Resources.IsNotSet;
 
@@ -27,7 +25,13 @@ namespace TocoDo.Converters
 			if (date.Value.Date.Year == DateTime.Today.Year)
 				return date.Value.ToString(dateFormat);
 			return date.Value.ToString(dateFormat + " yyyy");
+		}
 
+		public virtual object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			DateTime? date = value as DateTime?;
+
+			return Convert(date);
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
