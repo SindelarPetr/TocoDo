@@ -5,7 +5,8 @@
 			 xmlns:views="clr-namespace:TocoDo.Views;assembly=TocoDo"
 			 xmlns:tocoDo="clr-namespace:TocoDo;assembly=TocoDo"
 			 x:Class="TocoDo.Pages.Habits.ModifyHabitPage"
-			 Title="Modify the habit">
+			 Title="Modify the habit"
+             Style="{DynamicResource ContentPageStyle}">
 	<ContentPage.Content>
 		<Grid>
 			<Grid.RowDefinitions>
@@ -19,9 +20,23 @@
 				   BackgroundColor="{StaticResource ColorPrimaryLight}">
 				<customRenderers:NoLineEntry x:Name="EntryTitle" Text="{Binding ModelTitle, Mode=OneWay}" HorizontalOptions="FillAndExpand" TextColor="White" Unfocused="EntryTitle_OnUnfocused" />
 			</Frame>
-			
+
+			<!--Body-->
 			<ScrollView Grid.Row="1">
+				<!--Start and repeat-->
+				<Frame Margin="0">
+					<Label Text="ddddddd"></Label>
+				</Frame>
 				
+				<!--Habit type-->
+				<Frame >
+					
+				</Frame>
+				
+				<!--Description-->
+				<Frame>
+
+				</Frame>
 			</ScrollView>
 		</Grid>
 	</ContentPage.Content>

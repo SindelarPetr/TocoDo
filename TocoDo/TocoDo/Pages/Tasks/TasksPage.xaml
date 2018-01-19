@@ -5,7 +5,8 @@
 			 xmlns:services="clr-namespace:TocoDo.Services;assembly=TocoDo"
 			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
 			 xmlns:customRenderers="clr-namespace:TocoDo.CustomRenderers;assembly=TocoDo"
-			 x:Class="TocoDo.Pages.Main.TasksPage">
+			 x:Class="TocoDo.Pages.Main.TasksPage"
+             Style="{DynamicResource ContentPageStyle}">
 
 	<ContentPage.Content>
 		<AbsoluteLayout>

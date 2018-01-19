@@ -56,6 +56,10 @@
 				<Setter Property="HeightRequest" Value="26"/>
 				<Setter Property="TintColor" Value="White"/>
 			</Style>
+			<Style TargetType="ContentPage" ApplyToDerivedTypes="True">
+				<Setter Property="BackgroundColor" Value="{StaticResource BackgroundColor}"/>
+			</Style>
+
 		</ResourceDictionary>
 	</Application.Resources>
 </Application>

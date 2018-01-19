@@ -7,7 +7,6 @@
 			 xmlns:converters="clr-namespace:TocoDo.Converters;assembly=TocoDo"
 			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
 			 x:Class="TocoDo.Pages.Tasks.ModifyTaskPage"
-			 BackgroundColor="{StaticResource BackgroundColor}"
 			 Title="Modify the task">
 	<ContentPage.Resources>
 		<ResourceDictionary>

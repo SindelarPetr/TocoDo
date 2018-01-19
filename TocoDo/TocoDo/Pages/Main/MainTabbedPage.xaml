@@ -3,7 +3,7 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:main="clr-namespace:TocoDo.Pages.Main;assembly=TocoDo"
 			 x:Class="TocoDo.Pages.Main.MainTabbedPage" >
-	<main:TasksPage Title="Tasks" BackgroundColor="{StaticResource BackgroundColor}" NavigationPage.BarBackgroundColor="{DynamicResource BarColor}"/>
-	<main:TodayPage Title="Today" BackgroundColor="{StaticResource BackgroundColor}" NavigationPage.BarBackgroundColor="{DynamicResource BarColor}"/>
-	<main:HabitsPage Title="Habits" BackgroundColor="{StaticResource BackgroundColor}" NavigationPage.BarBackgroundColor="{DynamicResource BarColor}"/>
+	<main:TasksPage Title="Tasks" NavigationPage.BarBackgroundColor="{DynamicResource BarColor}"/>
+	<main:TodayPage Title="Today" NavigationPage.BarBackgroundColor="{DynamicResource BarColor}"/>
+	<main:HabitsPage Title="Habits" NavigationPage.BarBackgroundColor="{DynamicResource BarColor}"/>
 </TabbedPage>
