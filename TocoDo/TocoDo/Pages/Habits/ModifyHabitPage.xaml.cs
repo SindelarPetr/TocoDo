@@ -23,7 +23,7 @@ namespace TocoDo.Pages.Habits
 				Description = "This is description of a habit.",
 				Title = "Habit title.",
 				HabitType = Models.HabitType.Daylong,
-				RepeatNumber = 2,
+				RepeatsADay = 2,
 				RepeatType = Models.RepeatType.Mon,
 				StartDate = DateTime.Today + TimeSpan.FromDays(3),
 				DailyFillingCount = 3

@@ -34,9 +34,9 @@ namespace TocoDo.Models
 		public RepeatType RepeatType { get; set; }
 
 		/// <summary>
-		/// Specifies how many times should be the task repeated.
+		/// Specifies how many days should be the task repeated.
 		/// </summary>
-		public short RepeatNumber { get; set; }
+		public short DaysToRepeat { get; set; }
 
 		/// <summary>
 		/// How many times should be a unit task made per day

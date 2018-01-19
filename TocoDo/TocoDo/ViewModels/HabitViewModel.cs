@@ -21,7 +21,7 @@ namespace TocoDo.ViewModels
 		private bool _modelIsRecommended;
 		private int _modelDailyFillingCount;
 		private HabitType _modelHabitType;
-		private short _modelRepeatNumber;
+		private short _modelDaysToRepeat;
 		private DateTime? _modelStartDate;
 		private string _modelTitle;
 		private RepeatType _modelRepeatType;
@@ -44,6 +44,9 @@ namespace TocoDo.ViewModels
 			set => SetValue(ref _modelIsRecommended, value);
 		}
 
+		/// <summary>
+		/// How many times the habit was violated / performed today
+		/// </summary>
 		public int ModelDailyFillingCount
 		{
 			get => _modelDailyFillingCount;
@@ -58,10 +61,10 @@ namespace TocoDo.ViewModels
 			set => SetValue(ref _modelHabitType, value);
 		}
 
-		public short ModelRepeatNumber
+		public short ModelDaysToRepeat
 		{
-			get => _modelRepeatNumber;
-			set => SetValue(ref _modelRepeatNumber, value);
+			get => _modelDaysToRepeat;
+			set => SetValue(ref _modelDaysToRepeat, value);
 		}
 
 		public DateTime? ModelStartDate
@@ -89,17 +92,21 @@ namespace TocoDo.ViewModels
 		}
 
 		public string DateText { get; set; }
+
+		/// <summary>
+		/// Only for Unit habit. Count of times to repeat the habit each day
+		/// </summary>
+		public short ModelRepeatsADay
+		{
+			get => _modelRepeatsADay;
+			set => SetValue(ref _modelRepeatsADay, value);
+		}
 		#endregion
 
 		#region IsEditTitleMode
 		public static BindableProperty IsEditTitleModeProperty = BindableProperty.Create("IsEditTitleMode",
 			typeof(bool), typeof(bool), false);
 
-		public short ModelRepeatsADay
-		{
-			get { return _modelRepeatsADay; }
-			set => SetValue(ref _modelRepeatsADay, value);
-		}
 
 		public bool IsEditTitleMode
 		{
@@ -129,7 +136,7 @@ namespace TocoDo.ViewModels
 			_modelDescription = model.Description;
 			ModelFilling = new ObservableDictionary<DateTime, int>(model.Filling);
 			_modelHabitType = model.HabitType;
-			_modelRepeatNumber = model.RepeatNumber;
+			_modelDaysToRepeat = model.DaysToRepeat;
 			_modelStartDate = model.StartDate;
 			_modelTitle = model.Title;
 			_modelDailyFillingCount = model.DailyFillingCount;
@@ -164,7 +171,7 @@ namespace TocoDo.ViewModels
 				Description = ModelDescription,
 				Filling = new Dictionary<DateTime, int>(ModelFilling),
 				HabitType = ModelHabitType,
-				RepeatNumber = ModelRepeatNumber,
+				RepeatNumber = ModelDaysToRepeat,
 				StartDate = ModelStartDate,
 				Title = ModelTitle,
 				DailyFillingCount = ModelDailyFillingCount,
