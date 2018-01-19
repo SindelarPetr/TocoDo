@@ -259,7 +259,7 @@
     <value>Thu</value>
   </data>
   <data name="TimesADay" xml:space="preserve">
-    <value>Times a day</value>
+    <value>Time(s) a day</value>
   </data>
   <data name="Today" xml:space="preserve">
     <value>Today</value>

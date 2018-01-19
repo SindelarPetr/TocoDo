@@ -484,7 +484,7 @@ namespace TocoDo.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Times a day.
+        ///   Looks up a localized string similar to Time(s) a day.
         /// </summary>
         public static string TimesADay {
             get {
