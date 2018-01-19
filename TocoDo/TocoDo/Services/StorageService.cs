@@ -238,7 +238,7 @@ namespace TocoDo.Services
 				Id = FakeIdGenerator.GetId(),
 				IsRecommended = false,
 				RepeatType = RepeatType.Days - 1,
-				RepeatNumber = 10,
+				DaysToRepeat = 10,
 				StartDate = DateTime.Today - TimeSpan.FromDays(4)
 			});
 		}
@@ -265,7 +265,7 @@ namespace TocoDo.Services
 				Id = FakeIdGenerator.GetId(),
 				IsRecommended = false,
 				RepeatType = RepeatType.Days - 1,
-				RepeatNumber = 10,
+				DaysToRepeat = 10,
 				StartDate = DateTime.Today - TimeSpan.FromDays(4)
 			}));
 		}

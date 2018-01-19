@@ -171,7 +171,7 @@ namespace TocoDo.ViewModels
 				Description = ModelDescription,
 				Filling = new Dictionary<DateTime, int>(ModelFilling),
 				HabitType = ModelHabitType,
-				RepeatNumber = ModelDaysToRepeat,
+				DaysToRepeat = ModelDaysToRepeat,
 				StartDate = ModelStartDate,
 				Title = ModelTitle,
 				DailyFillingCount = ModelDailyFillingCount,
