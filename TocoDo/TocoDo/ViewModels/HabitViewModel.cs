@@ -7,6 +7,7 @@ using System.Windows.Input;
 using TocoDo.Converters;
 using TocoDo.Models;
 using TocoDo.Pages.Habits;
+using TocoDo.Pages.Main;
 using TocoDo.Properties;
 using TocoDo.Services;
 using Xamarin.Forms;
@@ -70,7 +71,11 @@ namespace TocoDo.ViewModels
 		public DateTime? ModelStartDate
 		{
 			get => _modelStartDate;
-			set => SetValue(ref _modelStartDate, value);
+			set
+			{
+				SetValue(ref _modelStartDate, value); 
+				OnPropertyChanged(".");
+			}
 		}
 
 		public string ModelTitle
@@ -82,7 +87,11 @@ namespace TocoDo.ViewModels
 		public RepeatType ModelRepeatType
 		{
 			get => _modelRepeatType;
-			set => SetValue(ref _modelRepeatType, value);
+			set
+			{
+				SetValue(ref _modelRepeatType, value);
+				OnPropertyChanged(".");
+			}
 		}
 
 		public string ModelDescription
@@ -119,6 +128,9 @@ namespace TocoDo.ViewModels
 		public ICommand EditCommand { get; private set; }
 		public ICommand UpdateCommand { get; private set; }
 		public ICommand InsertCommand { get; private set; }
+		public ICommand SelectStartDateCommand { get; private set; }
+		public ICommand UnsetStartDateCommand { get; private set; }
+		public ICommand SelectRepeatCommand { get; private set; }
 		#endregion
 
 		public HabitViewModel()
@@ -152,6 +164,45 @@ namespace TocoDo.ViewModels
 		{
 			InsertCommand = new Command<string>(async s => await InsertToStorage(s));
 			EditCommand = new Command(async () => await PageService.PushAsync(new ModifyHabitPage(this)));
+
+			SelectStartDateCommand = new Command(async () => await SelectDate(d => ModelStartDate = d, Resources.SelectStartDate));
+			UnsetStartDateCommand = new Command(() => ModelStartDate = null);
+		}
+
+		private async Task SelectDate(Action<DateTime?> pickedAction, string actionSheetHeader)
+		{
+			string[] buttons = { Resources.Today, Resources.Tomorrow, Resources.TheDayAfterTomorrow, Resources.PickADate };
+
+			string result = await PageService.DisplayActionSheet(actionSheetHeader, Resources.Cancel, null, buttons);
+
+
+			DateTime selectedDate;
+			if (result == Resources.Today)
+			{
+				selectedDate = DateTime.Today;
+			}
+			else if (result == Resources.Tomorrow)
+			{
+				selectedDate = DateTime.Today + TimeSpan.FromDays(1);
+			}
+			else if (result == Resources.TheDayAfterTomorrow)
+			{
+				selectedDate = DateTime.Today + TimeSpan.FromDays(2);
+			}
+			else if (result == Resources.PickADate)
+			{
+				SelectDateByPicker(d => pickedAction(d));
+				return;
+			}
+			else
+				return;
+
+			pickedAction(selectedDate);
+		}
+
+		private void SelectDateByPicker(Action<DateTime> pickedAction)
+		{
+			TodayPage.Instance.ShowGlobalDatePicker(ModelStartDate ?? DateTime.Today + TimeSpan.FromDays(1), pickedAction, DateTime.Today + TimeSpan.FromDays(1));
 		}
 
 		public async Task InsertToStorage(string title)

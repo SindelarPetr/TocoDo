@@ -11,10 +11,10 @@ namespace TocoDo.Converters
 		{
 			if (value == null)
 			{
-				return (Color)App.Current.Resources[AppStrings.DeactiveModifyItemColor];
+				return (Color)App.Current.Resources[AppStrings.UnsetItemColor];
 			}
 
-			return (Color)App.Current.Resources[AppStrings.ActiveModifyItemColor];
+			return (Color)App.Current.Resources[AppStrings.SetItemColor];
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

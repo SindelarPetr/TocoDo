@@ -138,13 +138,12 @@ namespace TocoDo.Pages.Main
 		{
 			_globalDatePickerAction?.Invoke(e.NewDate);
 			_globalDatePickerAction = null;
-
-
 		}
 
-		public void ShowGlobalDatePicker(DateTime showDate, Action<DateTime> pickedAction)
+		public void ShowGlobalDatePicker(DateTime showDate, Action<DateTime> pickedAction, DateTime? minDate = null)
 		{
 			GlobalDatePicker.Date = showDate;
+			GlobalDatePicker.MinimumDate = minDate ?? DateTime.Today;
 			ShowGlobalDatePicker(pickedAction);
 		}
 		public void ShowGlobalDatePicker(Action<DateTime> pickedAction)

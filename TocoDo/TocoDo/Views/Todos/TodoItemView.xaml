@@ -74,7 +74,7 @@
 
 					<!-- Reminder attribute -->
 					<StackLayout Grid.Column="1" Padding="0,0,5,0" IsVisible="{Binding Reminder, Converter={StaticResource IsNotNullConverter}}">
-						<tint:TintedImage  Source="{markupExtensions:PathResolver 'ic_notifications_active_white_24dp'}"  TintColor="{StaticResource ReminderColor}" HeightRequest="15" />
+						<tint:TintedImage  Source="{markupExtensions:PathResolver 'ic_notifications_active_white_24dp'}"  TintColor="{StaticResource SetItemColor}" HeightRequest="15" />
 					</StackLayout>
 					
 					<!-- Description attribute -->

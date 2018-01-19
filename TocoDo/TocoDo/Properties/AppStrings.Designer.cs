@@ -61,15 +61,6 @@ namespace TocoDo.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ActiveModifyItemColor.
-        /// </summary>
-        public static string ActiveModifyItemColor {
-            get {
-                return ResourceManager.GetString("ActiveModifyItemColor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to MySQLite.db3.
         /// </summary>
         public static string DatabaseName {
@@ -79,11 +70,20 @@ namespace TocoDo.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DeactiveModifyItemColor.
+        ///   Looks up a localized string similar to SetItemColor.
         /// </summary>
-        public static string DeactiveModifyItemColor {
+        public static string SetItemColor {
             get {
-                return ResourceManager.GetString("DeactiveModifyItemColor", resourceCulture);
+                return ResourceManager.GetString("SetItemColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UnsetItemColor.
+        /// </summary>
+        public static string UnsetItemColor {
+            get {
+                return ResourceManager.GetString("UnsetItemColor", resourceCulture);
             }
         }
     }

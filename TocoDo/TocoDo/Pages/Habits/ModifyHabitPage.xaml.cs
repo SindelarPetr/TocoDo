@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using TocoDo.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -32,18 +33,25 @@ namespace TocoDo.Pages.Habits
 
 		public ModifyHabitPage(HabitViewModel habit)
 		{
-			Habit = habit;
-			InitializeComponent();
+			try
+			{
+				Habit = habit;
+				InitializeComponent();
+			}
+			catch (Exception e)
+			{
+				Debug.WriteLine($"---------- Exception thrown in ModifyHabitPage constructor: {e.Message} <<--- with following stack trace: {Environment.NewLine} {e.StackTrace}");
+			}
 		}
 
 		private void EntryTitle_OnUnfocused(object sender, FocusEventArgs e)
 		{
-			var title = EntryTitle.Text.Trim();
+			//var title = EntryTitle.Text.Trim();
 
-			if (string.IsNullOrWhiteSpace(title))
-				return;
+			//if (string.IsNullOrWhiteSpace(title))
+			//	return;
 
-			Habit.ModelTitle = title;
+			//Habit.ModelTitle = title;
 		}
 	}
 }

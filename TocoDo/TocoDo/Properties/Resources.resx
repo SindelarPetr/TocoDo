@@ -243,6 +243,12 @@
   <data name="ScheduledTo" xml:space="preserve">
     <value>Scheduled to</value>
   </data>
+  <data name="SelectStartDate" xml:space="preserve">
+    <value>Select start date</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Start date</value>
+  </data>
   <data name="Sun" xml:space="preserve">
     <value>Sun</value>
   </data>

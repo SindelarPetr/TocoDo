@@ -4,9 +4,18 @@
 			 xmlns:customRenderers="clr-namespace:TocoDo.CustomRenderers;assembly=TocoDo"
 			 xmlns:views="clr-namespace:TocoDo.Views;assembly=TocoDo"
 			 xmlns:tocoDo="clr-namespace:TocoDo;assembly=TocoDo"
+			 xmlns:markupExtensions="clr-namespace:TocoDo.MarkupExtensions;assembly=TocoDo"
+			 xmlns:habits="clr-namespace:TocoDo.Converters.Habits;assembly=TocoDo"
+			 xmlns:converters="clr-namespace:TocoDo.Converters;assembly=TocoDo"
 			 x:Class="TocoDo.Pages.Habits.ModifyHabitPage"
-			 Title="Modify the habit"
-             Style="{DynamicResource ContentPageStyle}">
+			 Title="Modify the habit">
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<habits:HabitStartDateConverter x:Key="HabitStartDateConverter"/>
+			<converters:IsSettedValueToColorConverter x:Key="IsSettedValueToColorConverter"/>
+			<converters:IsNotNullConverter x:Key="IsNotNullConverter" />
+		</ResourceDictionary>
+	</ContentPage.Resources>
 	<ContentPage.Content>
 		<Grid>
 			<Grid.RowDefinitions>
@@ -25,18 +34,15 @@
 			<ScrollView Grid.Row="1">
 				<!--Start and repeat-->
 				<Frame Margin="0">
-					<Label Text="ddddddd"></Label>
+					<views:IconButton ImageSource="{markupExtensions:PathResolver 'ic_today_white_24dp'}" 
+					                  ClickCommand="{Binding SelectStartDateCommand}" 
+					                  IsRemoveButtonVisible="{Binding ModelStartDate, Converter={StaticResource IsNotNullConverter}}"           
+					                  Text="{Binding ModelStartDate, Converter={StaticResource HabitStartDateConverter}}"                           
+					                  RemoveCommand="{Binding UnsetStartDateCommand}" 
+					                  Color="{Binding ModelStartDate, Converter={StaticResource IsSettedValueToColorConverter}}"/>
 				</Frame>
-				
-				<!--Habit type-->
-				<Frame >
-					
-				</Frame>
-				
-				<!--Description-->
-				<Frame>
 
-				</Frame>
+				
 			</ScrollView>
 		</Grid>
 	</ContentPage.Content>
