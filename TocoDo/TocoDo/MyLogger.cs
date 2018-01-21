@@ -11,11 +11,13 @@ namespace TocoDo
 {
     public static class MyLogger
     {
-	    private const int INDENT_MIN = 5;
+	    private const int INDENT_CHARS_PER_LEVEL = 3;
+	    private const int INDENT_MIN = 0;
 	    private const char INDENT_CHAR = '=';
 	    private const char INDENT_END = '>';
-	    private const string WRITE_START = "Started {0} - {1} on line {2}";
-	    private const string WRITE_END = "Ended {0} - {1} on line {2}";
+	    private const string WRITE_START = "Started {0} {1} on line {2}";
+	    private const string WRITE_IN = "In {0} {1} on line {2}";
+	    private const string WRITE_END = "Ended {0} {1} on line {2}";
 
 	    private static int _indent = INDENT_MIN;
 
@@ -27,54 +29,47 @@ namespace TocoDo
 
 		[Conditional("DEBUG")]
 		public static void WriteStartMethod(string message = null,[CallerMemberName] string callerName = null, [CallerFilePath] string callerPath = null, [CallerLineNumber] int callerLineNumber = 0)
-	    {
+		{
 		    _indent++;
-			ApplyIndent();
-			Write(string.Format(WRITE_START, callerName, Path.GetFileName(callerPath), callerLineNumber));
-
-		    if (message != null)
-				WriteLine(": " + message);
-
+			Write(string.Format(WRITE_START + (message != null ? ": " + message : null), callerName, GetFileName(callerPath), callerLineNumber));
 	    }
 
 	    [Conditional("DEBUG")]
 	    public static void WriteInMethod(string message = null, [CallerMemberName] string callerName = null, [CallerFilePath] string callerPath = null, [CallerLineNumber] int callerLineNumber = 0)
 	    {
-		    ApplyIndent();
-
-			if(message != null)
-				Write(": " + message);
+			Write(string.Format(WRITE_IN + (message != null? ": " + message : null), callerName, GetFileName(callerPath), callerLineNumber));
 		}
 
 		[Conditional("DEBUG")]
 	    public static void WriteEndMethod(string message = null,[CallerMemberName] string callerName = null, [CallerFilePath] string callerPath = null, [CallerLineNumber] int callerLineNumber = 0)
 		{
-			ApplyIndent();
-			Write(string.Format(WRITE_START, callerName, Path.GetFileName(callerPath), callerLineNumber));
-
-			if (message != null)
-				Write(": " + message);
+			Write(string.Format(WRITE_END + (message != null? ": " + message : null), callerName, GetFileName(callerPath), callerLineNumber));
+			
 			_indent--;
 		}
-
-	    [Conditional("DEBUG")]
-	    private static void ApplyIndent()
+		
+	    private static string GetIndent()
 	    {
-			Write("".PadLeft(_indent, INDENT_CHAR) + INDENT_END);
+			return "".PadLeft(_indent * INDENT_CHARS_PER_LEVEL, INDENT_CHAR) + INDENT_END + " ";
 	    }
 
 
 	    [Conditional("DEBUG")]
 	    public static void Write(string message)
 	    {
-			Debug.Write(message);
+			Debug.Write(GetIndent() + message);
 	    }
 
 	    [Conditional("DEBUG")]
 	    public static void WriteLine(string message)
 	    {
-			Debug.WriteLine(message);
+			Debug.WriteLine(GetIndent() + message);
 	    }
 		
+	    public static string GetFileName(string path)
+	    {
+		    var parts = path.Split('\\');
+		    return parts[parts.Length - 1];
+	    }
 	}
 }
