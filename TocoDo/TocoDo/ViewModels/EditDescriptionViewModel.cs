@@ -41,7 +41,7 @@ namespace TocoDo.ViewModels
 		private async void Save()
 		{
 			_setDescriptionAction?.Invoke(Description.Trim());
-			//StorageService.UpdateTask(task);
+
 			await PageService.PopModalAsync();
 		}
 	}

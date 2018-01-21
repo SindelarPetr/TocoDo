@@ -59,7 +59,7 @@ namespace TocoDo.ViewModels
 			get => _description;
 			set
 			{
-				if(SetValue(ref _description, value));
+				if(SetValue(ref _description, value))
 				OnPropertyChanged(nameof(HasAttribute));
 			}
 		}

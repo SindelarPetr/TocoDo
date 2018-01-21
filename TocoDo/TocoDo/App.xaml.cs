@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 using TocoDo.Pages.Main;
+using TocoDo.Properties;
 using Xamarin.Forms;
 
 namespace TocoDo
@@ -12,6 +16,7 @@ namespace TocoDo
 
 		public App()
 		{
+			MyLogger.WriteStartMethod();
 			Debug.WriteLine("--- Called App constructor");
 			InitializeComponent();
 
@@ -25,14 +30,25 @@ namespace TocoDo
 
 			navigationPage.SetDynamicResource(NavigationPage.BarBackgroundColorProperty, "BarColor");
 
-			Debug.WriteLine("----- Setting MainPage");
 			MainPage = navigationPage;
 
-			Debug.WriteLine("----- Finished setting MainPage");
-			
-			Debug.WriteLine("--- Finished calling of App constructor");
+			MyLogger.WriteEndMethod();
 		}
 
+		protected override void OnStart()
+		{
+			//base.OnStart();
 
+			try
+			{
+				AppCenter.Start(string.Format(AppStrings.AppCenterMessage, AppStrings.AppCenterUwpSecret,
+						AppStrings.AppCenterAndroidSecret, AppStrings.AppCenterIosSecret), typeof(Analytics), typeof(Crashes));
+			}
+			catch (Exception e)
+			{
+
+				throw;
+			}
+		}
 	}
 }

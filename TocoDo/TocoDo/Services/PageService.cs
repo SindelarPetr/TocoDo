@@ -4,6 +4,7 @@ using Xamarin.Forms;
 
 namespace TocoDo.Services
 {
+	// TODO: Get rid of static PageService
 	public static class PageService
 	{
 		private static NavigationPage NavigationPage => (NavigationPage) App.Current.MainPage;

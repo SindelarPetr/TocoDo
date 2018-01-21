@@ -20,11 +20,7 @@ namespace TocoDo.Pages
 		public EditDescriptionPage(string title, string description, Action<string> setDescriptionAction)
 		{
 			Debug.Write("----------------- EditDescriptionPage constructor called.");
-
-			Debug.Write("-------------------- Before InitializeComponent.");
 			InitializeComponent();
-			Debug.Write("-------------------- After InitializeComponent.");
-
 			Vm = new EditDescriptionViewModel(title, description, setDescriptionAction);
 			Debug.Write("----------------- Finished calling EditDescriptionPage constructor.");
 		}

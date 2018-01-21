@@ -56,6 +56,7 @@ namespace TocoDo.Views
 
 		private void TapCalendar_OnTapped(object sender, EventArgs e)
 		{
+			// TODO: Get rid of handling View control
 			TodayPage.Instance.ShowGlobalDatePicker(TaskViewModel.Deadline ?? DateTime.Today, d => ChangeDate(d));
 		}
 
@@ -69,7 +70,6 @@ namespace TocoDo.Views
 				DateTime? originDateTime = TaskViewModel.Deadline;
 				TaskViewModel.Deadline = date;
 				StorageService.UpdateTask(TaskViewModel);
-				//TODO: OnDateChanged?.Invoke(this, originDateTime);
 				Debug.WriteLine("Ended ChangeDate");
 			}
 			catch (Exception e)

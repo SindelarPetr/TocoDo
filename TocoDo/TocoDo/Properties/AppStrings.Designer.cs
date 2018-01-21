@@ -61,29 +61,47 @@ namespace TocoDo.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 9737d654-4116-4840-9090-5869b7a77c59.
+        /// </summary>
+        public static string AppCenterAndroidSecret {
+            get {
+                return ResourceManager.GetString("AppCenterAndroidSecret", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 37adddfa-9b95-48e0-85c9-a6f76f581981.
+        /// </summary>
+        public static string AppCenterIosSecret {
+            get {
+                return ResourceManager.GetString("AppCenterIosSecret", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to uwp={0};android={1};ios={2}.
+        /// </summary>
+        public static string AppCenterMessage {
+            get {
+                return ResourceManager.GetString("AppCenterMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 51afeb7a-13f7-4026-9738-584b0608bd90.
+        /// </summary>
+        public static string AppCenterUwpSecret {
+            get {
+                return ResourceManager.GetString("AppCenterUwpSecret", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MySQLite.db3.
         /// </summary>
         public static string DatabaseName {
             get {
                 return ResourceManager.GetString("DatabaseName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SetItemColor.
-        /// </summary>
-        public static string SetItemColor {
-            get {
-                return ResourceManager.GetString("SetItemColor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to UnsetItemColor.
-        /// </summary>
-        public static string UnsetItemColor {
-            get {
-                return ResourceManager.GetString("UnsetItemColor", resourceCulture);
             }
         }
     }

@@ -117,13 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppCenterAndroidSecret" xml:space="preserve">
+    <value>9737d654-4116-4840-9090-5869b7a77c59</value>
+  </data>
+  <data name="AppCenterIosSecret" xml:space="preserve">
+    <value>37adddfa-9b95-48e0-85c9-a6f76f581981</value>
+  </data>
+  <data name="AppCenterMessage" xml:space="preserve">
+    <value>uwp={0};android={1};ios={2}</value>
+  </data>
+  <data name="AppCenterUwpSecret" xml:space="preserve">
+    <value>51afeb7a-13f7-4026-9738-584b0608bd90</value>
+  </data>
   <data name="DatabaseName" xml:space="preserve">
     <value>MySQLite.db3</value>
-  </data>
-  <data name="SetItemColor" xml:space="preserve">
-    <value>SetItemColor</value>
-  </data>
-  <data name="UnsetItemColor" xml:space="preserve">
-    <value>UnsetItemColor</value>
   </data>
 </root>
