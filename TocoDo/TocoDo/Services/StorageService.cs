@@ -12,7 +12,7 @@ using TocoDo.ViewModels;
 
 namespace TocoDo.Services
 {
-	// TODO: Make the class non static
+	// TODO: Make StorageService non static
 	public static class StorageService
 	{
 		#region Collections
