@@ -39,7 +39,7 @@
 					<!--Start and repeat-->
 					<Frame Margin="0">
 						<!--ClickCommand="{Binding SelectStartDateCommand}"-->
-						<views:IconButton ImageSource="{markupExtensions:PathResolver 'ic_today_white_24dp'}" 
+						<!--<views:IconButton ImageSource="{markupExtensions:PathResolver 'ic_today_white_24dp'}" 
 					                   
 					                  IsRemoveButtonVisible="{Binding ModelStartDate, Converter={StaticResource IsNotNullConverter}}"           
 					                  Text="{Binding ModelStartDate, Converter={StaticResource HabitStartDateConverter}}"                           
@@ -50,7 +50,7 @@
 									<triggerActions:IsVisibleSettingAction Element="{x:Reference RepeatView}"/>
 								</EventTrigger>
 							</views:IconButton.Triggers>
-						</views:IconButton>
+						</views:IconButton>-->
 
 						<!--<views:IconButton ImageSource="{markupExtensions:PathResolver 'ic_today_white_24dp'}" 
 					                  ClickCommand="{Binding SelectStartDateCommand}" 

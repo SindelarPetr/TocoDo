@@ -17,12 +17,10 @@ namespace TocoDo
 		public App()
 		{
 			MyLogger.WriteStartMethod();
-			Debug.WriteLine("--- Called App constructor");
 			InitializeComponent();
-
-			Debug.WriteLine("----- Creating MainPage");
+			
 			var main = new MainPage();
-			Debug.WriteLine("----- Finished creating MainPage");
+			MyLogger.WriteInMethod();
 
 			_tabbed = main.TabbedPage;
 
@@ -37,8 +35,6 @@ namespace TocoDo
 
 		protected override void OnStart()
 		{
-			//base.OnStart();
-
 			try
 			{
 				AppCenter.Start(string.Format(AppStrings.AppCenterMessage, AppStrings.AppCenterUwpSecret,

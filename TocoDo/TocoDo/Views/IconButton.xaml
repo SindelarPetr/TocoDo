@@ -3,36 +3,62 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:markupExtensions="clr-namespace:TocoDo.MarkupExtensions;assembly=TocoDo"
 			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
+			 xmlns:views="clr-namespace:TocoDo.Views;assembly=TocoDo"
+			 xmlns:triggerActions="clr-namespace:TocoDo.TriggerActions;assembly=TocoDo"
+			 xmlns:generic="clr-namespace:System.Collections.Generic;assembly=netstandard"
 			 x:Class="TocoDo.Views.IconButton"
 			 x:Name="This">
-  <ContentView.Content>
-	  <Grid BindingContext="{x:Reference This}" ColumnSpacing="15">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="Auto"/>
-				<ColumnDefinition Width="Auto"/>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="Auto"/>
-			</Grid.ColumnDefinitions>
-		  
-			<Grid.GestureRecognizers>
-				<TapGestureRecognizer Command="{Binding ClickCommand}" Tapped="TapGestureRecognizer_OnTapped"/>
-			</Grid.GestureRecognizers>
+	<ContentView.BindingContext>
+		<x:Reference>This</x:Reference>
+	</ContentView.BindingContext>
 
-			<!-- Icon of the button -->
-			<abstractions:TintedImage Source="{Binding ImageSource}" TintColor="{Binding Color}"/>
+	<ContentView.Triggers>
+		<Trigger TargetType="views:IconButton" Property="IsActive" Value="False">
+			<Trigger.EnterActions>
+				<triggerActions:ShakeAction Duration="500" ShakeRange="10"/>
+				<triggerActions:IconButtonColorChangeAction NewColor="Gray" Easing="SpringOut"/>
+			</Trigger.EnterActions>
+			<Trigger.ExitActions>
+				<triggerActions:IconButtonColorChangeAction NewColor="DodgerBlue" Easing="SpringOut"/>
+			</Trigger.ExitActions>
+		</Trigger>
+	</ContentView.Triggers>
+	<ContentView.Content>
+		<StackLayout>
+			<Grid ColumnSpacing="15" RowSpacing="0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="0"/>
+				</Grid.RowDefinitions>
 
-			<!-- Separation vertical line -->
-			<BoxView Grid.Row="0" Grid.Column="1" Color="DimGray" Opacity="0.5" WidthRequest="1" Margin="1,2,1,2" HeightRequest="5"/>
+				<Grid.GestureRecognizers>
+					<TapGestureRecognizer Tapped="ClickRecognise"/>
+				</Grid.GestureRecognizers>
 
-			<!--Button text-->
-			<Label Grid.Row="0" Grid.Column="2" Text="{Binding Text}" VerticalTextAlignment="Center" VerticalOptions="Fill" TextColor="{Binding Color}" />
-			
-			<!--Remove button-->
-			<abstractions:TintedImage Grid.Row="0" Grid.Column="3" Source="{markupExtensions:PathResolver 'ic_clear_white_18dp' }" TintColor="DarkGray" IsVisible="{Binding IsRemoveButtonVisible}">
-				<Image.GestureRecognizers>
-					<TapGestureRecognizer x:Name="RemoveTapRecogniser" Command="{Binding RemoveCommand}" Tapped="RemoveTapRecogniser_OnTapped"/>
-				</Image.GestureRecognizers>
-			</abstractions:TintedImage>
-		</Grid>
-  </ContentView.Content>
+				<!-- Icon of the button -->
+				<abstractions:TintedImage Source="{Binding ImageSource}" TintColor="{Binding Color}"/>
+
+				<!-- Separation vertical line -->
+				<BoxView Grid.Row="0" Grid.Column="1" Color="DimGray" Opacity="0.5" WidthRequest="1" Margin="1,2,1,2" HeightRequest="5"/>
+
+				<!--Label text-->
+				<Label Grid.Row="0" Grid.Column="2" Text="{Binding Text}" VerticalTextAlignment="Center" VerticalOptions="Fill" TextColor="{Binding Color}" />
+
+				<!--Remove button-->
+				<abstractions:TintedImage Grid.Row="0" Grid.Column="3" Source="{markupExtensions:PathResolver 'ic_clear_white_18dp' }" TintColor="DarkGray" IsVisible="{Binding IsActive}">
+					<Image.GestureRecognizers>
+						<TapGestureRecognizer x:Name="RemoveTapRecogniser" Tapped="RemoveRecognise"/>
+					</Image.GestureRecognizers>
+				</abstractions:TintedImage>
+
+				<ContentView x:Name="_innerContent"  Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Padding="0" Margin="0"/>
+			</Grid>
+		</StackLayout>
+	</ContentView.Content>
 </ContentView>

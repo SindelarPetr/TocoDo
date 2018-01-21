@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<views:IconButton xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:TocoDo.Views;assembly=TocoDo"
+             xmlns:triggerActions="clr-namespace:TocoDo.TriggerActions;assembly=TocoDo"
+             xmlns:converters="clr-namespace:TocoDo.Converters;assembly=TocoDo"
+             xmlns:controls="clr-namespace:TocoDo.Controls;assembly=TocoDo"
+             x:Class="TocoDo.Views.DateButtonView"
+             x:Name="This">
+	<views:IconButton.Resources>
+		<ResourceDictionary>
+			<converters:NullableDateTimeConverter x:Key="NullableDateTimeConverter"/>
+			<converters:IsNotNullConverter x:Key="IsNotNullConverter"/>
+		</ResourceDictionary>
+	</views:IconButton.Resources>
+	<views:IconButton.Triggers>
+		<EventTrigger Event="Clicked">
+			<EventTrigger.Actions>
+				<triggerActions:FocusAction ElementToFocus="{x:Reference DatePicker}"/>
+			</EventTrigger.Actions>
+		</EventTrigger>
+	</views:IconButton.Triggers>
+	<views:IconButton.InnerContent>
+		<controls:NullableDatePicker x:Name="DatePicker" IsVisible="False" DateSelected="DatePicker_OnDateSelected" NullableDate="{Binding Value}"/>
+	</views:IconButton.InnerContent>
+</views:IconButton>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -6,84 +7,119 @@ using Xamarin.Forms.Xaml;
 namespace TocoDo.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
+	[ContentProperty("InnerContent")]
 	public partial class IconButton : ContentView
 	{
-		#region ImageSource
-		public static BindableProperty ImageSourceProperty = BindableProperty.Create("ImageSource", typeof(string), typeof(string));
+		#region Backing fields
+		public static readonly BindableProperty ImageSourceProperty = BindableProperty.Create(nameof(ImageSource), typeof(string), typeof(string));
+		public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(string));
+		public static readonly BindableProperty ActiveColorProperty = BindableProperty.Create(nameof(ActiveColor), typeof(Color), typeof(Color), Color.DodgerBlue);
+		public static readonly BindableProperty PassiveColorProperty = BindableProperty.Create(nameof(PassiveColor), typeof(Color), typeof(Color), Color.Gray);
+		public static readonly BindableProperty IsRemoveButtonVisibleProperty =
+			BindableProperty.Create(nameof(IsRemoveButtonVisible), typeof(bool), typeof(bool), false);
+		public static readonly BindableProperty HasRemoveButtonProperty = BindableProperty.Create(nameof(HasRemoveButton), typeof(bool), typeof(bool), false); 
+		public static readonly BindableProperty IsActiveProperty = BindableProperty.Create(nameof(IsActive), typeof(bool), typeof(bool), false);
+		public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(Color), Color.Gray);
+		public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(object), typeof(object));
+		#endregion
 
+		#region Properties
 		public string ImageSource
 		{
 			get => (string)GetValue(ImageSourceProperty);
 			set => SetValue(ImageSourceProperty, value);
 		}
-		#endregion
-
-		#region Text
-		public static BindableProperty TextProperty = BindableProperty.Create("Text", typeof(string), typeof(string));
-
 		public string Text
 		{
 			get => (string)GetValue(TextProperty);
 			set => SetValue(TextProperty, value);
 		}
-		#endregion
-
-		#region Color
-		public static BindableProperty ColorProperty = BindableProperty.Create("Color", typeof(Color), typeof(Color), Color.Gray);
-
+		public Color ActiveColor { get; set; }
+		public Color PassiveColor { get; set; }
 		public Color Color
 		{
 			get => (Color)GetValue(ColorProperty);
 			set => SetValue(ColorProperty, value);
 		}
-		#endregion
-
-		#region IsRemoveButtonVisible
-		public static BindableProperty IsRemoveButtonVisibleProperty = BindableProperty.Create("IsRemoveButtonVisible", typeof(bool), typeof(bool), false);
-
 		public bool IsRemoveButtonVisible
 		{
 			get => (bool)GetValue(IsRemoveButtonVisibleProperty);
 			set => SetValue(IsRemoveButtonVisibleProperty, value);
 		}
-		#endregion
-
-		#region Click command
-		public static BindableProperty ClickCommandProperty = BindableProperty.Create("ClickCommand", typeof(ICommand), typeof(ICommand));
-
-		public ICommand ClickCommand
+		public bool HasRemoveButton
 		{
-			get => (ICommand)GetValue(ClickCommandProperty);
-			set => SetValue(ClickCommandProperty, value);
+			get => (bool)GetValue(HasRemoveButtonProperty);
+			set => SetValue(HasRemoveButtonProperty, value);
 		}
-		#endregion
-
-		#region Remove command
-		public static BindableProperty RemoveCommandProperty = BindableProperty.Create("RemoveCommand", typeof(ICommand), typeof(ICommand));
-
-		public ICommand RemoveCommand
+		public bool IsActive
 		{
-			get => (ICommand)GetValue(RemoveCommandProperty);
-			set => SetValue(RemoveCommandProperty, value);
+			get => (bool)GetValue(IsActiveProperty);
+			set => SetValue(IsActiveProperty, value);
 		}
+		public object Value
+		{
+			get => GetValue(ValueProperty);
+			set => SetValue(ValueProperty, value);
+		}
+
+		public View InnerContent
+		{
+			get => _innerContent.Content;
+			set => _innerContent.Content = value;
+		}
+
+		public Action ScaleAnimation;
 		#endregion
 
-		public event EventHandler Clicked = (a, b) => {};
-		public event EventHandler Removing = (a, b) => { };
+		#region Commands
+		public ICommand ClickCommand { get; set; }
+		public ICommand RemoveCommand { get; set; }
+		#endregion
+
+		#region Events
+		public event EventHandler Clicked;
+		public event EventHandler Removed;
+		public event Action ValueUpdated;
+		#endregion
 
 		public IconButton()
 		{
+			Clicked += (a, b) => ClickCommand?.Execute(null);
+			Removed += (a, b) => RemoveCommand?.Execute(null);
 			InitializeComponent();
+			
+			PropertyChanged += OnPropertyChanged;
+
+			double maxScale = 1.25;
+			ScaleAnimation += () => Xamarin.Forms.ViewExtensions.ScaleTo(this, maxScale, 250, new Easing(t =>
+			{
+				var val = Math.Sin(-t * Math.PI) * (maxScale - 1);
+				MyLogger.WriteInMethod(val.ToString());
+				return val;
+			}));
 		}
 
-		private void RemoveTapRecogniser_OnTapped(object sender, EventArgs e)
+		private void OnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
 		{
-			Removing?.Invoke(this, e);
+			if (propertyChangedEventArgs.PropertyName == nameof(Value))
+			{
+				if (Value != null)
+					ScaleAnimation();
+
+				IsActive = Value != null;
+				ValueUpdated?.Invoke();
+			}
 		}
 
-		private void TapGestureRecognizer_OnTapped(object sender, EventArgs e)
+		private void ClickRecognise(object sender, EventArgs e)
 		{
 			Clicked?.Invoke(this, e);
+		}
+
+		private void RemoveRecognise(object sender, EventArgs e)
+		{
+			Value = null;
+			Removed?.Invoke(this, e);
 		}
 	}
 }
