@@ -18,8 +18,8 @@ namespace TocoDo.Converters
 			if (date.Value.Date == DateTime.Today + TimeSpan.FromDays(1))
 				return Resources.Tomorrow;
 
-			if (date.Value.Date == DateTime.Today + TimeSpan.FromDays(2))
-				return Resources.TheDayAfterTomorrow;
+			//if (date.Value.Date == DateTime.Today + TimeSpan.FromDays(2))
+			//	return Resources.TheDayAfterTomorrow;
 
 			string dateFormat = "ddd, d MMM";
 			if (date.Value.Date.Year == DateTime.Today.Year)
