@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Input;
+using TocoDo.Helpers;
 using TocoDo.Properties;
 using TocoDo.Services;
-using Xamarin.Forms;
 
 namespace TocoDo.ViewModels
 {
@@ -21,8 +21,8 @@ namespace TocoDo.ViewModels
 			_setDescriptionAction = setDescriptionAction;
 			Title = title;
 			_originalDescription = Description = description;
-			DiscardCommand = new Command(Discard);
-			SaveCommand = new Command(Save);
+			DiscardCommand = new MyCommand(Discard);
+			SaveCommand = new MyCommand(Save);
 		}
 
 		private async void Discard()

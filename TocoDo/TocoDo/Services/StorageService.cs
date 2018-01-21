@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using TocoDo.ViewModels;
 
 namespace TocoDo.Services
 {
+	// TODO: Make the class non static
 	public static class StorageService
 	{
 		#region Collections
@@ -155,18 +157,20 @@ namespace TocoDo.Services
 
 		private static void BindTask(TaskViewModel task)
 		{
-			task.OnScheduleDateChanging += Task_OnScheduleDateChanging;
-			task.OnScheduleDateChanged += TaskOnOnScheduleDateChanged;
+			task.PropertyChanging += TaskOnPropertyChanging;
+			task.PropertyChanged += TaskOnPropertyChanged;
 		}
 
-		private static void Task_OnScheduleDateChanging(TaskViewModel taskViewModel, DateTime? oldDateTime, DateTime? newDateTime)
+		private static void TaskOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
 		{
-			RemoveTaskFromTheList(taskViewModel);
+			if(propertyChangedEventArgs.PropertyName == nameof(TaskViewModel.ScheduleDate))
+				AddTaskToTheList((TaskViewModel)sender);
 		}
 
-		private static void TaskOnOnScheduleDateChanged(TaskViewModel taskViewModel, DateTime? oldDateTime, DateTime? newDateTime)
+		private static void TaskOnPropertyChanging(object sender, PropertyChangingEventArgs propertyChangingEventArgs)
 		{
-			AddTaskToTheList(taskViewModel);
+			if (propertyChangingEventArgs.PropertyName == nameof(TaskViewModel.ScheduleDate))
+				RemoveTaskFromTheList((TaskViewModel)sender);
 		}
 
 		private static ObservableCollection<TaskViewModel> GetListForDate(DateTime? date)
@@ -193,8 +197,8 @@ namespace TocoDo.Services
 
 		private static void UnbindTask(TaskViewModel task)
 		{
-			task.OnScheduleDateChanging -= Task_OnScheduleDateChanging;
-			task.OnScheduleDateChanged -= TaskOnOnScheduleDateChanged;
+			task.PropertyChanging -= TaskOnPropertyChanging;
+			task.PropertyChanged -= TaskOnPropertyChanged;
 		}
 
 		private static async Task InsertTask(TaskModel taskModel)

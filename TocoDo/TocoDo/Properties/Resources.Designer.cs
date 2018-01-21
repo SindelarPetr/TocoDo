@@ -403,6 +403,15 @@ namespace TocoDo.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Repeat every....
+        /// </summary>
+        public static string RepeatEvery {
+            get {
+                return ResourceManager.GetString("RepeatEvery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sat.
         /// </summary>
         public static string Sat {

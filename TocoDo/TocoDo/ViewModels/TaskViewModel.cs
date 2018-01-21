@@ -2,59 +2,38 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using TocoDo.Helpers;
 using TocoDo.Models;
 using TocoDo.Pages;
 using TocoDo.Pages.Main;
 using TocoDo.Properties;
 using TocoDo.Services;
-using Xamarin.Forms;
 
 namespace TocoDo.ViewModels
 {
 	public class TaskViewModel : BaseViewModel
 	{
-		private readonly bool _updateOnPropertyChanged;
-
-		#region IsCalendarVisible
-		public static BindableProperty IsCalendarVisibleProperty = BindableProperty.Create(
-			propertyName: "IsCalendarVisible",
-			returnType: typeof(bool),
-			declaringType: typeof(bool),
-			defaultValue: false);
-
-		public bool IsCalendarVisible
-		{
-			get => (bool)GetValue(IsCalendarVisibleProperty);
-			set => SetValue(IsCalendarVisibleProperty, value);
-		}
-		#endregion
-
 		#region Backing fields
 		private DateTime? _deadline;
 		private DateTime _creationTime;
 		private string _description;
 		private string _title;
 		private DateTime? _reminder;
+		private DateTime? _done;
+		private DateTime? _scheduleDate;
 		#endregion
 
 		#region Properties
-		#region Done
-		public static BindableProperty DoneProperty = BindableProperty.Create(
-			propertyName: "Done",
-			returnType: typeof(DateTime?),
-			declaringType: typeof(DateTime?));
-
+		public int Id { get; set; }
 		public DateTime? Done
 		{
-			get => (DateTime?)GetValue(DoneProperty);
+			get => _done;
 			set
 			{
-				SetValue(DoneProperty, value);
+				SetValue(ref _done, value);
 				OnPropertyChanged(".");
 			}
 		}
-		#endregion
-
 		public DateTime? Deadline
 		{
 			get => _deadline;
@@ -65,46 +44,30 @@ namespace TocoDo.ViewModels
 				OnPropertyChanged(nameof(HasAttribute));
 			}
 		}
-
-		#region ScheduleDate
-		public static BindableProperty ScheduleDateProperty = BindableProperty.Create(
-			"ScheduleDate", typeof(DateTime?), typeof(DateTime?));
-
 		public DateTime? ScheduleDate
 		{
-			get => (DateTime?)GetValue(ScheduleDateProperty);
-			set
-			{
-				var oldValue = ScheduleDate;
-				OnScheduleDateChanging?.Invoke(this, oldValue, value);
-				SetValue(ScheduleDateProperty, value);
-				OnScheduleDateChanged?.Invoke(this, oldValue, value);
-			}
+			get => _scheduleDate;
+			set => SetValue(ref _scheduleDate, value);
 		}
-		#endregion
-
 		public DateTime CreateTime
 		{
 			get => _creationTime;
 			set => SetValue(ref _creationTime, value);
 		}
-
 		public string Description
 		{
 			get => _description;
 			set
 			{
-				SetValue(ref _description, value);
+				if(SetValue(ref _description, value));
 				OnPropertyChanged(nameof(HasAttribute));
 			}
 		}
-
 		public string Title
 		{
 			get => _title;
 			set => SetValue(ref _title, value);
 		}
-
 		public DateTime? Reminder
 		{
 			get => _reminder;
@@ -115,8 +78,9 @@ namespace TocoDo.ViewModels
 			}
 		}
 
-		public int Id { get; set; }
-
+		/// <summary>
+		/// TODO: Get rid of this, Replace with trigger
+		/// </summary>
 		public bool HasAttribute => Reminder != null || Deadline != null || !string.IsNullOrWhiteSpace(Description);
 		#endregion
 
@@ -136,28 +100,23 @@ namespace TocoDo.ViewModels
 		public ICommand EditDescriptionCommand { get; }
 		#endregion
 
-		#region Events
-		public event Action<TaskViewModel, DateTime?, DateTime?> OnScheduleDateChanging;
-		public event Action<TaskViewModel, DateTime?, DateTime?> OnScheduleDateChanged;
-		#endregion
-
 		public TaskViewModel(TaskModel taskModel)
 		{
 			#region Copy taskModel properties
 			Id = taskModel.Id;
-			Done = taskModel.Done;
-			Deadline = taskModel.Deadline;
-			Title = taskModel.Title;
+			_done = taskModel.Done;
+			_deadline = taskModel.Deadline;
+			_title = taskModel.Title;
 			CreateTime = taskModel.CreateTime;
-			Description = taskModel.Description;
-			Reminder = taskModel.Reminder;
-			ScheduleDate = taskModel.ScheduleDate;
+			_description = taskModel.Description;
+			_reminder = taskModel.Reminder;
+			_scheduleDate = taskModel.ScheduleDate;
 			#endregion
-
+			
 			#region Commands
-			RemoveCommand = new Command(async () => await RemoveTask());
-			UpdateCommand = new Command(async () => await Update());
-			CheckCommand = new Command(() =>
+			RemoveCommand = new MyCommand(async () => await RemoveTask());
+			UpdateCommand = new MyCommand(async () => await Update());
+			CheckCommand = new MyCommand(() =>
 			{
 				if (Done == null)
 					Done = DateTime.Now;
@@ -165,26 +124,25 @@ namespace TocoDo.ViewModels
 					Done = null;
 			});
 
-			SelectDeadlineDateCommand = new Command(async () => await SelectDeadlineDate());
-			RemoveDeadlineCommand = new Command(() => Deadline = null);
+			// TODO: use triggers to remove some commands
+			SelectDeadlineDateCommand = new MyCommand(async () => await SelectDeadlineDate());
+			RemoveDeadlineCommand = new MyCommand(() => Deadline = null);
 
-			EditDescriptionCommand = new Command(EditDescription);
+			EditDescriptionCommand = new MyCommand(EditDescription);
 
-			SelectScheduleDateCommand = new Command(async () => await SelectScheduleDate());
-			RemoveScheduleDateCommand = new Command(() => ScheduleDate = null);
+			SelectScheduleDateCommand = new MyCommand(async () => await SelectScheduleDate());
+			RemoveScheduleDateCommand = new MyCommand(() => ScheduleDate = null);
 
-			SelectReminderCommand = new Command(async () => await SelectReminder());
-			RemoveReminderCommand = new Command(() => Reminder = null);
+			SelectReminderCommand = new MyCommand(async () => await SelectReminder());
+			RemoveReminderCommand = new MyCommand(() => Reminder = null);
 			#endregion
-
-			_updateOnPropertyChanged = true;
 		}
 
-		protected override void OnPropertyChanged(string propertyName = null)
+		protected override async void OnPropertyChanged(string propertyName = null)
 		{
 			base.OnPropertyChanged(propertyName);
 
-			if (_updateOnPropertyChanged) Update();
+			await Update();
 		}
 
 		private async Task RemoveTask()

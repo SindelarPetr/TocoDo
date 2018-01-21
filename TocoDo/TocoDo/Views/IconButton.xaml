@@ -15,7 +15,7 @@
 			</Grid.ColumnDefinitions>
 		  
 			<Grid.GestureRecognizers>
-				<TapGestureRecognizer Command="{Binding ClickCommand}"/>
+				<TapGestureRecognizer Command="{Binding ClickCommand}" Tapped="TapGestureRecognizer_OnTapped"/>
 			</Grid.GestureRecognizers>
 
 			<!-- Icon of the button -->
@@ -30,7 +30,7 @@
 			<!--Remove button-->
 			<abstractions:TintedImage Grid.Row="0" Grid.Column="3" Source="{markupExtensions:PathResolver 'ic_clear_white_18dp' }" TintColor="DarkGray" IsVisible="{Binding IsRemoveButtonVisible}">
 				<Image.GestureRecognizers>
-					<TapGestureRecognizer x:Name="RemoveTapRecogniser" Command="{Binding RemoveCommand}"/>
+					<TapGestureRecognizer x:Name="RemoveTapRecogniser" Command="{Binding RemoveCommand}" Tapped="RemoveTapRecogniser_OnTapped"/>
 				</Image.GestureRecognizers>
 			</abstractions:TintedImage>
 		</Grid>

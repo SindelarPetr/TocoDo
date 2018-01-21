@@ -7,8 +7,11 @@
 			 xmlns:markupExtensions="clr-namespace:TocoDo.MarkupExtensions;assembly=TocoDo"
 			 xmlns:habits="clr-namespace:TocoDo.Converters.Habits;assembly=TocoDo"
 			 xmlns:converters="clr-namespace:TocoDo.Converters;assembly=TocoDo"
+			 xmlns:habits1="clr-namespace:TocoDo.Views.Habits;assembly=TocoDo"
+			 xmlns:triggerActions="clr-namespace:TocoDo.TriggerActions;assembly=TocoDo"
 			 x:Class="TocoDo.Pages.Habits.ModifyHabitPage"
-			 Title="Modify the habit">
+			 Title="Modify the habit"
+             x:Name="This">
 	<ContentPage.Resources>
 		<ResourceDictionary>
 			<habits:HabitStartDateConverter x:Key="HabitStartDateConverter"/>
@@ -17,33 +20,51 @@
 		</ResourceDictionary>
 	</ContentPage.Resources>
 	<ContentPage.Content>
-		<Grid>
-			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="*"/>
-				<RowDefinition Height="Auto"/>
-			</Grid.RowDefinitions>
+		<AbsoluteLayout>
+			<Grid AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
 
-			<!--Top Panel-->
-			<Frame Margin="0" CornerRadius="0" HasShadow="False" Padding="16,5,0,0" OutlineColor="{StaticResource ColorPrimaryLight}"
+				<!--Top Panel-->
+				<Frame Margin="0" CornerRadius="0" HasShadow="False" Padding="16,5,0,0" OutlineColor="{StaticResource ColorPrimaryLight}"
 				   BackgroundColor="{StaticResource ColorPrimaryLight}">
-				<customRenderers:NoLineEntry x:Name="EntryTitle" Text="{Binding ModelTitle, Mode=OneWay}" HorizontalOptions="FillAndExpand" TextColor="White" Unfocused="EntryTitle_OnUnfocused" />
-			</Frame>
+					<customRenderers:NoLineEntry x:Name="EntryTitle" Text="{Binding ModelTitle, Mode=OneWay}" HorizontalOptions="FillAndExpand" TextColor="White" Unfocused="EntryTitle_OnUnfocused" />
+				</Frame>
 
-			<!--Body-->
-			<ScrollView Grid.Row="1">
-				<!--Start and repeat-->
-				<Frame Margin="0">
-					<views:IconButton ImageSource="{markupExtensions:PathResolver 'ic_today_white_24dp'}" 
-					                  ClickCommand="{Binding SelectStartDateCommand}" 
+				<!--Body-->
+				<ScrollView Grid.Row="1">
+					<!--Start and repeat-->
+					<Frame Margin="0">
+						<!--ClickCommand="{Binding SelectStartDateCommand}"-->
+						<views:IconButton ImageSource="{markupExtensions:PathResolver 'ic_today_white_24dp'}" 
+					                   
 					                  IsRemoveButtonVisible="{Binding ModelStartDate, Converter={StaticResource IsNotNullConverter}}"           
 					                  Text="{Binding ModelStartDate, Converter={StaticResource HabitStartDateConverter}}"                           
 					                  RemoveCommand="{Binding UnsetStartDateCommand}" 
-					                  Color="{Binding ModelStartDate, Converter={StaticResource IsSettedValueToColorConverter}}"/>
-				</Frame>
+					                  Color="{Binding ModelStartDate, Converter={StaticResource IsSettedValueToColorConverter}}">
+							<views:IconButton.Triggers>
+								<EventTrigger Event="Clicked">
+									<triggerActions:IsVisibleSettingAction Element="{x:Reference RepeatView}"/>
+								</EventTrigger>
+							</views:IconButton.Triggers>
+						</views:IconButton>
 
-				
-			</ScrollView>
-		</Grid>
+						<!--<views:IconButton ImageSource="{markupExtensions:PathResolver 'ic_today_white_24dp'}" 
+					                  ClickCommand="{Binding SelectStartDateCommand}" 
+					                  IsRemoveButtonVisible="False"           
+					                  Text="{Binding ModelStartDate, Converter={StaticResource HabitStartDateConverter}}"                           
+					                  RemoveCommand="{Binding UnsetStartDateCommand}" 
+					                  Color="{Binding ModelStartDate, Converter={StaticResource IsSettedValueToColorConverter}}">
+						</views:IconButton>-->
+					</Frame>
+
+
+				</ScrollView>
+			</Grid>
+			<habits1:SelectRepeatView x:Name="RepeatView"  AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" IsVisible="False"/>
+		</AbsoluteLayout>
 	</ContentPage.Content>
 </ContentPage>

@@ -231,6 +231,9 @@
   <data name="Reminder" xml:space="preserve">
     <value>Reminder</value>
   </data>
+  <data name="RepeatEvery" xml:space="preserve">
+    <value>Repeat every...</value>
+  </data>
   <data name="Sat" xml:space="preserve">
     <value>Sat</value>
   </data>

@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -67,9 +68,22 @@ namespace TocoDo.Views
 		}
 		#endregion
 
+		public event EventHandler Clicked = (a, b) => {};
+		public event EventHandler Removing = (a, b) => { };
+
 		public IconButton()
 		{
 			InitializeComponent();
+		}
+
+		private void RemoveTapRecogniser_OnTapped(object sender, EventArgs e)
+		{
+			Removing?.Invoke(this, e);
+		}
+
+		private void TapGestureRecognizer_OnTapped(object sender, EventArgs e)
+		{
+			Clicked?.Invoke(this, e);
 		}
 	}
 }

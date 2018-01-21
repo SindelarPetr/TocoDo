@@ -16,8 +16,6 @@ namespace TocoDo.ViewModels
 {
 	public class HabitViewModel : BaseViewModel
 	{
-		private bool _updateOnPropertyChange;
-
 		#region Backing fields
 		private bool _modelIsRecommended;
 		private int _modelDailyFillingCount;
@@ -61,13 +59,11 @@ namespace TocoDo.ViewModels
 			get => _modelHabitType;
 			set => SetValue(ref _modelHabitType, value);
 		}
-
 		public short ModelDaysToRepeat
 		{
 			get => _modelDaysToRepeat;
 			set => SetValue(ref _modelDaysToRepeat, value);
 		}
-
 		public DateTime? ModelStartDate
 		{
 			get => _modelStartDate;
@@ -77,7 +73,6 @@ namespace TocoDo.ViewModels
 				OnPropertyChanged(".");
 			}
 		}
-
 		public string ModelTitle
 		{
 			get => _modelTitle;
@@ -112,17 +107,12 @@ namespace TocoDo.ViewModels
 		}
 		#endregion
 
-		#region IsEditTitleMode
-		public static BindableProperty IsEditTitleModeProperty = BindableProperty.Create("IsEditTitleMode",
-			typeof(bool), typeof(bool), false);
-
-
+		private bool _isEditTitleMode;
 		public bool IsEditTitleMode
 		{
-			get => (bool)GetValue(IsEditTitleModeProperty);
-			set => SetValue(IsEditTitleModeProperty, value);
+			get => _isEditTitleMode;
+			set => SetValue(ref _isEditTitleMode, value);
 		}
-		#endregion
 
 		#region Commands
 		public ICommand EditCommand { get; private set; }
@@ -156,8 +146,6 @@ namespace TocoDo.ViewModels
 			_modelRepeatsADay = model.RepeatsADay;
 
 			SetupCommands();
-
-			_updateOnPropertyChange = true;
 		}
 
 		private void SetupCommands()
@@ -235,7 +223,7 @@ namespace TocoDo.ViewModels
 		{
 			base.OnPropertyChanged(propertyName);
 
-			if (_updateOnPropertyChange && propertyName != nameof(IsEditTitleMode))
+			if (propertyName != nameof(IsEditTitleMode))
 				StorageService.UpdateHabit(this);
 		}
 	}
