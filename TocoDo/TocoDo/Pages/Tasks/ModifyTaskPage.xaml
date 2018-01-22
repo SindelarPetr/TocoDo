@@ -53,24 +53,13 @@
 				<Frame Margin="0" >
 					<StackLayout Spacing="10">
 						<!--Schedule date-->
-						<!--<views:IconButton ImageSource="{markupExtensions:PathResolver 'ic_today_white_24dp'}" 
-						                  ClickCommand="{Binding SelectScheduleDateCommand}" 
-						                  IsRemoveButtonVisible="{Binding ScheduleDate, Converter={StaticResource IsNotNullConverter}}"           Text="{Binding ScheduleDate, Converter={StaticResource ScheduleDateConverter}}"                           RemoveCommand="{Binding RemoveScheduleDateCommand}" 
-						                  Color="{Binding ScheduleDate, Converter={StaticResource ScheduleDateToColorConverter}}"/>-->
 						<views:DateButtonView ImageSource="{markupExtensions:PathResolver 'ic_today_white_24dp'}" FormattedText="Schedule date: {0}" SelectedDate="{Binding Source={x:Reference This}, Path=TaskViewModel.ScheduleDate, Mode=TwoWay, Converter={StaticResource ValueCheckerConverter} }" />
 
 						<!--Deadline-->
-						<!--<views:IconButton ImageSource="{markupExtensions:PathResolver 'ic_whatshot_white_24dp'}" 
-						                  ClickCommand="{Binding SelectDeadlineDateCommand}" 
-						                  IsRemoveButtonVisible="{Binding Deadline, Converter={StaticResource IsNotNullConverter}}"               Text="{Binding Deadline, Converter={StaticResource DeadlineConverter}}"                           RemoveCommand="{Binding RemoveDeadlineCommand}"
-						                  Color="{Binding Deadline, Converter={StaticResource DeadlineToColorConverter}}"/>-->
-						<!--<views:DateButtonView ImageSource="{markupExtensions:PathResolver 'ic_whatshot_white_24dp'}" FormattedText="Deadline: {0}" />-->
+						<views:DateButtonView ImageSource="{markupExtensions:PathResolver 'ic_whatshot_white_24dp'}" FormattedText="Deadline: {0}" SelectedDate="{Binding Source={x:Reference This}, Path=TaskViewModel.Deadline, Mode=TwoWay, Converter={StaticResource ValueCheckerConverter} }" ActiveColor="OrangeRed"/>
 
 						<!--Reminder-->
-						<!--<views:IconButton ImageSource="{markupExtensions:PathResolver 'ic_notifications_active_white_24dp'}" 
-						                  ClickCommand="{Binding SelectReminderCommand}" 
-						                  IsRemoveButtonVisible="{Binding Reminder, Converter={StaticResource IsNotNullConverter}}"               Text="{Binding Reminder, Converter={StaticResource ReminderConverter}}"                           RemoveCommand="{Binding RemoveReminderCommand}" 
-						                  Color="{Binding Reminder, Converter={StaticResource ReminderToColorConverter}}"/>-->
+						<views:DateButtonView ImageSource="{markupExtensions:PathResolver 'ic_notifications_active_white_24dp'}" FormattedText="Reminder: {0}" SelectedDate="{Binding Source={x:Reference This}, Path=TaskViewModel.Reminder, Mode=TwoWay, Converter={StaticResource ValueCheckerConverter} }" />
 					</StackLayout>
 				</Frame>
 

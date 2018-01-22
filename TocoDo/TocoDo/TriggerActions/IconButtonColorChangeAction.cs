@@ -27,6 +27,8 @@ namespace TocoDo.TriggerActions
 			anim.Commit(sender, "Name", 16, 500);
 	    }
 
+	    public void DoInvoke(IconButton sender) => Invoke(sender);
+
 	    private Color GetDifference(Color start, Color end, double t)
 	    {
 			return new Color(start.R + (end.R - start.R) * t, start.G + (end.G - start.G) * t, start.B + (end.B - start.B) * t);

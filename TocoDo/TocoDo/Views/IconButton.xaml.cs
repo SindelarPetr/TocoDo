@@ -13,8 +13,6 @@ namespace TocoDo.Views
 		#region Backing fields
 		public static readonly BindableProperty ImageSourceProperty = BindableProperty.Create(nameof(ImageSource), typeof(string), typeof(string));
 		public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(string));
-		public static readonly BindableProperty ActiveColorProperty = BindableProperty.Create(nameof(ActiveColor), typeof(Color), typeof(Color), Color.DodgerBlue);
-		public static readonly BindableProperty PassiveColorProperty = BindableProperty.Create(nameof(PassiveColor), typeof(Color), typeof(Color), Color.Gray);
 		public static readonly BindableProperty IsRemoveButtonVisibleProperty =
 			BindableProperty.Create(nameof(IsRemoveButtonVisible), typeof(bool), typeof(bool), false);
 		public static readonly BindableProperty HasRemoveButtonProperty = BindableProperty.Create(nameof(HasRemoveButton), typeof(bool), typeof(bool), false); 
@@ -33,7 +31,17 @@ namespace TocoDo.Views
 			get => (string)GetValue(TextProperty);
 			set => SetValue(TextProperty, value);
 		}
-		public Color ActiveColor { get; set; }
+
+		public Color ActiveColor
+		{
+			get => ColorChangeAction.NewColor;
+			set
+			{
+				ColorChangeAction.NewColor = value;
+				ColorChangeAction.DoInvoke(this);
+			}
+		}
+
 		public Color PassiveColor { get; set; }
 		public Color Color
 		{

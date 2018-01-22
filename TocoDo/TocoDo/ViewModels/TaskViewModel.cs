@@ -108,7 +108,7 @@ namespace TocoDo.ViewModels
 			CreateTime = taskModel.CreateTime;
 			_description = taskModel.Description;
 			_reminder = taskModel.Reminder;
-			_scheduleDate = DateTime.Today;
+			_scheduleDate = taskModel.ScheduleDate;
 			#endregion
 			
 			#region Commands
@@ -197,10 +197,10 @@ namespace TocoDo.ViewModels
 			{
 				selectedDate = DateTime.Today + TimeSpan.FromDays(1);
 			}
-			else if (result == Resources.TheDayAfterTomorrow)
-			{
-				selectedDate = DateTime.Today + TimeSpan.FromDays(2);
-			}
+			//else if (result == Resources.TheDayAfterTomorrow)
+			//{
+			//	selectedDate = DateTime.Today + TimeSpan.FromDays(2);
+			//}
 			else if (result == Resources.PickADate)
 			{
 				SelectDateByPicker(d => pickedAction(d));

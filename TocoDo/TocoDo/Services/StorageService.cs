@@ -313,6 +313,5 @@ namespace TocoDo.Services
 			UnscheduledHabits.Remove(habit);
 		}
 		#endregion
-
 	}
 }

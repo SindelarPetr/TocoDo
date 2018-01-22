@@ -12,6 +12,10 @@
 		<x:Reference>This</x:Reference>
 	</ContentView.BindingContext>
 
+	<ContentView.Resources>
+		
+	</ContentView.Resources>
+
 	<ContentView.Triggers>
 		<Trigger TargetType="views:IconButton" Property="IsActive" Value="False">
 			<Trigger.EnterActions>
@@ -19,7 +23,7 @@
 				<triggerActions:IconButtonColorChangeAction NewColor="Gray" Easing="SpringOut"/>
 			</Trigger.EnterActions>
 			<Trigger.ExitActions>
-				<triggerActions:IconButtonColorChangeAction NewColor="DodgerBlue" Easing="SpringOut"/>
+				<triggerActions:IconButtonColorChangeAction x:Name="ColorChangeAction" NewColor="DodgerBlue" Easing="SpringOut"/>
 			</Trigger.ExitActions>
 		</Trigger>
 	</ContentView.Triggers>
