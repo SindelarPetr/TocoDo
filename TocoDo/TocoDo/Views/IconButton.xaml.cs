@@ -15,7 +15,7 @@ namespace TocoDo.Views
 		public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(string));
 		public static readonly BindableProperty IsRemoveButtonVisibleProperty =
 			BindableProperty.Create(nameof(IsRemoveButtonVisible), typeof(bool), typeof(bool), false);
-		public static readonly BindableProperty HasRemoveButtonProperty = BindableProperty.Create(nameof(HasRemoveButton), typeof(bool), typeof(bool), false); 
+		public static readonly BindableProperty HasRemoveButtonProperty = BindableProperty.Create(nameof(HasRemoveButton), typeof(bool), typeof(bool), true); 
 		public static readonly BindableProperty IsActiveProperty = BindableProperty.Create(nameof(IsActive), typeof(bool), typeof(bool), false);
 		public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(Color), Color.Gray);
 		#endregion
@@ -39,7 +39,7 @@ namespace TocoDo.Views
 			{
 				ColorChangeAction.NewColor = value;
 
-				if (IsActive)
+				if (IsActive && HasRemoveButton)
 					ColorChangeAction.DoInvoke(this);
 			}
 		}
