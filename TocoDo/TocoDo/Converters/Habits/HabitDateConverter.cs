@@ -28,22 +28,21 @@ namespace TocoDo.Converters.Habits
 		    return $"From { startDate } - { repeatText } {dayAmountText }";
 		}
 
-	    private string GetRepeatText(RepeatType habitModelRepeatType, short modelRepeatNumber)
+	    public static  string GetRepeatText(RepeatType habitModelRepeatType, short modelRepeatNumber)
 	    {
 		    if (habitModelRepeatType.HasFlag(RepeatType.Days))
-			    return string.Format(Resources.ForNumDays, modelRepeatNumber);
+			    return string.Format(Resources.RepeatTypeDays, modelRepeatNumber);
 
 		    if (habitModelRepeatType.HasFlag(RepeatType.Months))
-			    return $"{Resources.For} {modelRepeatNumber} {Resources.Months}";
+			    return string.Format(Resources.RepeatTypeMonths, modelRepeatNumber);
 
 		    if (habitModelRepeatType.HasFlag(RepeatType.Years))
-			    return $"{Resources.For} {modelRepeatNumber} {Resources.NextYears}";
+			    return string.Format(Resources.RepeatTypeYears, modelRepeatNumber);
 
-		    return
-			    $"{Resources.Every} {GetWeekDays(habitModelRepeatType)} {Resources.For.ToLower()} {modelRepeatNumber} {Resources.Days.ToLower()}";
+		    return string.Format(Resources.RepeatTypeWeeks, GetWeekDays(habitModelRepeatType), modelRepeatNumber);
 	    }
 
-	    private string GetWeekDays(RepeatType type)
+	    public  static string GetWeekDays(RepeatType type)
 	    {
 		    string days = string.Empty;
 		    if (type.HasFlag(RepeatType.Mon))

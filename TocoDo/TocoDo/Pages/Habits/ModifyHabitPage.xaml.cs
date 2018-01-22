@@ -29,6 +29,7 @@ namespace TocoDo.Pages.Habits
 				StartDate = DateTime.Today + TimeSpan.FromDays(3),
 				DailyFillingCount = 3
 			});
+			InitializeComponent();
 		}
 
 		public ModifyHabitPage(HabitViewModel habit)

@@ -9,6 +9,7 @@
 			 xmlns:converters="clr-namespace:TocoDo.Converters;assembly=TocoDo"
 			 xmlns:habits1="clr-namespace:TocoDo.Views.Habits;assembly=TocoDo"
 			 xmlns:triggerActions="clr-namespace:TocoDo.TriggerActions;assembly=TocoDo"
+			 xmlns:properties="clr-namespace:TocoDo.Properties;assembly=TocoDo"
 			 x:Class="TocoDo.Pages.Habits.ModifyHabitPage"
 			 Title="Modify the habit"
              x:Name="This">
@@ -36,32 +37,14 @@
 
 				<!--Body-->
 				<ScrollView Grid.Row="1">
-					<!--Start and repeat-->
-					<Frame Margin="0">
-						<!--ClickCommand="{Binding SelectStartDateCommand}"-->
-						<!--<views:IconButton ImageSource="{markupExtensions:PathResolver 'ic_today_white_24dp'}" 
-					                   
-					                  IsRemoveButtonVisible="{Binding ModelStartDate, Converter={StaticResource IsNotNullConverter}}"           
-					                  Text="{Binding ModelStartDate, Converter={StaticResource HabitStartDateConverter}}"                           
-					                  RemoveCommand="{Binding UnsetStartDateCommand}" 
-					                  Color="{Binding ModelStartDate, Converter={StaticResource IsSettedValueToColorConverter}}">
-							<views:IconButton.Triggers>
-								<EventTrigger Event="Clicked">
-									<triggerActions:IsVisibleSettingAction Element="{x:Reference RepeatView}"/>
-								</EventTrigger>
-							</views:IconButton.Triggers>
-						</views:IconButton>-->
-
-						<!--<views:IconButton ImageSource="{markupExtensions:PathResolver 'ic_today_white_24dp'}" 
-					                  ClickCommand="{Binding SelectStartDateCommand}" 
-					                  IsRemoveButtonVisible="False"           
-					                  Text="{Binding ModelStartDate, Converter={StaticResource HabitStartDateConverter}}"                           
-					                  RemoveCommand="{Binding UnsetStartDateCommand}" 
-					                  Color="{Binding ModelStartDate, Converter={StaticResource IsSettedValueToColorConverter}}">
-						</views:IconButton>-->
+					<!--Start and repeat buttons-->
+					<Frame Margin="10, 0, 10, 0" VerticalOptions="Center">
+						<StackLayout>
+							<views:DateButtonView SelectedDate="{Binding Source={x:Reference This}, Path=Habit.ModelStartDate}" ImageSource="{markupExtensions:PathResolver Source='ic_today_white_24dp'}" DateFormat="{x:Static properties:Resources.StartDateText}"/>
+							
+							<habits1:RepeatTypeButton FormattedText="{x:Static properties:Resources.RepeatTypeText}" RepeatType="{Binding Source={x:Reference This}, Path=Habit.ModelHabitType, Mode=TwoWay}" ImageSource="{markupExtensions:PathResolver 'ic_loop_white_24dp'}"/>
+						</StackLayout>
 					</Frame>
-
-
 				</ScrollView>
 			</Grid>
 			<habits1:SelectRepeatView x:Name="RepeatView"  AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" IsVisible="False"/>

@@ -221,10 +221,12 @@ namespace TocoDo.ViewModels
 
 		protected override void OnPropertyChanged(string propertyName = null)
 		{
+			MyLogger.WriteStartMethod();
 			base.OnPropertyChanged(propertyName);
 
 			if (propertyName != nameof(IsEditTitleMode))
 				StorageService.UpdateHabit(this);
+			MyLogger.WriteEndMethod();
 		}
 	}
 }

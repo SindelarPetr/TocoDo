@@ -20,7 +20,7 @@ namespace TocoDo.Views.Habits
 
 		public SelectRepeatView()
 		{
-			Vm = new SelectRepeatView();
+			//Vm = new SelectRepeatView();
 			InitializeComponent();
 		}
 

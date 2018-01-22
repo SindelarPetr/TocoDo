@@ -205,6 +205,15 @@ namespace TocoDo.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deadline: {0}.
+        /// </summary>
+        public static string DeadlineText {
+            get {
+                return ResourceManager.GetString("DeadlineText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete to-do.
         /// </summary>
         public static string DeleteToDo {
@@ -403,11 +412,74 @@ namespace TocoDo.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reminder: {0}.
+        /// </summary>
+        public static string ReminderText {
+            get {
+                return ResourceManager.GetString("ReminderText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string Repeat {
+            get {
+                return ResourceManager.GetString("Repeat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Repeat every....
         /// </summary>
         public static string RepeatEvery {
             get {
                 return ResourceManager.GetString("RepeatEvery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Every day for {0} days.
+        /// </summary>
+        public static string RepeatTypeDays {
+            get {
+                return ResourceManager.GetString("RepeatTypeDays", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Every month for {0} months.
+        /// </summary>
+        public static string RepeatTypeMonths {
+            get {
+                return ResourceManager.GetString("RepeatTypeMonths", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Repeat: {0}.
+        /// </summary>
+        public static string RepeatTypeText {
+            get {
+                return ResourceManager.GetString("RepeatTypeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Every {0} for {1} days.
+        /// </summary>
+        public static string RepeatTypeWeeks {
+            get {
+                return ResourceManager.GetString("RepeatTypeWeeks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Every year for {0} years.
+        /// </summary>
+        public static string RepeatTypeYears {
+            get {
+                return ResourceManager.GetString("RepeatTypeYears", resourceCulture);
             }
         }
         
@@ -439,6 +511,15 @@ namespace TocoDo.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Schedule date: {0}.
+        /// </summary>
+        public static string ScheduleDateText {
+            get {
+                return ResourceManager.GetString("ScheduleDateText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Scheduled to.
         /// </summary>
         public static string ScheduledTo {
@@ -462,6 +543,15 @@ namespace TocoDo.Properties {
         public static string StartDate {
             get {
                 return ResourceManager.GetString("StartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start date: {0}.
+        /// </summary>
+        public static string StartDateText {
+            get {
+                return ResourceManager.GetString("StartDateText", resourceCulture);
             }
         }
         
