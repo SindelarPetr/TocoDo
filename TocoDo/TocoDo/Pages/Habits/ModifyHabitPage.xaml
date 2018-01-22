@@ -10,44 +10,64 @@
 			 xmlns:habits1="clr-namespace:TocoDo.Views.Habits;assembly=TocoDo"
 			 xmlns:triggerActions="clr-namespace:TocoDo.TriggerActions;assembly=TocoDo"
 			 xmlns:properties="clr-namespace:TocoDo.Properties;assembly=TocoDo"
+			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
 			 x:Class="TocoDo.Pages.Habits.ModifyHabitPage"
 			 Title="Modify the habit"
              x:Name="This">
-	<ContentPage.Resources>
-		<ResourceDictionary>
-			<habits:HabitStartDateConverter x:Key="HabitStartDateConverter"/>
-			<converters:IsSettedValueToColorConverter x:Key="IsSettedValueToColorConverter"/>
-			<converters:IsNotNullConverter x:Key="IsNotNullConverter" />
-		</ResourceDictionary>
-	</ContentPage.Resources>
 	<ContentPage.Content>
-		<AbsoluteLayout>
-			<Grid AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="*"/>
-					<RowDefinition Height="Auto"/>
-				</Grid.RowDefinitions>
+		<Grid AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
 
-				<!--Top Panel-->
-				<Frame Margin="0" CornerRadius="0" HasShadow="False" Padding="16,5,0,0" OutlineColor="{StaticResource ColorPrimaryLight}"
+			<!--Top Panel-->
+			<Frame Margin="0" CornerRadius="0" HasShadow="False" Padding="16,5,0,0" OutlineColor="{StaticResource ColorPrimaryLight}"
 				   BackgroundColor="{StaticResource ColorPrimaryLight}">
-					<customRenderers:NoLineEntry x:Name="EntryTitle" Text="{Binding ModelTitle, Mode=OneWay}" HorizontalOptions="FillAndExpand" TextColor="White" Unfocused="EntryTitle_OnUnfocused" />
-				</Frame>
+				<customRenderers:NoLineEntry x:Name="EntryTitle" Text="{Binding ModelTitle, Mode=OneWay}" HorizontalOptions="FillAndExpand" TextColor="White" Unfocused="EntryTitle_OnUnfocused" />
+			</Frame>
 
-				<!--Body-->
-				<ScrollView Grid.Row="1">
+			<!--Body-->
+			<ScrollView Grid.Row="1">
+				<Grid Padding="10, 10, 10, 40">
 					<!--Start and repeat buttons-->
-					<Frame Margin="10, 0, 10, 0" VerticalOptions="Center">
+					<Frame Margin="0" VerticalOptions="Center">
 						<StackLayout>
 							<views:DateButtonView x:Name="DateButtonView" SelectedDate="{Binding Source={x:Reference This}, Path=Habit.ModelStartDate}" ImageSource="{markupExtensions:PathResolver Source='ic_today_white_24dp'}" DateFormat="{x:Static properties:Resources.StartDateText}"/>
-							
+
 							<habits1:RepeatTypeButton FormattedText="{x:Static properties:Resources.RepeatTypeText}" RepeatType="{Binding Source={x:Reference This}, Path=Habit.ModelHabitType, Mode=TwoWay}" ImageSource="{markupExtensions:PathResolver 'ic_loop_white_24dp'}" IsActive="{Binding Source={x:Reference DateButtonView}, Path=IsActive}" HasRemoveButton="False"/>
 						</StackLayout>
 					</Frame>
-				</ScrollView>
-			</Grid>
-			<habits1:SelectRepeatView x:Name="RepeatView"  AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" IsVisible="False"/>
-		</AbsoluteLayout>
+
+					<!--Habit type-->
+					<Frame Margin="0" Grid.Row="1">
+						<StackLayout>
+
+						</StackLayout>
+					</Frame>
+
+					<!--Description-->
+					<Frame Margin="0" Grid.Row="2" HorizontalOptions="FillAndExpand">
+						<StackLayout>
+
+						</StackLayout>
+					</Frame>
+				</Grid>
+			</ScrollView>
+
+			<!--Bottom panel-->
+			<Frame Grid.Row="2" Grid.Column="0" CornerRadius="0" Margin="0" Padding="15, 0, 15, 0">
+				<StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Padding="0">
+					<Label Text="Place for some text :)" HorizontalOptions="FillAndExpand"
+								       VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" />
+					<abstractions:TintedImage x:Name="ButtonRemove" Source="{markupExtensions:PathResolver 'ic_delete_white_24dp.png'}" HeightRequest="42" WidthRequest="25" TintColor="Gray">
+						<Image.GestureRecognizers>
+							<TapGestureRecognizer Command="{Binding RemoveCommand}"/>
+						</Image.GestureRecognizers>
+					</abstractions:TintedImage>
+				</StackLayout>
+			</Frame>
+		</Grid>
 	</ContentPage.Content>
 </ContentPage>

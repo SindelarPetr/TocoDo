@@ -28,52 +28,50 @@
 		</Trigger>
 	</ContentView.Triggers>
 	<ContentView.Content>
-		<StackLayout>
-			<Grid ColumnSpacing="15" RowSpacing="0">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="Auto"/>
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="0"/>
-				</Grid.RowDefinitions>
+		<Grid ColumnSpacing="15" RowSpacing="0">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="Auto"/>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="0"/>
+			</Grid.RowDefinitions>
 
-				<Grid.GestureRecognizers>
-					<TapGestureRecognizer Tapped="ClickRecognise"/>
-				</Grid.GestureRecognizers>
+			<Grid.GestureRecognizers>
+				<TapGestureRecognizer Tapped="ClickRecognise"/>
+			</Grid.GestureRecognizers>
 
-				<!-- Icon of the button -->
-				<abstractions:TintedImage Source="{Binding ImageSource}" TintColor="{Binding Color}"/>
+			<!-- Icon of the button -->
+			<abstractions:TintedImage Source="{Binding ImageSource}" TintColor="{Binding Color}"/>
 
-				<!-- Separation vertical line -->
-				<BoxView Grid.Row="0" Grid.Column="1" Color="DimGray" Opacity="0.5" WidthRequest="1" Margin="1,2,1,2" HeightRequest="5"/>
+			<!-- Separation vertical line -->
+			<BoxView Grid.Row="0" Grid.Column="1" Color="DimGray" Opacity="0.5" WidthRequest="1" Margin="1,2,1,2" HeightRequest="5"/>
 
-				<!--Label text-->
-				<Label Grid.Row="0" Grid.Column="2" Text="{Binding Text}" VerticalTextAlignment="Center" VerticalOptions="Fill" TextColor="{Binding Color}" />
+			<!--Label text-->
+			<Label Grid.Row="0" Grid.Column="2" Text="{Binding Text}" VerticalTextAlignment="Center" VerticalOptions="Fill" TextColor="{Binding Color}" />
 
-				<!--Remove button-->
-				<abstractions:TintedImage Grid.Row="0" Grid.Column="3" Source="{markupExtensions:PathResolver 'ic_clear_white_18dp' }" TintColor="DarkGray" IsVisible="False">
-					<Image.GestureRecognizers>
-						<TapGestureRecognizer x:Name="RemoveTapRecogniser" Tapped="RemoveRecognise"/>
-					</Image.GestureRecognizers>
-					<abstractions:TintedImage.Triggers>
-						<MultiTrigger TargetType="abstractions:TintedImage">
-							<MultiTrigger.Conditions>
-								<BindingCondition Binding="{Binding IsActive}" Value="True"/>
-								<BindingCondition Binding="{Binding HasRemoveButton}" Value="True"/>
-							</MultiTrigger.Conditions>
-							<MultiTrigger.Setters>
-								<Setter Property="IsVisible" Value="True"/>
-							</MultiTrigger.Setters>
-						</MultiTrigger>
-					</abstractions:TintedImage.Triggers>
-				</abstractions:TintedImage>
+			<!--Remove button-->
+			<abstractions:TintedImage Grid.Row="0" Grid.Column="3" Source="{markupExtensions:PathResolver 'ic_clear_white_18dp' }" TintColor="DarkGray" IsVisible="False">
+				<Image.GestureRecognizers>
+					<TapGestureRecognizer x:Name="RemoveTapRecogniser" Tapped="RemoveRecognise"/>
+				</Image.GestureRecognizers>
+				<abstractions:TintedImage.Triggers>
+					<MultiTrigger TargetType="abstractions:TintedImage">
+						<MultiTrigger.Conditions>
+							<BindingCondition Binding="{Binding IsActive}" Value="True"/>
+							<BindingCondition Binding="{Binding HasRemoveButton}" Value="True"/>
+						</MultiTrigger.Conditions>
+						<MultiTrigger.Setters>
+							<Setter Property="IsVisible" Value="True"/>
+						</MultiTrigger.Setters>
+					</MultiTrigger>
+				</abstractions:TintedImage.Triggers>
+			</abstractions:TintedImage>
 
-				<ContentView x:Name="_innerContent"  Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Padding="0" Margin="0"/>
-			</Grid>
-		</StackLayout>
+			<ContentView x:Name="_innerContent"  Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Padding="0" Margin="0"/>
+		</Grid>
 	</ContentView.Content>
 </ContentView>
