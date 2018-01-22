@@ -20,7 +20,6 @@ namespace TocoDo.Views
 		public static readonly BindableProperty HasRemoveButtonProperty = BindableProperty.Create(nameof(HasRemoveButton), typeof(bool), typeof(bool), false); 
 		public static readonly BindableProperty IsActiveProperty = BindableProperty.Create(nameof(IsActive), typeof(bool), typeof(bool), false);
 		public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(Color), Color.Gray);
-		public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(object), typeof(object));
 		#endregion
 
 		#region Properties
@@ -56,11 +55,6 @@ namespace TocoDo.Views
 			get => (bool)GetValue(IsActiveProperty);
 			set => SetValue(IsActiveProperty, value);
 		}
-		public object Value
-		{
-			get => GetValue(ValueProperty);
-			set => SetValue(ValueProperty, value);
-		}
 
 		public View InnerContent
 		{
@@ -84,11 +78,12 @@ namespace TocoDo.Views
 
 		public IconButton()
 		{
+			MyLogger.WriteStartMethod();
 			Clicked += (a, b) => ClickCommand?.Execute(null);
 			Removed += (a, b) => RemoveCommand?.Execute(null);
+			MyLogger.WriteInMethod("Before InitializeComponent");
 			InitializeComponent();
-			
-			PropertyChanged += OnPropertyChanged;
+			MyLogger.WriteInMethod("After InitializeComponent");
 
 			double maxScale = 1.25;
 			ScaleAnimation += () => Xamarin.Forms.ViewExtensions.ScaleTo(this, maxScale, 250, new Easing(t =>
@@ -97,18 +92,7 @@ namespace TocoDo.Views
 				MyLogger.WriteInMethod(val.ToString());
 				return val;
 			}));
-		}
-
-		private void OnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
-		{
-			if (propertyChangedEventArgs.PropertyName == nameof(Value))
-			{
-				if (Value != null)
-					ScaleAnimation();
-
-				IsActive = Value != null;
-				ValueUpdated?.Invoke();
-			}
+			MyLogger.WriteEndMethod();
 		}
 
 		private void ClickRecognise(object sender, EventArgs e)
@@ -118,8 +102,12 @@ namespace TocoDo.Views
 
 		private void RemoveRecognise(object sender, EventArgs e)
 		{
-			Value = null;
 			Removed?.Invoke(this, e);
+		}
+
+		public void MakeUpdateAnimation()
+		{
+			ScaleAnimation();
 		}
 	}
 }

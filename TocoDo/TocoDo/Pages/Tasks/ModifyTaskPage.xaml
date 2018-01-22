@@ -15,16 +15,9 @@
 				<Setter Property="TextColor" Value="Gray" />
 			</Style>
 			<converters:ModifyPageBottmPanelTextConverter x:Key="ModifyPageBottmPanelTextConverter" />
-			<converters:IsNotNullConverter x:Key="IsNotNullConverter" />
 			<converters:NoteTextConverter x:Key="NoteTextConverter" />
 			<converters:CheckConverter x:Key="CheckConverter" />
-			<converters:DeadlineConverter x:Key="DeadlineConverter" />
-			<converters:DeadlineToColorConverter x:Key="DeadlineToColorConverter" />
 			<converters:DescriptionToColorConverter x:Key="DescriptionToColorConverter" />
-			<converters:ReminderConverter x:Key="ReminderConverter"/>
-			<converters:ReminderToColorConverter x:Key="ReminderToColorConverter" />
-			<converters:ScheduleDateConverter x:Key="ScheduleDateConverter" />
-			<converters:ScheduleDateToColorConverter x:Key="ScheduleDateToColorConverter" />
 		</ResourceDictionary>
 	</ContentPage.Resources>
 	<ContentPage.Content>
@@ -62,12 +55,17 @@
 						                  ClickCommand="{Binding SelectScheduleDateCommand}" 
 						                  IsRemoveButtonVisible="{Binding ScheduleDate, Converter={StaticResource IsNotNullConverter}}"           Text="{Binding ScheduleDate, Converter={StaticResource ScheduleDateConverter}}"                           RemoveCommand="{Binding RemoveScheduleDateCommand}" 
 						                  Color="{Binding ScheduleDate, Converter={StaticResource ScheduleDateToColorConverter}}"/>-->
-						<views:DateButtonView ImageSource="{markupExtensions:PathResolver 'ic_today_white_24dp'}" FormattedText="Schedule date: {0}" />
+						<views:DateButtonView ImageSource="{markupExtensions:PathResolver 'ic_today_white_24dp'}" FormattedText="Schedule date: {0}">
+							<views:DateButtonView.SelectedDate>
+								<x:DateTime/>
+							</views:DateButtonView.SelectedDate>
+						</views:DateButtonView>
 						<!--Deadline-->
 						<!--<views:IconButton ImageSource="{markupExtensions:PathResolver 'ic_whatshot_white_24dp'}" 
 						                  ClickCommand="{Binding SelectDeadlineDateCommand}" 
 						                  IsRemoveButtonVisible="{Binding Deadline, Converter={StaticResource IsNotNullConverter}}"               Text="{Binding Deadline, Converter={StaticResource DeadlineConverter}}"                           RemoveCommand="{Binding RemoveDeadlineCommand}"
 						                  Color="{Binding Deadline, Converter={StaticResource DeadlineToColorConverter}}"/>-->
+						<!--<views:DateButtonView ImageSource="{markupExtensions:PathResolver 'ic_whatshot_white_24dp'}" FormattedText="Deadline: {0}" />-->
 
 						<!--Reminder-->
 						<!--<views:IconButton ImageSource="{markupExtensions:PathResolver 'ic_notifications_active_white_24dp'}" 

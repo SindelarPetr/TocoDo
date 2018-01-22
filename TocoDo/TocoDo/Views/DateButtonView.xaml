@@ -5,12 +5,11 @@
              xmlns:triggerActions="clr-namespace:TocoDo.TriggerActions;assembly=TocoDo"
              xmlns:converters="clr-namespace:TocoDo.Converters;assembly=TocoDo"
              xmlns:controls="clr-namespace:TocoDo.Controls;assembly=TocoDo"
+             xmlns:modifyTask="clr-namespace:TocoDo.Converters.ModifyTask;assembly=TocoDo"
              x:Class="TocoDo.Views.DateButtonView"
              x:Name="This">
 	<views:IconButton.Resources>
 		<ResourceDictionary>
-			<converters:NullableDateTimeConverter x:Key="NullableDateTimeConverter"/>
-			<converters:IsNotNullConverter x:Key="IsNotNullConverter"/>
 		</ResourceDictionary>
 	</views:IconButton.Resources>
 	<views:IconButton.Triggers>
@@ -21,6 +20,6 @@
 		</EventTrigger>
 	</views:IconButton.Triggers>
 	<views:IconButton.InnerContent>
-		<controls:NullableDatePicker x:Name="DatePicker" IsVisible="False" DateSelected="DatePicker_OnDateSelected" NullableDate="{Binding Value}"/>
+		<controls:NullableDatePicker x:Name="DatePicker" IsVisible="False" DateSelected="DatePicker_OnDateSelected" NullableDate="{Binding SelectedDate}"/>
 	</views:IconButton.InnerContent>
 </views:IconButton>

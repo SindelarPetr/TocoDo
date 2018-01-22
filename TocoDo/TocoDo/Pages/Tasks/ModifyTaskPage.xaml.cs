@@ -33,10 +33,10 @@ namespace TocoDo.Pages.Tasks
 
 		public ModifyTaskPage(TaskViewModel taskToModify)
 		{
-			Debug.Write("-------- Called ModifyTaskPage constructor.");
+			MyLogger.WriteStartMethod();
 			BindingContext = taskToModify;
 			InitializeComponent();
-			Debug.Write("-------- Finished calling of ModifyTaskPage constructor.");
+			MyLogger.WriteEndMethod();
 		}
 
 		protected override void OnAppearing()

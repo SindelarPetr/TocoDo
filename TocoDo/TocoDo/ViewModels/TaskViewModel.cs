@@ -15,7 +15,6 @@ namespace TocoDo.ViewModels
 	{
 		#region Backing fields
 		private DateTime? _deadline;
-		private DateTime _creationTime;
 		private string _description;
 		private string _title;
 		private DateTime? _reminder;
@@ -51,8 +50,7 @@ namespace TocoDo.ViewModels
 		}
 		public DateTime CreateTime
 		{
-			get => _creationTime;
-			set => SetValue(ref _creationTime, value);
+			get;
 		}
 		public string Description
 		{
@@ -177,6 +175,7 @@ namespace TocoDo.ViewModels
 			await StorageService.UpdateTask(this);
 		}
 
+		// Todo: Get rid of this
 		private void SelectDateByPicker(Action<DateTime> pickedAction)
 		{
 			TodayPage.Instance.ShowGlobalDatePicker(Deadline ?? DateTime.Today, pickedAction);
