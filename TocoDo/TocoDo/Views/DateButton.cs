@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using TocoDo.Controls;
 using TocoDo.Converters;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace TocoDo.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class DateButtonView : IconButton
+	public class DateButtonView : IconButton
 	{
 		#region Backing fields
 		public static BindableProperty FormattedTextProperty = BindableProperty.Create(nameof(FormattedText), typeof(string), typeof(string), "{0}");
@@ -30,7 +27,6 @@ namespace TocoDo.Views
 			get => (string)GetValue(DateFormatProperty);
 			set => SetValue(DateFormatProperty, value);
 		}
-
 		public DateTime? SelectedDate
 		{
 			get => (DateTime?)GetValue(SelectedDateProperty);
@@ -38,17 +34,39 @@ namespace TocoDo.Views
 		}
 		#endregion
 
+		private NullableDatePicker _nullablePicker;
+
 		public DateButtonView()
 		{
-			InitializeComponent();
+			Clicked += OnClicked;
+			Removed += OnRemoved;
+			_nullablePicker = new NullableDatePicker();
+			_nullablePicker.SetBinding(NullableDatePicker.NullableDateProperty, new Binding("SelectedDate", BindingMode.TwoWay));
+			_nullablePicker.DateSelected += DatePicker_OnDateSelected;
+			//SetBinding(IsActiveProperty, new Binding("SelectedDate", BindingMode.OneWay, new IsNotNullConverter()));
+			InnerContent = _nullablePicker;
+
 			PropertyChanged += OnPropertyChanged;
 			SetText();
+		}
+
+		private void OnRemoved(object sender, EventArgs eventArgs)
+		{
+			SelectedDate = null;
+		}
+
+		private void OnClicked(object sender, EventArgs eventArgs)
+		{
+			_nullablePicker.Focus();
 		}
 
 		private void OnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
 		{
 			if (propertyChangedEventArgs.PropertyName == nameof(SelectedDate) || propertyChangedEventArgs.PropertyName == nameof(FormattedText))
 			{
+				if(SelectedDate != null)
+					MakeUpdateAnimation();
+				IsActive = SelectedDate != null;
 				SetText();
 			}
 		}

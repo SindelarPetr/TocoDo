@@ -88,7 +88,7 @@ namespace TocoDo.Views
 			double maxScale = 1.25;
 			ScaleAnimation += () => Xamarin.Forms.ViewExtensions.ScaleTo(this, maxScale, 250, new Easing(t =>
 			{
-				var val = Math.Sin(-t * Math.PI) * (maxScale - 1);
+				var val = Math.Sin(t * Math.PI) * (maxScale - 1);
 				MyLogger.WriteInMethod(val.ToString());
 				return val;
 			}));

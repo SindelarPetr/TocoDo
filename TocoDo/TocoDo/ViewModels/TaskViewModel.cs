@@ -108,7 +108,7 @@ namespace TocoDo.ViewModels
 			CreateTime = taskModel.CreateTime;
 			_description = taskModel.Description;
 			_reminder = taskModel.Reminder;
-			_scheduleDate = taskModel.ScheduleDate;
+			_scheduleDate = DateTime.Today;
 			#endregion
 			
 			#region Commands

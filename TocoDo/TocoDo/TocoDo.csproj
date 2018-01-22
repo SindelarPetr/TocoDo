@@ -5,15 +5,6 @@
 		<PackageTargetFallback>$(PackageTargetFallback);portable-win+net45+wp8+win81+wpa8</PackageTargetFallback>
   </PropertyGroup>
 
-  <!--<ItemGroup>
-    <EmbeddedResource Include="App.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-  </ItemGroup>-->
-
   <ItemGroup>
     <PackageReference Include="Microcharts" Version="0.7.1" />
     <PackageReference Include="Microcharts.Forms" Version="0.7.1" />
@@ -25,14 +16,6 @@
     <PackageReference Include="Storage.Net" Version="5.8.1.107" />
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.121934" />
   </ItemGroup>
-
-	<!--<ItemGroup>
-		--><!-- https://bugzilla.xamarin.com/show_bug.cgi?id=55591 --><!--
-		<None Remove="**\*.xaml" />
-
-		<Compile Update="**\*.xaml.cs" DependentUpon="%(Filename)" />
-		<EmbeddedResource Include="**\*.xaml" SubType="Designer" Generator="MSBuild:UpdateDesignTimeXaml" />
-	</ItemGroup>-->
 
 	<ItemGroup>
 	  <Compile Remove="Properties\Resources2.Designer.cs" />
@@ -71,13 +54,6 @@
 	    <SubType>Code</SubType>
 	  </Compile>
 	</ItemGroup>
-	
-	<!--<ItemGroup>
-		<EmbeddedResource Include="Resources.resx">
-			<Generator>PublicResXFileCodeGenerator</Generator>
-			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
-	</ItemGroup>-->
 
 	<ItemGroup>
 	  <None Update="Resources.resx">
@@ -103,9 +79,6 @@
 	  <EmbeddedResource Update="Properties\AppStrings.resx">
 	    <Generator>PublicResXFileCodeGenerator</Generator>
 	    <LastGenOutput>AppStrings.Designer.cs</LastGenOutput>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Views\DateButtonView.xaml">
-	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Views\Habits\HabitSetView.xaml">
 	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>

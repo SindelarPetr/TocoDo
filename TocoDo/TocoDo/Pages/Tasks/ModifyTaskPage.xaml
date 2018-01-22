@@ -7,7 +7,8 @@
 			 xmlns:converters="clr-namespace:TocoDo.Converters;assembly=TocoDo"
 			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
 			 x:Class="TocoDo.Pages.Tasks.ModifyTaskPage"
-			 Title="Modify the task">
+			 Title="Modify the task"
+             x:Name="This">
 	<ContentPage.Resources>
 		<ResourceDictionary>
 			<Style TargetType="Label">
@@ -18,6 +19,7 @@
 			<converters:NoteTextConverter x:Key="NoteTextConverter" />
 			<converters:CheckConverter x:Key="CheckConverter" />
 			<converters:DescriptionToColorConverter x:Key="DescriptionToColorConverter" />
+			<converters:ValueCheckerConverter x:Key="ValueCheckerConverter"/>
 		</ResourceDictionary>
 	</ContentPage.Resources>
 	<ContentPage.Content>
@@ -55,11 +57,8 @@
 						                  ClickCommand="{Binding SelectScheduleDateCommand}" 
 						                  IsRemoveButtonVisible="{Binding ScheduleDate, Converter={StaticResource IsNotNullConverter}}"           Text="{Binding ScheduleDate, Converter={StaticResource ScheduleDateConverter}}"                           RemoveCommand="{Binding RemoveScheduleDateCommand}" 
 						                  Color="{Binding ScheduleDate, Converter={StaticResource ScheduleDateToColorConverter}}"/>-->
-						<views:DateButtonView ImageSource="{markupExtensions:PathResolver 'ic_today_white_24dp'}" FormattedText="Schedule date: {0}">
-							<views:DateButtonView.SelectedDate>
-								<x:DateTime/>
-							</views:DateButtonView.SelectedDate>
-						</views:DateButtonView>
+						<views:DateButtonView ImageSource="{markupExtensions:PathResolver 'ic_today_white_24dp'}" FormattedText="Schedule date: {0}" SelectedDate="{Binding Source={x:Reference This}, Path=TaskViewModel.ScheduleDate, Mode=TwoWay, Converter={StaticResource ValueCheckerConverter} }" />
+
 						<!--Deadline-->
 						<!--<views:IconButton ImageSource="{markupExtensions:PathResolver 'ic_whatshot_white_24dp'}" 
 						                  ClickCommand="{Binding SelectDeadlineDateCommand}" 

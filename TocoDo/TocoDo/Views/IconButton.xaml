@@ -5,7 +5,6 @@
 			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
 			 xmlns:views="clr-namespace:TocoDo.Views;assembly=TocoDo"
 			 xmlns:triggerActions="clr-namespace:TocoDo.TriggerActions;assembly=TocoDo"
-			 xmlns:generic="clr-namespace:System.Collections.Generic;assembly=netstandard"
 			 x:Class="TocoDo.Views.IconButton"
              x:Name="This"
 	>

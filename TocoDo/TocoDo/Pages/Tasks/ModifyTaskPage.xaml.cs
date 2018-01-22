@@ -9,7 +9,7 @@ namespace TocoDo.Pages.Tasks
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ModifyTaskPage : ContentPage
 	{
-		private TaskViewModel TaskViewModel
+		public TaskViewModel TaskViewModel
 		{
 			get => (TaskViewModel)BindingContext;
 			set => BindingContext = value;
