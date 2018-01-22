@@ -38,7 +38,9 @@ namespace TocoDo.Views
 			set
 			{
 				ColorChangeAction.NewColor = value;
-				ColorChangeAction.DoInvoke(this);
+
+				if (IsActive)
+					ColorChangeAction.DoInvoke(this);
 			}
 		}
 
