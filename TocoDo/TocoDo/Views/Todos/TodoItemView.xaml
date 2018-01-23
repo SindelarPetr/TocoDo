@@ -7,7 +7,8 @@
 			 xmlns:customRenderers="clr-namespace:TocoDo.CustomRenderers;assembly=TocoDo"
 			 xmlns:converters="clr-namespace:TocoDo.Converters;assembly=TocoDo"
 			 xmlns:markupExtensions="clr-namespace:TocoDo.MarkupExtensions;assembly=TocoDo"
-             Padding="0,5,0,5" VerticalOptions="Center">
+			 xmlns:triggerActions="clr-namespace:TocoDo.TriggerActions;assembly=TocoDo"
+			 Padding="0,5,0,5" VerticalOptions="Center">
 	<ContentView.Resources>
 		<ResourceDictionary>
 			<Style TargetType="tint:TintedImage">
@@ -39,10 +40,15 @@
 
 
 			<!--Title label-->
-			<customRenderers:CrossedLabel x:Name="LabelTitle" Grid.Column="1" Text="{Binding Title}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center" IsStrikeThrough="{Binding Done, Mode=OneWay, Converter={StaticResource IsNotNullConverter}}" TextColor="Gray" HeightRequest="20"/>
+			<customRenderers:CrossedLabel x:Name="LabelTitle" Grid.Column="1" Text="{Binding Title}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center" IsStrikeThrough="{Binding Done, Converter={StaticResource IsNotNullConverter}}" TextColor="Gray" HeightRequest="20"/>
 
 			<!-- Task attributes -->
-			<Grid Grid.Column="2" HorizontalOptions="End" Opacity="0.7" ColumnSpacing="4" VerticalOptions="Center">
+			<Grid Grid.Column="2" HorizontalOptions="End" Opacity="0.7" ColumnSpacing="0" VerticalOptions="Center">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
 				<Grid.Triggers>
 					<MultiTrigger TargetType="Grid">
 						<MultiTrigger.Conditions>
@@ -64,32 +70,13 @@
 					</ResourceDictionary>
 				</Grid.Resources>
 
-				<tint:TintedImage IsVisible="True" Grid.Column="0" Source="{markupExtensions:PathResolver 'ic_whatshot_white_24dp'}" TintColor="{StaticResource DeadlineColor}" >
-					<tint:TintedImage.Triggers>
-						<DataTrigger TargetType="tint:TintedImage"  Binding="{Binding Deadline}" Value="{x:Null}">
-							<Setter Property="IsVisible" Value="False"/>
-						</DataTrigger>
-					</tint:TintedImage.Triggers>
-				</tint:TintedImage>
+				<tint:TintedImage Grid.Column="0" Source="{markupExtensions:PathResolver 'ic_whatshot_white_24dp'}" TintColor="{StaticResource DeadlineColor}" IsVisible="{Binding Deadline, Converter={StaticResource IsNotNullConverter}}"/>
 
 				<!-- Reminder attribute -->
-				<tint:TintedImage IsVisible="True" Grid.Column="1" Source="{markupExtensions:PathResolver 'ic_notifications_active_white_24dp'}"  TintColor="{StaticResource SetItemColor}" >
-					<tint:TintedImage.Triggers>
-						<DataTrigger TargetType="tint:TintedImage"  Binding="{Binding Reminder}" Value="{x:Null}">
-							<Setter Property="IsVisible" Value="False"/>
-						</DataTrigger>
-					</tint:TintedImage.Triggers>
-				</tint:TintedImage>
+				<tint:TintedImage Grid.Column="1" Source="{markupExtensions:PathResolver 'ic_notifications_active_white_24dp'}"  TintColor="{StaticResource SetItemColor}" IsVisible="{Binding Reminder, Converter={StaticResource IsNotNullConverter}}" Margin="4, 0, 0, 0"/>
 
 				<!-- Description attribute -->
-				<tint:TintedImage IsVisible="True" Grid.Column="2" Source="{markupExtensions:PathResolver 'ic_mode_edit_white_24dp'}" TintColor="{StaticResource DescriptionColor}" >
-					<tint:TintedImage.Triggers>
-						<DataTrigger TargetType="tint:TintedImage"  Binding="{Binding Description, Converter={StaticResource IsNotNullOrWhitespaceConverter}}" Value="False">
-							<Setter Property="IsVisible" Value="False"/>
-						</DataTrigger>
-					</tint:TintedImage.Triggers>
-				</tint:TintedImage>
-				<!--</Grid>-->
+				<tint:TintedImage Grid.Column="2" Source="{markupExtensions:PathResolver 'ic_mode_edit_white_24dp'}" TintColor="{StaticResource DescriptionColor}" IsVisible="{Binding Description, Converter={StaticResource IsNotNullOrWhitespaceConverter}}" Margin="4, 0, 0, 0"/>
 			</Grid>
 		</Grid>
 	</ContentView.Content>
