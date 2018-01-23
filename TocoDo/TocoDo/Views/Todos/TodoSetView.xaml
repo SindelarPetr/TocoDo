@@ -3,10 +3,10 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 x:Class="TocoDo.Views.TodoSetView"
 			 x:Name="This"
-			 Padding="0,0,0,0">
+             VerticalOptions="Center">
 	<ContentView.Content>
 		<StackLayout Spacing="0" BindingContext="{x:Reference This}">
-			<Label Text="{Binding HeaderText}" BackgroundColor="{Binding HeaderBackgroundColor}" FontSize="{Binding HeaderTextSize}" IsVisible="{Binding IsHeaderVisible}" TextColor="Black" FontAttributes="Bold"/>
+			<Label Text="{Binding HeaderText}" BackgroundColor="{Binding HeaderBackgroundColor}" FontSize="{Binding HeaderTextSize}" IsVisible="{Binding IsHeaderVisible}" TextColor="{StaticResource ColorPrimary}" />
 			<StackLayout x:Name="LayoutTodo" Spacing="0" />
 		</StackLayout>
 	</ContentView.Content>

@@ -7,7 +7,7 @@
 			 xmlns:customRenderers="clr-namespace:TocoDo.CustomRenderers;assembly=TocoDo"
 			 xmlns:converters="clr-namespace:TocoDo.Converters;assembly=TocoDo"
 			 xmlns:markupExtensions="clr-namespace:TocoDo.MarkupExtensions;assembly=TocoDo"
-             Padding="0,5,0,5">
+             Padding="0,5,0,5" VerticalOptions="Center">
 	<ContentView.Resources>
 		<ResourceDictionary>
 			<Style TargetType="tint:TintedImage">
@@ -16,74 +16,81 @@
 			</Style>
 			<converters:CheckConverter x:Key="CheckConverter" />
 			<converters:IsNotNullConverter x:Key="IsNotNullConverter" />
-			<converters:IsNotNullOrWhitespaceConverter x:Key="IsNotNullOrWhitespaceConverter" />
-			<converters:DateToTextConverter x:Key="DateToTextConverter" />
 			<converters:DoneOpacityConverter x:Key="DoneOpacityConverter" />
-			<x:Double x:Key="TaskAttributeTextSize">11</x:Double>
+			<converters:IsNotNullOrWhitespaceConverter x:Key="IsNotNullOrWhitespaceConverter"/>
 		</ResourceDictionary>
 	</ContentView.Resources>
 	<ContentView.Content>
-		<Grid Opacity="{Binding Done, Converter={StaticResource DoneOpacityConverter}}" ColumnSpacing="10">
+		<Grid VerticalOptions="Center" Opacity="{Binding Done, Converter={StaticResource DoneOpacityConverter}}" ColumnSpacing="10">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="Auto"/>
 				<ColumnDefinition Width="*"/>
 				<ColumnDefinition Width="Auto"/>
 			</Grid.ColumnDefinitions>
 			<Grid.RowDefinitions>
-				<RowDefinition Height="*"/>
+				<RowDefinition Height="Auto"/>
 			</Grid.RowDefinitions>
+			<Grid.GestureRecognizers>
+				<TapGestureRecognizer Tapped="TapTitle_OnTapped"/>
+			</Grid.GestureRecognizers>
 
 			<!--Check box-->
-			<views:TodoBoxView x:Name="TodoBoxView" IsChecked="{Binding Done, Mode=OneWay, Converter={StaticResource CheckConverter}}" CheckCommand="{Binding CheckCommand}"/>
+			<views:TodoBoxView x:Name="TodoBoxView" IsChecked="{Binding Done, Mode=OneWay, Converter={StaticResource CheckConverter}}" CheckCommand="{Binding CheckCommand}" HeightRequest="40" WidthRequest="40"/>
 
-			<Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Column="1" Grid.Row="0" RowSpacing="3" Padding="0,3,0,0">
-				<Grid.GestureRecognizers>
-					<TapGestureRecognizer Tapped="TapTitle_OnTapped"/>
-				</Grid.GestureRecognizers>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="*"/>
-					<RowDefinition Height="Auto"/>
-				</Grid.RowDefinitions>
 
-				<!--Title label-->
-				<customRenderers:CrossedLabel x:Name="LabelTitle" Text="{Binding Title}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center" IsStrikeThrough="{Binding Done, Mode=OneWay, Converter={StaticResource IsNotNullConverter}}" TextColor="Gray"/>
-				<!--<Label Text="{Binding Title}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center" />-->
+			<!--Title label-->
+			<customRenderers:CrossedLabel x:Name="LabelTitle" Grid.Column="1" Text="{Binding Title}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center" IsStrikeThrough="{Binding Done, Mode=OneWay, Converter={StaticResource IsNotNullConverter}}" TextColor="Gray" HeightRequest="20"/>
 
-				<!-- Task attributes -->
-				<Grid Grid.Row="1" HorizontalOptions="End" IsVisible="{Binding HasAttribute}" Opacity="0.7" ColumnSpacing="0">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto"/>
-						<ColumnDefinition Width="Auto"/>
-						<ColumnDefinition Width="Auto"/>
-					</Grid.ColumnDefinitions>
+			<!-- Task attributes -->
+			<Grid Grid.Column="2" HorizontalOptions="End" Opacity="0.7" ColumnSpacing="4" VerticalOptions="Center">
+				<Grid.Triggers>
+					<MultiTrigger TargetType="Grid">
+						<MultiTrigger.Conditions>
+							<BindingCondition Binding="{Binding Deadline}" Value="{x:Null}"/>
+							<BindingCondition Binding="{Binding Description, Converter={StaticResource IsNotNullOrWhitespaceConverter}}" Value="False"/>
+							<BindingCondition Binding="{Binding Reminder}" Value="{x:Null}"/>
+						</MultiTrigger.Conditions>
+						<MultiTrigger.Setters>
+							<Setter Property="IsVisible" Value="False"/>
+						</MultiTrigger.Setters>
+					</MultiTrigger>
+				</Grid.Triggers>
+				<Grid.Resources>
+					<ResourceDictionary>
+						<Style TargetType="tint:TintedImage">
+							<Setter Property="IsVisible" Value="True"/>
+							<Setter Property="HeightRequest" Value="15"/>
+						</Style>
+					</ResourceDictionary>
+				</Grid.Resources>
 
-					<!-- Deadline attribute -->
-					<Grid ColumnSpacing="4" IsVisible="{Binding Deadline, Converter={StaticResource IsNotNullConverter}}" Padding="0,0,5,0">
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="Auto" />
-							<ColumnDefinition Width="Auto" />
-						</Grid.ColumnDefinitions>
-						<tint:TintedImage Grid.Column="0" Source="{markupExtensions:PathResolver 'ic_whatshot_white_24dp'}" TintColor="{StaticResource DeadlineColor}" HeightRequest="15"/>
-						<Label Grid.Column="1" FontSize="{StaticResource TaskAttributeTextSize}" Text="{Binding Deadline, Converter={StaticResource DateToTextConverter}}" TextColor="{StaticResource DeadlineColor}" />
-					</Grid>
+				<tint:TintedImage IsVisible="True" Grid.Column="0" Source="{markupExtensions:PathResolver 'ic_whatshot_white_24dp'}" TintColor="{StaticResource DeadlineColor}" >
+					<tint:TintedImage.Triggers>
+						<DataTrigger TargetType="tint:TintedImage"  Binding="{Binding Deadline}" Value="{x:Null}">
+							<Setter Property="IsVisible" Value="False"/>
+						</DataTrigger>
+					</tint:TintedImage.Triggers>
+				</tint:TintedImage>
 
-					<!-- Reminder attribute -->
-					<StackLayout Grid.Column="1" IsVisible="{Binding Reminder, Converter={StaticResource IsNotNullConverter}}">
-						<tint:TintedImage  Margin="0,0,5,0" Source="{markupExtensions:PathResolver 'ic_notifications_active_white_24dp'}"  TintColor="{StaticResource SetItemColor}" HeightRequest="15" />
-					</StackLayout>
-					
-					<!-- Description attribute -->
-					<tint:TintedImage Grid.Column="2" Source="{markupExtensions:PathResolver 'ic_mode_edit_white_24dp'}" IsVisible="{Binding Description, Converter={StaticResource IsNotNullOrWhitespaceConverter}}" TintColor="{StaticResource DescriptionColor}" HeightRequest="15" />
-				</Grid>
+				<!-- Reminder attribute -->
+				<tint:TintedImage IsVisible="True" Grid.Column="1" Source="{markupExtensions:PathResolver 'ic_notifications_active_white_24dp'}"  TintColor="{StaticResource SetItemColor}" >
+					<tint:TintedImage.Triggers>
+						<DataTrigger TargetType="tint:TintedImage"  Binding="{Binding Reminder}" Value="{x:Null}">
+							<Setter Property="IsVisible" Value="False"/>
+						</DataTrigger>
+					</tint:TintedImage.Triggers>
+				</tint:TintedImage>
+
+				<!-- Description attribute -->
+				<tint:TintedImage IsVisible="True" Grid.Column="2" Source="{markupExtensions:PathResolver 'ic_mode_edit_white_24dp'}" TintColor="{StaticResource DescriptionColor}" >
+					<tint:TintedImage.Triggers>
+						<DataTrigger TargetType="tint:TintedImage"  Binding="{Binding Description, Converter={StaticResource IsNotNullOrWhitespaceConverter}}" Value="False">
+							<Setter Property="IsVisible" Value="False"/>
+						</DataTrigger>
+					</tint:TintedImage.Triggers>
+				</tint:TintedImage>
+				<!--</Grid>-->
 			</Grid>
-
-			<StackLayout x:Name="LayoutCalendar" Grid.Column="2" Grid.Row="0" IsVisible="False">
-				<StackLayout.GestureRecognizers>
-					<TapGestureRecognizer Tapped="TapCalendar_OnTapped"/>
-				</StackLayout.GestureRecognizers>
-
-				<tint:TintedImage x:Name="ImageCalendar" Source="ic_today_white_24dp.png" TintColor="Firebrick" IsVisible="{Binding IsCalendarVisible}"/>
-			</StackLayout>
 		</Grid>
 	</ContentView.Content>
 </ContentView>

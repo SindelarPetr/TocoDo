@@ -1,24 +1,22 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+<Frame xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TocoDo.Views.Global.FrameWrapper"
-             x:Name="This">
-	<ContentView.Content>
-		<Frame Padding="0" BindingContext="{x:Reference This}">
-			<Grid x:Name="Grid" RowSpacing="0">
-
+             x:Name="This"
+		     Padding="0">
+	<Frame.Content>
+		<Grid x:Name="Grid" RowSpacing="0" Padding="0" BindingContext="{x:Reference This}">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto"/>
 					<RowDefinition Height="Auto"/>
 					<RowDefinition Height="*"/>
-				</Grid.RowDefinitions>
+			</Grid.RowDefinitions>
 
-					<Frame VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="{StaticResource ColorPrimaryDark}" CornerRadius="0" Padding="0" HasShadow="True">
-						<Label Text="{Binding Source={x:Reference This}, Path=Header}" TextColor="White" Style="{StaticResource FrameTitle}" HorizontalOptions="FillAndExpand" Margin="10,15,5,2" FontSize="17" FontFamily=""/>
-					</Frame>
-					<!--<BoxView Grid.Row="1" HeightRequest="1" Margin="0,0" Color="Black" Opacity="1"/>-->
-				
-			</Grid>
-		</Frame>
-	</ContentView.Content>
-</ContentView>
+			<Frame VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="{StaticResource ColorPrimaryDark}" CornerRadius="0" Padding="0" HasShadow="True">
+				<Label Text="{Binding Source={x:Reference This}, Path=Header}" TextColor="White" HorizontalOptions="FillAndExpand" Margin="15,15,5,2" FontSize="Large"/>
+			</Frame>
+			<!--<BoxView Grid.Row="1" HeightRequest="1" Margin="0,0" Color="Black" Opacity="1"/>-->
+
+		</Grid>
+	</Frame.Content>
+</Frame>

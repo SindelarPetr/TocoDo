@@ -36,12 +36,7 @@ namespace TocoDo.ViewModels
 		public DateTime? Deadline
 		{
 			get => _deadline;
-			set
-			{
-				SetValue(ref _deadline, value);
-
-				OnPropertyChanged(nameof(HasAttribute));
-			}
+			set => SetValue(ref _deadline, value);
 		}
 		public DateTime? ScheduleDate
 		{
@@ -55,11 +50,7 @@ namespace TocoDo.ViewModels
 		public string Description
 		{
 			get => _description;
-			set
-			{
-				if(SetValue(ref _description, value))
-				OnPropertyChanged(nameof(HasAttribute));
-			}
+			set => SetValue(ref _description, value);
 		}
 		public string Title
 		{
@@ -69,17 +60,8 @@ namespace TocoDo.ViewModels
 		public DateTime? Reminder
 		{
 			get => _reminder;
-			set
-			{
-				SetValue(ref _reminder, value); 
-				OnPropertyChanged(nameof(HasAttribute));
-			}
+			set => SetValue(ref _reminder, value);
 		}
-
-		/// <summary>
-		/// TODO: Get rid of this, Replace with trigger
-		/// </summary>
-		public bool HasAttribute => Reminder != null || Deadline != null || !string.IsNullOrWhiteSpace(Description);
 		#endregion
 
 		#region Commands

@@ -5,11 +5,12 @@
 			 xmlns:markupExtensions="clr-namespace:TocoDo.MarkupExtensions;assembly=TocoDo"
 			 x:Class="TocoDo.Views.TodoBoxView"
 			 x:Name="This">
+	<ContentView.GestureRecognizers>
+		<TapGestureRecognizer Tapped="TapCheckBox_OnTapped"/>
+	</ContentView.GestureRecognizers>
 	<ContentView.Content>
-		<AbsoluteLayout HorizontalOptions="Start" HeightRequest="24" WidthRequest="24" BindingContext="{x:Reference This}">
-			<AbsoluteLayout.GestureRecognizers>
-				<TapGestureRecognizer Tapped="TapCheckBox_OnTapped"/>
-			</AbsoluteLayout.GestureRecognizers>
+		<AbsoluteLayout HorizontalOptions="Start" HeightRequest="32" WidthRequest="32" BindingContext="{x:Reference This}">
+			
 			<abstractions:TintedImage x:Name="ImageBackground" IsVisible="{Binding IsBackgroundVisible}" Source="{markupExtensions:PathResolver 'ic_circle_24dp.png'}" TintColor="{Binding BackgroundImageColor}" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All"/>
 
 			<abstractions:TintedImage x:Name="ImageChecked" Source="{markupExtensions:PathResolver 'ic_checkbox_checked_24dp.png'}" TintColor="{Binding CheckedColor}" IsVisible="{Binding IsChecked, Mode=OneWay}" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" />

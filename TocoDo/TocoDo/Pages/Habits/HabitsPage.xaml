@@ -13,19 +13,19 @@
 			<ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" BindingContext="{x:Reference This}">
 				<StackLayout Style="{StaticResource PageStackLayout}">
 					<!-- Current -->
-					<Label Text="Current" Style="{StaticResource FrameTitle}"/>
+					<!--<Label Text="Current" Style="{StaticResource FrameTitle}"/>-->
 					<Frame>
 						<habits:HabitSetView HabitsSource="{x:Static services:StorageService.CurrentHabits}" />
 					</Frame>
 
 					<!-- Scheduled -->
-					<Label Text="Scheduled" Style="{StaticResource FrameTitle}" />
+					<!--<Label Text="Scheduled" Style="{StaticResource FrameTitle}" />-->
 					<Frame>
 						<habits:HabitSetView x:Name="ScheduledHabitSetView" HabitsSource="{x:Static services:StorageService.ScheduledHabits}" />
 					</Frame>
 
 					<!-- Unscheduled -->
-					<Label Text="Unscheduled" Style="{StaticResource FrameTitle}" />
+					<!--<Label Text="Unscheduled" Style="{StaticResource FrameTitle}" />-->
 					<Frame>
 						<habits:HabitSetView x:Name="UnscheduledHabitSetView" HabitsSource="{x:Static services:StorageService.UnscheduledHabits}" />
 					</Frame>

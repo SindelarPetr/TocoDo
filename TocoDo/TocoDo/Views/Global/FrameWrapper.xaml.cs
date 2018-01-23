@@ -13,7 +13,7 @@ namespace TocoDo.Views.Global
 {
 	[ContentProperty("InnerContent")]
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class FrameWrapper : ContentView
+	public partial class FrameWrapper : Frame
 	{
 		public static BindableProperty InnerContentProperty = BindableProperty.Create(nameof(InnerContent), typeof(View), typeof(View));
 		public static BindableProperty HeaderProperty = BindableProperty.Create(nameof(Header), typeof(string), typeof(string), string.Empty);

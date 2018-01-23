@@ -14,12 +14,12 @@
 				<StackLayout Style="{StaticResource PageStackLayout}">
 					<!-- Someday -->
 					<global:FrameWrapper Header="Someday">
-						<views:TodoSetView Padding="15, 5, 15, 5" TasksSource="{x:Static services:StorageService.SomedayTasks}"/>
+						<views:TodoSetView TasksSource="{x:Static services:StorageService.SomedayTasks}"/>
 					</global:FrameWrapper>
 
 					<!-- Scheduled -->
 					<global:FrameWrapper Header="Scheduled">
-						<views:ScheduledTasksView TasksSource="{x:Static services:StorageService.ScheduledTasks}"/>
+						<views:ScheduledTasksView Margin="0,5,0,0"  TasksSource="{x:Static services:StorageService.ScheduledTasks}"/>
 					</global:FrameWrapper>
 				</StackLayout>
 			</ScrollView>

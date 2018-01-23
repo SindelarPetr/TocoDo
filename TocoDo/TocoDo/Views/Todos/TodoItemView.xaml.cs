@@ -22,24 +22,10 @@ namespace TocoDo.Views
 
 		public TodoItemView(TaskViewModel model)
 		{
-			BindingContext = model;
 
 			InitializeComponent();
+			BindingContext = model;
 		}
-
-
-
-		#region Animations
-		private void AnimateCheck()
-		{
-			//LabelTitle.FadeTo(0.4);
-		}
-
-		private void AnimateUncheck()
-		{
-			//LabelTitle.FadeTo(1);
-		}
-		#endregion
 
 		private async void TapTitle_OnTapped(object sender, EventArgs e)
 		{
@@ -60,7 +46,8 @@ namespace TocoDo.Views
 			TodayPage.Instance.ShowGlobalDatePicker(TaskViewModel.Deadline ?? DateTime.Today, d => ChangeDate(d));
 		}
 
-		private void ChangeDate(DateTime? date)
+		// TODO: Get rid of this
+		private async void ChangeDate(DateTime? date)
 		{
 			try
 			{
@@ -69,7 +56,7 @@ namespace TocoDo.Views
 					return;
 				DateTime? originDateTime = TaskViewModel.Deadline;
 				TaskViewModel.Deadline = date;
-				StorageService.UpdateTask(TaskViewModel);
+				await StorageService.UpdateTask(TaskViewModel);
 				Debug.WriteLine("Ended ChangeDate");
 			}
 			catch (Exception e)

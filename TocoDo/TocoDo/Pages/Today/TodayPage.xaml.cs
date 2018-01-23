@@ -62,8 +62,13 @@ namespace TocoDo.Pages.Main
 
 		private void SetupProgressChart()
 		{
-			var workDayColor = SKColor.Parse("#CFD8DC");
-			var weekendColor = ((Color)App.Current.Resources["ColorPrimaryLight"]).ToSKColor();//SKColor.Parse("#26A69A");
+			//	var todayDayColor = Color.LimeGreen.ToSKColor();
+			//	var workDayColor = SKColor.Parse("#CFD8DC");
+			//	var weekendColor = ((Color)App.Current.Resources["ColorPrimaryLight"]).ToSKColor();//SKColor.Parse("#26A69A");
+			
+			var todayDayColor = Color.White.ToSKColor();
+			var workDayColor = Color.White.ToSKColor();
+			var weekendColor = Color.White.ToSKColor();
 
 			var todayEntry = new Entry(4)
 			{
@@ -99,8 +104,8 @@ namespace TocoDo.Pages.Main
 				{
 					Label = "Wed",
 					ValueLabel = "10",
-					Color = workDayColor,
-					TextColor = workDayColor
+					Color = todayDayColor,
+					TextColor = todayDayColor
 				},
 				new Entry(8)
 				{
@@ -122,10 +127,10 @@ namespace TocoDo.Pages.Main
 			var chart = new LineChart
 			{
 				LineAreaAlpha = 80,
-				LineMode = LineMode.Spline,
-				PointSize = 25,
+				LineMode = LineMode.Straight,
+				PointSize = 15,
 				LabelTextSize = 24,
-				LineSize = 15,
+				LineSize = 7,
 				Entries = entries,
 				BackgroundColor = Color.Transparent.ToSKColor()
 			};
