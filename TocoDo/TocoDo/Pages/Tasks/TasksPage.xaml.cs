@@ -7,9 +7,9 @@ namespace TocoDo.Pages.Main
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class TasksPage : ContentPage
 	{
+		// Todo: Remove static refence to the page
 		public static TasksPage Instance;
-
-		// For creating a new task
+		
 		public TasksPage()
 		{
 			InitializeComponent();

@@ -5,47 +5,22 @@
 			 xmlns:services="clr-namespace:TocoDo.Services;assembly=TocoDo"
 			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
 			 xmlns:customRenderers="clr-namespace:TocoDo.CustomRenderers;assembly=TocoDo"
+			 xmlns:global="clr-namespace:TocoDo.Views.Global;assembly=TocoDo"
 			 x:Class="TocoDo.Pages.Main.TasksPage"
              Style="{DynamicResource ContentPageStyle}">
-
 	<ContentPage.Content>
 		<AbsoluteLayout>
 			<ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
 				<StackLayout Style="{StaticResource PageStackLayout}">
-
 					<!-- Someday -->
-					<Frame Padding="0">
-						<Grid RowSpacing="0">
-							
-							<Grid.RowDefinitions>
-								<RowDefinition Height="Auto"/>
-								<RowDefinition Height="Auto"/>
-								<RowDefinition Height="Auto"/>
-								<RowDefinition Height="*"/>
-							</Grid.RowDefinitions>
-
-							<Label Text="Header" Style="{StaticResource FrameTitle}" HorizontalOptions="FillAndExpand" Margin="13,15,5,2" FontSize="17" FontFamily=""/>
-							<BoxView Grid.Row="1" HeightRequest="1" Margin="0,0" Color="Gray" Opacity="0.4"/>
-							<views:TodoSetView IsVisible="False" x:Name="SomedayTodoSetView" Grid.Row="2" IsCalendarVisible="True" TasksSource="{x:Static services:StorageService.SomedayTasks}" />
-
-							<StackLayout Grid.Row="3" Padding="13">
-								<StackLayout.Resources>
-									<ResourceDictionary>
-										<Style TargetType="Label">
-											<Setter Property="TextColor" Value="Gray"/>
-										</Style>
-									</ResourceDictionary>
-								</StackLayout.Resources>
-								<Label Text="Here I want to be able to insert content"/>
-							</StackLayout>
-						</Grid>
-					</Frame>
+					<global:FrameWrapper Header="Someday">
+						<views:TodoSetView Padding="15, 5, 15, 5" TasksSource="{x:Static services:StorageService.SomedayTasks}"/>
+					</global:FrameWrapper>
 
 					<!-- Scheduled -->
-					<Label Text="Scheduled" Style="{StaticResource FrameTitle}" HorizontalOptions="FillAndExpand" />
-					<Frame Style="{StaticResource TaskFrame}">
+					<global:FrameWrapper Header="Scheduled">
 						<views:ScheduledTasksView TasksSource="{x:Static services:StorageService.ScheduledTasks}"/>
-					</Frame>
+					</global:FrameWrapper>
 				</StackLayout>
 			</ScrollView>
 			<customRenderers:FloatingAddButton AbsoluteLayout.LayoutBounds="1,1,88,88" AbsoluteLayout.LayoutFlags="PositionProportional" Margin="16" Clicked="ButtonAddSomeday_OnClicked"/>

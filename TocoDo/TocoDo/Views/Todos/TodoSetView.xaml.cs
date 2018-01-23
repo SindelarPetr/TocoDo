@@ -118,7 +118,6 @@ namespace TocoDo.Views
 
 		private void TasksSourceOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
 		{
-
 			switch (notifyCollectionChangedEventArgs.Action)
 			{
 				case NotifyCollectionChangedAction.Add:
@@ -133,7 +132,6 @@ namespace TocoDo.Views
 						RemoveTaskModel(task);
 					}
 					break;
-
 			}
 		}
 

@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-			 xmlns:markupExtensions="clr-namespace:TocoDo.MarkupExtensions;assembly=TocoDo"
-			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
 			 x:Class="TocoDo.App">
 	<Application.Resources>
 		<ResourceDictionary>
@@ -14,9 +12,8 @@
 			<Color x:Key="ColorSecondaryDark">#4b2c20</Color>
 			<Color x:Key="ColorSecondaryLight">#a98274</Color>
 
-
 			<Color x:Key="BarColor">#3F51B5</Color>
-			<Color x:Key="BackgroundColor" >#303030</Color>
+			<Color x:Key="BackgroundColor" >#cccccc</Color>
 
 			<Color x:Key="UnsetItemColor">DarkGray</Color>
 			<Color x:Key="DeadlineColor">Red</Color>
