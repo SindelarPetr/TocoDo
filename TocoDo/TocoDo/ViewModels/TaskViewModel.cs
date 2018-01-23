@@ -29,8 +29,9 @@ namespace TocoDo.ViewModels
 			get => _done;
 			set
 			{
-				SetValue(ref _done, value);
-				OnPropertyChanged(".");
+				// Change the done time only if the property has no value...
+				if(_done == null || value == null)
+					SetValue(ref _done, value);
 			}
 		}
 		public DateTime? Deadline
@@ -67,16 +68,6 @@ namespace TocoDo.ViewModels
 		#region Commands
 		public ICommand RemoveCommand { get; }
 		public ICommand UpdateCommand { get; }
-		public ICommand CheckCommand { get; }
-		public ICommand SelectDeadlineDateCommand { get; }
-		public ICommand RemoveDeadlineCommand { get; }
-
-		public ICommand SelectScheduleDateCommand { get; }
-		public ICommand RemoveScheduleDateCommand { get; }
-
-		public ICommand SelectReminderCommand { get; }
-		public ICommand RemoveReminderCommand { get; }
-
 		public ICommand EditDescriptionCommand { get; }
 		#endregion
 
@@ -96,25 +87,8 @@ namespace TocoDo.ViewModels
 			#region Commands
 			RemoveCommand = new MyCommand(async () => await RemoveTask());
 			UpdateCommand = new MyCommand(async () => await Update());
-			CheckCommand = new MyCommand(() =>
-			{
-				if (Done == null)
-					Done = DateTime.Now;
-				else
-					Done = null;
-			});
-
-			// TODO: use triggers to remove some commands
-			SelectDeadlineDateCommand = new MyCommand(async () => await SelectDeadlineDate());
-			RemoveDeadlineCommand = new MyCommand(() => Deadline = null);
-
+			
 			EditDescriptionCommand = new MyCommand(EditDescription);
-
-			SelectScheduleDateCommand = new MyCommand(async () => await SelectScheduleDate());
-			RemoveScheduleDateCommand = new MyCommand(() => ScheduleDate = null);
-
-			SelectReminderCommand = new MyCommand(async () => await SelectReminder());
-			RemoveReminderCommand = new MyCommand(() => Reminder = null);
 			#endregion
 		}
 
@@ -179,10 +153,6 @@ namespace TocoDo.ViewModels
 			{
 				selectedDate = DateTime.Today + TimeSpan.FromDays(1);
 			}
-			//else if (result == Resources.TheDayAfterTomorrow)
-			//{
-			//	selectedDate = DateTime.Today + TimeSpan.FromDays(2);
-			//}
 			else if (result == Resources.PickADate)
 			{
 				SelectDateByPicker(d => pickedAction(d));

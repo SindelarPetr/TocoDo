@@ -36,11 +36,11 @@
 			</Grid.GestureRecognizers>
 
 			<!--Check box-->
-			<views:CheckerView x:Name="TodoBoxView" IsChecked="{Binding Done, Mode=OneWay, Converter={StaticResource CheckConverter}}" HeightRequest="40" WidthRequest="40"/>
+			<views:CheckerView x:Name="TodoBoxView" IsChecked="{Binding Done, Mode=TwoWay, Converter={StaticResource CheckConverter}}" HeightRequest="40" WidthRequest="40" CheckCommand="CheckCommand"/>
 
 
 			<!--Title label-->
-			<customRenderers:CrossedLabel x:Name="LabelTitle" Grid.Column="1" Text="{Binding Title}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center" IsStrikeThrough="{Binding Done, Converter={StaticResource IsNotNullConverter}}" TextColor="Gray" HeightRequest="20"/>
+			<customRenderers:CrossedLabel x:Name="LabelTitle" Grid.Column="1" Text="{Binding Title}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center" IsStrikeThrough="{Binding Done, Mode=OneWay, Converter={StaticResource IsNotNullConverter}}" TextColor="Gray" HeightRequest="20"/>
 
 			<!-- Task attributes -->
 			<Grid Grid.Column="2" HorizontalOptions="End" Opacity="0.7" ColumnSpacing="0" VerticalOptions="Center">
