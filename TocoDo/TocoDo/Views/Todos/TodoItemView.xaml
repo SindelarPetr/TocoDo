@@ -36,7 +36,7 @@
 			</Grid.GestureRecognizers>
 
 			<!--Check box-->
-			<views:TodoBoxView x:Name="TodoBoxView" IsChecked="{Binding Done, Mode=OneWay, Converter={StaticResource CheckConverter}}" CheckCommand="{Binding CheckCommand}" HeightRequest="40" WidthRequest="40"/>
+			<views:CheckerView x:Name="TodoBoxView" IsChecked="{Binding Done, Mode=OneWay, Converter={StaticResource CheckConverter}}" HeightRequest="40" WidthRequest="40"/>
 
 
 			<!--Title label-->
