@@ -6,6 +6,7 @@
 			 xmlns:services="clr-namespace:TocoDo.Services;assembly=TocoDo"
 			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
 			 xmlns:customRenderers="clr-namespace:TocoDo.CustomRenderers;assembly=TocoDo"
+			 xmlns:global="clr-namespace:TocoDo.Views.Global;assembly=TocoDo"
 			 x:Class="TocoDo.Pages.Main.HabitsPage"
 			 x:Name="This">
 	<ContentPage.Content>
@@ -13,29 +14,19 @@
 			<ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" BindingContext="{x:Reference This}">
 				<StackLayout Style="{StaticResource PageStackLayout}">
 					<!-- Current -->
-					<!--<Label Text="Current" Style="{StaticResource FrameTitle}"/>-->
-					<Frame>
+					<global:FrameWrapper Header="Current">
 						<habits:HabitSetView HabitsSource="{x:Static services:StorageService.CurrentHabits}" />
-					</Frame>
+					</global:FrameWrapper>
 
 					<!-- Scheduled -->
-					<!--<Label Text="Scheduled" Style="{StaticResource FrameTitle}" />-->
-					<Frame>
+					<global:FrameWrapper Header="Scheduled">
 						<habits:HabitSetView x:Name="ScheduledHabitSetView" HabitsSource="{x:Static services:StorageService.ScheduledHabits}" />
-					</Frame>
+					</global:FrameWrapper>
 
 					<!-- Unscheduled -->
-					<!--<Label Text="Unscheduled" Style="{StaticResource FrameTitle}" />-->
-					<Frame>
+					<global:FrameWrapper Header="Unscheduled">
 						<habits:HabitSetView x:Name="UnscheduledHabitSetView" HabitsSource="{x:Static services:StorageService.UnscheduledHabits}" />
-					</Frame>
-
-					<!-- Recommended -->
-					<!--<Label Text="Recommended" Style="{StaticResource FrameTitle}" />
-					<Frame>
-						<StackLayout Spacing="6">
-						</StackLayout>
-					</Frame>-->
+					</global:FrameWrapper>
 				</StackLayout>
 			</ScrollView>
 

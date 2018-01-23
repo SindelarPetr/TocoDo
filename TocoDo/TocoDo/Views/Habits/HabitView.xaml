@@ -16,13 +16,14 @@
 	</ContentView.Resources>
 
 	<ContentView.Content>
-		<StackLayout Spacing="0" Padding="0">
+		<StackLayout Spacing="0" Padding="0, 3">
 			<StackLayout.GestureRecognizers>
 				<TapGestureRecognizer Command="{Binding EditCommand}" />
 			</StackLayout.GestureRecognizers>
-			<customRenderers:NoLineEntry x:Name="EntryEditTitle" Text="{Binding ModelTitle, Mode=OneWay}" IsVisible="{Binding IsEditTitleMode}" Unfocused="EditTitle_OnUnfocused" FontSize="Large" FontAttributes="Bold" TextColor="Black" />
-			<Label Text="{Binding ModelTitle}" IsVisible="{Binding IsEditTitleMode, Converter={StaticResource BoolReverseConverter}}" FontSize="Large" FontAttributes="Bold" TextColor="Black"/>
-			<Label Text="{Binding ., Converter={StaticResource HabitDateConverter}}" Margin="10, 0, 0, 0" FontSize="12" IsVisible="{Binding ModelStartDate, Converter={StaticResource IsNotNullConverter}}"/>
+
+			<customRenderers:NoLineEntry x:Name="EntryEditTitle" Text="{Binding ModelTitle, Mode=OneWay}" IsVisible="{Binding IsEditTitleMode}" Unfocused="EditTitle_OnUnfocused" FontSize="Medium" TextColor="{StaticResource ColorPrimaryLight}" />
+			<Label Text="{Binding ModelTitle}" IsVisible="{Binding IsEditTitleMode, Converter={StaticResource BoolReverseConverter}}" FontSize="Medium"  TextColor="{StaticResource ColorPrimaryLight}" />
+			<Label Text="{Binding ., Converter={StaticResource HabitDateConverter}}" Margin="0" FontSize="12" IsVisible="{Binding ModelStartDate, Converter={StaticResource IsNotNullConverter}}"/>
 		</StackLayout>
 	</ContentView.Content>
 </ContentView>
