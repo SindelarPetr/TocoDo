@@ -73,51 +73,51 @@ namespace TocoDo.Pages.Main
 			var todayEntry = new Entry(4)
 			{
 				Label = "Sat",
-				ValueLabel = "4",
+				//ValueLabel = "4",
 				Color = weekendColor,
 				TextColor = weekendColor
 			};
 			var entries = new[]
 			{
-				new Entry(2)
+				new Entry(0)
 				{
 					Label = "Sun",
-					ValueLabel = "2",
+					//ValueLabel = "2",
 					Color = weekendColor,
 					TextColor = weekendColor
 				},
 				new Entry(6)
 				{
 					Label = "Mon",
-					ValueLabel = "6",
+					//ValueLabel = "6",
 					Color = workDayColor,
 					TextColor = workDayColor
 				},
 				new Entry(7)
 				{
 					Label = "Tue",
-					ValueLabel = "7",
+					//ValueLabel = "7",
 					Color = workDayColor,
 					TextColor = workDayColor
 				},
 				new Entry(10)
 				{
 					Label = "Wed",
-					ValueLabel = "10",
+					//ValueLabel = "10",
 					Color = todayDayColor,
 					TextColor = todayDayColor
 				},
 				new Entry(8)
 				{
 					Label = "Thu",
-					ValueLabel = "8",
+					//ValueLabel = "8",
 					Color = workDayColor,
 					TextColor = workDayColor
 				},
 				new Entry(13)
 				{
 					Label = "Fri",
-					ValueLabel = "13",
+					//ValueLabel = "13",
 					Color = workDayColor,
 					TextColor = workDayColor
 				},
@@ -130,9 +130,10 @@ namespace TocoDo.Pages.Main
 				LineMode = LineMode.Straight,
 				PointSize = 15,
 				LabelTextSize = 24,
-				LineSize = 7,
+				LineSize = 5,
 				Entries = entries,
-				BackgroundColor = Color.Transparent.ToSKColor()
+				BackgroundColor = Color.Transparent.ToSKColor(),
+				//PointMode = PointMode.None
 			};
 
 			ChartProgress.Chart = chart;
