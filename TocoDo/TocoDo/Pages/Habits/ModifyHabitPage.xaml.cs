@@ -47,12 +47,19 @@ namespace TocoDo.Pages.Habits
 
 		private void EntryTitle_OnUnfocused(object sender, FocusEventArgs e)
 		{
-			var title = EntryTitle.Text.Trim();
+			//var title = EntryTitle.Text.Trim();
 
-			if (string.IsNullOrWhiteSpace(title))
-				return;
+			//if (string.IsNullOrWhiteSpace(title))
+			//	return;
 
-			EntryTitle.Text = Habit.ModelTitle = title;
+			//EntryTitle.Text = Habit.ModelTitle = title;
+		}
+
+		private void TapGestureRecognizer_OnTapped(object sender, EventArgs e)
+		{
+			var editDescriptionPage = new EditDescriptionPage(Habit.ModelTitle, Habit.ModelDescription, d => Habit.ModelDescription = d);
+
+			Navigation.PushModalAsync(editDescriptionPage);
 		}
 	}
 }

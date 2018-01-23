@@ -8,14 +8,18 @@
 			 xmlns:habits="clr-namespace:TocoDo.Converters.Habits;assembly=TocoDo"
 			 xmlns:converters="clr-namespace:TocoDo.Converters;assembly=TocoDo"
 			 xmlns:habits1="clr-namespace:TocoDo.Views.Habits;assembly=TocoDo"
-			 xmlns:triggerActions="clr-namespace:TocoDo.TriggerActions;assembly=TocoDo"
 			 xmlns:properties="clr-namespace:TocoDo.Properties;assembly=TocoDo"
 			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
 			 x:Class="TocoDo.Pages.Habits.ModifyHabitPage"
 			 Title="Modify the habit"
              x:Name="This">
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<converters:IsNotNullOrWhitespaceConverter x:Key="IsNotNullOrWhitespaceConverter"/>
+		</ResourceDictionary>
+	</ContentPage.Resources>
 	<ContentPage.Content>
-		<Grid AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+		<Grid>
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto"/>
 				<RowDefinition Height="*"/>
@@ -23,14 +27,19 @@
 			</Grid.RowDefinitions>
 
 			<!--Top Panel-->
-			<Frame Margin="0" CornerRadius="0" HasShadow="False" Padding="16,5,0,0" OutlineColor="{StaticResource ColorPrimaryLight}"
-				   BackgroundColor="{StaticResource ColorPrimaryLight}">
+			<Frame Margin="0" CornerRadius="0" HasShadow="False" Padding="16,5,0,0" OutlineColor="{StaticResource ColorPrimary}"
+				   BackgroundColor="{StaticResource ColorPrimary}">
 				<customRenderers:NoLineEntry x:Name="EntryTitle" Text="{Binding ModelTitle, Mode=OneWay}" HorizontalOptions="FillAndExpand" TextColor="White" Unfocused="EntryTitle_OnUnfocused" />
 			</Frame>
 
 			<!--Body-->
 			<ScrollView Grid.Row="1">
 				<Grid Padding="10, 10, 10, 40">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="*"/>
+					</Grid.RowDefinitions>
 					<!--Start and repeat buttons-->
 					<Frame Margin="0" VerticalOptions="Center">
 						<StackLayout>
@@ -49,9 +58,21 @@
 
 					<!--Description-->
 					<Frame Margin="0" Grid.Row="2" HorizontalOptions="FillAndExpand">
-						<StackLayout>
-
-						</StackLayout>
+						<ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+							<StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+								<StackLayout.GestureRecognizers>
+									<TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped"/>
+								</StackLayout.GestureRecognizers>
+								<Label Text="{Binding ModelDescription}" VerticalTextAlignment="Start" HorizontalTextAlignment="Start">
+									<Label.Triggers>
+										<DataTrigger TargetType="Label"  Binding="{Binding ModelDescription, Converter={StaticResource IsNotNullOrWhitespaceConverter}}" Value="False">
+											<Setter Property="TextColor" Value="DarkGray">
+											</Setter>
+										</DataTrigger>
+									</Label.Triggers>
+								</Label>
+							</StackLayout>
+						</ScrollView>
 					</Frame>
 				</Grid>
 			</ScrollView>
