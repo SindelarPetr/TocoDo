@@ -3,6 +3,8 @@ using System.Diagnostics;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using Rg.Plugins.Popup.Extensions;
+using Rg.Plugins.Popup.Pages;
 using TocoDo.Pages.Main;
 using TocoDo.Properties;
 using Xamarin.Forms;
@@ -18,7 +20,7 @@ namespace TocoDo
 		{
 			MyLogger.WriteStartMethod();
 			InitializeComponent();
-			
+
 			var main = new MainPage();
 			MyLogger.WriteInMethod();
 

@@ -65,6 +65,12 @@ namespace TocoDo
 	    {
 			Debug.WriteLine(GetIndent() + message);
 	    }
+
+	    [Conditional("DEBUG")]
+	    public static void WriteException(Exception ex)
+	    {
+			WriteLine($"ERROR: An exception has been thrown: { ex.Message } -----> with following stack-trace: { ex.StackTrace }");
+	    }
 		
 	    public static string GetFileName(string path)
 	    {

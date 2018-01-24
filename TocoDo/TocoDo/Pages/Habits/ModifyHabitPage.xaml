@@ -45,7 +45,7 @@
 						<StackLayout>
 							<views:DateButtonView x:Name="DateButtonView" SelectedDate="{Binding Source={x:Reference This}, Path=Habit.ModelStartDate}" ImageSource="{markupExtensions:PathResolver Source='ic_today_white_24dp'}" DateFormat="{x:Static properties:Resources.StartDateText}"/>
 
-							<habits1:RepeatTypeButton FormattedText="{x:Static properties:Resources.RepeatTypeText}" RepeatType="{Binding Source={x:Reference This}, Path=Habit.ModelHabitType, Mode=TwoWay}" ImageSource="{markupExtensions:PathResolver 'ic_loop_white_24dp'}" IsActive="{Binding Source={x:Reference DateButtonView}, Path=IsActive}" HasRemoveButton="False"/>
+							<habits1:RepeatTypeButton FormattedText="{x:Static properties:Resources.RepeatTypeText}" RepeatType="{Binding Source={x:Reference This}, Path=Habit.ModelHabitType, Mode=TwoWay}" ImageSource="{markupExtensions:PathResolver 'ic_loop_white_24dp'}" IsActive="{Binding Source={x:Reference DateButtonView}, Path=IsActive}" HasRemoveButton="False" Clicked="IconButton_OnClicked"/>
 						</StackLayout>
 					</Frame>
 

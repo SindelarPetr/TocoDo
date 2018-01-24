@@ -20,6 +20,7 @@ namespace TocoDo.Droid
 
 			base.OnCreate(bundle);
 
+			Rg.Plugins.Popup.Popup.Init(this, bundle);
 			TintedImageRenderer.Init();
 			global::Xamarin.Forms.Forms.Init(this, bundle);
 

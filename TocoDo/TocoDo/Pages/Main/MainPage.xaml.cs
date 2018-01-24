@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics;
+using Rg.Plugins.Popup.Extensions;
+using TocoDo.Popups;
 using TocoDo.Services;
 using Xamarin.Forms;
 

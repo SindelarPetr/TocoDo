@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
+using Rg.Plugins.Popup.Contracts;
+using Rg.Plugins.Popup.Extensions;
+using Rg.Plugins.Popup.Services;
+using TocoDo.Popups;
 using TocoDo.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -60,6 +64,20 @@ namespace TocoDo.Pages.Habits
 			var editDescriptionPage = new EditDescriptionPage(Habit.ModelTitle, Habit.ModelDescription, d => Habit.ModelDescription = d);
 
 			Navigation.PushModalAsync(editDescriptionPage);
+		}
+
+		private async void IconButton_OnClicked(object sender, EventArgs e)
+		{
+			try
+			{
+				var repeatTypePopup = new HabitRepeatTypePopup();
+				await PopupNavigation.Instance.PushAsync(repeatTypePopup);
+			}
+			catch (Exception ex)
+			{
+				MyLogger.WriteException(ex);
+				throw;
+			}
 		}
 	}
 }
