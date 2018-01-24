@@ -19,6 +19,7 @@ namespace TocoDo.Views.Global
 		public static BindableProperty InnerContentProperty = BindableProperty.Create(nameof(InnerContent), typeof(View), typeof(View));
 		public static BindableProperty HeaderProperty = BindableProperty.Create(nameof(Header), typeof(string), typeof(string), string.Empty);
 		public static BindableProperty HeaderBackgroundColorProperty = BindableProperty.Create(nameof(HeaderBackgroundColor), typeof(Color), typeof(Color), Color.Gray);
+		public static BindableProperty HeaderTextColorProperty = BindableProperty.Create(nameof(HeaderTextColor), typeof(Color), typeof(Color), Color.White);
 		#endregion
 
 		#region Properties
@@ -27,17 +28,20 @@ namespace TocoDo.Views.Global
 			get => (View)GetValue(InnerContentProperty);
 			set => SetValue(InnerContentProperty, value);
 		}
-
 		public string Header
 		{
 			get => (string)GetValue(HeaderProperty);
 			set => SetValue(HeaderProperty, value);
 		}
-
 		public Color HeaderBackgroundColor
 		{
 			get => (Color) GetValue(HeaderBackgroundColorProperty);
 			set => SetValue(HeaderBackgroundColorProperty, value);
+		}
+		public Color HeaderTextColor
+		{
+			get => (Color) GetValue(HeaderTextColorProperty);
+			set => SetValue(HeaderTextColorProperty, value);
 		}
 		#endregion
 
