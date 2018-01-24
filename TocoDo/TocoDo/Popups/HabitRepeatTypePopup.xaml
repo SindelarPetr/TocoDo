@@ -2,12 +2,22 @@
 <pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
-             x:Class="TocoDo.Popups.HabitRepeatTypePopup">
+             xmlns:global="clr-namespace:TocoDo.Views.Global;assembly=TocoDo"
+             xmlns:pickerItems="clr-namespace:TocoDo.PickerItems;assembly=TocoDo"
+             x:Class="TocoDo.Popups.HabitRepeatTypePopup"
+                x:Name="This">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="35">
+			<StackLayout.BindingContext>
+				<x:Reference Name="This"/>
+			</StackLayout.BindingContext>
+			<global:FrameWrapper Header="Repeating..." HeaderBackgroundColor="{StaticResource ColorSecondary}" >
+				<Picker SelectedItem="{Binding SelectedRepeatType}" ItemDisplayBinding="{Binding Text}">
+					<Picker.ItemsSource>
+						<pickerItems:RepeatTypeItems />
+					</Picker.ItemsSource>
+				</Picker>
+			</global:FrameWrapper>
+		</StackLayout>
     </ContentPage.Content>
 </pages:PopupPage>
