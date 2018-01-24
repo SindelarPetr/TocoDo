@@ -12,7 +12,7 @@
 					<RowDefinition Height="*"/>
 			</Grid.RowDefinitions>
 
-			<Frame VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="{StaticResource ColorPrimaryDark}" CornerRadius="0" Padding="0" HasShadow="True">
+			<Frame VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="{Binding HeaderBackgroundColor}" CornerRadius="0" Padding="0" HasShadow="True">
 				<Label Text="{Binding Source={x:Reference This}, Path=Header}" TextColor="White" HorizontalOptions="FillAndExpand" Margin="15,15,5,2" FontSize="Large"/>
 			</Frame>
 			<!--<BoxView Grid.Row="1" HeightRequest="1" Margin="0,0" Color="Black" Opacity="1"/>-->
