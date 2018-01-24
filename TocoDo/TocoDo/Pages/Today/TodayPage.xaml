@@ -55,8 +55,9 @@
 							<StackLayout Padding="15, 0, 5, 0">
 								<abstractions:TintedImage Source="ic_keyboard_arrow_left_white_36dp.png"/>
 							</StackLayout>
+							
 							<views:MyCalendarView Grid.Column="1" HorizontalOptions="FillAndExpand"/>
-
+							
 							<StackLayout Grid.Column="2" Padding="5, 0, 15, 0">
 								<abstractions:TintedImage  Source="ic_keyboard_arrow_right_white_36dp.png" VerticalOptions="Center"/>
 							</StackLayout>

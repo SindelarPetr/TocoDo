@@ -70,7 +70,12 @@ namespace TocoDo.Pages.Habits
 		{
 			try
 			{
-				var repeatTypePopup = new HabitRepeatTypePopup();
+				var repeatTypePopup = new HabitRepeatTypePopup(Habit.ModelRepeatType, Habit.ModelDaysToRepeat);
+				repeatTypePopup.Save += (repeatType, daysToRepeat) =>
+				{
+					Habit.ModelRepeatType = repeatType;
+					Habit.ModelDaysToRepeat = (short) daysToRepeat;
+				};
 				await PopupNavigation.Instance.PushAsync(repeatTypePopup);
 			}
 			catch (Exception ex)

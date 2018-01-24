@@ -4,20 +4,74 @@
              xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
              xmlns:global="clr-namespace:TocoDo.Views.Global;assembly=TocoDo"
              xmlns:pickerItems="clr-namespace:TocoDo.PickerItems;assembly=TocoDo"
+             xmlns:customRenderers="clr-namespace:TocoDo.CustomRenderers;assembly=TocoDo"
+             xmlns:controls="clr-namespace:TocoDo.Controls;assembly=TocoDo"
+             xmlns:properties="clr-namespace:TocoDo.Properties;assembly=TocoDo"
              x:Class="TocoDo.Popups.HabitRepeatTypePopup"
                 x:Name="This">
-    <ContentPage.Content>
-        <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="35">
+	<ContentPage.Content>
+		<StackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="35">
 			<StackLayout.BindingContext>
 				<x:Reference Name="This"/>
 			</StackLayout.BindingContext>
-			<global:FrameWrapper Header="Repeating..." HeaderBackgroundColor="{StaticResource ColorSecondary}" >
-				<Picker SelectedItem="{Binding SelectedRepeatType}" ItemDisplayBinding="{Binding Text}">
-					<Picker.ItemsSource>
-						<pickerItems:RepeatTypeItems />
-					</Picker.ItemsSource>
-				</Picker>
+			<global:FrameWrapper Header="Repeat every..." HeaderBackgroundColor="White" HeaderTextColor="{StaticResource ColorPrimary}">
+				<StackLayout Padding="10" BindingContext="{x:Reference This}">
+					<StackLayout Orientation="Horizontal" Padding="10" Spacing="15">
+						<Entry Keyboard="Numeric" Text="{Binding DaysToRepeat}" WidthRequest="30"/>
+						<controls:ResizablePicker x:Name="Picker" SelectedIndexChanged="Picker_OnSelectedIndexChanged" />
+					</StackLayout>
+					<StackLayout IsVisible="False" Orientation="Vertical" Spacing="8">
+						<StackLayout.Resources>
+							<ResourceDictionary>
+								<Style TargetType="Button">
+									<Setter Property="BackgroundColor" Value="White"/>
+									<Setter Property="WidthRequest" Value="54"/>
+									<Setter Property="HeightRequest" Value="54"/>
+									<Setter Property="FontAttributes" Value="None"/>
+									<Setter Property="FontSize" Value="Micro"/>
+									<Setter Property="BorderWidth" Value="5"/>
+									<Setter Property="BorderColor" Value="Blue"/>
+								</Style>
+								<Style TargetType="StackLayout">
+									<Setter Property="HorizontalOptions" Value="Center"/>
+									<Setter Property="VerticalOptions" Value="Center"/>
+									<Setter Property="Orientation" Value="Horizontal"/>
+									<Setter Property="Spacing" Value="8"/>
+								</Style>
+							</ResourceDictionary>
+						</StackLayout.Resources>
+						<StackLayout.Triggers>
+							<DataTrigger TargetType="StackLayout"  Binding="{Binding Source={x:Reference Picker}, Path=SelectedIndex}" Value="1">
+								<Setter Property="IsVisible" Value="True"/>
+							</DataTrigger>
+						</StackLayout.Triggers>
+						<StackLayout>
+							<Button Text="{x:Static properties:Resources.Mon}"/>
+							<Button Text="{x:Static properties:Resources.Tue}"/>
+							<Button Text="{x:Static properties:Resources.Wed}"/>
+							<Button Text="{x:Static properties:Resources.Thu}"/>
+						</StackLayout>
+						<StackLayout>
+							<Button Text="{x:Static properties:Resources.Fri}"/>
+							<Button Text="{x:Static properties:Resources.Sat}"/>
+							<Button Text="{x:Static properties:Resources.Sun}"/>
+						</StackLayout>
+					</StackLayout>
+					<StackLayout  Orientation="Horizontal" HorizontalOptions="End">
+						<StackLayout.Resources>
+							<ResourceDictionary>
+								<Style TargetType="customRenderers:NoBorderButton">
+									<Setter Property="WidthRequest" Value="80"/>
+									<Setter Property="BackgroundColor" Value="Transparent"/>
+									<Setter Property="HorizontalOptions" Value="End"/>
+								</Style>
+							</ResourceDictionary>
+						</StackLayout.Resources>
+						<customRenderers:NoBorderButton Text="Cancel" TextColor="Gray" Clicked="Cancel_OnClicked" />
+						<customRenderers:NoBorderButton Text="Done" TextColor="Blue" Clicked="Save_OnClicked" />
+					</StackLayout>
+				</StackLayout>
 			</global:FrameWrapper>
 		</StackLayout>
-    </ContentPage.Content>
+	</ContentPage.Content>
 </pages:PopupPage>

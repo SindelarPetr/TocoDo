@@ -1,6 +1,7 @@
 ﻿using SQLite;
 using System;
 using System.Collections.Generic;
+using TocoDo.Properties;
 
 namespace TocoDo.Models
 {

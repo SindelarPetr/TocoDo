@@ -187,7 +187,7 @@ namespace TocoDo.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to days.
+        ///   Looks up a localized string similar to Days.
         /// </summary>
         public static string Days {
             get {
@@ -358,7 +358,7 @@ namespace TocoDo.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to months.
+        ///   Looks up a localized string similar to Months.
         /// </summary>
         public static string Months {
             get {
@@ -678,6 +678,15 @@ namespace TocoDo.Properties {
         public static string Year {
             get {
                 return ResourceManager.GetString("Year", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Years.
+        /// </summary>
+        public static string Years {
+            get {
+                return ResourceManager.GetString("Years", resourceCulture);
             }
         }
         

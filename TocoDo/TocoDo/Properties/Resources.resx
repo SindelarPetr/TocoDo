@@ -160,7 +160,7 @@
     <value>Day</value>
   </data>
   <data name="Days" xml:space="preserve">
-    <value>days</value>
+    <value>Days</value>
   </data>
   <data name="DaysAgo" xml:space="preserve">
     <value>days ago</value>
@@ -217,7 +217,7 @@
     <value>Month</value>
   </data>
   <data name="Months" xml:space="preserve">
-    <value>months</value>
+    <value>Months</value>
   </data>
   <data name="NewTask" xml:space="preserve">
     <value>New task</value>
@@ -323,6 +323,9 @@
   </data>
   <data name="Year" xml:space="preserve">
     <value>Year</value>
+  </data>
+  <data name="Years" xml:space="preserve">
+    <value>Years</value>
   </data>
   <data name="Yeasterday" xml:space="preserve">
     <value>Yeasterday</value>
