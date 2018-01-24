@@ -9,6 +9,7 @@
 			 xmlns:customRenderers="clr-namespace:TocoDo.CustomRenderers;assembly=TocoDo"
 			 xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
 			 xmlns:global="clr-namespace:TocoDo.Views.Global;assembly=TocoDo"
+			 xmlns:forms="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.CarouselView"
 			 x:Class="TocoDo.Pages.Main.TodayPage"
 			 x:Name="This">
 	<ContentPage.Resources>
@@ -30,8 +31,36 @@
 					</Grid.RowDefinitions>
 
 					<!--Progress-->
-					<global:FrameWrapper Header="Progress" VerticalOptions="FillAndExpand" HeightRequest="200" BackgroundColor="{StaticResource ColorPrimary}">
-						<microcharts:ChartView x:Name="ChartProgress" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"  Margin="-5,10"/>
+					<global:FrameWrapper Header="Progress" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource ColorPrimaryDark}">
+						<!--<microcharts:ChartView x:Name="ChartProgress" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"  Margin="-5,10"/>-->
+						<Grid ColumnSpacing="0">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+							<Grid.Resources>
+								<ResourceDictionary>
+									<Style TargetType="StackLayout">
+										<Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+										<Setter Property="Padding" Value="10, 0, 10, 0"/>
+									</Style>
+									<Style TargetType="abstractions:TintedImage">
+										<Setter Property="TintColor" Value="White"/>
+										<Setter Property="VerticalOptions" Value="Center"/>
+									</Style>
+								</ResourceDictionary>
+							</Grid.Resources>
+
+							<StackLayout Padding="15, 0, 5, 0">
+								<abstractions:TintedImage Source="ic_keyboard_arrow_left_white_36dp.png"/>
+							</StackLayout>
+							<views:MyCalendarView Grid.Column="1" HorizontalOptions="FillAndExpand"/>
+
+							<StackLayout Grid.Column="2" Padding="5, 0, 15, 0">
+								<abstractions:TintedImage  Source="ic_keyboard_arrow_right_white_36dp.png" VerticalOptions="Center"/>
+							</StackLayout>
+						</Grid>
 					</global:FrameWrapper>
 
 					<!--TODAY-->

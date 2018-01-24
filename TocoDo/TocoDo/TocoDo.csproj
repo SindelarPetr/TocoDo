@@ -16,6 +16,7 @@
     <PackageReference Include="sqlite-net-pcl" Version="1.4.118" />
     <PackageReference Include="Storage.Net" Version="5.8.1.107" />
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.122203" />
+    <PackageReference Include="Xamarin.Forms.CarouselView" Version="2.3.0-pre2" />
   </ItemGroup>
 
 	<ItemGroup>
@@ -90,10 +91,10 @@
 	  <EmbeddedResource Update="Views\Habits\HabitSetView.xaml">
 	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 	  </EmbeddedResource>
-	  <EmbeddedResource Update="Views\Habits\SelectRepeatView.xaml">
+	  <EmbeddedResource Update="Views\Habits\TodayHabitView.xaml">
 	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 	  </EmbeddedResource>
-	  <EmbeddedResource Update="Views\Habits\TodayHabitView.xaml">
+	  <EmbeddedResource Update="Views\MyCalendarView.xaml">
 	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 	  </EmbeddedResource>
 	</ItemGroup>

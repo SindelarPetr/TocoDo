@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TocoDo.Views.MyCalendarView">
+	<ContentView.Resources>
+		<ResourceDictionary>
+			<GridLength x:Key="CellSize">30</GridLength>
+			<x:Int32 x:Key="BorderThick">3</x:Int32>
+			<Color x:Key="BorderColor">White</Color>
+		</ResourceDictionary>
+	</ContentView.Resources>
+	<ContentView.Content>
+		<Grid Padding="{StaticResource BorderThick}">
+			<Grid.ColumnDefinitions>
+				<!--<ColumnDefinition Width="{StaticResource CellSize}"/>
+				<ColumnDefinition Width="{StaticResource CellSize}"/>
+				<ColumnDefinition Width="{StaticResource CellSize}"/>
+				<ColumnDefinition Width="{StaticResource CellSize}"/>
+				<ColumnDefinition Width="{StaticResource CellSize}"/>
+				<ColumnDefinition Width="{StaticResource CellSize}"/>
+				<ColumnDefinition Width="{StaticResource CellSize}"/>-->
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="{StaticResource CellSize}"/>
+				<RowDefinition Height="{StaticResource CellSize}"/>
+				<RowDefinition Height="{StaticResource CellSize}"/>
+				<RowDefinition Height="{StaticResource CellSize}"/>
+				<RowDefinition Height="{StaticResource CellSize}"/>
+			</Grid.RowDefinitions>
+			<Grid.Resources>
+				<ResourceDictionary>
+					<Style x:Key="LabelBase" TargetType="Label">
+						<Setter Property="TextColor" Value="White"/>
+						<Setter Property="FontSize" Value="Small"/>
+						<Setter Property="HorizontalOptions" Value="Fill"/>
+						<Setter Property="VerticalOptions" Value="Fill"/>
+						<Setter Property="HorizontalTextAlignment" Value="Center"/>
+						<Setter Property="VerticalTextAlignment" Value="Center"/>
+						<Setter Property="BackgroundColor" Value="{StaticResource ColorPrimaryDark}"/>
+					</Style>
+					<Style TargetType="Label" BasedOn="{StaticResource LabelBase}"/>
+
+					<Style x:Key="LabelOtherDays" TargetType="Label" BasedOn="{StaticResource LabelBase}">
+						<Setter Property="TextColor" Value="DarkGray"/>
+					</Style>
+					<Style x:Key="LabelToday" TargetType="Label" BasedOn="{StaticResource LabelBase}">
+						<Setter Property="FontAttributes" Value="Bold"/>
+						<Setter Property="BackgroundColor" Value="White"/>
+						<Setter Property="TextColor" Value="{StaticResource ColorPrimaryDark}"/>
+					</Style>
+				</ResourceDictionary>
+			</Grid.Resources>
+
+			<!-- Calendar for February 2018 -->
+			<Label Grid.Row="0" Grid.Column="0" Text="29" Style="{StaticResource LabelOtherDays}" />
+			<Label Grid.Row="0" Grid.Column="1" Text="30" Style="{StaticResource LabelOtherDays}" />
+			<Label Grid.Row="0" Grid.Column="2" Text="31" Style="{StaticResource LabelOtherDays}" />
+			<Label Grid.Row="0" Grid.Column="3" Text="1" />
+			<Label Grid.Row="0" Grid.Column="4" Text="2" />
+			<Label Grid.Row="0" Grid.Column="5" Text="3" />
+			<Label Grid.Row="0" Grid.Column="6" Text="4" />
+
+			<Label Grid.Row="1" Grid.Column="0" Text="5" />
+			<Label Grid.Row="1" Grid.Column="1" Text="6" />
+			<Label Grid.Row="1" Grid.Column="2" Text="7" />
+			<Label Grid.Row="1" Grid.Column="3" Text="8" />
+			<Label Grid.Row="1" Grid.Column="4" Text="9" />
+			<Label Grid.Row="1" Grid.Column="5" Text="10" />
+			<Label Grid.Row="1" Grid.Column="6" Text="11" />
+
+			<Label Grid.Row="2" Grid.Column="0" Text="12" />
+			<Label Grid.Row="2" Grid.Column="1" Text="13" />
+			<Label Grid.Row="2" Grid.Column="2" Text="14" />
+			<Label Grid.Row="2" Grid.Column="3" Text="15" />
+			<Label Grid.Row="2" Grid.Column="4" Text="16" Style="{StaticResource LabelToday}" />
+			<Label Grid.Row="2" Grid.Column="5" Text="17" />
+			<Label Grid.Row="2" Grid.Column="6" Text="18" />
+
+			<Label Grid.Row="3" Grid.Column="0" Text="19" />
+			<Label Grid.Row="3" Grid.Column="1" Text="20" />
+			<Label Grid.Row="3" Grid.Column="2" Text="21" />
+			<Label Grid.Row="3" Grid.Column="3" Text="22" />
+			<Label Grid.Row="3" Grid.Column="4" Text="23" />
+			<Label Grid.Row="3" Grid.Column="5" Text="24" />
+			<Label Grid.Row="3" Grid.Column="6" Text="25" />
+
+			<Label Grid.Row="4" Grid.Column="0" Text="26" />
+			<Label Grid.Row="4" Grid.Column="1" Text="27" />
+			<Label Grid.Row="4" Grid.Column="2" Text="28" />
+			<Label Grid.Row="4" Grid.Column="3" Text="1" Style="{StaticResource LabelOtherDays}" />
+			<Label Grid.Row="4" Grid.Column="4" Text="2" Style="{StaticResource LabelOtherDays}" />
+			<Label Grid.Row="4" Grid.Column="5" Text="3" Style="{StaticResource LabelOtherDays}" />
+			<Label Grid.Row="4" Grid.Column="6" Text="4" Style="{StaticResource LabelOtherDays}" />
+			
+		</Grid>
+	</ContentView.Content>
+</ContentView>

@@ -24,8 +24,9 @@ namespace TocoDo.Droid.CustomRenderers
 
 			var draw = Context.GetDrawable("CircleShape");
 			Control.SetBackground(draw);
-			Control.Elevation = 15;
+			Control.Elevation = 10;
 			Control.TranslationZ = 15;
+			Control.SetShadowLayer(10, 0, 0,Color.Black);
 		}
 	}
 }

@@ -18,6 +18,8 @@ namespace TocoDo.Pages.Main
 		{
 			InitializeComponent();
 
+
+
 			Instance = this;
 
 			if (Children.Count >= 2)

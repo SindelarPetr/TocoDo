@@ -178,6 +178,15 @@ namespace TocoDo.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Day.
+        /// </summary>
+        public static string Day {
+            get {
+                return ResourceManager.GetString("Day", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to days.
         /// </summary>
         public static string Days {
@@ -336,6 +345,15 @@ namespace TocoDo.Properties {
         public static string Mon {
             get {
                 return ResourceManager.GetString("Mon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Month.
+        /// </summary>
+        public static string Month {
+            get {
+                return ResourceManager.GetString("Month", resourceCulture);
             }
         }
         
@@ -633,6 +651,33 @@ namespace TocoDo.Properties {
         public static string Wed {
             get {
                 return ResourceManager.GetString("Wed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Week.
+        /// </summary>
+        public static string Week {
+            get {
+                return ResourceManager.GetString("Week", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weeks.
+        /// </summary>
+        public static string Weeks {
+            get {
+                return ResourceManager.GetString("Weeks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Year.
+        /// </summary>
+        public static string Year {
+            get {
+                return ResourceManager.GetString("Year", resourceCulture);
             }
         }
         

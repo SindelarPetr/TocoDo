@@ -59,6 +59,8 @@ namespace TocoDo.Droid
 			}
 
 			var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
+			//toolbar.Elevation = 10;
+			
 			//toolbar.SetPadding(16, 38, 16, 16);
 			//Toolbar will now take on default actionbar characteristics
 			SetSupportActionBar(toolbar);

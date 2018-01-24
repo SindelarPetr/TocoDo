@@ -2,6 +2,7 @@
 using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -136,7 +137,7 @@ namespace TocoDo.Pages.Main
 				//PointMode = PointMode.None
 			};
 
-			ChartProgress.Chart = chart;
+			//ChartProgress.Chart = chart;
 		}
 
 		#region Global date picker
