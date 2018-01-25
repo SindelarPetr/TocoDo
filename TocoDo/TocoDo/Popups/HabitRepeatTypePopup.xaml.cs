@@ -45,8 +45,6 @@ namespace TocoDo.Popups
 		public HabitRepeatTypePopup(RepeatType repeatType, int daysToRepeat)
 		{
 			SelectDayCommand = new Command(SelectDayCommandExecute);
-			DaysToRepeat = daysToRepeat;
-			SelectedRepeatType = repeatType;
 			InitializeComponent ();
 
 
@@ -62,8 +60,11 @@ namespace TocoDo.Popups
 			Picker.ItemsSource = list;
 
 			// Init values in entry and picker
+			DaysToRepeat = daysToRepeat;
+			SelectedRepeatType = repeatType;
 			if (repeatType < RepeatType.Days)
 			{
+				lastWeeksRepeat = repeatType;
 				Picker.SelectedIndex = 1;
 			}
 			else
@@ -94,7 +95,7 @@ namespace TocoDo.Popups
 			}
 			else
 			{
-				// If there were days selected then remember the date
+				// If there were days seles
 				if (SelectedRepeatType < RepeatType.Days)
 					lastWeeksRepeat = SelectedRepeatType;
 
