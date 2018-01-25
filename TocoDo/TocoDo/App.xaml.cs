@@ -13,8 +13,23 @@ namespace TocoDo
 {
 	public partial class App : Application
 	{
+		public Color ColorPrimary
+		{
+			get => (Color)Resources["ColorPrimary"];
+			set => Resources["ColorPrimary"] = value;
+		}
+		public Color ColorPrimaryLight
+		{
+			get => (Color)Resources["ColorPrimaryLight"];
+			set => Resources["ColorPrimaryLight"] = value;
+		}
+		public Color ColorPrimaryDark
+		{
+			get => (Color)Resources["ColorPrimaryDark"];
+			set => Resources["ColorPrimaryDark"] = value;
+		}
+
 		public static Action BarColorChanged;
-		private readonly TabbedPage _tabbed;
 
 		public App()
 		{
@@ -24,12 +39,8 @@ namespace TocoDo
 			var main = new MainPage();
 			MyLogger.WriteInMethod();
 
-			_tabbed = main.TabbedPage;
-
 			var navigationPage = new NavigationPage(main);
-
 			navigationPage.SetDynamicResource(NavigationPage.BarBackgroundColorProperty, "BarColor");
-
 			MainPage = navigationPage;
 
 			MyLogger.WriteEndMethod();
