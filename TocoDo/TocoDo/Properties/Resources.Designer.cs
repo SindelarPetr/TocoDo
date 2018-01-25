@@ -484,7 +484,7 @@ namespace TocoDo.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Every {0} for {1} days.
+        ///   Looks up a localized string similar to Every {0} for {1} weeks.
         /// </summary>
         public static string RepeatTypeWeeks {
             get {

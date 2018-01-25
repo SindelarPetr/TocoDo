@@ -259,7 +259,7 @@
     <value>Repeat: {0}</value>
   </data>
   <data name="RepeatTypeWeeks" xml:space="preserve">
-    <value>Every {0} for {1} days</value>
+    <value>Every {0} for {1} weeks</value>
   </data>
   <data name="RepeatTypeYears" xml:space="preserve">
     <value>Every year for {0} years</value>
