@@ -19,7 +19,7 @@
 			<global:FrameWrapper Header="Repeat every..." HeaderBackgroundColor="White" HeaderTextColor="{StaticResource ColorPrimary}">
 				<StackLayout Padding="10" BindingContext="{x:Reference This}">
 					<StackLayout Orientation="Horizontal" Padding="10" Spacing="15">
-						<Entry Keyboard="Numeric" Text="{Binding DaysToRepeat}" WidthRequest="30"/>
+						<Entry Keyboard="Numeric" Text="{Binding DaysToRepeat}" WidthRequest="40" HorizontalTextAlignment="Center"/>
 						<controls:ResizablePicker x:Name="Picker" SelectedIndexChanged="Picker_OnSelectedIndexChanged" />
 					</StackLayout>
 					
