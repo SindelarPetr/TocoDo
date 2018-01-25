@@ -65,14 +65,14 @@
 
 				<!--Note panel-->
 				<Frame Grid.Row="1" Grid.Column="0" Margin="0" VerticalOptions="FillAndExpand">
-					<ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+					<!--<ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">-->
 						<StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
 							<StackLayout.GestureRecognizers>
 								<TapGestureRecognizer Command="{Binding EditDescriptionCommand}"/>
 							</StackLayout.GestureRecognizers>
 							<Label Text="{Binding Description, Converter={StaticResource NoteTextConverter}}" VerticalTextAlignment="Start" HorizontalTextAlignment="Start" TextColor="{Binding Description, Converter={StaticResource DescriptionToColorConverter}}"/>
 						</StackLayout>
-					</ScrollView>
+					<!--</ScrollView>-->
 				</Frame>
 			</Grid>
 

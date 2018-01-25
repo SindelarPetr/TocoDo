@@ -243,11 +243,8 @@
   <data name="ReminderText" xml:space="preserve">
     <value>Reminder: {0}</value>
   </data>
-  <data name="Repeat" xml:space="preserve">
-    <value />
-  </data>
   <data name="RepeatEvery" xml:space="preserve">
-    <value>Repeat every...</value>
+    <value>Repeat...</value>
   </data>
   <data name="RepeatTypeDays" xml:space="preserve">
     <value>Every day for {0} days</value>

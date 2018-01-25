@@ -24,8 +24,8 @@ namespace TocoDo.Converters.Habits
 			string repeatText = GetRepeatText(habit.ModelRepeatType, habit.ModelDaysToRepeat);
 		    string dayAmountText = habit.ModelHabitType == HabitType.Daylong
 			    ? $"{Resources.AllDay.ToLower()}"
-			    : $"{habit.ModelRepeatsADay} {Resources.TimesADay.ToLower()}";
-		    return $"From { startDate } - { repeatText } {dayAmountText }";
+			    : $"{habit.ModelDailyFillingCount} {Resources.TimesADay.ToLower()}";
+		    return $"From { startDate } - { repeatText } { dayAmountText}";
 		}
 
 	    public static  string GetRepeatText(RepeatType habitModelRepeatType, int modelRepeatNumber)

@@ -3,6 +3,7 @@ using System.Diagnostics;
 using Rg.Plugins.Popup.Contracts;
 using Rg.Plugins.Popup.Extensions;
 using Rg.Plugins.Popup.Services;
+using TocoDo.Models;
 using TocoDo.Popups;
 using TocoDo.ViewModels;
 using Xamarin.Forms;
@@ -84,6 +85,16 @@ namespace TocoDo.Pages.Habits
 				MyLogger.WriteException(ex);
 				throw;
 			}
+		}
+
+		private void BtnUnit_Clicked(object sender, EventArgs e)
+		{
+			Habit.ModelHabitType = HabitType.Unit;
+		}
+
+		private void BtnDaylong_Clicked(object sender, EventArgs e)
+		{
+			Habit.ModelHabitType = HabitType.Daylong;
 		}
 	}
 }

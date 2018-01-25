@@ -49,7 +49,11 @@ namespace TocoDo.ViewModels
 		public int ModelDailyFillingCount
 		{
 			get => _modelDailyFillingCount;
-			set => SetValue(ref _modelDailyFillingCount, value);
+			set
+			{
+				SetValue(ref _modelDailyFillingCount, value);
+				OnPropertyChanged(".");
+			}
 		}
 
 		public ObservableDictionary<DateTime, int> ModelFilling { get; }
@@ -57,12 +61,20 @@ namespace TocoDo.ViewModels
 		public HabitType ModelHabitType
 		{
 			get => _modelHabitType;
-			set => SetValue(ref _modelHabitType, value);
+			set
+			{
+				SetValue(ref _modelHabitType, value);
+				OnPropertyChanged(".");
+			}
 		}
 		public int ModelDaysToRepeat
 		{
 			get => _modelDaysToRepeat;
-			set => SetValue(ref _modelDaysToRepeat, value);
+			set
+			{
+				SetValue(ref _modelDaysToRepeat, value);
+				OnPropertyChanged(".");
+			}
 		}
 		public DateTime? ModelStartDate
 		{
@@ -163,7 +175,6 @@ namespace TocoDo.ViewModels
 
 			string result = await PageService.DisplayActionSheet(actionSheetHeader, Resources.Cancel, null, buttons);
 
-
 			DateTime selectedDate;
 			if (result == Resources.Today)
 			{
@@ -188,6 +199,7 @@ namespace TocoDo.ViewModels
 			pickedAction(selectedDate);
 		}
 
+		// TODO: get rid of this
 		private void SelectDateByPicker(Action<DateTime> pickedAction)
 		{
 			TodayPage.Instance.ShowGlobalDatePicker(ModelStartDate ?? DateTime.Today + TimeSpan.FromDays(1), pickedAction, DateTime.Today + TimeSpan.FromDays(1));

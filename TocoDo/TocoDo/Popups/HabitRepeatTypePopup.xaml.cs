@@ -44,6 +44,7 @@ namespace TocoDo.Popups
 
 		public HabitRepeatTypePopup(RepeatType repeatType, int daysToRepeat)
 		{
+			
 			SelectDayCommand = new Command(SelectDayCommandExecute);
 			InitializeComponent ();
 

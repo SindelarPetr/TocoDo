@@ -439,16 +439,7 @@ namespace TocoDo.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string Repeat {
-            get {
-                return ResourceManager.GetString("Repeat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Repeat every....
+        ///   Looks up a localized string similar to Repeat....
         /// </summary>
         public static string RepeatEvery {
             get {
