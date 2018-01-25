@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Input;
 using Rg.Plugins.Popup.Extensions;
 using Rg.Plugins.Popup.Pages;
+using TocoDo.Controls;
 using TocoDo.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
@@ -13,21 +15,40 @@ namespace TocoDo.Popups
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class HabitRepeatTypePopup : PopupPage
 	{
+		#region Backing fields
 		public BindableProperty DaysToRepeatProperty = BindableProperty.Create(nameof(DaysToRepeat), typeof(int), typeof(int), 21);
+		public BindableProperty SelectedRepeatTypeProperty = BindableProperty.Create(nameof(SelectedRepeatType), typeof(RepeatType), typeof(RepeatType), RepeatType.Days); 
+		#endregion
 
+		#region Properties
 		public int DaysToRepeat
 		{
-			get => (int) GetValue(DaysToRepeatProperty);
+			get => (int)GetValue(DaysToRepeatProperty);
 			set => SetValue(DaysToRepeatProperty, value);
 		}
 
+		public RepeatType SelectedRepeatType
+		{
+			get => (RepeatType)GetValue(SelectedRepeatTypeProperty);
+			set => SetValue(SelectedRepeatTypeProperty, value);
+		} 
+		#endregion
+
 		private List<KeyValuePair<int, string>> _pickerValues;
-		private RepeatType _selectedRepeatType;
 
 		public event Action<RepeatType, int> Save;
+
+		private RepeatType lastWeeksRepeat = RepeatType.Mon | RepeatType.Tue | RepeatType.Wed | RepeatType.Thu | RepeatType.Fri;
+
+		public ICommand SelectDayCommand { get; set; }
+
 		public HabitRepeatTypePopup(RepeatType repeatType, int daysToRepeat)
 		{
+			SelectDayCommand = new Command(SelectDayCommandExecute);
+			DaysToRepeat = daysToRepeat;
+			SelectedRepeatType = repeatType;
 			InitializeComponent ();
+
 
 			_pickerValues = new List<KeyValuePair<int, string>>
 			{
@@ -41,15 +62,22 @@ namespace TocoDo.Popups
 			Picker.ItemsSource = list;
 
 			// Init values in entry and picker
-			DaysToRepeat = daysToRepeat;
-
-			if (repeatType < RepeatType.Months)
+			if (repeatType < RepeatType.Days)
 			{
-				SetDaysInWeek(repeatType);
 				Picker.SelectedIndex = 1;
 			}
 			else
 				Picker.SelectedItem = _pickerValues.First(p => p.Key == (int) repeatType).Value;
+		}
+
+		private void SelectDayCommandExecute(object o)
+		{
+			var btn = (SelectDayButton) o;
+
+			if (!btn.IsToggled)
+				SelectedRepeatType |= btn.RepeatType;
+			else
+				SelectedRepeatType &= ~btn.RepeatType;
 		}
 
 		private void Picker_OnSelectedIndexChanged(object sender, EventArgs e)
@@ -62,26 +90,16 @@ namespace TocoDo.Popups
 			// -1 indicates selection of Week which means that we have to get the exact days in a week.
 			if (key == -1)
 			{
-				_selectedRepeatType = GetDaysInWeek();
+				SelectedRepeatType = lastWeeksRepeat;
 			}
 			else
 			{
-				_selectedRepeatType = (RepeatType) key;
+				// If there were days selected then remember the date
+				if (SelectedRepeatType < RepeatType.Days)
+					lastWeeksRepeat = SelectedRepeatType;
+
+				SelectedRepeatType = (RepeatType) key;
 			}
-		}
-
-		private RepeatType GetDaysInWeek()
-		{
-			// TODO: Check toggled buttons selecting week days
-			return RepeatType.Fri;
-		}
-
-		private void SetDaysInWeek(RepeatType repeatType)
-		{
-			if (repeatType >= RepeatType.Months)
-				return;
-
-			// TODO: Toggle correct day in week buttons
 		}
 
 		private async void Cancel_OnClicked(object sender, EventArgs e)
@@ -92,7 +110,7 @@ namespace TocoDo.Popups
 
 		private async void Save_OnClicked(object sender, EventArgs e)
 		{
-			Save?.Invoke(_selectedRepeatType, DaysToRepeat);
+			Save?.Invoke(SelectedRepeatType, DaysToRepeat);
 			await Navigation.PopPopupAsync();
 		}
 	}

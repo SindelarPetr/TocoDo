@@ -88,21 +88,28 @@ namespace TocoDo.Views
 
 		public IconButton()
 		{
-			MyLogger.WriteStartMethod();
-			Clicked += (a, b) => ClickCommand?.Execute(null);
-			Removed += (a, b) => RemoveCommand?.Execute(null);
-			MyLogger.WriteInMethod("Before InitializeComponent");
-			InitializeComponent();
-			MyLogger.WriteInMethod("After InitializeComponent");
-
-			double maxScale = 1.25;
-			ScaleAnimation += () => Xamarin.Forms.ViewExtensions.ScaleTo(this, maxScale, 250, new Easing(t =>
+			try
 			{
-				var val = Math.Sin(t * Math.PI) * (maxScale - 1);
-				MyLogger.WriteInMethod(val.ToString());
-				return val;
-			}));
-			MyLogger.WriteEndMethod();
+				MyLogger.WriteStartMethod();
+				Clicked += (a, b) => ClickCommand?.Execute(null);
+				Removed += (a, b) => RemoveCommand?.Execute(null);
+				MyLogger.WriteInMethod("Before InitializeComponent");
+				InitializeComponent();
+				MyLogger.WriteInMethod("After InitializeComponent");
+
+				double maxScale = 1.25;
+				ScaleAnimation += () => Xamarin.Forms.ViewExtensions.ScaleTo(this, maxScale, 250, new Easing(t =>
+				{
+					var val = Math.Sin(t * Math.PI) * (maxScale - 1);
+					MyLogger.WriteInMethod(val.ToString());
+					return val;
+				}));
+				MyLogger.WriteEndMethod();
+			}
+			catch (Exception e)
+			{
+				MyLogger.WriteException(e);
+			}
 		}
 
 		private void ClickRecognise(object sender, EventArgs e)

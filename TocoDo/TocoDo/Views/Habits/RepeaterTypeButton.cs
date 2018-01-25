@@ -10,12 +10,10 @@ namespace TocoDo.Views.Habits
 {
     public class RepeatTypeButton : IconButton
     {
-	    private const short DEFAULT_DAYS_TO_REPEAT = 21;
-
 		#region Backing fields
 		public static BindableProperty RepeatTypeProperty = BindableProperty.Create(nameof(RepeatType), typeof(RepeatType), typeof(RepeatType), RepeatType.Days, BindingMode.TwoWay);
-		public static BindableProperty DaysToRepeatProperty = BindableProperty.Create(nameof(DaysToRepeat), typeof(short), typeof(short), DEFAULT_DAYS_TO_REPEAT, BindingMode.TwoWay);
-		public static BindableProperty FormattedTextProperty = BindableProperty.Create(nameof(DaysToRepeat), typeof(string), typeof(string), "{0}");
+		public static BindableProperty DaysToRepeatProperty = BindableProperty.Create(nameof(DaysToRepeat), typeof(int), typeof(int), 20, BindingMode.TwoWay);
+		public static BindableProperty FormattedTextProperty = BindableProperty.Create(nameof(FormattedText), typeof(string), typeof(string), "{0}");
 		#endregion
 
 		#region Properties
@@ -24,9 +22,9 @@ namespace TocoDo.Views.Habits
 			get => (RepeatType)GetValue(RepeatTypeProperty);
 			set => SetValue(RepeatTypeProperty, value);
 		}
-		public short DaysToRepeat
+		public int DaysToRepeat
 		{
-			get => (short)GetValue(DaysToRepeatProperty);
+			get => (int)GetValue(DaysToRepeatProperty);
 			set => SetValue(DaysToRepeatProperty, value);
 		}
 	    public string FormattedText
@@ -48,6 +46,7 @@ namespace TocoDo.Views.Habits
 		        propertyChangedEventArgs.PropertyName == nameof(FormattedText))
 		    {
 			    UpdateText();
+				//MakeUpdateAnimation();
 		    }
 	    }
 

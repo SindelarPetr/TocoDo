@@ -20,12 +20,12 @@ namespace TocoDo.ViewModels
 		private bool _modelIsRecommended;
 		private int _modelDailyFillingCount;
 		private HabitType _modelHabitType;
-		private short _modelDaysToRepeat;
+		private int _modelDaysToRepeat;
 		private DateTime? _modelStartDate;
 		private string _modelTitle;
 		private RepeatType _modelRepeatType;
 		private string _modelDescription;
-		private short _modelRepeatsADay;
+		private int _modelRepeatsADay;
 		#endregion
 
 		#region Properties
@@ -59,7 +59,7 @@ namespace TocoDo.ViewModels
 			get => _modelHabitType;
 			set => SetValue(ref _modelHabitType, value);
 		}
-		public short ModelDaysToRepeat
+		public int ModelDaysToRepeat
 		{
 			get => _modelDaysToRepeat;
 			set => SetValue(ref _modelDaysToRepeat, value);
@@ -100,7 +100,7 @@ namespace TocoDo.ViewModels
 		/// <summary>
 		/// Only for Unit habit. Count of times to repeat the habit each day
 		/// </summary>
-		public short ModelRepeatsADay
+		public int ModelRepeatsADay
 		{
 			get => _modelRepeatsADay;
 			set => SetValue(ref _modelRepeatsADay, value);

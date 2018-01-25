@@ -28,7 +28,7 @@ namespace TocoDo.Converters.Habits
 		    return $"From { startDate } - { repeatText } {dayAmountText }";
 		}
 
-	    public static  string GetRepeatText(RepeatType habitModelRepeatType, short modelRepeatNumber)
+	    public static  string GetRepeatText(RepeatType habitModelRepeatType, int modelRepeatNumber)
 	    {
 		    if (habitModelRepeatType.HasFlag(RepeatType.Days))
 			    return string.Format(Resources.RepeatTypeDays, modelRepeatNumber);
@@ -48,22 +48,22 @@ namespace TocoDo.Converters.Habits
 		    if (type.HasFlag(RepeatType.Mon))
 			    days += (days == String.Empty ? "" : ", ") + Resources.Mon;
 
-		    if (type.HasFlag(RepeatType.Mon))
+		    if (type.HasFlag(RepeatType.Tue))
 			    days += (days == String.Empty ? "" : ", ") + Resources.Tue;
 
-		    if (type.HasFlag(RepeatType.Mon))
+		    if (type.HasFlag(RepeatType.Wed))
 			    days += (days == String.Empty ? "" : ", ") + Resources.Wed;
 
-		    if (type.HasFlag(RepeatType.Mon))
+		    if (type.HasFlag(RepeatType.Thu))
 			    days += (days == String.Empty ? "" : ", ") + Resources.Thu;
 
-		    if (type.HasFlag(RepeatType.Mon))
+		    if (type.HasFlag(RepeatType.Fri))
 			    days += (days == String.Empty ? "" : ", ") + Resources.Fri;
 
-		    if (type.HasFlag(RepeatType.Mon))
+		    if (type.HasFlag(RepeatType.Sat))
 			    days += (days == String.Empty ? "" : ", ") + Resources.Sat;
 
-		    if (type.HasFlag(RepeatType.Mon))
+		    if (type.HasFlag(RepeatType.Sun))
 			    days += (days == String.Empty ? "" : ", ") + Resources.Sun;
 
 		    return days;

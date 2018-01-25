@@ -74,7 +74,8 @@ namespace TocoDo.Pages.Habits
 				repeatTypePopup.Save += (repeatType, daysToRepeat) =>
 				{
 					Habit.ModelRepeatType = repeatType;
-					Habit.ModelDaysToRepeat = (short) daysToRepeat;
+					Habit.ModelDaysToRepeat = daysToRepeat;
+					
 				};
 				await PopupNavigation.Instance.PushAsync(repeatTypePopup);
 			}

@@ -241,8 +241,8 @@ namespace TocoDo.Services
 				HabitType = HabitType.Unit,
 				Id = FakeIdGenerator.GetId(),
 				IsRecommended = false,
-				RepeatType = RepeatType.Days - 1,
-				DaysToRepeat = 10,
+				RepeatType = RepeatType.Days - 2,
+				DaysToRepeat = 13,
 				StartDate = DateTime.Today - TimeSpan.FromDays(4)
 			});
 		}
@@ -265,11 +265,11 @@ namespace TocoDo.Services
 					{ DateTime.Today - TimeSpan.FromDays(1), 2 },
 					{ DateTime.Today, 1 },
 				},
-				HabitType = HabitType.Unit,
+				HabitType = HabitType.Daylong,
 				Id = FakeIdGenerator.GetId(),
 				IsRecommended = false,
-				RepeatType = RepeatType.Days - 1,
-				DaysToRepeat = 10,
+				RepeatType = RepeatType.Days - (1 + 2 + 4 + 5),
+				DaysToRepeat = 12,
 				StartDate = DateTime.Today - TimeSpan.FromDays(4)
 			}));
 		}

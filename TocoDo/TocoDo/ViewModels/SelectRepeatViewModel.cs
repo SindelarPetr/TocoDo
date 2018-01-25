@@ -18,9 +18,9 @@ namespace TocoDo.ViewModels
 
 		public RepeatType RepeatType { get; set; }
 
-		public short RepeatsADay { get; set; }
+		public int RepeatsADay { get; set; }
 
-	    public SelectRepeatViewModel(RepeatType repeatType, short repeatsADay)
+	    public SelectRepeatViewModel(RepeatType repeatType, int repeatsADay)
 	    {
 			RepeatType = repeatType;
 			RepeatsADay = repeatsADay;

@@ -45,7 +45,7 @@
 						<StackLayout>
 							<views:DateButtonView x:Name="DateButtonView" SelectedDate="{Binding Source={x:Reference This}, Path=Habit.ModelStartDate}" ImageSource="{markupExtensions:PathResolver Source='ic_today_white_24dp'}" DateFormat="{x:Static properties:Resources.StartDateText}"/>
 
-							<habits1:RepeatTypeButton FormattedText="{x:Static properties:Resources.RepeatTypeText}" RepeatType="{Binding Source={x:Reference This}, Path=Habit.ModelHabitType, Mode=TwoWay}" ImageSource="{markupExtensions:PathResolver 'ic_loop_white_24dp'}" IsActive="{Binding Source={x:Reference DateButtonView}, Path=IsActive}" HasRemoveButton="False" Clicked="IconButton_OnClicked"/>
+							<habits1:RepeatTypeButton FormattedText="{x:Static properties:Resources.RepeatTypeText}" RepeatType="{Binding Source={x:Reference This}, Path=Habit.ModelRepeatType}" ImageSource="{markupExtensions:PathResolver 'ic_loop_white_24dp'}" IsActive="{Binding Source={x:Reference DateButtonView}, Path=IsActive}" HasRemoveButton="False" Clicked="IconButton_OnClicked" DaysToRepeat="{Binding Source={x:Reference This}, Path=Habit.ModelDaysToRepeat}"/>
 						</StackLayout>
 					</Frame>
 
@@ -66,8 +66,7 @@
 								<Label Text="{Binding ModelDescription}" VerticalTextAlignment="Start" HorizontalTextAlignment="Start">
 									<Label.Triggers>
 										<DataTrigger TargetType="Label"  Binding="{Binding ModelDescription, Converter={StaticResource IsNotNullOrWhitespaceConverter}}" Value="False">
-											<Setter Property="TextColor" Value="DarkGray">
-											</Setter>
+											<Setter Property="TextColor" Value="DarkGray"/>
 										</DataTrigger>
 									</Label.Triggers>
 								</Label>

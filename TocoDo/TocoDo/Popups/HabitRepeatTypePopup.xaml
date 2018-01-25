@@ -7,6 +7,8 @@
              xmlns:customRenderers="clr-namespace:TocoDo.CustomRenderers;assembly=TocoDo"
              xmlns:controls="clr-namespace:TocoDo.Controls;assembly=TocoDo"
              xmlns:properties="clr-namespace:TocoDo.Properties;assembly=TocoDo"
+             xmlns:models="clr-namespace:TocoDo.Models;assembly=TocoDo"
+             xmlns:habits="clr-namespace:TocoDo.Converters.Habits;assembly=TocoDo"
              x:Class="TocoDo.Popups.HabitRepeatTypePopup"
                 x:Name="This">
 	<ContentPage.Content>
@@ -20,17 +22,19 @@
 						<Entry Keyboard="Numeric" Text="{Binding DaysToRepeat}" WidthRequest="30"/>
 						<controls:ResizablePicker x:Name="Picker" SelectedIndexChanged="Picker_OnSelectedIndexChanged" />
 					</StackLayout>
+					
+					<!--Week days buttons-->
 					<StackLayout IsVisible="False" Orientation="Vertical" Spacing="8">
 						<StackLayout.Resources>
 							<ResourceDictionary>
-								<Style TargetType="Button">
+								<habits:RepeatTypeToBoolConverter x:Key="RepeatTypeToBoolConverter" />
+								<Style TargetType="controls:SelectDayButton">
 									<Setter Property="BackgroundColor" Value="White"/>
 									<Setter Property="WidthRequest" Value="54"/>
 									<Setter Property="HeightRequest" Value="54"/>
 									<Setter Property="FontAttributes" Value="None"/>
 									<Setter Property="FontSize" Value="Micro"/>
-									<Setter Property="BorderWidth" Value="5"/>
-									<Setter Property="BorderColor" Value="Blue"/>
+									<Setter Property="Command" Value="{Binding SelectDayCommand}"/>
 								</Style>
 								<Style TargetType="StackLayout">
 									<Setter Property="HorizontalOptions" Value="Center"/>
@@ -46,15 +50,15 @@
 							</DataTrigger>
 						</StackLayout.Triggers>
 						<StackLayout>
-							<Button Text="{x:Static properties:Resources.Mon}"/>
-							<Button Text="{x:Static properties:Resources.Tue}"/>
-							<Button Text="{x:Static properties:Resources.Wed}"/>
-							<Button Text="{x:Static properties:Resources.Thu}"/>
+							<controls:SelectDayButton x:Name="BtnMon" Text="{x:Static properties:Resources.Mon}" RepeatType="{x:Static models:RepeatType.Mon}" IsToggled="{Binding SelectedRepeatType, Converter={StaticResource RepeatTypeToBoolConverter}, ConverterParameter={x:Static models:RepeatType.Mon}, Mode=OneWay}" CommandParameter="{x:Reference BtnMon}"/>
+							<controls:SelectDayButton x:Name="BtnTue" Text="{x:Static properties:Resources.Tue}" RepeatType="{x:Static models:RepeatType.Tue}" IsToggled="{Binding SelectedRepeatType, Converter={StaticResource RepeatTypeToBoolConverter}, ConverterParameter={x:Static models:RepeatType.Tue}, Mode=OneWay}" CommandParameter="{x:Reference BtnTue}"/>
+							<controls:SelectDayButton x:Name="BtnWed" Text="{x:Static properties:Resources.Wed}" RepeatType="{x:Static models:RepeatType.Wed}" IsToggled="{Binding SelectedRepeatType, Converter={StaticResource RepeatTypeToBoolConverter}, ConverterParameter={x:Static models:RepeatType.Wed}, Mode=OneWay}" CommandParameter="{x:Reference BtnWed}"/>
+							<controls:SelectDayButton x:Name="BtnThu" Text="{x:Static properties:Resources.Thu}" RepeatType="{x:Static models:RepeatType.Thu}" IsToggled="{Binding SelectedRepeatType, Converter={StaticResource RepeatTypeToBoolConverter}, ConverterParameter={x:Static models:RepeatType.Thu}, Mode=OneWay}" CommandParameter="{x:Reference BtnThu}"/>
 						</StackLayout>
 						<StackLayout>
-							<Button Text="{x:Static properties:Resources.Fri}"/>
-							<Button Text="{x:Static properties:Resources.Sat}"/>
-							<Button Text="{x:Static properties:Resources.Sun}"/>
+							<controls:SelectDayButton x:Name="BtnFri" Text="{x:Static properties:Resources.Fri}" RepeatType="{x:Static models:RepeatType.Fri}" IsToggled="{Binding SelectedRepeatType, Converter={StaticResource RepeatTypeToBoolConverter}, ConverterParameter={x:Static models:RepeatType.Fri}, Mode=OneWay}" CommandParameter="{x:Reference BtnFri}"/>
+							<controls:SelectDayButton x:Name="BtnSat" Text="{x:Static properties:Resources.Sat}" RepeatType="{x:Static models:RepeatType.Sat}" IsToggled="{Binding SelectedRepeatType, Converter={StaticResource RepeatTypeToBoolConverter}, ConverterParameter={x:Static models:RepeatType.Sat}, Mode=OneWay}" CommandParameter="{x:Reference BtnSat}"/>
+							<controls:SelectDayButton x:Name="BtnSun" Text="{x:Static properties:Resources.Sun}" RepeatType="{x:Static models:RepeatType.Sun}" IsToggled="{Binding SelectedRepeatType, Converter={StaticResource RepeatTypeToBoolConverter}, ConverterParameter={x:Static models:RepeatType.Sun}, Mode=OneWay}" CommandParameter="{x:Reference BtnSun}"/>
 						</StackLayout>
 					</StackLayout>
 					<StackLayout  Orientation="Horizontal" HorizontalOptions="End">
