@@ -20,7 +20,7 @@
 		</ResourceDictionary>
 	</ContentPage.Resources>
 	<ContentPage.Content>
-		<Grid>
+		<Grid BindingContext="{Binding Source={x:Reference This}, Path=Habit}">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto"/>
 				<RowDefinition Height="*"/>
@@ -45,9 +45,9 @@
 					<!--Start and repeat buttons-->
 					<Frame Margin="0" VerticalOptions="Center">
 						<StackLayout>
-							<views:DateButtonView x:Name="DateButtonView" SelectedDate="{Binding Source={x:Reference This}, Path=Habit.ModelStartDate, Mode=TwoWay}" ImageSource="{markupExtensions:PathResolver Source='ic_today_white_24dp'}" DateFormat="{x:Static properties:Resources.StartDateText}"/>
+							<views:DateButtonView x:Name="DateButtonView" SelectedDate="{Binding ModelStartDate, Mode=TwoWay}" ImageSource="{markupExtensions:PathResolver Source='ic_today_white_24dp'}" DateFormat="{x:Static properties:Resources.StartDateText}"/>
 
-							<habits1:RepeatTypeButton FormattedText="{x:Static properties:Resources.RepeatTypeText}" RepeatType="{Binding Source={x:Reference This}, Path=Habit.ModelRepeatType}" ImageSource="{markupExtensions:PathResolver 'ic_loop_white_24dp'}" IsActive="{Binding Source={x:Reference DateButtonView}, Path=IsActive}" HasRemoveButton="False" Clicked="IconButton_OnClicked" DaysToRepeat="{Binding Source={x:Reference This}, Path=Habit.ModelDaysToRepeat}"/>
+							<habits1:RepeatTypeButton FormattedText="{x:Static properties:Resources.RepeatTypeText}" RepeatType="{Binding ModelRepeatType}" ImageSource="{markupExtensions:PathResolver 'ic_loop_white_24dp'}" IsActive="{Binding Source={x:Reference DateButtonView}, Path=IsActive}" HasRemoveButton="False" Clicked="IconButton_OnClicked" DaysToRepeat="{Binding ModelDaysToRepeat}"/>
 						</StackLayout>
 					</Frame>
 
@@ -95,7 +95,7 @@
 									</DataTrigger>
 								</StackLayout.Triggers>
 								<Label Text="Times a day:" VerticalOptions="Fill" VerticalTextAlignment="Center"/>
-								<Entry Text="{Binding ModelDailyFillingCount}" WidthRequest="40" HorizontalTextAlignment="Center" Keyboard="Numeric"/>
+								<Entry Text="{Binding ModelMaxRepeatsADay}" WidthRequest="40" HorizontalTextAlignment="Center" Keyboard="Numeric"/>
 							</StackLayout>
 						</StackLayout>
 					</Frame>
