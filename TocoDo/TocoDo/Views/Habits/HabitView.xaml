@@ -4,6 +4,8 @@
 			 xmlns:converters="clr-namespace:TocoDo.Converters;assembly=TocoDo"
 			 xmlns:habits="clr-namespace:TocoDo.Converters.Habits;assembly=TocoDo"
 			 xmlns:customRenderers="clr-namespace:TocoDo.CustomRenderers;assembly=TocoDo"
+			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
+			 xmlns:markupExtensions="clr-namespace:TocoDo.MarkupExtensions;assembly=TocoDo"
 			 x:Class="TocoDo.Views.Habits.HabitView"
 			 x:Name="This"
 			 x:Key="This">
@@ -21,9 +23,49 @@
 				<TapGestureRecognizer Command="{Binding EditCommand}" />
 			</StackLayout.GestureRecognizers>
 
-			<customRenderers:NoLineEntry x:Name="EntryEditTitle" Text="{Binding ModelTitle, Mode=OneWay}" IsVisible="{Binding IsEditTitleMode}" Unfocused="EditTitle_OnUnfocused" FontSize="Medium" TextColor="{StaticResource ColorPrimaryLight}" />
-			<Label Text="{Binding ModelTitle}" IsVisible="{Binding IsEditTitleMode, Converter={StaticResource BoolReverseConverter}}" FontSize="Medium"  TextColor="{StaticResource ColorPrimaryLight}" />
-			<Label Text="{Binding ., Converter={StaticResource HabitDateConverter}}" Margin="0" FontSize="12" IsVisible="{Binding ModelStartDate, Converter={StaticResource IsNotNullConverter}}"/>
+			<customRenderers:NoLineEntry x:Name="EntryEditTitle" Text="{Binding ModelTitle, Mode=OneWay}" Unfocused="EditTitle_OnUnfocused" FontSize="Medium" TextColor="{StaticResource ColorPrimaryLight}" >
+				<customRenderers:NoLineEntry.Triggers>
+					<Trigger TargetType="customRenderers:NoLineEntry" Property="IsFocused" Value="False">
+						<Setter Property="IsVisible" Value="False"/>
+					</Trigger>
+				</customRenderers:NoLineEntry.Triggers>
+			</customRenderers:NoLineEntry>
+			<Label Text="{Binding ModelTitle}" IsVisible="{Binding IsEditTitleMode, Converter={StaticResource BoolReverseConverter}}" Style="{StaticResource HabitHeader}"/>
+			<!--<Label Text="{Binding ., Converter={StaticResource HabitDateConverter}}" Margin="0" FontSize="12" IsVisible="{Binding ModelStartDate, Converter={StaticResource IsNotNullConverter}}"/>-->
+			<Grid ColumnSpacing="4" RowSpacing="-3" Padding="15, 0,0,0" Scale="0.85" IsVisible="{Binding ModelStartDate, Converter={StaticResource IsNotNullConverter}}">
+				<Grid.Resources>
+					<ResourceDictionary>
+						<Color x:Key="DetailColor">Gray</Color>
+						<Style TargetType="abstractions:TintedImage">
+							<Setter Property="TintColor" Value="{StaticResource DetailColor}"/>
+						</Style>
+						<Style TargetType="Label">
+							<Setter Property="TextColor" Value="{StaticResource DetailColor}"/>
+							<Setter Property="FontSize" Value="Small"/>
+							<Setter Property="HorizontalOptions" Value="Fill"/>
+							<Setter Property="VerticalOptions" Value="Fill"/>
+							<Setter Property="HorizontalTextAlignment" Value="Start"/>
+							<Setter Property="VerticalTextAlignment" Value="Center"/>
+						</Style>
+					</ResourceDictionary>
+				</Grid.Resources>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+
+				<abstractions:TintedImage Source="{markupExtensions:PathResolver 'ic_today_white_18dp'}"/>
+				<abstractions:TintedImage Grid.Row="1"  Source="{markupExtensions:PathResolver 'ic_hourglass_empty_white_18dp'}"/>
+				<abstractions:TintedImage Grid.Column="2"  Source="{markupExtensions:PathResolver 'ic_autorenew_white_18dp'}"/>
+				<abstractions:TintedImage Grid.Row="1" Grid.Column="2"  Source="{markupExtensions:PathResolver 'ic_date_range_white_18dp'}"/>
+				
+				<Label Grid.Column="1" Text="Start date"/>
+				<Label Grid.Column="1" Grid.Row="1" Text="Unit / Daylong"/>
+				<Label Grid.Column="3" Text="Every Mon, Tue, Wed, Thu, Fri, Sat"/>
+				<Label Grid.Column="3" Grid.Row="1" Text="21 weeks"/>
+			</Grid>
 		</StackLayout>
 	</ContentView.Content>
 </ContentView>
