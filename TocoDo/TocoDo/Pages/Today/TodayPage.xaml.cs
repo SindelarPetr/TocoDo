@@ -7,6 +7,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using TocoDo.Models;
+using TocoDo.Services;
+using TocoDo.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Entry = Microcharts.Entry;
@@ -134,10 +136,7 @@ namespace TocoDo.Pages.Main
 				LineSize = 5,
 				Entries = entries,
 				BackgroundColor = Color.Transparent.ToSKColor(),
-				//PointMode = PointMode.None
 			};
-
-			//ChartProgress.Chart = chart;
 		}
 
 		#region Global date picker
@@ -178,9 +177,7 @@ namespace TocoDo.Pages.Main
 
 		private void ButtonAddToday_OnClicked(object sender, EventArgs e)
 		{
-			NewTaskView.IsVisible = true;
-			NewTaskView.Focus();
-			NewTaskView.DefaulDateTime = DateTime.Today;
+			StorageService.AddTaskToTheList(new TaskViewModel { ScheduleDate = DateTime.Today });
 		}
 	}
 }

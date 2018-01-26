@@ -244,9 +244,9 @@ namespace TocoDo.ViewModels
 		public async Task InsertToStorage(string title)
 		{
 			_modelTitle = title;
+			OnPropertyChanged(nameof(ModelTitle));
 			IsCreateMode = false;
 			await StorageService.InsertHabit(this);
-			OnPropertyChanged(nameof(ModelTitle));
 		}
 
 		public HabitModel GetHabitModel()
@@ -272,6 +272,7 @@ namespace TocoDo.ViewModels
 			MyLogger.WriteStartMethod();
 			base.OnPropertyChanged(propertyName);
 
+			if(!IsCreateMode)
 			StorageService.UpdateHabit(this);
 			MyLogger.WriteEndMethod();
 		}

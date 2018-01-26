@@ -8,10 +8,11 @@ using TocoDo.Pages;
 using TocoDo.Pages.Main;
 using TocoDo.Properties;
 using TocoDo.Services;
+using TocoDo.Views.Habits;
 
 namespace TocoDo.ViewModels
 {
-	public class TaskViewModel : BaseViewModel
+	public class TaskViewModel : BaseViewModel, ICreateMode
 	{
 		#region Backing fields
 		private DateTime? _deadline;
@@ -63,13 +64,21 @@ namespace TocoDo.ViewModels
 			get => _reminder;
 			set => SetValue(ref _reminder, value);
 		}
+
+		public bool IsCreateMode { get; set; }
 		#endregion
 
 		#region Commands
-		public ICommand RemoveCommand { get; }
-		public ICommand UpdateCommand { get; }
-		public ICommand EditDescriptionCommand { get; }
+		public ICommand RemoveCommand { get; set; }
+		public ICommand UpdateCommand { get; set; }
+		public ICommand EditDescriptionCommand { get; set; }
 		#endregion
+
+		public TaskViewModel()
+		{
+			IsCreateMode = true;
+			InitCommands();
+		}
 
 		public TaskViewModel(TaskModel taskModel)
 		{
@@ -83,20 +92,24 @@ namespace TocoDo.ViewModels
 			_reminder = taskModel.Reminder;
 			_scheduleDate = taskModel.ScheduleDate;
 			#endregion
-			
-			#region Commands
+
+			InitCommands();
+		}
+
+		private void InitCommands()
+		{
 			RemoveCommand = new MyCommand(async () => await RemoveTask());
 			UpdateCommand = new MyCommand(async () => await Update());
-			
+
 			EditDescriptionCommand = new MyCommand(EditDescription);
-			#endregion
 		}
 
 		protected override async void OnPropertyChanged(string propertyName = null)
 		{
 			base.OnPropertyChanged(propertyName);
 
-			await Update();
+			if(!IsCreateMode)
+				await Update();
 		}
 
 		private async Task RemoveTask()
@@ -198,6 +211,14 @@ namespace TocoDo.ViewModels
 			Debug.Write("------------- Edit description called.");
 			await PageService.PushModalAsync(new EditDescriptionPage(Title, Description, d => Description = d));
 			Debug.Write("------------- Stopped calling edit description.");
+		}
+
+		public async void InsertToStorage(string title)
+		{
+			_title = title;
+			OnPropertyChanged(nameof(Title));
+			IsCreateMode = false;
+			await StorageService.InsertTask(this, false);
 		}
 	}
 }

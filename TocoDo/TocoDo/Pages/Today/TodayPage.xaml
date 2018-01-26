@@ -11,6 +11,7 @@
 			 xmlns:global="clr-namespace:TocoDo.Views.Global;assembly=TocoDo"
 			 xmlns:forms="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.CarouselView"
 			 xmlns:habits="clr-namespace:TocoDo.Views.Habits;assembly=TocoDo"
+			 xmlns:todos="clr-namespace:TocoDo.Views.Todos;assembly=TocoDo"
 			 x:Class="TocoDo.Pages.Main.TodayPage"
 			 x:Name="This">
 	<ContentPage.Content>
@@ -59,7 +60,7 @@
 
 					<!--TODAY-->
 					<global:FrameWrapper Grid.Row="1" Header="Tasks">
-						<views:TodoSetView Padding="15, 5" TasksSource="{x:Static services:StorageService.TodayTasks}" VerticalOptions="Start"/>
+						<todos:TaskCollection Padding="15, 5" ItemsSource="{x:Static services:StorageService.TodayTasks}" VerticalOptions="Start"/>
 					</global:FrameWrapper>
 
 					<global:FrameWrapper Grid.Row="2" Header="Habits">

@@ -19,6 +19,9 @@
 			<converters:IsNotNullConverter x:Key="IsNotNullConverter" />
 			<converters:DoneOpacityConverter x:Key="DoneOpacityConverter" />
 			<converters:IsNotNullOrWhitespaceConverter x:Key="IsNotNullOrWhitespaceConverter"/>
+			<converters:BoolReverseConverter x:Key="BoolReverseConverter"/>
+			<Color x:Key="TitleColor">Gray</Color>
+			<x:Double x:Key="TitleFontSize">15</x:Double>
 		</ResourceDictionary>
 	</ContentView.Resources>
 	<ContentView.Content>
@@ -39,8 +42,21 @@
 			<views:CheckerView x:Name="TodoBoxView" IsChecked="{Binding Done, Mode=TwoWay, Converter={StaticResource CheckConverter}}" HeightRequest="40" WidthRequest="40" CheckCommand="CheckCommand"/>
 
 
-			<!--Title label-->
-			<customRenderers:CrossedLabel x:Name="LabelTitle" Grid.Column="1" Text="{Binding Title}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center" IsStrikeThrough="{Binding Done, Mode=OneWay, Converter={StaticResource IsNotNullConverter}}" TextColor="Gray" HeightRequest="20"/>
+			<StackLayout Grid.Column="1" VerticalOptions="Center">
+				<customRenderers:NoLineEntry x:Name="EntryEditTitle" Text="{Binding Title, Mode=OneWay}" Unfocused="EditTitle_OnUnfocused" FontSize="{StaticResource TitleFontSize}" TextColor="{StaticResource TitleColor}" Margin="-3, 0,0,0">
+					<customRenderers:NoLineEntry.Triggers>
+						<Trigger TargetType="customRenderers:NoLineEntry" Property="IsFocused" Value="False">
+							<Setter Property="IsVisible" Value="False"/>
+						</Trigger>
+					</customRenderers:NoLineEntry.Triggers>
+				</customRenderers:NoLineEntry>
+
+				<!--Title label-->
+				<customRenderers:CrossedLabel x:Name="LabelTitle" Text="{Binding Title}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center" IsStrikeThrough="{Binding Done, Mode=OneWay, Converter={StaticResource IsNotNullConverter}}" HeightRequest="20" FontSize="{StaticResource TitleFontSize}" TextColor="{StaticResource TitleColor}" IsVisible="{Binding Source={x:Reference EntryEditTitle}, Path=IsVisible, Converter={StaticResource BoolReverseConverter}}">
+
+				</customRenderers:CrossedLabel>
+
+			</StackLayout>
 
 			<!-- Task attributes -->
 			<Grid Grid.Column="2" HorizontalOptions="End" Opacity="0.7" ColumnSpacing="0" VerticalOptions="Center">

@@ -115,12 +115,24 @@ namespace TocoDo.Services
 				CreateTime = DateTime.Now
 			};
 
-			await InsertTask(newTask);
-
 			var viewModel = new TaskViewModel(newTask);
+
+			await InsertTask(viewModel);
+
+			return viewModel;
+		}
+
+		public static async Task InsertTask(TaskViewModel viewModel, bool addToTheList = true)
+		{
+			var task = viewModel.GetTaskModel();
+			await InsertTask(task);
+			viewModel.Id = task.Id;
+
+			if(!addToTheList)
+				return;
+
 			AddTaskToTheList(viewModel);
 			BindTask(viewModel);
-			return viewModel;
 		}
 
 		public static async Task UpdateTask(TaskViewModel task)
@@ -148,7 +160,7 @@ namespace TocoDo.Services
 			});
 		}
 
-		private static void AddTaskToTheList(TaskViewModel task)
+		public static void AddTaskToTheList(TaskViewModel task)
 		{
 			Debug.Write("------------- Adding task to the list");
 			Debug.Write("------------- Id of the task is: " + task.Id);
@@ -192,7 +204,7 @@ namespace TocoDo.Services
 			return ScheduledTasks;
 		}
 
-		private static void RemoveTaskFromTheList(TaskViewModel task)
+		public static void RemoveTaskFromTheList(TaskViewModel task)
 		{
 			GetListForDate(task.ScheduleDate).Remove(task);
 		}

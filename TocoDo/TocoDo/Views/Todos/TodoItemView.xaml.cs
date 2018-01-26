@@ -6,15 +6,16 @@ using TocoDo.Pages.Main;
 using TocoDo.Pages.Tasks;
 using TocoDo.Services;
 using TocoDo.ViewModels;
+using TocoDo.Views.Habits;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace TocoDo.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class TodoItemView : ContentView
+	public partial class TodoItemView : ContentView, IEntryFocusable<TaskViewModel>
 	{
-		public TaskViewModel TaskViewModel
+		public TaskViewModel ViewModel
 		{
 			get => (TaskViewModel)BindingContext;
 			set => BindingContext = value;
@@ -30,13 +31,31 @@ namespace TocoDo.Views
 		{
 			Debug.WriteLine("------- Called TapTitle_OnTapped.");
 
-			var page = new ModifyTaskPage(TaskViewModel);
+			var page = new ModifyTaskPage(ViewModel);
 
 			Debug.WriteLine("------- Created instance of ModifyTaskPage in TapTitle_OnTapped.");
 
 			await PageService.PushAsync(page);
 
 			Debug.WriteLine("------- Finished calling of TapTitle_OnTapped.");
+		}
+
+		private void EditTitle_OnUnfocused(object sender, FocusEventArgs e)
+		{
+			var title = ((Entry)e.VisualElement).Text;
+			// If user left the entry blank, then remove the task from collection
+			if (string.IsNullOrWhiteSpace(title))
+			{
+				StorageService.RemoveTaskFromTheList(ViewModel);
+				return;
+			}
+
+			ViewModel.InsertToStorage(title);
+		}
+
+		public void FocusEntry()
+		{
+			EntryEditTitle.Focus();
 		}
 	}
 }

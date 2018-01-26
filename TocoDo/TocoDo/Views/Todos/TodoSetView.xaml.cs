@@ -153,7 +153,7 @@ namespace TocoDo.Views
 			{
 				var todo = child as TodoItemView;
 
-				if (todo?.TaskViewModel.Id == id)
+				if (todo?.ViewModel.Id == id)
 					return todo;
 			}
 
