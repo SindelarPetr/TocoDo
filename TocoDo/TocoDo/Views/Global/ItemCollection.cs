@@ -61,7 +61,6 @@ namespace TocoDo.Views.Todos
 						RemoveItem(task);
 					}
 					break;
-
 			}
 		}
 

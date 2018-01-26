@@ -189,6 +189,12 @@
   <data name="EveryDayFor" xml:space="preserve">
     <value>Every day for</value>
   </data>
+  <data name="EveryMonth" xml:space="preserve">
+    <value>Every month</value>
+  </data>
+  <data name="EveryYear" xml:space="preserve">
+    <value>EveryYear</value>
+  </data>
   <data name="Finished" xml:space="preserve">
     <value>Finished</value>
   </data>
@@ -200,6 +206,12 @@
   </data>
   <data name="Fri" xml:space="preserve">
     <value>Fri</value>
+  </data>
+  <data name="HabitDetailHabitTypeDaylong" xml:space="preserve">
+    <value>All day</value>
+  </data>
+  <data name="HabitDetailHabitTypeTextUnit" xml:space="preserve">
+    <value>{0} time(s) a day</value>
   </data>
   <data name="HrsAgo" xml:space="preserve">
     <value>hours ago</value>

@@ -277,6 +277,24 @@ namespace TocoDo.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Every month.
+        /// </summary>
+        public static string EveryMonth {
+            get {
+                return ResourceManager.GetString("EveryMonth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EveryYear.
+        /// </summary>
+        public static string EveryYear {
+            get {
+                return ResourceManager.GetString("EveryYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Finished.
         /// </summary>
         public static string Finished {
@@ -309,6 +327,24 @@ namespace TocoDo.Properties {
         public static string Fri {
             get {
                 return ResourceManager.GetString("Fri", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All day.
+        /// </summary>
+        public static string HabitDetailHabitTypeDaylong {
+            get {
+                return ResourceManager.GetString("HabitDetailHabitTypeDaylong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} time(s) a day.
+        /// </summary>
+        public static string HabitDetailHabitTypeTextUnit {
+            get {
+                return ResourceManager.GetString("HabitDetailHabitTypeTextUnit", resourceCulture);
             }
         }
         

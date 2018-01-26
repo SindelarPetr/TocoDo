@@ -16,8 +16,8 @@ namespace TocoDo.Converters
 		    if (value is HabitViewModel habit)
 		    {
 			    if (habit.ModelHabitType == HabitType.Unit)
-				    return string.Format(Resources.ActiveHabitButtonTextUnit, habit.ModelDailyFillingCount, habit.ModelRepeatsADay);
-				return string.Format(Resources.ActiveHabitButtonTextDaylong, habit.ModelDailyFillingCount);
+				    return string.Format(Resources.ActiveHabitButtonTextUnit, habit.ModelRepeatsToday, habit.ModelMaxRepeatsADay);
+				return string.Format(Resources.ActiveHabitButtonTextDaylong, habit.ModelRepeatsToday);
 		    }
 
 		    return "";

@@ -229,7 +229,7 @@ namespace TocoDo.Services
 		{
 			return new HabitViewModel(new HabitModel
 			{
-				DailyFillingCount = 3,
+				RepeatsToday = 3,
 				Title = "Meditation",
 				Description = "Sit somewhere where its quiet and calm down all thoughts for 20 minutes.",
 				Filling = new Dictionary<DateTime, int>
@@ -256,7 +256,7 @@ namespace TocoDo.Services
 				GetExampleHabitViewModel(),
 				new HabitViewModel(new HabitModel
 				{
-					DailyFillingCount = 3,
+					RepeatsToday = 3,
 					RepeatsADay = 5,
 					Title = "Today started 4 days ago",
 					Description = "Every morning make 40 push ups in 2 iterations (20 in each).",
@@ -277,7 +277,7 @@ namespace TocoDo.Services
 				}),
 				new HabitViewModel(new HabitModel
 				{
-					DailyFillingCount = 3,
+					RepeatsToday = 3,
 					RepeatsADay = 5,
 					Title = "Today starts today",
 					Description = "Every morning make 40 push ups in 2 iterations (20 in each).",
@@ -298,7 +298,7 @@ namespace TocoDo.Services
 				}),
 				new HabitViewModel(new HabitModel
 				{
-				DailyFillingCount = 3,
+				RepeatsToday = 3,
 				RepeatsADay = 5,
 				Title = "Current started 4 days ago (Thursday + Saturday)",
 				Description = "Every morning make 40 push ups in 2 iterations (20 in each).",
@@ -319,7 +319,7 @@ namespace TocoDo.Services
 			}),
 				new HabitViewModel(new HabitModel
 				{
-				DailyFillingCount = 3,
+				RepeatsToday = 3,
 				RepeatsADay = 5,
 				Title = "Finished 1 year ago",
 				Description = "Every morning make 40 push ups in 2 iterations (20 in each).",
@@ -340,7 +340,7 @@ namespace TocoDo.Services
 			}),
 				new HabitViewModel(new HabitModel
 				{
-				DailyFillingCount = 3,
+				RepeatsToday = 3,
 				RepeatsADay = 5,
 				Title = "Will start tomorrow",
 				Description = "Every morning make 40 push ups in 2 iterations (20 in each).",

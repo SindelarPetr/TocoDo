@@ -45,7 +45,7 @@ namespace TocoDo.Models
 		public int RepeatsADay { get; set; }
 		#endregion
 
-		public int DailyFillingCount { get; set; }
+		public int RepeatsToday { get; set; }
 		public bool IsRecommended { get; set; }
 
 		/// <summary>

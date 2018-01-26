@@ -32,7 +32,7 @@ namespace TocoDo.Pages.Habits
 				RepeatsADay = 2,
 				RepeatType = Models.RepeatType.Mon,
 				StartDate = DateTime.Today + TimeSpan.FromDays(3),
-				DailyFillingCount = 3
+				RepeatsToday = 3
 			});
 			InitializeComponent();
 		}

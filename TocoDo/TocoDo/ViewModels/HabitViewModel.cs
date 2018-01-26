@@ -20,7 +20,7 @@ namespace TocoDo.ViewModels
 
 		#region Backing fields
 		private bool _modelIsRecommended;
-		private int _modelDailyFillingCount;
+		private int _modelRepeatsToday;
 		private HabitType _modelHabitType;
 		private int _modelDaysToRepeat;
 		private DateTime? _modelStartDate;
@@ -48,13 +48,12 @@ namespace TocoDo.ViewModels
 		/// <summary>
 		/// How many times the habit was violated / performed today
 		/// </summary>
-		public int ModelDailyFillingCount
+		public int ModelRepeatsToday
 		{
-			get => _modelDailyFillingCount;
+			get => _modelRepeatsToday;
 			set
 			{
-				SetValue(ref _modelDailyFillingCount, value);
-				OnPropertyChanged(".");
+				SetValue(ref _modelRepeatsToday, value);
 			}
 		}
 
@@ -66,7 +65,7 @@ namespace TocoDo.ViewModels
 			set
 			{
 				SetValue(ref _modelHabitType, value);
-				OnPropertyChanged(".");
+				OnPropertyChanged(nameof(HabitTypeWithRepeats));
 			}
 		}
 		public int ModelDaysToRepeat
@@ -75,17 +74,13 @@ namespace TocoDo.ViewModels
 			set
 			{
 				SetValue(ref _modelDaysToRepeat, value);
-				OnPropertyChanged(".");
+				OnPropertyChanged(nameof(HabitDaysToRepeatWithRepeatType));
 			}
 		}
 		public DateTime? ModelStartDate
 		{
 			get => _modelStartDate;
-			set
-			{
-				SetValue(ref _modelStartDate, value); 
-				OnPropertyChanged(".");
-			}
+			set => SetValue(ref _modelStartDate, value);
 		}
 		public string ModelTitle
 		{
@@ -98,8 +93,8 @@ namespace TocoDo.ViewModels
 			get => _modelRepeatType;
 			set
 			{
-				SetValue(ref _modelRepeatType, value);
-				OnPropertyChanged(".");
+				SetValue(ref _modelRepeatType, value); 
+				OnPropertyChanged(nameof(HabitDaysToRepeatWithRepeatType));
 			}
 		}
 
@@ -114,14 +109,49 @@ namespace TocoDo.ViewModels
 		/// <summary>
 		/// Only for Unit habit. Count of times to repeat the habit each day
 		/// </summary>
-		public int ModelRepeatsADay
+		public int ModelMaxRepeatsADay
 		{
 			get => _modelRepeatsADay;
-			set => SetValue(ref _modelRepeatsADay, value);
+			set
+			{
+				SetValue(ref _modelRepeatsADay, value);
+				OnPropertyChanged(nameof(HabitTypeWithRepeats));
+			}
 		}
+
 		public bool IsCreateMode { get; set; }
-		
+
 		public bool ModelIsFinished { get; set; }
+
+		public string HabitTypeWithRepeats => (ModelHabitType == HabitType.Daylong)
+			? Resources.HabitDetailHabitTypeDaylong
+			: string.Format(Resources.HabitDetailHabitTypeTextUnit, ModelMaxRepeatsADay);
+
+		public string HabitDaysToRepeatWithRepeatType
+		{
+			get
+			{
+				string timeScale;
+				switch (ModelRepeatType)
+				{
+					case RepeatType.Days:
+						timeScale = Resources.Days;
+						break;
+					case RepeatType.Months:
+						timeScale = Resources.Months;
+						break;
+					case RepeatType.Years:
+						timeScale = Resources.Years;
+						break;
+					default:
+						timeScale = Resources.Weeks;
+						break;
+				}
+
+				return $"{Resources.For} {ModelDaysToRepeat} {timeScale}";
+			}
+
+		}
 		#endregion
 
 		#region Commands
@@ -137,6 +167,11 @@ namespace TocoDo.ViewModels
 
 		public HabitViewModel()
 		{
+			// Set initial values
+			ModelRepeatType = RepeatType.Days;
+			ModelHabitType = HabitType.Daylong;
+			ModelMaxRepeatsADay = 1;
+
 			ModelFilling = new ObservableDictionary<DateTime, int>();
 			IsCreateMode = true;
 
@@ -153,7 +188,7 @@ namespace TocoDo.ViewModels
 			_modelDaysToRepeat = model.DaysToRepeat;
 			_modelStartDate = model.StartDate;
 			_modelTitle = model.Title;
-			_modelDailyFillingCount = model.DailyFillingCount;
+			_modelRepeatsToday = model.RepeatsToday;
 			_modelIsRecommended = model.IsRecommended;
 			_modelRepeatsADay = model.RepeatsADay;
 
@@ -167,7 +202,7 @@ namespace TocoDo.ViewModels
 
 			SelectStartDateCommand = new Command(async () => await SelectDate(d => ModelStartDate = d, Resources.SelectStartDate));
 			UnsetStartDateCommand = new Command(() => ModelStartDate = null);
-			IncreaseTodayCommand = new Command(() => ModelDailyFillingCount++);
+			IncreaseTodayCommand = new Command(() => ModelRepeatsToday++);
 		}
 
 		private async Task SelectDate(Action<DateTime?> pickedAction, string actionSheetHeader)
@@ -226,9 +261,9 @@ namespace TocoDo.ViewModels
 				DaysToRepeat = ModelDaysToRepeat,
 				StartDate = ModelStartDate,
 				Title = ModelTitle,
-				DailyFillingCount = ModelDailyFillingCount,
+				RepeatsToday = ModelRepeatsToday,
 				IsRecommended = ModelIsRecommended,
-				RepeatsADay = ModelRepeatsADay
+				RepeatsADay = ModelMaxRepeatsADay
 			};
 		}
 

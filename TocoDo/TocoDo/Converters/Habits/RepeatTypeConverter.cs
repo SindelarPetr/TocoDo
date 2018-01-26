@@ -4,45 +4,37 @@ using System.Globalization;
 using System.Text;
 using TocoDo.Models;
 using TocoDo.Properties;
-using TocoDo.ViewModels;
 using Xamarin.Forms;
 
 namespace TocoDo.Converters.Habits
 {
-    public class HabitDateConverter : IValueConverter
+    public class RepeatTypeConverter : IValueConverter
     {
 	    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 	    {
-			HabitViewModel habit = value as HabitViewModel;
+		    if (value is RepeatType type)
+		    {
+			    return GetRepeatText(type);
+		    }
 
-		    DateTime? date = habit?.ModelStartDate;
-
-			if (date == null)
-			    return string.Empty;
-
-		    string startDate = DateToTextConverter.Convert(date);
-			string repeatText = GetRepeatText(habit.ModelRepeatType, habit.ModelDaysToRepeat);
-		    string dayAmountText = habit.ModelHabitType == HabitType.Daylong
-			    ? $"{Resources.AllDay.ToLower()}"
-			    : $"{habit.ModelRepeatsToday} {Resources.TimesADay.ToLower()}";
-		    return $"From { startDate } - { repeatText } { dayAmountText}";
-		}
-
-	    public static  string GetRepeatText(RepeatType habitModelRepeatType, int modelRepeatNumber)
-	    {
-		    if (habitModelRepeatType.HasFlag(RepeatType.Days))
-			    return string.Format(Resources.RepeatTypeDays, modelRepeatNumber);
-
-		    if (habitModelRepeatType.HasFlag(RepeatType.Months))
-			    return string.Format(Resources.RepeatTypeMonths, modelRepeatNumber);
-
-		    if (habitModelRepeatType.HasFlag(RepeatType.Years))
-			    return string.Format(Resources.RepeatTypeYears, modelRepeatNumber);
-
-		    return string.Format(Resources.RepeatTypeWeeks, GetWeekDays(habitModelRepeatType), modelRepeatNumber);
+		    return string.Empty;
 	    }
 
-	    public  static string GetWeekDays(RepeatType type)
+	    public static string GetRepeatText(RepeatType habitModelRepeatType)
+	    {
+		    if (habitModelRepeatType.HasFlag(RepeatType.Days))
+			    return Resources.EveryDay;
+
+		    if (habitModelRepeatType.HasFlag(RepeatType.Months))
+			    return Resources.EveryMonth;
+
+		    if (habitModelRepeatType.HasFlag(RepeatType.Years))
+			    return Resources.EveryYear;
+
+		    return $"{ Resources.Every } { GetWeekDays(habitModelRepeatType) }";
+	    }
+
+	    public static string GetWeekDays(RepeatType type)
 	    {
 		    string days = string.Empty;
 		    if (type.HasFlag(RepeatType.Mon))
@@ -69,7 +61,7 @@ namespace TocoDo.Converters.Habits
 		    return days;
 	    }
 
-	    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
 	    {
 		    throw new NotImplementedException();
 	    }
