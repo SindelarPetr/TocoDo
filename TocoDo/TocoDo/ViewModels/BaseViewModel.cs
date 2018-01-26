@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -15,7 +16,7 @@ namespace TocoDo.ViewModels
 
 			if (EqualityComparer<T>.Default.Equals(backingField, value))
 				return false;
-			OnPropertyChanging(propertyName);
+			OnPropertyChanging(this, backingField, value, propertyName);
 
 			backingField = value;
 
@@ -23,17 +24,20 @@ namespace TocoDo.ViewModels
 			return true;
 		}
 
-		public event PropertyChangingEventHandler PropertyChanging;
+		/// <summary>
+		/// sender, oldValue, newValue, propertyName
+		/// </summary>
+		public event Action<object, object, object, string> PropertyChanging;
 		public event PropertyChangedEventHandler PropertyChanged;
+
+		protected virtual void OnPropertyChanging(object sender, object oldValue, object newValue, [CallerMemberName] string propertyName = null)
+		{
+			PropertyChanging?.Invoke(sender, oldValue, newValue, propertyName);
+		}
 
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		}
-
-		protected virtual void OnPropertyChanging([CallerMemberName] string propertyName = null)
-		{
-			PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(propertyName));
 		}
 	}
 }

@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using NetBox.Extensions;
 using TocoDo.Helpers;
 using TocoDo.Models;
 using TocoDo.ViewModels;
@@ -30,10 +31,11 @@ namespace TocoDo.Services
 		#region Habits
 		public static ObservableCollection<HabitViewModel> AllHabits { get; } = new ObservableCollection<HabitViewModel>();
 
+		public static ObservableCollection<HabitViewModel> ActiveHabits { get; } = new ObservableCollection<HabitViewModel>();
 		public static ObservableCollection<HabitViewModel> CurrentHabits { get; } = new ObservableCollection<HabitViewModel>();
 		public static ObservableCollection<HabitViewModel> ScheduledHabits { get; } = new ObservableCollection<HabitViewModel>();
 		public static ObservableCollection<HabitViewModel> UnscheduledHabits { get; } = new ObservableCollection<HabitViewModel>();
-		public static ObservableCollection<HabitViewModel> RecommendedHabits { get; } = new ObservableCollection<HabitViewModel>();
+		public static ObservableCollection<HabitViewModel> YesterdayFinishedHabits { get; } = new ObservableCollection<HabitViewModel>();
 		#endregion
 		#endregion
 
@@ -167,9 +169,9 @@ namespace TocoDo.Services
 				AddTaskToTheList((TaskViewModel)sender);
 		}
 
-		private static void TaskOnPropertyChanging(object sender, PropertyChangingEventArgs propertyChangingEventArgs)
+		private static void TaskOnPropertyChanging(object sender, object oldValue, object newValue, string propertyName)
 		{
-			if (propertyChangingEventArgs.PropertyName == nameof(TaskViewModel.ScheduleDate))
+			if (propertyName == nameof(TaskViewModel.ScheduleDate))
 				RemoveTaskFromTheList((TaskViewModel)sender);
 		}
 
@@ -249,13 +251,56 @@ namespace TocoDo.Services
 
 		static async Task LoadHabits()
 		{
-			CurrentHabits.Add(GetExampleHabitViewModel());
-
-			int id = 2;
-			ScheduledHabits.Add(new HabitViewModel(new HabitModel
+			var habitList = new List<HabitViewModel>
 			{
+				GetExampleHabitViewModel(),
+				new HabitViewModel(new HabitModel
+				{
+					DailyFillingCount = 3,
+					RepeatsADay = 5,
+					Title = "Today started 4 days ago",
+					Description = "Every morning make 40 push ups in 2 iterations (20 in each).",
+					Filling = new Dictionary<DateTime, int>
+					{
+						{ DateTime.Today - TimeSpan.FromDays(4), 2 },
+						{ DateTime.Today - TimeSpan.FromDays(3), 3 },
+						{ DateTime.Today - TimeSpan.FromDays(2), 1 },
+						{ DateTime.Today - TimeSpan.FromDays(1), 2 },
+						{ DateTime.Today, 1 },
+					},
+					HabitType = HabitType.Unit,
+					Id = FakeIdGenerator.GetId(),
+					IsRecommended = false,
+					RepeatType = RepeatType.Fri,
+					DaysToRepeat = 12,
+					StartDate = DateTime.Today - TimeSpan.FromDays(4)
+				}),
+				new HabitViewModel(new HabitModel
+				{
+					DailyFillingCount = 3,
+					RepeatsADay = 5,
+					Title = "Today starts today",
+					Description = "Every morning make 40 push ups in 2 iterations (20 in each).",
+					Filling = new Dictionary<DateTime, int>
+					{
+						{ DateTime.Today - TimeSpan.FromDays(4), 2 },
+						{ DateTime.Today - TimeSpan.FromDays(3), 3 },
+						{ DateTime.Today - TimeSpan.FromDays(2), 1 },
+						{ DateTime.Today - TimeSpan.FromDays(1), 2 },
+						{ DateTime.Today, 1 },
+					},
+					HabitType = HabitType.Unit,
+					Id = FakeIdGenerator.GetId(),
+					IsRecommended = false,
+					RepeatType = RepeatType.Fri,
+					DaysToRepeat = 12,
+					StartDate = DateTime.Today
+				}),
+				new HabitViewModel(new HabitModel
+				{
 				DailyFillingCount = 3,
-				Title = "Morning push ups",
+				RepeatsADay = 5,
+				Title = "Current started 4 days ago (Thursday + Saturday)",
 				Description = "Every morning make 40 push ups in 2 iterations (20 in each).",
 				Filling = new Dictionary<DateTime, int>
 				{
@@ -268,10 +313,74 @@ namespace TocoDo.Services
 				HabitType = HabitType.Daylong,
 				Id = FakeIdGenerator.GetId(),
 				IsRecommended = false,
-				RepeatType = RepeatType.Days - (1 + 2 + 4 + 5),
+				RepeatType = RepeatType.Sat | RepeatType.Thu,
 				DaysToRepeat = 12,
 				StartDate = DateTime.Today - TimeSpan.FromDays(4)
-			}));
+			}),
+				new HabitViewModel(new HabitModel
+				{
+				DailyFillingCount = 3,
+				RepeatsADay = 5,
+				Title = "Finished 1 year ago",
+				Description = "Every morning make 40 push ups in 2 iterations (20 in each).",
+				Filling = new Dictionary<DateTime, int>
+				{
+					{ DateTime.Today - TimeSpan.FromDays(4), 2 },
+					{ DateTime.Today - TimeSpan.FromDays(3), 3 },
+					{ DateTime.Today - TimeSpan.FromDays(2), 1 },
+					{ DateTime.Today - TimeSpan.FromDays(1), 2 },
+					{ DateTime.Today, 1 },
+				},
+				HabitType = HabitType.Daylong,
+				Id = FakeIdGenerator.GetId(),
+				IsRecommended = false,
+				RepeatType = RepeatType.Years,
+				DaysToRepeat = 4,
+				StartDate = DateTime.Today.AddYears(-5),
+			}),
+				new HabitViewModel(new HabitModel
+				{
+				DailyFillingCount = 3,
+				RepeatsADay = 5,
+				Title = "Will start tomorrow",
+				Description = "Every morning make 40 push ups in 2 iterations (20 in each).",
+				Filling = new Dictionary<DateTime, int>
+				{
+					{ DateTime.Today - TimeSpan.FromDays(4), 2 },
+					{ DateTime.Today - TimeSpan.FromDays(3), 3 },
+					{ DateTime.Today - TimeSpan.FromDays(2), 1 },
+					{ DateTime.Today - TimeSpan.FromDays(1), 2 },
+					{ DateTime.Today, 1 },
+				},
+				HabitType = HabitType.Daylong,
+				Id = FakeIdGenerator.GetId(),
+				IsRecommended = false,
+				RepeatType = RepeatType.Days,
+				DaysToRepeat = 20,
+				StartDate = DateTime.Today + TimeSpan.FromDays(1)
+			})
+			};
+
+			var filtred = new List<HabitViewModel>();
+			foreach (var habit in habitList)
+			{
+				if (IsHabitFinished(habit))
+				{
+					YesterdayFinishedHabits.Add(habit);
+					continue;
+				}
+				else
+				{
+					filtred.Add(habit);
+				}
+
+				if (IsHabitToday(habit))
+				{
+					ActiveHabits.Add(habit);
+				}
+			}
+
+			filtred.ForEach(AddHabitToTheList);
 		}
 
 		public static async void UpdateHabit(HabitViewModel habit)
@@ -305,12 +414,130 @@ namespace TocoDo.Services
 
 		public static void AddHabitToTheList(HabitViewModel habit)
 		{
-			UnscheduledHabits.Add(habit);
+			// Get the propper position for the habit
+			var list = GetProperList(habit);
+			list.Add(habit);
+			habit.PropertyChanging += OnHabitOnPropertyChanging;
+		}
+
+		private static void OnHabitOnPropertyChanging(object habit, object oldValue, object newValue, string propertyName)
+		{
+			if (propertyName != nameof(HabitViewModel.ModelStartDate)) return;
+
+			var vm = (HabitViewModel) habit;
+			var oldList = GetProperList(vm);
+			var newList = GetProperList((DateTime?) newValue, vm.ModelRepeatType, vm.ModelDaysToRepeat);
+
+			if (oldList == newList)
+				return;
+
+			RemoveHabitFromTheList(vm);
+			newList.Add(vm);
+			vm.PropertyChanging += OnHabitOnPropertyChanging;
 		}
 
 		public static void RemoveHabitFromTheList(HabitViewModel habit)
 		{
-			UnscheduledHabits.Remove(habit);
+			var	list = GetProperList(habit);
+			list?.Remove(habit);
+			habit.PropertyChanging -= OnHabitOnPropertyChanging;
+		}
+
+		private static ObservableCollection<HabitViewModel> GetProperList(HabitViewModel habit) =>
+			GetProperList(habit.ModelStartDate, habit.ModelRepeatType, habit.ModelDaysToRepeat);
+
+		private static ObservableCollection<HabitViewModel> GetProperList(DateTime? start, RepeatType repeatType, int daysToRepeat)
+		{
+			if (start == null)
+				return UnscheduledHabits;
+
+			// Habit will begin in the future
+			if (start > DateTime.Now)
+			{
+				return ScheduledHabits;
+			}
+
+			// check if habit already ended
+			if (IsHabitFinished(start, repeatType, daysToRepeat))
+				return null;
+
+			return CurrentHabits;
+		}
+
+		private static TimeSpan HabitLength(DateTime start, RepeatType repeatType, int daysToRepeat)
+		{
+			switch (repeatType)
+			{
+				case RepeatType.Years:
+					return start.AddYears(daysToRepeat) - start;
+				case RepeatType.Months:
+					return start.AddMonths(daysToRepeat) - start;
+				case RepeatType.Days:
+					return start.AddDays(daysToRepeat) - start;
+			}
+
+			int fromWeekMissing = 0;
+			switch (repeatType)
+			{
+				case RepeatType.Sat:
+					fromWeekMissing = 1;
+					break;
+				case RepeatType.Fri:
+					fromWeekMissing = 2;
+					break;
+				case RepeatType.Thu:
+					fromWeekMissing = 3;
+					break;
+				case RepeatType.Wed:
+					fromWeekMissing = 4;
+					break;
+				case RepeatType.Tue:
+					fromWeekMissing = 5;
+					break;
+				case RepeatType.Mon:
+					fromWeekMissing = 6;
+					break;
+			}
+
+			return start.AddDays(daysToRepeat * 7 - fromWeekMissing) - start;
+		}
+
+		private static bool IsHabitToday(HabitViewModel habit)
+		{
+			if (habit.ModelStartDate == null || !IsHabitCurrent(habit)) return false;
+
+			var start = habit.ModelStartDate.Value;
+			var repeat = habit.ModelRepeatType;
+			switch (repeat)
+			{
+				case RepeatType.Days:
+					return true;
+				case RepeatType.Months:
+					return  start.Day == DateTime.Today.Day;
+				case RepeatType.Years:
+					return start.Day == DateTime.Today.Day && start.Month == DateTime.Today.Month;
+			}
+
+			return (repeat.HasFlag(RepeatType.Mon) && (int) DateTime.Today.DayOfWeek == 1) ||
+			       (repeat.HasFlag(RepeatType.Tue) && (int) DateTime.Today.DayOfWeek == 2) ||
+			       (repeat.HasFlag(RepeatType.Wed) && (int) DateTime.Today.DayOfWeek == 3) ||
+			       (repeat.HasFlag(RepeatType.Thu) && (int) DateTime.Today.DayOfWeek == 4) ||
+			       (repeat.HasFlag(RepeatType.Fri) && (int) DateTime.Today.DayOfWeek == 5) ||
+			       (repeat.HasFlag(RepeatType.Sat) && (int) DateTime.Today.DayOfWeek == 6) ||
+			       (repeat.HasFlag(RepeatType.Sun) && (int) DateTime.Today.DayOfWeek == 0);
+		}
+
+
+		private static bool IsHabitFinished(HabitViewModel habit) =>
+			IsHabitFinished(habit.ModelStartDate, habit.ModelRepeatType, habit.ModelDaysToRepeat);
+		private static bool IsHabitFinished(DateTime? start, RepeatType repeatType, int daysToRepeat)
+		{
+			return start != null && start + HabitLength(start.Value, repeatType, daysToRepeat) < DateTime.Now;
+		}
+
+		private static bool IsHabitCurrent(HabitViewModel habit)
+		{
+			return habit.ModelStartDate != null && !IsHabitFinished(habit) && habit.ModelStartDate.Value <= DateTime.Today;
 		}
 		#endregion
 	}

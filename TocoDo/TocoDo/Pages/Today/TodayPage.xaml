@@ -10,6 +10,7 @@
 			 xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
 			 xmlns:global="clr-namespace:TocoDo.Views.Global;assembly=TocoDo"
 			 xmlns:forms="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.CarouselView"
+			 xmlns:habits="clr-namespace:TocoDo.Views.Habits;assembly=TocoDo"
 			 x:Class="TocoDo.Pages.Main.TodayPage"
 			 x:Name="This">
 	<ContentPage.Content>
@@ -57,8 +58,12 @@
 					</global:FrameWrapper>
 
 					<!--TODAY-->
-					<global:FrameWrapper Grid.Row="1" Header="Today">
+					<global:FrameWrapper Grid.Row="1" Header="Tasks">
 						<views:TodoSetView Padding="15, 5" TasksSource="{x:Static services:StorageService.TodayTasks}" VerticalOptions="Start"/>
+					</global:FrameWrapper>
+
+					<global:FrameWrapper Grid.Row="2" Header="Habits">
+						<habits:ActualHabitCollection ItemsSource="{x:Static services:StorageService.ActiveHabits}"/>
 					</global:FrameWrapper>
 				</Grid>
 			</ScrollView>

@@ -11,7 +11,6 @@ namespace TocoDo.Views
 	public partial class TodoSetView : ContentView
 	{
 		#region TasksSource
-
 		private ObservableCollection<TaskViewModel> _taskSource;
 		public ObservableCollection<TaskViewModel> TasksSource
 		{
@@ -83,8 +82,7 @@ namespace TocoDo.Views
 		public static BindableProperty HeaderTextProperty = BindableProperty.Create(
 			propertyName: "HeaderText",
 			returnType: typeof(string),
-			declaringType: typeof(string),
-			defaultValue: null);
+			declaringType: typeof(string));
 
 		public string HeaderText
 		{

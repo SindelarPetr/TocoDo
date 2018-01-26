@@ -27,12 +27,15 @@
 				<Setter Property="Padding" Value="20, 10, 20, 10"/>
 			</Style>
 
-			<Style x:Key="PageStackLayout" TargetType="StackLayout">
+			<Style x:Key="PageLayout" TargetType="Layout">
 				<Setter Property="Padding" Value="10,10,10,88"/>
+			</Style>
+
+			<Style x:Key="PageStackLayout" TargetType="StackLayout" BasedOn="{StaticResource PageLayout}">
 				<Setter Property="Spacing" Value="10"/>
 			</Style>
 
-			<Style x:Key="PageGrid" TargetType="Grid">
+			<Style x:Key="PageGrid" TargetType="Grid" BasedOn="{StaticResource PageLayout}">
 				<Setter Property="Padding" Value="10"/>
 				<Setter Property="RowSpacing" Value="10"/>
 			</Style>
@@ -63,12 +66,18 @@
 				<Setter Property="Padding" Value="15, 5, 15, 5"/>
 			</Style>
 			
-			<Style TargetType="habits:HabitSetView" ApplyToDerivedTypes="True">
+			<Style TargetType="habits:HabitCollection" ApplyToDerivedTypes="True">
 				<Setter Property="Padding" Value="15, 5, 15, 15"/>
 			</Style>
 
-			<Style x:Key="MainFrame" TargetType="Frame">
-				
+			<Style x:Key="MainFrame" TargetType="Frame"></Style>
+			
+			<Style x:Key="HabitHeader" TargetType="Label">
+				<Setter Property="FontSize" Value="Medium" />
+				<Setter Property="TextColor" Value="{StaticResource ColorPrimaryLight}" />
+			</Style>
+			<Style TargetType="habits:ActualHabitView">
+				<Setter Property="Padding" Value="15, 5, 15, 15"/>
 			</Style>
 		</ResourceDictionary>
 	</Application.Resources>

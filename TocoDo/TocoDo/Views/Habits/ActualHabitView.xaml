@@ -1,11 +1,47 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-			 x:Class="TocoDo.Views.Habits.ActualHabitView">
-  <ContentView.Content>
-		<StackLayout>
-			<!-- This button should increase the counter of the habit - if the habit is all day, then it increases the counter of violences and if the task is type of unit, then it increases the count of how many times it has been done -->
-		  <Button Text="TODO"/>
+			 xmlns:customRenderers="clr-namespace:TocoDo.CustomRenderers;assembly=TocoDo"
+			 xmlns:converters="clr-namespace:TocoDo.Converters;assembly=TocoDo"
+			 xmlns:habits="clr-namespace:TocoDo.Converters.Habits;assembly=TocoDo"
+			 xmlns:models="clr-namespace:TocoDo.Models;assembly=TocoDo"
+			 x:Class="TocoDo.Views.Habits.ActualHabitView"
+             x:Name="This">
+	<ContentView.Resources>
+		<ResourceDictionary>
+			<converters:HabitDaylyFillingCountConverter x:Key="FillingCountConverter"/>
+		</ResourceDictionary>
+	</ContentView.Resources>
+	<ContentView.Content>
+		<StackLayout BindingContext="{Binding Source={x:Reference This}, Path=ViewModel}" >
+			<StackLayout.GestureRecognizers>
+				<TapGestureRecognizer Command="{Binding ShowProgressCommand}" />
+			</StackLayout.GestureRecognizers>
+
+			<Grid ColumnSpacing="0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
+				<Label Text="{Binding ModelTitle}" Style="{StaticResource HabitHeader}" />
+				<Label Grid.Column="1" Margin="5,0,0,0" FontSize="Small" Text="{Binding ModelRepeatsADay, StringFormat='Goal: {0}'}" HorizontalOptions="Fill" HorizontalTextAlignment="Center" VerticalOptions="Fill" VerticalTextAlignment="Center">
+					<Label.Triggers>
+						<DataTrigger TargetType="Label" Binding="{Binding ModelHabitType}" Value="{x:Static models:HabitType.Daylong}">
+							<Setter Property="IsVisible" Value="False"/>
+						</DataTrigger>
+					</Label.Triggers>
+				</Label>
+			</Grid>
+			<Button Text="{Binding ModelDailyFillingCount}" BackgroundColor="{StaticResource ColorPrimaryLight}" TextColor="White" Command="{Binding IncreaseTodayCommand}" Clicked="Button_OnClicked">
+				<Button.Triggers>
+					<DataTrigger TargetType="Button"  Binding="{Binding ModelHabitType}" Value="{x:Static models:HabitType.Daylong}" >
+						<Setter Property="BackgroundColor" Value="{StaticResource ColorPrimaryLight}"/>
+						<Setter Property="Text" Value="{Binding ModelDailyFillingCount, StringFormat='Vioalted {0} times'}"></Setter>
+					</DataTrigger>
+				</Button.Triggers>
+			</Button>
+
+			
 		</StackLayout>
   </ContentView.Content>
 </ContentView>

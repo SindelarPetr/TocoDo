@@ -10,12 +10,14 @@ using TocoDo.Pages.Habits;
 using TocoDo.Pages.Main;
 using TocoDo.Properties;
 using TocoDo.Services;
+using TocoDo.Views.Habits;
 using Xamarin.Forms;
 
 namespace TocoDo.ViewModels
 {
-	public class HabitViewModel : BaseViewModel
+	public class HabitViewModel : BaseViewModel, ICreateMode
 	{
+
 		#region Backing fields
 		private bool _modelIsRecommended;
 		private int _modelDailyFillingCount;
@@ -117,28 +119,26 @@ namespace TocoDo.ViewModels
 			get => _modelRepeatsADay;
 			set => SetValue(ref _modelRepeatsADay, value);
 		}
+		public bool IsCreateMode { get; set; }
+		
+		public bool ModelIsFinished { get; set; }
 		#endregion
-
-		private bool _isEditTitleMode;
-		public bool IsEditTitleMode
-		{
-			get => _isEditTitleMode;
-			set => SetValue(ref _isEditTitleMode, value);
-		}
 
 		#region Commands
 		public ICommand EditCommand { get; private set; }
+		public ICommand ShowProgressCommand { get; private set; }
 		public ICommand UpdateCommand { get; private set; }
 		public ICommand InsertCommand { get; private set; }
 		public ICommand SelectStartDateCommand { get; private set; }
 		public ICommand UnsetStartDateCommand { get; private set; }
 		public ICommand SelectRepeatCommand { get; private set; }
+		public ICommand IncreaseTodayCommand { get; private set; }
 		#endregion
 
 		public HabitViewModel()
 		{
 			ModelFilling = new ObservableDictionary<DateTime, int>();
-			IsEditTitleMode = true;
+			IsCreateMode = true;
 
 			SetupCommands();
 		}
@@ -167,6 +167,7 @@ namespace TocoDo.ViewModels
 
 			SelectStartDateCommand = new Command(async () => await SelectDate(d => ModelStartDate = d, Resources.SelectStartDate));
 			UnsetStartDateCommand = new Command(() => ModelStartDate = null);
+			IncreaseTodayCommand = new Command(() => ModelDailyFillingCount++);
 		}
 
 		private async Task SelectDate(Action<DateTime?> pickedAction, string actionSheetHeader)
@@ -208,7 +209,7 @@ namespace TocoDo.ViewModels
 		public async Task InsertToStorage(string title)
 		{
 			_modelTitle = title;
-			IsEditTitleMode = false;
+			IsCreateMode = false;
 			await StorageService.InsertHabit(this);
 			OnPropertyChanged(nameof(ModelTitle));
 		}
@@ -236,8 +237,7 @@ namespace TocoDo.ViewModels
 			MyLogger.WriteStartMethod();
 			base.OnPropertyChanged(propertyName);
 
-			if (propertyName != nameof(IsEditTitleMode))
-				StorageService.UpdateHabit(this);
+			StorageService.UpdateHabit(this);
 			MyLogger.WriteEndMethod();
 		}
 	}

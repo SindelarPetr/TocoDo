@@ -61,6 +61,24 @@ namespace TocoDo.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Violations: {0}.
+        /// </summary>
+        public static string ActiveHabitButtonTextDaylong {
+            get {
+                return ResourceManager.GetString("ActiveHabitButtonTextDaylong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} / {1}.
+        /// </summary>
+        public static string ActiveHabitButtonTextUnit {
+            get {
+                return ResourceManager.GetString("ActiveHabitButtonTextUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add a note.
         /// </summary>
         public static string AddANote {

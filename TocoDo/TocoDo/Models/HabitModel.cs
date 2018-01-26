@@ -52,5 +52,10 @@ namespace TocoDo.Models
 		/// Records in which days the user meeted his goals (in case of unit type challenge) or how many times violated the challenge (in case of daylong type of challenge).
 		/// </summary>
 		public Dictionary<DateTime, int> Filling { get; set; }
+
+		/// <summary>
+		/// Indicates whether the Habit has its all iterations behind.
+		/// </summary>
+		public bool IsFinished { get; set; }
 	}
 }

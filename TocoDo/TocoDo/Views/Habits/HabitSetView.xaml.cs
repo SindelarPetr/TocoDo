@@ -65,21 +65,14 @@ namespace TocoDo.Views.Habits
 		{
 			var habitView = new HabitView(habit);
 			MainLayout.Children.Add(habitView);
-			if (habit.IsEditTitleMode)
-				habitView.FocusEditTitleEntry();
+			if (habit.IsCreateMode)
+				habitView.FocusEntry();
 		}
 
 		private void RemoveHabit(HabitViewModel habit)
 		{
 			HabitView habitItem = FindHabitItem(habit);
 			habitItem.IsVisible = false;
-			//habitItem?.FadeTo(0).ContinueWith(r =>
-			//{
-			//	Debug.WriteLine("------------ Before removing the habitItem from layout");
-			//	//
-				
-			//	Debug.WriteLine("------------ After removing the habitItem from layout");
-			//});
 		}
 
 		private HabitView FindHabitItem(HabitViewModel id)
@@ -88,7 +81,7 @@ namespace TocoDo.Views.Habits
 			{
 				var habit = child as HabitView;
 
-				if (habit?.HabitViewModel == id)
+				if (habit?.ViewModel == id)
 					return habit;
 			}
 
