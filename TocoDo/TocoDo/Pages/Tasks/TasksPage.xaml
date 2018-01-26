@@ -6,6 +6,7 @@
 			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
 			 xmlns:customRenderers="clr-namespace:TocoDo.CustomRenderers;assembly=TocoDo"
 			 xmlns:global="clr-namespace:TocoDo.Views.Global;assembly=TocoDo"
+			 xmlns:todos="clr-namespace:TocoDo.Views.Todos;assembly=TocoDo"
 			 x:Class="TocoDo.Pages.Main.TasksPage"
              Style="{DynamicResource ContentPageStyle}">
 	<ContentPage.Content>
@@ -14,7 +15,7 @@
 				<StackLayout Style="{StaticResource PageStackLayout}">
 					<!-- Someday -->
 					<global:FrameWrapper Header="Someday">
-						<views:TodoSetView TasksSource="{x:Static services:StorageService.SomedayTasks}"/>
+						<todos:TaskCollection ItemsSource="{x:Static services:StorageService.SomedayTasks}"/>
 					</global:FrameWrapper>
 
 					<!-- Scheduled -->
@@ -24,8 +25,6 @@
 				</StackLayout>
 			</ScrollView>
 			<customRenderers:FloatingAddButton AbsoluteLayout.LayoutBounds="1,1,88,88" AbsoluteLayout.LayoutFlags="PositionProportional" Margin="16" Clicked="ButtonAddSomeday_OnClicked"/>
-			<views:NewTaskView x:Name="NewTaskView" AbsoluteLayout.LayoutBounds="1,1,1,50"
-							   AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional" />
 		</AbsoluteLayout>
 	</ContentPage.Content>
 </ContentPage>

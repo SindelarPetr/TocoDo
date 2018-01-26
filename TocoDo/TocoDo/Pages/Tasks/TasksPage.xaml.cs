@@ -1,4 +1,6 @@
 ﻿using System;
+using TocoDo.Services;
+using TocoDo.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -19,14 +21,7 @@ namespace TocoDo.Pages.Main
 
 		private void ButtonAddSomeday_OnClicked(object sender, EventArgs e)
 		{
-			NewTaskView.DefaulDateTime = null;
-			ShowNewTaskView();
-		}
-
-		private void ShowNewTaskView()
-		{
-			NewTaskView.IsVisible = true;
-			NewTaskView.Focus();
+			StorageService.AddTaskToTheList(new TaskViewModel());
 		}
 	}
 }

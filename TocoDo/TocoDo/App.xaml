@@ -4,6 +4,7 @@
 			 xmlns:views="clr-namespace:TocoDo.Views;assembly=TocoDo"
 			 xmlns:habits="clr-namespace:TocoDo.Views.Habits;assembly=TocoDo"
 			 xmlns:global="clr-namespace:TocoDo.Views.Global;assembly=TocoDo"
+			 xmlns:todos="clr-namespace:TocoDo.Views.Todos;assembly=TocoDo"
 			 x:Class="TocoDo.App">
 	<Application.Resources>
 		<ResourceDictionary>
@@ -65,8 +66,12 @@
 				<Setter Property="Padding" Value="15, 5, 15, 5"/>
 			</Style>
 			
-			<Style TargetType="habits:HabitCollection" ApplyToDerivedTypes="True">
+			<Style TargetType="habits:HabitCollection">
 				<Setter Property="Padding" Value="15, 5, 15, 15"/>
+			</Style>
+			
+			<Style TargetType="todos:TaskCollection">
+				<Setter Property="Padding" Value="15, 5, 15, 15"></Setter>
 			</Style>
 
 			<Style x:Key="MainFrame" TargetType="Frame"></Style>

@@ -60,7 +60,7 @@
 
 					<!--TODAY-->
 					<global:FrameWrapper Grid.Row="1" Header="Tasks">
-						<todos:TaskCollection Padding="15, 5" ItemsSource="{x:Static services:StorageService.TodayTasks}" VerticalOptions="Start"/>
+						<todos:TaskCollection ItemsSource="{x:Static services:StorageService.TodayTasks}" VerticalOptions="Start"/>
 					</global:FrameWrapper>
 
 					<global:FrameWrapper Grid.Row="2" Header="Habits">
@@ -70,8 +70,6 @@
 			</ScrollView>
 
 			<customRenderers:FloatingAddButton AbsoluteLayout.LayoutBounds="1,1,88,88" AbsoluteLayout.LayoutFlags="PositionProportional" Margin="16" Clicked="ButtonAddToday_OnClicked" />
-
-			<views:NewTaskView x:Name="NewTaskView" AbsoluteLayout.LayoutBounds="1,1,1,50" AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"/>
 			<DatePicker x:Name="GlobalDatePicker" IsVisible="False"  DateSelected="GlobalDatePicker_DateSelected" />
 			<TimePicker x:Name="GlobalTimePicker" IsVisible="False" Time="{Binding SelectedTime}" PropertyChanged="GlobalTimePicker_OnPropertyChanged"/>
 		</AbsoluteLayout>
