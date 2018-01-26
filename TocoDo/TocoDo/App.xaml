@@ -36,7 +36,6 @@
 			</Style>
 
 			<Style x:Key="PageGrid" TargetType="Grid" BasedOn="{StaticResource PageLayout}">
-				<Setter Property="Padding" Value="10"/>
 				<Setter Property="RowSpacing" Value="10"/>
 			</Style>
 
