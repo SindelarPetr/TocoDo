@@ -31,7 +31,7 @@
 					</Trigger>
 				</customRenderers:NoLineEntry.Triggers>
 			</customRenderers:NoLineEntry>
-			<Label Text="{Binding ModelTitle}" IsVisible="{Binding IsEditTitleMode, Converter={StaticResource BoolReverseConverter}}" Style="{StaticResource HabitHeader}"/>
+			<Label Text="{Binding ModelTitle}" IsVisible="{Binding IsCreateMode, Converter={StaticResource BoolReverseConverter}}" Style="{StaticResource HabitHeader}"/>
 			<Grid ColumnSpacing="4" RowSpacing="0" Padding="15, 0, 0, 0" Scale="0.85" IsVisible="{Binding ModelStartDate, Converter={StaticResource IsNotNullConverter}}">
 				<Grid.Resources>
 					<ResourceDictionary>

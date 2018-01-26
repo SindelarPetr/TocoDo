@@ -16,7 +16,6 @@
 				<Setter Property="TextColor" Value="Gray" />
 			</Style>
 			<converters:ModifyPageBottmPanelTextConverter x:Key="ModifyPageBottmPanelTextConverter" />
-			<converters:NoteTextConverter x:Key="NoteTextConverter" />
 			<converters:CheckConverter x:Key="CheckConverter" />
 			<converters:DescriptionToColorConverter x:Key="DescriptionToColorConverter" />
 			<converters:ValueCheckerConverter x:Key="ValueCheckerConverter"/>

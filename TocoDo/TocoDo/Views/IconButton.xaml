@@ -6,16 +6,7 @@
 			 xmlns:views="clr-namespace:TocoDo.Views;assembly=TocoDo"
 			 xmlns:triggerActions="clr-namespace:TocoDo.TriggerActions;assembly=TocoDo"
 			 x:Class="TocoDo.Views.IconButton"
-             x:Name="This"
-	>
-	<ContentView.BindingContext>
-		<x:Reference>This</x:Reference>
-	</ContentView.BindingContext>
-
-	<ContentView.Resources>
-		
-	</ContentView.Resources>
-
+             x:Name="This">
 	<ContentView.Triggers>
 		<Trigger TargetType="views:IconButton" Property="IsActive" Value="False">
 			<Trigger.EnterActions>
@@ -28,7 +19,7 @@
 		</Trigger>
 	</ContentView.Triggers>
 	<ContentView.Content>
-		<Grid ColumnSpacing="15" RowSpacing="0">
+		<Grid ColumnSpacing="15" RowSpacing="0" BindingContext="{x:Reference This}">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="Auto"/>
 				<ColumnDefinition Width="Auto"/>
