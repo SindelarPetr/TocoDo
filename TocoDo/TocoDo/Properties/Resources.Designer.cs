@@ -286,7 +286,7 @@ namespace TocoDo.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to EveryYear.
+        ///   Looks up a localized string similar to Every year.
         /// </summary>
         public static string EveryYear {
             get {
@@ -453,6 +453,15 @@ namespace TocoDo.Properties {
         public static string No {
             get {
                 return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a note :).
+        /// </summary>
+        public static string NotePlaceholder {
+            get {
+                return ResourceManager.GetString("NotePlaceholder", resourceCulture);
             }
         }
         

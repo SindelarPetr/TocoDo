@@ -102,20 +102,21 @@
 
 					<!--Description-->
 					<Frame Margin="0" Grid.Row="2" HorizontalOptions="FillAndExpand">
-						<ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-							<StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-								<StackLayout.GestureRecognizers>
-									<TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped"/>
-								</StackLayout.GestureRecognizers>
-								<Label Text="{Binding ModelDescription}" VerticalTextAlignment="Start" HorizontalTextAlignment="Start">
-									<Label.Triggers>
-										<DataTrigger TargetType="Label"  Binding="{Binding ModelDescription, Converter={StaticResource IsNotNullOrWhitespaceConverter}}" Value="False">
-											<Setter Property="TextColor" Value="DarkGray"/>
-										</DataTrigger>
-									</Label.Triggers>
-								</Label>
-							</StackLayout>
-						</ScrollView>
+						<StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+							<StackLayout.GestureRecognizers>
+								<TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped"/>
+							</StackLayout.GestureRecognizers>
+							<Label Text="{Binding ModelDescription}" VerticalOptions="Fill" HorizontalOptions="Fill" VerticalTextAlignment="Start" HorizontalTextAlignment="Start" TextColor="Gray">
+								<Label.Triggers>
+									<DataTrigger TargetType="Label"  Binding="{Binding ModelDescription, Converter={StaticResource IsNotNullOrWhitespaceConverter}}" Value="False">
+										<Setter Property="TextColor" Value="DarkGray"/>
+										<Setter Property="Text" Value="{x:Static properties:Resources.AddANote}"/>
+										<Setter Property="VerticalTextAlignment" Value="Center"/>
+										<Setter Property="HorizontalTextAlignment" Value="Center"/>
+									</DataTrigger>
+								</Label.Triggers>
+							</Label>
+						</StackLayout>
 					</Frame>
 				</Grid>
 			</ScrollView>
