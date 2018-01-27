@@ -171,6 +171,7 @@ namespace TocoDo.ViewModels
 			ModelRepeatType = RepeatType.Days;
 			ModelHabitType = HabitType.Daylong;
 			ModelMaxRepeatsADay = 1;
+			ModelDaysToRepeat = 21;
 
 			ModelFilling = new ObservableDictionary<DateTime, int>();
 			IsCreateMode = true;

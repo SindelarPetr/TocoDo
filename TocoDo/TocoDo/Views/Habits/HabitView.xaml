@@ -23,7 +23,6 @@
 			<StackLayout.GestureRecognizers>
 				<TapGestureRecognizer Command="{Binding EditCommand}" />
 			</StackLayout.GestureRecognizers>
-
 			<customRenderers:NoLineEntry x:Name="EntryEditTitle" Text="{Binding ModelTitle, Mode=OneWay}" Unfocused="EditTitle_OnUnfocused" FontSize="Medium" TextColor="{StaticResource ColorPrimaryLight}" >
 				<customRenderers:NoLineEntry.Triggers>
 					<Trigger TargetType="customRenderers:NoLineEntry" Property="IsFocused" Value="False">
