@@ -26,7 +26,6 @@
 
 					<!--Progress-->
 					<global:FrameWrapper Header="Progress" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource ColorPrimaryDark}">
-						<!--<microcharts:ChartView x:Name="ChartProgress" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"  Margin="-5,10"/>-->
 						<Grid ColumnSpacing="0">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="Auto"/>

@@ -68,6 +68,9 @@
 	  <EmbeddedResource Update="CustomRenderers\FloatingAddButton.xaml">
 	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 	  </EmbeddedResource>
+	  <EmbeddedResource Update="Pages\Habits\HabitProgressPage.xaml">
+	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+	  </EmbeddedResource>
 	  <EmbeddedResource Update="Pages\Habits\ModifyHabitPage.xaml">
 	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 	  </EmbeddedResource>
@@ -88,7 +91,7 @@
 	  <EmbeddedResource Update="Views\Global\FrameWrapper.xaml">
 	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 	  </EmbeddedResource>
-	  <EmbeddedResource Update="Views\Habits\HabitProgressPage.xaml">
+	  <EmbeddedResource Update="Views\Habits\HabitDetailView.xaml">
 	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Views\Habits\HabitSetView.xaml">

@@ -15,7 +15,7 @@
 	<ContentView.Content>
 		<StackLayout BindingContext="{Binding Source={x:Reference This}, Path=ViewModel}" >
 			<StackLayout.GestureRecognizers>
-				<TapGestureRecognizer Command="{Binding ShowProgressCommand}" />
+				<TapGestureRecognizer Command="{Binding EditCommand}" />
 			</StackLayout.GestureRecognizers>
 
 			<Grid ColumnSpacing="0">

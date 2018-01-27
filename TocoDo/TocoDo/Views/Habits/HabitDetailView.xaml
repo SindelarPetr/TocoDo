@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
+             xmlns:markupExtensions="clr-namespace:TocoDo.MarkupExtensions;assembly=TocoDo"
+             xmlns:converters="clr-namespace:TocoDo.Converters;assembly=TocoDo"
+             xmlns:habits="clr-namespace:TocoDo.Converters.Habits;assembly=TocoDo"
+             x:Class="TocoDo.Views.Habits.HabitDetailView"
+             x:Name="This">
+	<ContentView.Resources>
+		<ResourceDictionary>
+			<habits:RepeatTypeConverter x:Key="RepeatTypeConverter"/>
+		</ResourceDictionary>
+	</ContentView.Resources>
+
+	<ContentView.Content>
+		<Grid BindingContext="{Binding Source={x:Reference This}, Path=ViewModel}" ColumnSpacing="4" RowSpacing="8" Padding="15, 0, 0, 0" IsVisible="{Binding ModelStartDate, Converter={StaticResource IsNotNullConverter}}">
+			<Grid.Resources>
+				<ResourceDictionary>
+					<Color x:Key="DetailColor">Gray</Color>
+					<Style TargetType="abstractions:TintedImage">
+						<Setter Property="TintColor" Value="{StaticResource DetailColor}" />
+					</Style>
+					<Style TargetType="Label">
+						<Setter Property="TextColor" Value="{StaticResource DetailColor}" />
+						<Setter Property="FontSize" Value="Small" />
+						<Setter Property="HorizontalOptions" Value="Fill" />
+						<Setter Property="VerticalOptions" Value="Fill" />
+						<Setter Property="HorizontalTextAlignment" Value="Start" />
+						<Setter Property="VerticalTextAlignment" Value="Center" />
+					</Style>
+				</ResourceDictionary>
+			</Grid.Resources>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+
+			<abstractions:TintedImage Source="{markupExtensions:PathResolver 'ic_today_white_18dp'}" />
+			<abstractions:TintedImage Grid.Row="1" Source="{markupExtensions:PathResolver 'ic_hourglass_empty_white_18dp'}" />
+			<abstractions:TintedImage Grid.Column="2" Source="{markupExtensions:PathResolver 'ic_autorenew_white_18dp'}" />
+			<abstractions:TintedImage Grid.Row="1" Grid.Column="2"
+			                          Source="{markupExtensions:PathResolver 'ic_date_range_white_18dp'}" />
+
+			<Label Grid.Column="1" Text="{Binding ModelStartDate, Converter={StaticResource DateToTextConverter}}" />
+			<Label Grid.Column="1" Grid.Row="1" Text="{Binding HabitTypeWithRepeats}" />
+			<Label Grid.Column="3" Text="{Binding ModelRepeatType, Converter={StaticResource RepeatTypeConverter}}" />
+			<Label Grid.Column="3" Grid.Row="1" Text="{Binding HabitDaysToRepeatWithRepeatType}" />
+		</Grid>
+	</ContentView.Content>
+</ContentView>

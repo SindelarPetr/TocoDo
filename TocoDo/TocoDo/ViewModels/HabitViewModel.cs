@@ -87,7 +87,6 @@ namespace TocoDo.ViewModels
 			get => _modelTitle;
 			set => SetValue(ref _modelTitle, value);
 		}
-
 		public RepeatType ModelRepeatType
 		{
 			get => _modelRepeatType;
@@ -97,15 +96,11 @@ namespace TocoDo.ViewModels
 				OnPropertyChanged(nameof(HabitDaysToRepeatWithRepeatType));
 			}
 		}
-
 		public string ModelDescription
 		{
 			get => _modelDescription;
 			set => SetValue(ref _modelDescription, value);
 		}
-
-		public string DateText { get; set; }
-
 		/// <summary>
 		/// Only for Unit habit. Count of times to repeat the habit each day
 		/// </summary>
@@ -120,6 +115,8 @@ namespace TocoDo.ViewModels
 		}
 
 		public bool IsCreateMode { get; set; }
+
+		public bool IsStarted => ModelStartDate != null && ModelStartDate.Value < DateTime.Now;
 
 		public bool ModelIsFinished { get; set; }
 
@@ -156,7 +153,6 @@ namespace TocoDo.ViewModels
 
 		#region Commands
 		public ICommand EditCommand { get; private set; }
-		public ICommand ShowProgressCommand { get; private set; }
 		public ICommand UpdateCommand { get; private set; }
 		public ICommand InsertCommand { get; private set; }
 		public ICommand SelectStartDateCommand { get; private set; }
@@ -199,7 +195,7 @@ namespace TocoDo.ViewModels
 		private void SetupCommands()
 		{
 			InsertCommand = new Command<string>(async s => await InsertToStorage(s));
-			EditCommand = new Command(async () => await PageService.PushAsync(new ModifyHabitPage(this)));
+			EditCommand = new Command(async () => await PageService.PushAsync(IsStarted? (Page)new HabitProgressPage(this) : (Page)new ModifyHabitPage(this)));
 
 			SelectStartDateCommand = new Command(async () => await SelectDate(d => ModelStartDate = d, Resources.SelectStartDate));
 			UnsetStartDateCommand = new Command(() => ModelStartDate = null);

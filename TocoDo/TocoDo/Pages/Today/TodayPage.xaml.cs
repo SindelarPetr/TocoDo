@@ -56,89 +56,10 @@ namespace TocoDo.Pages.Main
 
 			InitializeComponent();
 
-			SetupProgressChart();
-
 			Instance = this;
 
 			Debug.WriteLine("---------- Finished calling of constructor of TodayPage");
 		}
-
-		private void SetupProgressChart()
-		{
-			//	var todayDayColor = Color.LimeGreen.ToSKColor();
-			//	var workDayColor = SKColor.Parse("#CFD8DC");
-			//	var weekendColor = ((Color)App.Current.Resources["ColorPrimaryLight"]).ToSKColor();//SKColor.Parse("#26A69A");
-			
-			var todayDayColor = Color.White.ToSKColor();
-			var workDayColor = Color.White.ToSKColor();
-			var weekendColor = Color.White.ToSKColor();
-
-			var todayEntry = new Entry(4)
-			{
-				Label = "Sat",
-				//ValueLabel = "4",
-				Color = weekendColor,
-				TextColor = weekendColor
-			};
-			var entries = new[]
-			{
-				new Entry(0)
-				{
-					Label = "Sun",
-					//ValueLabel = "2",
-					Color = weekendColor,
-					TextColor = weekendColor
-				},
-				new Entry(6)
-				{
-					Label = "Mon",
-					//ValueLabel = "6",
-					Color = workDayColor,
-					TextColor = workDayColor
-				},
-				new Entry(7)
-				{
-					Label = "Tue",
-					//ValueLabel = "7",
-					Color = workDayColor,
-					TextColor = workDayColor
-				},
-				new Entry(10)
-				{
-					Label = "Wed",
-					//ValueLabel = "10",
-					Color = todayDayColor,
-					TextColor = todayDayColor
-				},
-				new Entry(8)
-				{
-					Label = "Thu",
-					//ValueLabel = "8",
-					Color = workDayColor,
-					TextColor = workDayColor
-				},
-				new Entry(13)
-				{
-					Label = "Fri",
-					//ValueLabel = "13",
-					Color = workDayColor,
-					TextColor = workDayColor
-				},
-				todayEntry,
-			};
-
-			var chart = new LineChart
-			{
-				LineAreaAlpha = 80,
-				LineMode = LineMode.Straight,
-				PointSize = 15,
-				LabelTextSize = 24,
-				LineSize = 5,
-				Entries = entries,
-				BackgroundColor = Color.Transparent.ToSKColor(),
-			};
-		}
-
 		#region Global date picker
 		private void GlobalDatePicker_DateSelected(object sender, DateChangedEventArgs e)
 		{

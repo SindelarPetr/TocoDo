@@ -381,10 +381,8 @@ namespace TocoDo.Services
 					YesterdayFinishedHabits.Add(habit);
 					continue;
 				}
-				else
-				{
-					filtred.Add(habit);
-				}
+
+				filtred.Add(habit);
 
 				if (IsHabitToday(habit))
 				{
@@ -414,7 +412,6 @@ namespace TocoDo.Services
 			try
 			{
 				var model = habit.GetHabitModel();
-				//await _connection.InsertAsync(model);
 				habit.SetModelId(FakeIdGenerator.GetId()); //model.Id);
 			}
 			catch (Exception ex)
@@ -470,7 +467,7 @@ namespace TocoDo.Services
 			}
 
 			// check if habit already ended
-			if (IsHabitFinished(start, repeatType, daysToRepeat))
+			if (DateTimeHelper.IsHabitFinished(start, repeatType, daysToRepeat))
 				return null;
 
 			return CurrentHabits;
@@ -516,40 +513,15 @@ namespace TocoDo.Services
 
 		private static bool IsHabitToday(HabitViewModel habit)
 		{
-			if (habit.ModelStartDate == null || !IsHabitCurrent(habit)) return false;
-
-			var start = habit.ModelStartDate.Value;
-			var repeat = habit.ModelRepeatType;
-			switch (repeat)
-			{
-				case RepeatType.Days:
-					return true;
-				case RepeatType.Months:
-					return  start.Day == DateTime.Today.Day;
-				case RepeatType.Years:
-					return start.Day == DateTime.Today.Day && start.Month == DateTime.Today.Month;
-			}
-
-			return (repeat.HasFlag(RepeatType.Mon) && (int) DateTime.Today.DayOfWeek == 1) ||
-			       (repeat.HasFlag(RepeatType.Tue) && (int) DateTime.Today.DayOfWeek == 2) ||
-			       (repeat.HasFlag(RepeatType.Wed) && (int) DateTime.Today.DayOfWeek == 3) ||
-			       (repeat.HasFlag(RepeatType.Thu) && (int) DateTime.Today.DayOfWeek == 4) ||
-			       (repeat.HasFlag(RepeatType.Fri) && (int) DateTime.Today.DayOfWeek == 5) ||
-			       (repeat.HasFlag(RepeatType.Sat) && (int) DateTime.Today.DayOfWeek == 6) ||
-			       (repeat.HasFlag(RepeatType.Sun) && (int) DateTime.Today.DayOfWeek == 0);
+			return DateTimeHelper.IsHabitToday(habit.ModelStartDate, habit.ModelRepeatType, habit.ModelDaysToRepeat);
 		}
-
 
 		private static bool IsHabitFinished(HabitViewModel habit) =>
-			IsHabitFinished(habit.ModelStartDate, habit.ModelRepeatType, habit.ModelDaysToRepeat);
-		private static bool IsHabitFinished(DateTime? start, RepeatType repeatType, int daysToRepeat)
-		{
-			return start != null && start + HabitLength(start.Value, repeatType, daysToRepeat) < DateTime.Now;
-		}
+			DateTimeHelper.IsHabitFinished(habit.ModelStartDate, habit.ModelRepeatType, habit.ModelDaysToRepeat);
 
 		private static bool IsHabitCurrent(HabitViewModel habit)
 		{
-			return habit.ModelStartDate != null && !IsHabitFinished(habit) && habit.ModelStartDate.Value <= DateTime.Today;
+			return DateTimeHelper.IsHabitCurrent(habit.ModelStartDate, habit.ModelRepeatType, habit.ModelDaysToRepeat);
 		}
 		#endregion
 	}
