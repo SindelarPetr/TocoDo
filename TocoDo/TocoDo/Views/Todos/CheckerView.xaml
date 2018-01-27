@@ -11,11 +11,17 @@
 		<TapGestureRecognizer Tapped="TapCheckBox_OnTapped" />
 	</ContentView.GestureRecognizers>
 	<ContentView.Content>
+
 		<AbsoluteLayout HorizontalOptions="Start" HeightRequest="32" WidthRequest="32" BindingContext="{x:Reference This}">
-			<abstractions:TintedImage Source="{markupExtensions:PathResolver 'ic_checkbox_background_36dp.png'}" TintColor="DarkGray" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" >
+			<abstractions:TintedImage Source="{markupExtensions:PathResolver 'ic_checkbox_background_36dp.png'}" TintColor="{Binding UncheckedColor}" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" >
+				<abstractions:TintedImage.Triggers>
+					<DataTrigger TargetType="abstractions:TintedImage" Binding="{Binding IsChecked}" Value="True">
+						<Setter Property="TintColor" Value="{Binding UncheckedColor}"/>
+					</DataTrigger>
+				</abstractions:TintedImage.Triggers>
 			</abstractions:TintedImage>
 
-			<abstractions:TintedImage Source="{markupExtensions:PathResolver 'ic_checkbox_checker_36dp.png'}" TintColor="{StaticResource ColorPrimary}" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" Scale="0.5" Opacity="0">
+			<abstractions:TintedImage Source="{markupExtensions:PathResolver 'ic_checkbox_checker_36dp.png'}" TintColor="{Binding CheckedColor}" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" Scale="0.5" Opacity="0">
 				<abstractions:TintedImage.Triggers>
 					<DataTrigger TargetType="abstractions:TintedImage"  Binding="{Binding IsChecked}" Value="True">
 						<DataTrigger.EnterActions>

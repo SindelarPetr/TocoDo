@@ -11,10 +11,8 @@ namespace TocoDo.Views
 	{
 		#region Backing fiels
 		public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(bool), false, BindingMode.TwoWay);
-		public static readonly BindableProperty IsBackgroundVisibleProperty = BindableProperty.Create(nameof(IsBackgroundVisible), typeof(bool), typeof(bool), false);
-		public static readonly BindableProperty BackgroundImageColorProperty = BindableProperty.Create(nameof(BackgroundImageColor), typeof(Color), typeof(Color), Color.White);
-		public static readonly BindableProperty CheckedColorProperty = BindableProperty.Create(nameof(CheckedColor), typeof(Color), typeof(Color), Color.White);
-		public static readonly BindableProperty UncheckedColorProperty = BindableProperty.Create(nameof(UncheckedColor), typeof(Color), typeof(Color), Color.White);
+		public static readonly BindableProperty CheckedColorProperty = BindableProperty.Create(nameof(CheckedColor), typeof(Color), typeof(Color), ((App)App.Current).ColorPrimary);
+		public static readonly BindableProperty UncheckedColorProperty = BindableProperty.Create(nameof(UncheckedColor), typeof(Color), typeof(Color), ((App)App.Current).ColorPrimary);
 		#endregion
 
 		#region Properties
@@ -22,16 +20,6 @@ namespace TocoDo.Views
 		{
 			get => (bool)GetValue(IsCheckedProperty);
 			set => SetValue(IsCheckedProperty, value);
-		}
-		public bool IsBackgroundVisible
-		{
-			get => (bool)GetValue(IsBackgroundVisibleProperty);
-			set => SetValue(IsBackgroundVisibleProperty, value);
-		}
-		public Color BackgroundImageColor
-		{
-			get => (Color)GetValue(BackgroundImageColorProperty);
-			set => SetValue(BackgroundImageColorProperty, value);
 		}
 		public Color CheckedColor
 		{

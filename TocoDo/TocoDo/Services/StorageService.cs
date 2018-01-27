@@ -261,6 +261,18 @@ namespace TocoDo.Services
 			});
 		}
 
+		private static Dictionary<DateTime, int> GenerateFilling()
+		{
+			var rand = new Random();
+			var dic = new Dictionary<DateTime, int>();
+			for (int i = 0; i < 100; i++)
+			{
+				dic.Add(DateTime.Today.AddDays(-50).AddDays(i), (i < 50)? rand.Next(0, 2) : 0);
+			}
+
+			return dic;
+		}
+
 		static async Task LoadHabits()
 		{
 			var habitList = new List<HabitViewModel>
@@ -272,14 +284,7 @@ namespace TocoDo.Services
 					RepeatsADay = 5,
 					Title = "Today started 4 days ago",
 					Description = "Every morning make 40 push ups in 2 iterations (20 in each).",
-					Filling = new Dictionary<DateTime, int>
-					{
-						{ DateTime.Today - TimeSpan.FromDays(4), 2 },
-						{ DateTime.Today - TimeSpan.FromDays(3), 3 },
-						{ DateTime.Today - TimeSpan.FromDays(2), 1 },
-						{ DateTime.Today - TimeSpan.FromDays(1), 2 },
-						{ DateTime.Today, 1 },
-					},
+					Filling = GenerateFilling(),
 					HabitType = HabitType.Unit,
 					Id = FakeIdGenerator.GetId(),
 					IsRecommended = false,
@@ -393,12 +398,12 @@ namespace TocoDo.Services
 			filtred.ForEach(AddHabitToTheList);
 		}
 
-		public static async void UpdateHabit(HabitViewModel habit)
+		public static async Task UpdateHabit(HabitViewModel habit)
 		{
 			//await _connection.UpdateAsync(habit.GetHabitModel());
 		}
 
-		public static async void DeleteHabit(HabitViewModel habit)
+		public static async Task DeleteHabit(HabitViewModel habit)
 		{
 			//await _connection.DeleteAsync(habit.GetHabitModel());
 		}

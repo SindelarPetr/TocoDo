@@ -6,6 +6,11 @@ namespace TocoDo.Helpers
 {
 	public static class DateTimeHelper
 	{
+		public static int ZeroMondayBasedDay(this DateTime date)
+		{
+			return ((int) date.DayOfWeek + 6) % 7;
+		}
+
 		public static string GetDayExtension(this DateTime date)
 		{
 			var ext = date.Day % 10 == 1 && date.Day != 11

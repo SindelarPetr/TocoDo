@@ -2,9 +2,12 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using NetBox.Extensions;
 using TocoDo.Converters;
+using TocoDo.Helpers;
 using TocoDo.Models;
 using TocoDo.Pages.Habits;
 using TocoDo.Pages.Main;
@@ -52,11 +55,12 @@ namespace TocoDo.ViewModels
 			get => _modelRepeatsToday;
 			set
 			{
-				SetValue(ref _modelRepeatsToday, value);
+				if(DateTimeHelper.IsHabitToday(ModelStartDate, ModelRepeatType, ModelDaysToRepeat))
+					SetValue(ref _modelRepeatsToday, value);
 			}
 		}
 
-		public ObservableDictionary<DateTime, int> ModelFilling { get; }
+		public ObservableDictionary<DateTime, int> ModelFilling { get; private set; }
 
 		public DateTime ModelCreationDate { get; }
 		public HabitType ModelHabitType
@@ -269,14 +273,72 @@ namespace TocoDo.ViewModels
 			};
 		}
 
-		protected override void OnPropertyChanged(string propertyName = null)
+		protected override async void OnPropertyChanged(string propertyName = null)
 		{
 			MyLogger.WriteStartMethod();
 			base.OnPropertyChanged(propertyName);
 
+			if (propertyName == nameof(ModelRepeatsToday))
+			{
+				InitFilling();
+				if (ModelFilling == null || !ModelFilling.Any())
+				{
+					InitFilling();
+				}
+
+				var today = DateTime.Today;
+				var filling = ModelFilling;
+				if (filling.ContainsKey(today))
+					filling[today] = ModelRepeatsToday;
+			}
+
 			if(!IsCreateMode)
-			StorageService.UpdateHabit(this);
+				await StorageService.UpdateHabit(this);
 			MyLogger.WriteEndMethod();
+		}
+
+		/// <summary>
+		/// Fills all dates when the habit will (or supposed to) be performed
+		/// </summary>
+		private void InitFilling()
+		{
+			var modelStartDate = ModelStartDate;
+			var modelRepeatType = ModelRepeatType;
+
+			if(modelStartDate == null)
+				throw new ArgumentException("When a habit Filling is being initialized, it cannot have ModelStartDate set to null");
+
+			var newFilling = new ObservableDictionary<DateTime, int>();
+			var startDate = modelStartDate.Value;
+			switch (modelRepeatType)
+			{
+				case RepeatType.Days:
+					for (int i = 0; i < ModelDaysToRepeat; i++)
+						newFilling.Add(startDate.AddDays(i), 0);
+					break;
+				case RepeatType.Months:
+					for (int i = 0; i < ModelDaysToRepeat; i++)
+						newFilling.Add(startDate.AddMonths(i), 0);
+					break;
+				case RepeatType.Years:
+					for (int i = 0; i < ModelDaysToRepeat; i++)
+						newFilling.Add(startDate.AddYears(i), 0);
+					break;
+				default:
+					for (int i = 0; i < ModelDaysToRepeat * 7; i++)
+					{
+						// For every day of a week check if the day is within the ModelRepeatType
+						if (modelRepeatType.HasFlag((RepeatType)(1 << startDate.ZeroMondayBasedDay())))
+						{
+							newFilling.Add(startDate, 0);
+						}
+
+						startDate = startDate.AddDays(1);
+					}
+				break;
+			}
+
+			ModelFilling = newFilling;
 		}
 	}
 }

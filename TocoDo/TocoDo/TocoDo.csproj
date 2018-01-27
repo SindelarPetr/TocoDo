@@ -55,6 +55,9 @@
 	  <Compile Update="Views\Habits\TodayHabitView.xaml.cs">
 	    <SubType>Code</SubType>
 	  </Compile>
+	  <Compile Update="Views\Todos\CheckerView.xaml.cs">
+	    <DependentUpon>CheckerView.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
