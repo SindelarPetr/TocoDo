@@ -6,11 +6,15 @@
 			 xmlns:global="clr-namespace:TocoDo.Views.Global;assembly=TocoDo"
 			 xmlns:todos="clr-namespace:TocoDo.Views.Todos;assembly=TocoDo"
 			 xmlns:converters="clr-namespace:TocoDo.Converters;assembly=TocoDo"
+			 xmlns:tasks="clr-namespace:TocoDo.Converters.Tasks;assembly=TocoDo"
 			 x:Class="TocoDo.App">
 	<Application.Resources>
 		<ResourceDictionary>
 			<converters:IsNotNullConverter x:Key="IsNotNullConverter"/>
 			<converters:DateToTextConverter x:Key="DateToTextConverter"/>
+			<tasks:PastDateTimeConverter x:Key="PastDateTimeConverter"/>
+			<converters:IsNotNullOrWhitespaceConverter x:Key="IsNotNullOrWhitespaceConverter"/>
+			<converters:BoolReverseConverter x:Key="BoolReverseConverter"/>
 
 			<Color x:Key="ColorPrimary">#3F51B5</Color>
 			<Color x:Key="ColorPrimaryDark">#283593</Color>
@@ -86,6 +90,11 @@
 			</Style>
 			<Style TargetType="habits:ActualHabitView">
 				<Setter Property="Padding" Value="15, 5, 15, 15"/>
+			</Style>
+			<Style x:Key="SecondayPageGrid" TargetType="Grid" >
+				<Setter Property="Padding" Value="10,10,10,30"/>
+				<Setter Property="VerticalOptions" Value="FillAndExpand"/>
+				<Setter Property="RowSpacing" Value="10"/>
 			</Style>
 		</ResourceDictionary>
 	</Application.Resources>

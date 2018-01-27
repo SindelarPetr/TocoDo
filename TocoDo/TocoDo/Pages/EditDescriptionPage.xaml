@@ -5,9 +5,10 @@
 			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
 			 xmlns:markupExtensions="clr-namespace:TocoDo.MarkupExtensions;assembly=TocoDo"
 			 x:Class="TocoDo.Pages.EditDescriptionPage"
-             BackgroundColor="White">
+             BackgroundColor="White"
+             x:Name="This">
 	<ContentPage.Content>
-		<Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+		<Grid BindingContext="{Binding Source={x:Reference This}, Path=ViewModel}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto"/>
 				<RowDefinition Height="*"/>
@@ -44,7 +45,7 @@
 				x:Name="EditorNote"
 				VerticalOptions="FillAndExpand" 
 				HorizontalOptions="FillAndExpand"
-				Text="{Binding Description}" />
+				Text="{Binding Description}" IsEnabled="{Binding IsReadonly, Converter={StaticResource BoolReverseConverter}}"/>
 			</ScrollView>
 		</Grid>
 	</ContentPage.Content>

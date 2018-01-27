@@ -62,9 +62,7 @@ namespace TocoDo.Pages.Habits
 
 		private void TapGestureRecognizer_OnTapped(object sender, EventArgs e)
 		{
-			var editDescriptionPage = new EditDescriptionPage(Habit.ModelTitle, Habit.ModelDescription, d => Habit.ModelDescription = d);
-
-			Navigation.PushModalAsync(editDescriptionPage);
+			
 		}
 
 		private async void IconButton_OnClicked(object sender, EventArgs e)

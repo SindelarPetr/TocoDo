@@ -10,19 +10,12 @@ namespace TocoDo.Pages
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class EditDescriptionPage : ContentPage
 	{
+		public EditDescriptionViewModel ViewModel { get; set; }
 
-		private EditDescriptionViewModel Vm
+		public EditDescriptionPage(string title, string description, Action<string> setDescriptionAction, bool isReadonly = false)
 		{
-			get => (EditDescriptionViewModel)BindingContext;
-			set => BindingContext = value;
-		}
-
-		public EditDescriptionPage(string title, string description, Action<string> setDescriptionAction)
-		{
-			Debug.Write("----------------- EditDescriptionPage constructor called.");
+			ViewModel = new EditDescriptionViewModel(title, description, setDescriptionAction, isReadonly);
 			InitializeComponent();
-			Vm = new EditDescriptionViewModel(title, description, setDescriptionAction);
-			Debug.Write("----------------- Finished calling EditDescriptionPage constructor.");
 		}
 
 		protected override void OnAppearing()
@@ -31,14 +24,14 @@ namespace TocoDo.Pages
 			base.OnAppearing();
 
 			// In case there is no description focus the Edit
-			if (string.IsNullOrWhiteSpace(Vm.Description))
+			if (string.IsNullOrWhiteSpace(ViewModel.Description) && !ViewModel.IsReadonly)
 				EditorNote.Focus();
 			Debug.Write("----------------- Finished calling of OnAppearing of EditDescriptionPage.");
 		}
 
 		protected override bool OnBackButtonPressed()
 		{
-			Vm.DiscardCommand?.Execute(null);
+			ViewModel.DiscardCommand?.Execute(null);
 			return true;
 		}
 	}

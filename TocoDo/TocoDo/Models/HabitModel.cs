@@ -57,5 +57,7 @@ namespace TocoDo.Models
 		/// Indicates whether the Habit has its all iterations behind.
 		/// </summary>
 		public bool IsFinished { get; set; }
+
+		public DateTime CreationDate { get; set; }
 	}
 }

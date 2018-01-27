@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:properties="clr-namespace:TocoDo.Properties;assembly=TocoDo"
+             x:Class="TocoDo.Views.DescriptionFrameView"
+             x:Name="This">
+	<ContentView.Content>
+		<Frame BindingContext="{x:Reference This}" HorizontalOptions="FillAndExpand">
+		  <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+			  <StackLayout.GestureRecognizers>
+				  <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped"/>
+			  </StackLayout.GestureRecognizers>
+				<Label Text="{x:Static properties:Resources.AddANote}" VerticalOptions="Fill" HorizontalOptions="Fill" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="DarkGray">
+				  <Label.Triggers>
+					  <DataTrigger TargetType="Label"  Binding="{Binding Description, Converter={StaticResource IsNotNullOrWhitespaceConverter}}" Value="True">
+						  <Setter Property="TextColor" Value="Gray"/>
+						  <Setter Property="Text" Value="{Binding Description}"/>
+						  <Setter Property="VerticalTextAlignment" Value="Start"/>
+						  <Setter Property="HorizontalTextAlignment" Value="Start"/>
+					  </DataTrigger>
+				  </Label.Triggers>
+			  </Label>
+		  </StackLayout>
+	  </Frame>
+	</ContentView.Content>
+</ContentView>

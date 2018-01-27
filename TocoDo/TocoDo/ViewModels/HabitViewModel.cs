@@ -17,7 +17,6 @@ namespace TocoDo.ViewModels
 {
 	public class HabitViewModel : BaseViewModel, ICreateMode
 	{
-
 		#region Backing fields
 		private bool _modelIsRecommended;
 		private int _modelRepeatsToday;
@@ -59,6 +58,7 @@ namespace TocoDo.ViewModels
 
 		public ObservableDictionary<DateTime, int> ModelFilling { get; }
 
+		public DateTime ModelCreationDate { get; }
 		public HabitType ModelHabitType
 		{
 			get => _modelHabitType;
@@ -159,11 +159,13 @@ namespace TocoDo.ViewModels
 		public ICommand UnsetStartDateCommand { get; private set; }
 		public ICommand SelectRepeatCommand { get; private set; }
 		public ICommand IncreaseTodayCommand { get; private set; }
+		public ICommand RemoveCommand { get; private set; }
 		#endregion
 
 		public HabitViewModel()
 		{
 			// Set initial values
+			ModelCreationDate = DateTime.Now;
 			ModelRepeatType = RepeatType.Days;
 			ModelHabitType = HabitType.Daylong;
 			ModelMaxRepeatsADay = 1;
@@ -177,6 +179,7 @@ namespace TocoDo.ViewModels
 
 		public HabitViewModel(HabitModel model)
 		{
+			ModelCreationDate = model.CreationDate;
 			ModelId = model.Id;
 			_modelRepeatType = model.RepeatType;
 			_modelDescription = model.Description;
@@ -200,6 +203,7 @@ namespace TocoDo.ViewModels
 			SelectStartDateCommand = new Command(async () => await SelectDate(d => ModelStartDate = d, Resources.SelectStartDate));
 			UnsetStartDateCommand = new Command(() => ModelStartDate = null);
 			IncreaseTodayCommand = new Command(() => ModelRepeatsToday++);
+			RemoveCommand = new Command(() => StorageService.DeleteHabit(this));
 		}
 
 		private async Task SelectDate(Action<DateTime?> pickedAction, string actionSheetHeader)
@@ -251,6 +255,7 @@ namespace TocoDo.ViewModels
 			return new HabitModel
 			{
 				Id = ModelId,
+				CreationDate = ModelCreationDate,
 				RepeatType = ModelRepeatType,
 				Description = ModelDescription,
 				Filling = new Dictionary<DateTime, int>(ModelFilling),

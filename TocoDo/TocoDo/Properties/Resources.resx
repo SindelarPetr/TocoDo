@@ -171,6 +171,9 @@
   <data name="DaysAgo" xml:space="preserve">
     <value>days ago</value>
   </data>
+  <data name="Day_s" xml:space="preserve">
+    <value>Day(s)</value>
+  </data>
   <data name="Deadline" xml:space="preserve">
     <value>Deadline</value>
   </data>
@@ -236,6 +239,9 @@
   </data>
   <data name="Months" xml:space="preserve">
     <value>Months</value>
+  </data>
+  <data name="Month_s" xml:space="preserve">
+    <value>Month(s)</value>
   </data>
   <data name="NewTask" xml:space="preserve">
     <value>New task</value>
@@ -339,16 +345,34 @@
   <data name="Weeks" xml:space="preserve">
     <value>Weeks</value>
   </data>
+  <data name="Week_s" xml:space="preserve">
+    <value>Week(s)</value>
+  </data>
   <data name="Year" xml:space="preserve">
     <value>Year</value>
   </data>
   <data name="Years" xml:space="preserve">
     <value>Years</value>
   </data>
+  <data name="Year_s" xml:space="preserve">
+    <value>Year(s)</value>
+  </data>
   <data name="Yeasterday" xml:space="preserve">
     <value>Yeasterday</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
+  </data>
+  <data name="Day_sAgo" xml:space="preserve">
+    <value>{0} day(s) ago</value>
+  </data>
+  <data name="Month_sAgo" xml:space="preserve">
+    <value>{0} Month(s) ago</value>
+  </data>
+  <data name="Week_sAgo" xml:space="preserve">
+    <value>{0} week(s) ago</value>
+  </data>
+  <data name="Year_sAgo" xml:space="preserve">
+    <value>{0} year(s) ago</value>
   </data>
 </root>
