@@ -2,14 +2,10 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:views="clr-namespace:TocoDo.Views;assembly=TocoDo"
-			 xmlns:markupExtensions="clr-namespace:TocoDo.MarkupExtensions;assembly=TocoDo"
 			 xmlns:services="clr-namespace:TocoDo.Services;assembly=TocoDo"
-			 xmlns:system1="clr-namespace:System;assembly=netstandard"
 			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
 			 xmlns:customRenderers="clr-namespace:TocoDo.CustomRenderers;assembly=TocoDo"
-			 xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
 			 xmlns:global="clr-namespace:TocoDo.Views.Global;assembly=TocoDo"
-			 xmlns:forms="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.CarouselView"
 			 xmlns:habits="clr-namespace:TocoDo.Views.Habits;assembly=TocoDo"
 			 xmlns:todos="clr-namespace:TocoDo.Views.Todos;assembly=TocoDo"
 			 x:Class="TocoDo.Pages.Main.TodayPage"
@@ -24,8 +20,8 @@
 						<RowDefinition Height="*"/>
 					</Grid.RowDefinitions>
 
-					<!--Progress-->
-					<global:FrameWrapper Header="Progress" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource ColorPrimaryDark}">
+					<!--Calendar-->
+					<global:FrameWrapper Header="January" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource ColorPrimaryDark}">
 						<Grid ColumnSpacing="0">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="Auto"/>
