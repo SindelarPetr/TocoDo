@@ -44,14 +44,13 @@ namespace TocoDo.Models
 		/// </summary>
 		public int RepeatsADay { get; set; }
 		#endregion
-
-		public int RepeatsToday { get; set; }
+		
 		public bool IsRecommended { get; set; }
 
 		/// <summary>
-		/// Records in which days the user meeted his goals (in case of unit type challenge) or how many times violated the challenge (in case of daylong type of challenge).
+		/// Records in which days the user met his goals (in case of unit type challenge) or how many times violated the challenge (in case of daylong type of challenge). Its serialized as a JSON
 		/// </summary>
-		public Dictionary<DateTime, int> Filling { get; set; }
+		public string Filling { get; set; }
 
 		/// <summary>
 		/// Indicates whether the Habit has its all iterations behind.

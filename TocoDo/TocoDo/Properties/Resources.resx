@@ -375,4 +375,10 @@
   <data name="Year_sAgo" xml:space="preserve">
     <value>{0} year(s) ago</value>
   </data>
+  <data name="DeleteHabitConfirmHeader" xml:space="preserve">
+    <value>Alert</value>
+  </data>
+  <data name="DeleteHabitConfirmText" xml:space="preserve">
+    <value>Are you sure you want to delete this habit forever?</value>
+  </data>
 </root>

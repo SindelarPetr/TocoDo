@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using NetBox.Extensions;
 using TocoDo.Helpers;
@@ -165,7 +166,7 @@ namespace TocoDo.Services
 			Debug.Write("------------- Adding task to the list");
 			Debug.Write("------------- Id of the task is: " + task.Id);
 
-			GetListForDate(task.ScheduleDate).Add(task);
+			GetTaskListForDate(task.ScheduleDate).Add(task);
 			Debug.Write("------------- Finished adding task to the list");
 		}
 
@@ -187,7 +188,7 @@ namespace TocoDo.Services
 				RemoveTaskFromTheList((TaskViewModel)sender);
 		}
 
-		private static ObservableCollection<TaskViewModel> GetListForDate(DateTime? date)
+		private static ObservableCollection<TaskViewModel> GetTaskListForDate(DateTime? date)
 		{
 			date = date?.Date;
 
@@ -206,7 +207,7 @@ namespace TocoDo.Services
 
 		public static void RemoveTaskFromTheList(TaskViewModel task)
 		{
-			GetListForDate(task.ScheduleDate).Remove(task);
+			GetTaskListForDate(task.ScheduleDate).Remove(task);
 		}
 
 		private static void UnbindTask(TaskViewModel task)
@@ -234,31 +235,34 @@ namespace TocoDo.Services
 		#region Habits
 		static async Task InitHabits()
 		{
-			//await _connection.CreateTableAsync<HabitModel>();
+			MyLogger.WriteStartMethod();
+			await _connection.CreateTableAsync<HabitModel>();
+			MyLogger.WriteEndMethod();
 		}
 
 		public static HabitViewModel GetExampleHabitViewModel()
 		{
-			return new HabitViewModel(new HabitModel
-			{
-				RepeatsToday = 3,
-				Title = "Meditation",
-				Description = "Sit somewhere where its quiet and calm down all thoughts for 20 minutes.",
-				Filling = new Dictionary<DateTime, int>
-				{
-					{ DateTime.Today - TimeSpan.FromDays(4), 2 },
-					{ DateTime.Today - TimeSpan.FromDays(3), 3 },
-					{ DateTime.Today - TimeSpan.FromDays(2), 1 },
-					{ DateTime.Today - TimeSpan.FromDays(1), 2 },
-					{ DateTime.Today, 1 },
-				},
-				HabitType = HabitType.Unit,
-				Id = FakeIdGenerator.GetId(),
-				IsRecommended = false,
-				RepeatType = RepeatType.Days - 2,
-				DaysToRepeat = 13,
-				StartDate = DateTime.Today - TimeSpan.FromDays(4)
-			});
+			//return new HabitViewModel(new HabitModel
+			//{
+			//	RepeatsToday = 3,
+			//	Title = "Meditation",
+			//	Description = "Sit somewhere where its quiet and calm down all thoughts for 20 minutes.",
+			//	Filling = new Dictionary<DateTime, int>
+			//	{
+			//		{ DateTime.Today - TimeSpan.FromDays(4), 2 },
+			//		{ DateTime.Today - TimeSpan.FromDays(3), 3 },
+			//		{ DateTime.Today - TimeSpan.FromDays(2), 1 },
+			//		{ DateTime.Today - TimeSpan.FromDays(1), 2 },
+			//		{ DateTime.Today, 1 },
+			//	},
+			//	HabitType = HabitType.Unit,
+			//	Id = FakeIdGenerator.GetId(),
+			//	IsRecommended = false,
+			//	RepeatType = RepeatType.Days - 2,
+			//	DaysToRepeat = 13,
+			//	StartDate = DateTime.Today - TimeSpan.FromDays(4)
+			//});
+			return new HabitViewModel();
 		}
 
 		private static Dictionary<DateTime, int> GenerateFilling()
@@ -273,110 +277,114 @@ namespace TocoDo.Services
 			return dic;
 		}
 
+		private static List<HabitViewModel> GetFakeHabits()
+		{
+			return new List<HabitViewModel>();
+			//{
+			//	GetExampleHabitViewModel(),
+			//	new HabitViewModel(new HabitModel
+			//	{
+			//		RepeatsADay = 5,
+			//		Title = "Today started 4 days ago",
+			//		Description = "Every morning make 40 push ups in 2 iterations (20 in each).",
+			//		Filling = GenerateFilling(),
+			//		HabitType = HabitType.Unit,
+			//		Id = FakeIdGenerator.GetId(),
+			//		IsRecommended = false,
+			//		RepeatType = RepeatType.Fri,
+			//		DaysToRepeat = 12,
+			//		StartDate = DateTime.Today - TimeSpan.FromDays(4)
+			//	}),
+			//	new HabitViewModel(new HabitModel
+			//	{
+			//		RepeatsADay = 5,
+			//		Title = "Today starts today",
+			//		Description = "Every morning make 40 push ups in 2 iterations (20 in each).",
+			//		Filling = new Dictionary<DateTime, int>
+			//		{
+			//			{ DateTime.Today - TimeSpan.FromDays(4), 2 },
+			//			{ DateTime.Today - TimeSpan.FromDays(3), 3 },
+			//			{ DateTime.Today - TimeSpan.FromDays(2), 1 },
+			//			{ DateTime.Today - TimeSpan.FromDays(1), 2 },
+			//			{ DateTime.Today, 1 },
+			//		},
+			//		HabitType = HabitType.Unit,
+			//		Id = FakeIdGenerator.GetId(),
+			//		IsRecommended = false,
+			//		RepeatType = RepeatType.Fri,
+			//		DaysToRepeat = 12,
+			//		StartDate = DateTime.Today
+			//	}),
+			//	new HabitViewModel(new HabitModel
+			//	{
+			//	RepeatsADay = 5,
+			//	Title = "Current started 4 days ago (Thursday + Saturday)",
+			//	Description = "Every morning make 40 push ups in 2 iterations (20 in each).",
+			//	Filling = new Dictionary<DateTime, int>
+			//	{
+			//		{ DateTime.Today - TimeSpan.FromDays(4), 2 },
+			//		{ DateTime.Today - TimeSpan.FromDays(3), 3 },
+			//		{ DateTime.Today - TimeSpan.FromDays(2), 1 },
+			//		{ DateTime.Today - TimeSpan.FromDays(1), 2 },
+			//		{ DateTime.Today, 1 },
+			//	},
+			//	HabitType = HabitType.Daylong,
+			//	Id = FakeIdGenerator.GetId(),
+			//	IsRecommended = false,
+			//	RepeatType = RepeatType.Sat | RepeatType.Thu,
+			//	DaysToRepeat = 12,
+			//	StartDate = DateTime.Today - TimeSpan.FromDays(4)
+			//}),
+			//	new HabitViewModel(new HabitModel
+			//	{
+			//	RepeatsADay = 5,
+			//	Title = "Finished 1 year ago",
+			//	Description = "Every morning make 40 push ups in 2 iterations (20 in each).",
+			//	Filling = new Dictionary<DateTime, int>
+			//	{
+			//		{ DateTime.Today - TimeSpan.FromDays(4), 2 },
+			//		{ DateTime.Today - TimeSpan.FromDays(3), 3 },
+			//		{ DateTime.Today - TimeSpan.FromDays(2), 1 },
+			//		{ DateTime.Today - TimeSpan.FromDays(1), 2 },
+			//		{ DateTime.Today, 1 },
+			//	},
+			//	HabitType = HabitType.Daylong,
+			//	Id = FakeIdGenerator.GetId(),
+			//	IsRecommended = false,
+			//	RepeatType = RepeatType.Years,
+			//	DaysToRepeat = 4,
+			//	StartDate = DateTime.Today.AddYears(-5),
+			//}),
+			//	new HabitViewModel(new HabitModel
+			//	{
+			//	RepeatsADay = 5,
+			//	Title = "Will start tomorrow",
+			//	Description = "Every morning make 40 push ups in 2 iterations (20 in each).",
+			//	Filling = new Dictionary<DateTime, int>
+			//	{
+			//		{ DateTime.Today - TimeSpan.FromDays(4), 2 },
+			//		{ DateTime.Today - TimeSpan.FromDays(3), 3 },
+			//		{ DateTime.Today - TimeSpan.FromDays(2), 1 },
+			//		{ DateTime.Today - TimeSpan.FromDays(1), 2 },
+			//		{ DateTime.Today, 1 },
+			//	},
+			//	HabitType = HabitType.Daylong,
+			//	Id = FakeIdGenerator.GetId(),
+			//	IsRecommended = false,
+			//	RepeatType = RepeatType.Days,
+			//	DaysToRepeat = 20,
+			//	StartDate = DateTime.Today + TimeSpan.FromDays(1)
+			//})
+			//};
+
+
+		}
+
 		static async Task LoadHabits()
 		{
-			var habitList = new List<HabitViewModel>
-			{
-				GetExampleHabitViewModel(),
-				new HabitViewModel(new HabitModel
-				{
-					RepeatsToday = 3,
-					RepeatsADay = 5,
-					Title = "Today started 4 days ago",
-					Description = "Every morning make 40 push ups in 2 iterations (20 in each).",
-					Filling = GenerateFilling(),
-					HabitType = HabitType.Unit,
-					Id = FakeIdGenerator.GetId(),
-					IsRecommended = false,
-					RepeatType = RepeatType.Fri,
-					DaysToRepeat = 12,
-					StartDate = DateTime.Today - TimeSpan.FromDays(4)
-				}),
-				new HabitViewModel(new HabitModel
-				{
-					RepeatsToday = 3,
-					RepeatsADay = 5,
-					Title = "Today starts today",
-					Description = "Every morning make 40 push ups in 2 iterations (20 in each).",
-					Filling = new Dictionary<DateTime, int>
-					{
-						{ DateTime.Today - TimeSpan.FromDays(4), 2 },
-						{ DateTime.Today - TimeSpan.FromDays(3), 3 },
-						{ DateTime.Today - TimeSpan.FromDays(2), 1 },
-						{ DateTime.Today - TimeSpan.FromDays(1), 2 },
-						{ DateTime.Today, 1 },
-					},
-					HabitType = HabitType.Unit,
-					Id = FakeIdGenerator.GetId(),
-					IsRecommended = false,
-					RepeatType = RepeatType.Fri,
-					DaysToRepeat = 12,
-					StartDate = DateTime.Today
-				}),
-				new HabitViewModel(new HabitModel
-				{
-				RepeatsToday = 3,
-				RepeatsADay = 5,
-				Title = "Current started 4 days ago (Thursday + Saturday)",
-				Description = "Every morning make 40 push ups in 2 iterations (20 in each).",
-				Filling = new Dictionary<DateTime, int>
-				{
-					{ DateTime.Today - TimeSpan.FromDays(4), 2 },
-					{ DateTime.Today - TimeSpan.FromDays(3), 3 },
-					{ DateTime.Today - TimeSpan.FromDays(2), 1 },
-					{ DateTime.Today - TimeSpan.FromDays(1), 2 },
-					{ DateTime.Today, 1 },
-				},
-				HabitType = HabitType.Daylong,
-				Id = FakeIdGenerator.GetId(),
-				IsRecommended = false,
-				RepeatType = RepeatType.Sat | RepeatType.Thu,
-				DaysToRepeat = 12,
-				StartDate = DateTime.Today - TimeSpan.FromDays(4)
-			}),
-				new HabitViewModel(new HabitModel
-				{
-				RepeatsToday = 3,
-				RepeatsADay = 5,
-				Title = "Finished 1 year ago",
-				Description = "Every morning make 40 push ups in 2 iterations (20 in each).",
-				Filling = new Dictionary<DateTime, int>
-				{
-					{ DateTime.Today - TimeSpan.FromDays(4), 2 },
-					{ DateTime.Today - TimeSpan.FromDays(3), 3 },
-					{ DateTime.Today - TimeSpan.FromDays(2), 1 },
-					{ DateTime.Today - TimeSpan.FromDays(1), 2 },
-					{ DateTime.Today, 1 },
-				},
-				HabitType = HabitType.Daylong,
-				Id = FakeIdGenerator.GetId(),
-				IsRecommended = false,
-				RepeatType = RepeatType.Years,
-				DaysToRepeat = 4,
-				StartDate = DateTime.Today.AddYears(-5),
-			}),
-				new HabitViewModel(new HabitModel
-				{
-				RepeatsToday = 3,
-				RepeatsADay = 5,
-				Title = "Will start tomorrow",
-				Description = "Every morning make 40 push ups in 2 iterations (20 in each).",
-				Filling = new Dictionary<DateTime, int>
-				{
-					{ DateTime.Today - TimeSpan.FromDays(4), 2 },
-					{ DateTime.Today - TimeSpan.FromDays(3), 3 },
-					{ DateTime.Today - TimeSpan.FromDays(2), 1 },
-					{ DateTime.Today - TimeSpan.FromDays(1), 2 },
-					{ DateTime.Today, 1 },
-				},
-				HabitType = HabitType.Daylong,
-				Id = FakeIdGenerator.GetId(),
-				IsRecommended = false,
-				RepeatType = RepeatType.Days,
-				DaysToRepeat = 20,
-				StartDate = DateTime.Today + TimeSpan.FromDays(1)
-			})
-			};
+			var models = await _connection.Table<HabitModel>().Where(h => h.IsFinished == false).ToListAsync();
+			//var habitList = GetFakeHabits();
+			var habitList = models.Select(m => new HabitViewModel(m));
 
 			var filtred = new List<HabitViewModel>();
 			foreach (var habit in habitList)
@@ -400,12 +408,15 @@ namespace TocoDo.Services
 
 		public static async Task UpdateHabit(HabitViewModel habit)
 		{
-			//await _connection.UpdateAsync(habit.GetHabitModel());
+			await _connection.UpdateAsync(habit.GetHabitModel());
 		}
 
 		public static async Task DeleteHabit(HabitViewModel habit)
 		{
-			//await _connection.DeleteAsync(habit.GetHabitModel());
+		 	var list = GetHabitList(habit);
+			list.Remove(habit);
+			await _connection.DeleteAsync(habit.GetHabitModel());
+			await PageService.PopAsync();
 		}
 
 		/// <summary>
@@ -417,7 +428,9 @@ namespace TocoDo.Services
 			try
 			{
 				var model = habit.GetHabitModel();
-				habit.SetModelId(FakeIdGenerator.GetId()); //model.Id);
+				//habit.SetModelId(FakeIdGenerator.GetId()); //model.Id);
+				await _connection.InsertAsync(model);
+				habit.SetModelId(model.Id);
 			}
 			catch (Exception ex)
 			{
@@ -429,7 +442,7 @@ namespace TocoDo.Services
 		public static void AddHabitToTheList(HabitViewModel habit)
 		{
 			// Get the propper position for the habit
-			var list = GetProperList(habit);
+			var list = GetHabitList(habit);
 			list.Add(habit);
 			habit.PropertyChanging += OnHabitOnPropertyChanging;
 		}
@@ -439,8 +452,8 @@ namespace TocoDo.Services
 			if (propertyName != nameof(HabitViewModel.ModelStartDate)) return;
 
 			var vm = (HabitViewModel) habit;
-			var oldList = GetProperList(vm);
-			var newList = GetProperList((DateTime?) newValue, vm.ModelRepeatType, vm.ModelDaysToRepeat);
+			var oldList = GetHabitList(vm);
+			var newList = GetHabitList((DateTime?) newValue, vm.ModelRepeatType, vm.ModelDaysToRepeat);
 
 			if (oldList == newList)
 				return;
@@ -452,15 +465,15 @@ namespace TocoDo.Services
 
 		public static void RemoveHabitFromTheList(HabitViewModel habit)
 		{
-			var	list = GetProperList(habit);
+			var	list = GetHabitList(habit);
 			list?.Remove(habit);
 			habit.PropertyChanging -= OnHabitOnPropertyChanging;
 		}
 
-		private static ObservableCollection<HabitViewModel> GetProperList(HabitViewModel habit) =>
-			GetProperList(habit.ModelStartDate, habit.ModelRepeatType, habit.ModelDaysToRepeat);
+		private static ObservableCollection<HabitViewModel> GetHabitList(HabitViewModel habit) =>
+			GetHabitList(habit.ModelStartDate, habit.ModelRepeatType, habit.ModelDaysToRepeat);
 
-		private static ObservableCollection<HabitViewModel> GetProperList(DateTime? start, RepeatType repeatType, int daysToRepeat)
+		private static ObservableCollection<HabitViewModel> GetHabitList(DateTime? start, RepeatType repeatType, int daysToRepeat)
 		{
 			if (start == null)
 				return UnscheduledHabits;

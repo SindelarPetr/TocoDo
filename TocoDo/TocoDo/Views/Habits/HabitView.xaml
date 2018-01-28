@@ -29,7 +29,7 @@
 				</customRenderers:NoLineEntry.Triggers>
 			</customRenderers:NoLineEntry>
 			<Label Text="{Binding ModelTitle}" IsVisible="{Binding Source={x:Reference EntryEditTitle}, Path=IsVisible, Converter={StaticResource BoolReverseConverter}}" Style="{StaticResource HabitHeader}"/>
-			<habits1:HabitDetailView ViewModel="{Binding .}" Margin="0,8,0,0"/>
+			<habits1:HabitDetailView ViewModel="{Binding .}" Margin="0,8,0,0" IsVisible="{Binding ModelStartDate, Converter={StaticResource IsNotNullConverter}}"/>
 		</StackLayout>
 	</ContentView.Content>
 </ContentView>

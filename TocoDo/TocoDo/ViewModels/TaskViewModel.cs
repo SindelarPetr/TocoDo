@@ -108,8 +108,11 @@ namespace TocoDo.ViewModels
 		{
 			base.OnPropertyChanged(propertyName);
 
-			if(!IsCreateMode)
+			if (!IsCreateMode)
+			{
 				await Update();
+				MyLogger.WriteInMethod($"Saved task, changed property: {propertyName}");
+			}
 		}
 
 		private async Task RemoveTask()
@@ -208,9 +211,7 @@ namespace TocoDo.ViewModels
 
 		private async void EditDescription()
 		{
-			Debug.Write("------------- Edit description called.");
 			await PageService.PushModalAsync(new EditDescriptionPage(Title, Description, d => Description = d));
-			Debug.Write("------------- Stopped calling edit description.");
 		}
 
 		public async void InsertToStorage(string title)

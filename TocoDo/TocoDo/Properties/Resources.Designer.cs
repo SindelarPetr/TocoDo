@@ -259,6 +259,24 @@ namespace TocoDo.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Alert.
+        /// </summary>
+        public static string DeleteHabitConfirmHeader {
+            get {
+                return ResourceManager.GetString("DeleteHabitConfirmHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this habit forever?.
+        /// </summary>
+        public static string DeleteHabitConfirmText {
+            get {
+                return ResourceManager.GetString("DeleteHabitConfirmText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete to-do.
         /// </summary>
         public static string DeleteToDo {

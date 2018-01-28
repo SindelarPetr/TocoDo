@@ -3,9 +3,12 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using NetBox;
 using NetBox.Extensions;
+using Newtonsoft.Json;
 using TocoDo.Converters;
 using TocoDo.Helpers;
 using TocoDo.Models;
@@ -29,7 +32,7 @@ namespace TocoDo.ViewModels
 		private string _modelTitle;
 		private RepeatType _modelRepeatType;
 		private string _modelDescription;
-		private int _modelRepeatsADay;
+		private int _modelMaxRepeatsADay;
 		#endregion
 
 		#region Properties
@@ -59,7 +62,7 @@ namespace TocoDo.ViewModels
 					SetValue(ref _modelRepeatsToday, value);
 			}
 		}
-
+		
 		public ObservableDictionary<DateTime, int> ModelFilling { get; private set; }
 
 		public DateTime ModelCreationDate { get; }
@@ -110,10 +113,10 @@ namespace TocoDo.ViewModels
 		/// </summary>
 		public int ModelMaxRepeatsADay
 		{
-			get => _modelRepeatsADay;
+			get => _modelMaxRepeatsADay;
 			set
 			{
-				SetValue(ref _modelRepeatsADay, value);
+				SetValue(ref _modelMaxRepeatsADay, value);
 				OnPropertyChanged(nameof(HabitTypeWithRepeats));
 			}
 		}
@@ -170,10 +173,10 @@ namespace TocoDo.ViewModels
 		{
 			// Set initial values
 			ModelCreationDate = DateTime.Now;
-			ModelRepeatType = RepeatType.Days;
-			ModelHabitType = HabitType.Daylong;
-			ModelMaxRepeatsADay = 1;
-			ModelDaysToRepeat = 21;
+			_modelRepeatType = RepeatType.Days;
+			_modelHabitType = HabitType.Daylong;
+			_modelMaxRepeatsADay = 1;
+			_modelDaysToRepeat = 21;
 
 			ModelFilling = new ObservableDictionary<DateTime, int>();
 			IsCreateMode = true;
@@ -187,14 +190,14 @@ namespace TocoDo.ViewModels
 			ModelId = model.Id;
 			_modelRepeatType = model.RepeatType;
 			_modelDescription = model.Description;
-			ModelFilling = new ObservableDictionary<DateTime, int>(model.Filling);
+			ModelFilling = new ObservableDictionary<DateTime, int>(Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<DateTime, int>>(model.Filling));
 			_modelHabitType = model.HabitType;
 			_modelDaysToRepeat = model.DaysToRepeat;
 			_modelStartDate = model.StartDate;
 			_modelTitle = model.Title;
-			_modelRepeatsToday = model.RepeatsToday;
+			_modelRepeatsToday = ModelFilling.ContainsKey(DateTime.Today)? ModelFilling[DateTime.Today] : 0;
 			_modelIsRecommended = model.IsRecommended;
-			_modelRepeatsADay = model.RepeatsADay;
+			_modelMaxRepeatsADay = model.RepeatsADay;
 
 			SetupCommands();
 		}
@@ -207,7 +210,17 @@ namespace TocoDo.ViewModels
 			SelectStartDateCommand = new Command(async () => await SelectDate(d => ModelStartDate = d, Resources.SelectStartDate));
 			UnsetStartDateCommand = new Command(() => ModelStartDate = null);
 			IncreaseTodayCommand = new Command(() => ModelRepeatsToday++);
-			RemoveCommand = new Command(() => StorageService.DeleteHabit(this));
+			RemoveCommand = new Command(async () => await Delete());
+		}
+
+		private async Task Delete()
+		{
+			// Ask user if he is sure
+			var result = await PageService.DisplayAlert(Resources.DeleteHabitConfirmHeader, Resources.DeleteHabitConfirmText,
+				Resources.Yes, Resources.Cancel);
+
+			if(result)
+				await StorageService.DeleteHabit(this);
 		}
 
 		private async Task SelectDate(Action<DateTime?> pickedAction, string actionSheetHeader)
@@ -262,12 +275,11 @@ namespace TocoDo.ViewModels
 				CreationDate = ModelCreationDate,
 				RepeatType = ModelRepeatType,
 				Description = ModelDescription,
-				Filling = new Dictionary<DateTime, int>(ModelFilling),
+				Filling = JsonConvert.SerializeObject(new Dictionary<DateTime, int>(ModelFilling)),
 				HabitType = ModelHabitType,
 				DaysToRepeat = ModelDaysToRepeat,
 				StartDate = ModelStartDate,
 				Title = ModelTitle,
-				RepeatsToday = ModelRepeatsToday,
 				IsRecommended = ModelIsRecommended,
 				RepeatsADay = ModelMaxRepeatsADay
 			};
@@ -278,6 +290,7 @@ namespace TocoDo.ViewModels
 			MyLogger.WriteStartMethod();
 			base.OnPropertyChanged(propertyName);
 
+			// Init filling if needed and update it
 			if (propertyName == nameof(ModelRepeatsToday))
 			{
 				InitFilling();
@@ -292,8 +305,11 @@ namespace TocoDo.ViewModels
 					filling[today] = ModelRepeatsToday;
 			}
 
-			if(!IsCreateMode)
+			if (!IsCreateMode)
+			{
 				await StorageService.UpdateHabit(this);
+				MyLogger.WriteInMethod($"Updated habit, changed property: {propertyName}");
+			}
 			MyLogger.WriteEndMethod();
 		}
 
