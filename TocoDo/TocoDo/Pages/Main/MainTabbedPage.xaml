@@ -3,7 +3,8 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:main="clr-namespace:TocoDo.Pages.Main;assembly=TocoDo"
 			 x:Class="TocoDo.Pages.Main.MainTabbedPage" >
-	<main:TasksPage Title="Tasks" NavigationPage.BarBackgroundColor="{DynamicResource BarColor}"/>
-	<main:TodayPage Title="Today" NavigationPage.BarBackgroundColor="{DynamicResource BarColor}"/>
-	<main:HabitsPage Title="Habits" NavigationPage.BarBackgroundColor="{DynamicResource BarColor}"/>
+
+	<main:TasksPage Icon="ic_done_white_24dp.png"/>
+	<main:TodayPage Icon="ic_today_white_24dp.png"/>
+	<main:HabitsPage Icon="ic_event_available_white_24dp.png" />
 </TabbedPage>

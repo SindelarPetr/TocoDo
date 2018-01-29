@@ -40,7 +40,7 @@ namespace TocoDo
 			MyLogger.WriteInMethod();
 
 			var navigationPage = new NavigationPage(main);
-			navigationPage.SetDynamicResource(NavigationPage.BarBackgroundColorProperty, "BarColor");
+			//navigationPage.SetDynamicResource(NavigationPage.BarBackgroundColorProperty, "BarColor");
 			MainPage = navigationPage;
 
 			MyLogger.WriteEndMethod();

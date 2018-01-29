@@ -17,9 +17,7 @@ namespace TocoDo.Pages.Main
 		public MainTabbedPage()
 		{
 			InitializeComponent();
-
-
-
+			
 			Instance = this;
 
 			if (Children.Count >= 2)

@@ -4,13 +4,19 @@
 			 xmlns:main="clr-namespace:TocoDo.Pages.Main;assembly=TocoDo"
 			 xmlns:m="clr-namespace:TocoDo.Pages;assembly=TocoDo"
 			 x:Class="TocoDo.Pages.Main.MainPage"
-				  Title="Toco Do"
-				  >
-
+			 Title="Toco Do">
 	<MasterDetailPage.Master>
 		<main:MainMasterPage Title="Toco Do"/>
 	</MasterDetailPage.Master>
 	<MasterDetailPage.Detail>
-		<main:MainTabbedPage Title="Toco Do" BarBackgroundColor="{DynamicResource BarColor}"/>
+		<main:MainTabbedPage Title="Toco Do">
+			<main:MainTabbedPage.BarBackgroundColor>
+				<OnPlatform x:TypeArguments="Color" >
+					<On Platform="iOS">White</On>
+					<On Platform="Android" Value="{StaticResource BarColor}"/>
+					<On Platform="UWP">Black</On>
+				</OnPlatform>
+			</main:MainTabbedPage.BarBackgroundColor>
+		</main:MainTabbedPage>
 	</MasterDetailPage.Detail>
 </MasterDetailPage>
