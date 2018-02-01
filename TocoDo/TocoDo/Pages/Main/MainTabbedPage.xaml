@@ -4,7 +4,27 @@
 			 xmlns:main="clr-namespace:TocoDo.Pages.Main;assembly=TocoDo"
 			 x:Class="TocoDo.Pages.Main.MainTabbedPage" >
 
-	<main:TasksPage Icon="ic_done_white_24dp.png"/>
-	<main:TodayPage Icon="ic_today_white_24dp.png"/>
-	<main:HabitsPage Icon="ic_event_available_white_24dp.png" />
+	<main:TasksPage Title="Tasks">
+		<main:TasksPage.Icon>
+			<OnPlatform x:TypeArguments="FileImageSource">
+				<On Platform="iOS" Value="ic_done_white_24dp.png"/>
+			</OnPlatform>
+		</main:TasksPage.Icon>
+	</main:TasksPage>
+
+	<main:TodayPage Title="Calendar">
+		<main:TodayPage.Icon>
+			<OnPlatform x:TypeArguments="FileImageSource">
+				<On Platform="iOS" Value="ic_today_white_24dp.png"/>
+			</OnPlatform>
+		</main:TodayPage.Icon>
+	</main:TodayPage>
+
+	<main:HabitsPage Title="Habits">
+		<main:HabitsPage.Icon>
+			<OnPlatform x:TypeArguments="FileImageSource">
+				<On Platform="iOS" Value="ic_event_available_white_24dp.png"/>
+			</OnPlatform>
+		</main:HabitsPage.Icon>
+	</main:HabitsPage>
 </TabbedPage>
