@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:TocoDo.Views;assembly=TocoDo"
              x:Class="TocoDo.Views.MyCalendarView">
 	<ContentView.Resources>
 		<ResourceDictionary>
@@ -19,20 +20,20 @@
 				<ColumnDefinition Width="{StaticResource CellSize}"/>
 				<ColumnDefinition Width="{StaticResource CellSize}"/>
 				<ColumnDefinition Width="{StaticResource CellSize}"/>-->
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
 			</Grid.ColumnDefinitions>
 			<Grid.RowDefinitions>
-				<RowDefinition Height="{StaticResource CellSize}"/>
-				<RowDefinition Height="{StaticResource CellSize}"/>
-				<RowDefinition Height="{StaticResource CellSize}"/>
-				<RowDefinition Height="{StaticResource CellSize}"/>
-				<RowDefinition Height="{StaticResource CellSize}"/>
+				<RowDefinition Height="*" />
+				<RowDefinition Height="*" />
+				<RowDefinition Height="*" />
+				<RowDefinition Height="*" />
+				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
 			<Grid.Resources>
 				<ResourceDictionary>
@@ -59,46 +60,42 @@
 			</Grid.Resources>
 
 			<!-- Calendar for February 2018 -->
-			<Label Grid.Row="0" Grid.Column="0" Text="29" Style="{StaticResource LabelOtherDays}" />
-			<Label Grid.Row="0" Grid.Column="1" Text="30" Style="{StaticResource LabelOtherDays}" />
-			<Label Grid.Row="0" Grid.Column="2" Text="31" Style="{StaticResource LabelOtherDays}" />
-			<Label Grid.Row="0" Grid.Column="3" Text="1" />
-			<Label Grid.Row="0" Grid.Column="4" Text="2" />
-			<Label Grid.Row="0" Grid.Column="5" Text="3" />
-			<Label Grid.Row="0" Grid.Column="6" Text="4" />
+			<views:CalendarCell Grid.Row="0" Grid.Column="0" Text="29" />
+			<views:CalendarCell Grid.Row="0" Grid.Column="1" Text="30" />
+			<views:CalendarCell Grid.Row="0" Grid.Column="2" Text="31" />
+			<views:CalendarCell Grid.Row="0" Grid.Column="3" Text="1" />
+			<views:CalendarCell Grid.Row="0" Grid.Column="4" Text="2" />
+			<views:CalendarCell Grid.Row="0" Grid.Column="5" Text="3" />
+			<views:CalendarCell Grid.Row="0" Grid.Column="6" Text="4" />
+			<views:CalendarCell Grid.Row="1" Grid.Column="0" Text="5" />
+			<views:CalendarCell Grid.Row="1" Grid.Column="1" Text="6" />
+			<views:CalendarCell Grid.Row="1" Grid.Column="2" Text="7" />
+			<views:CalendarCell Grid.Row="1" Grid.Column="3" Text="8" />
+			<views:CalendarCell Grid.Row="1" Grid.Column="4" Text="9" />
+			<views:CalendarCell Grid.Row="1" Grid.Column="5" Text="10" />
+			<views:CalendarCell Grid.Row="1" Grid.Column="6" Text="11" />
+			<views:CalendarCell Grid.Row="2" Grid.Column="0" Text="12" />
+			<views:CalendarCell Grid.Row="2" Grid.Column="1" Text="13" />
+			<views:CalendarCell Grid.Row="2" Grid.Column="2" Text="14" />
+			<views:CalendarCell Grid.Row="2" Grid.Column="3" Text="15" />
+			<views:CalendarCell Grid.Row="2" Grid.Column="4" Text="16" />
+			<views:CalendarCell Grid.Row="2" Grid.Column="5" Text="17" />
+			<views:CalendarCell Grid.Row="2" Grid.Column="6" Text="18" />
+			<views:CalendarCell Grid.Row="3" Grid.Column="0" Text="19" />
+			<views:CalendarCell Grid.Row="3" Grid.Column="1" Text="20" />
+			<views:CalendarCell Grid.Row="3" Grid.Column="2" Text="21" />
+			<views:CalendarCell Grid.Row="3" Grid.Column="3" Text="22" />
+			<views:CalendarCell Grid.Row="3" Grid.Column="4" Text="23" />
+			<views:CalendarCell Grid.Row="3" Grid.Column="5" Text="24" />
+			<views:CalendarCell Grid.Row="3" Grid.Column="6" Text="25" />
+			<views:CalendarCell Grid.Row="4" Grid.Column="0" Text="26" />
+			<views:CalendarCell Grid.Row="4" Grid.Column="1" Text="27" />
+			<views:CalendarCell Grid.Row="4" Grid.Column="2" Text="28" />
+			<views:CalendarCell Grid.Row="4" Grid.Column="3" Text="1" />
+			<views:CalendarCell Grid.Row="4" Grid.Column="4" Text="2" />
+			<views:CalendarCell Grid.Row="4" Grid.Column="5" Text="3" />
+			<views:CalendarCell Grid.Row="4" Grid.Column="6" Text="4" />
 
-			<Label Grid.Row="1" Grid.Column="0" Text="5" />
-			<Label Grid.Row="1" Grid.Column="1" Text="6" />
-			<Label Grid.Row="1" Grid.Column="2" Text="7" />
-			<Label Grid.Row="1" Grid.Column="3" Text="8" />
-			<Label Grid.Row="1" Grid.Column="4" Text="9" />
-			<Label Grid.Row="1" Grid.Column="5" Text="10" />
-			<Label Grid.Row="1" Grid.Column="6" Text="11" />
-
-			<Label Grid.Row="2" Grid.Column="0" Text="12" />
-			<Label Grid.Row="2" Grid.Column="1" Text="13" />
-			<Label Grid.Row="2" Grid.Column="2" Text="14" />
-			<Label Grid.Row="2" Grid.Column="3" Text="15" />
-			<Label Grid.Row="2" Grid.Column="4" Text="16" Style="{StaticResource LabelToday}" />
-			<Label Grid.Row="2" Grid.Column="5" Text="17" />
-			<Label Grid.Row="2" Grid.Column="6" Text="18" />
-
-			<Label Grid.Row="3" Grid.Column="0" Text="19" />
-			<Label Grid.Row="3" Grid.Column="1" Text="20" />
-			<Label Grid.Row="3" Grid.Column="2" Text="21" />
-			<Label Grid.Row="3" Grid.Column="3" Text="22" />
-			<Label Grid.Row="3" Grid.Column="4" Text="23" />
-			<Label Grid.Row="3" Grid.Column="5" Text="24" />
-			<Label Grid.Row="3" Grid.Column="6" Text="25" />
-
-			<Label Grid.Row="4" Grid.Column="0" Text="26" />
-			<Label Grid.Row="4" Grid.Column="1" Text="27" />
-			<Label Grid.Row="4" Grid.Column="2" Text="28" />
-			<Label Grid.Row="4" Grid.Column="3" Text="1" Style="{StaticResource LabelOtherDays}" />
-			<Label Grid.Row="4" Grid.Column="4" Text="2" Style="{StaticResource LabelOtherDays}" />
-			<Label Grid.Row="4" Grid.Column="5" Text="3" Style="{StaticResource LabelOtherDays}" />
-			<Label Grid.Row="4" Grid.Column="6" Text="4" Style="{StaticResource LabelOtherDays}" />
-			
 		</Grid>
 	</ContentView.Content>
 </ContentView>

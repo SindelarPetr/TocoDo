@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TocoDo.Views.CalendarCell"
+             x:Name="This">
+
+  <ContentView.Content>
+		<StackLayout Spacing="0" BindingContext="{x:Reference This}" Padding="0">
+			<StackLayout.Resources>
+				<ResourceDictionary>
+					<Style TargetType="Label" >
+						<Setter Property="Text" Value="•"/>
+						<Setter Property="FontAttributes" Value="Bold"/>
+						<Setter Property="TextColor" Value="White"/>
+					</Style>
+				</ResourceDictionary>
+			</StackLayout.Resources>
+
+			<StackLayout Orientation="Horizontal" Padding="0" Margin="0, -4">
+				<Label />
+				<Label />
+				<Label />
+			</StackLayout>
+
+			<Label Text="{Binding Text}" FontSize="Small" HorizontalOptions="Fill" HorizontalTextAlignment="Center"/>
+
+			<StackLayout Orientation="Horizontal" Padding="0" Margin="0, -4">
+				<Label />
+				<Label />
+				<Label />
+			</StackLayout>
+		</StackLayout>
+  </ContentView.Content>
+</ContentView>
