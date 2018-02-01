@@ -56,7 +56,7 @@ namespace TocoDo
 			catch (Exception e)
 			{
 
-				throw;
+				//throw;
 			}
 		}
 	}
