@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.JustMock;
 using TocoDo.BusinessLogic.DependencyInjection;
+using TocoDo.BusinessLogic.DependencyInjection.Models;
 using TocoDo.BusinessLogic.Services;
 
 namespace TocoDo.UnitTests
@@ -18,7 +19,7 @@ namespace TocoDo.UnitTests
 			public void InitializeTest()
 			{
 				_persistance = Mock.Create<IPersistance>();
-				_storage = new StorageService(_persistance);
+				_storage = new StorageService(_persistance, Mock.Create<INavigationService>(), Mock.Create<IModelFactory>());
 			}
 
 			[TestMethod]

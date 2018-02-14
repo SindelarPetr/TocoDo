@@ -6,7 +6,8 @@
 			 xmlns:tasks="clr-namespace:TocoDo.UI.Converters.Tasks;assembly=TocoDo.UI"
 			 xmlns:converters="clr-namespace:TocoDo.UI.Converters;assembly=TocoDo.UI"
 			 xmlns:customRenderers="clr-namespace:TocoDo.UI.CustomRenderers;assembly=TocoDo.UI"
-			 xmlns:views="clr-namespace:TocoDo.Views;assembly=TocoDo.UI"
+			 xmlns:markupExtensions="clr-namespace:TocoDo.UI.MarkupExtensions;assembly=TocoDo.UI"
+			 xmlns:todos="clr-namespace:TocoDo.UI.Views.Todos;assembly=TocoDo.UI"
 			 Padding="0,5,0,5" VerticalOptions="Center">
 	<ContentView.Resources>
 		<ResourceDictionary>
@@ -38,7 +39,7 @@
 			</Grid.GestureRecognizers>
 
 			<!--Check box-->
-			<views:CheckerView x:Name="TodoBoxView" IsChecked="{Binding Done, Mode=TwoWay, Converter={StaticResource CheckConverter}}" HeightRequest="40" WidthRequest="40" CheckCommand="CheckCommand"/>
+			<todos:CheckerView x:Name="TodoBoxView" IsChecked="{Binding Done, Mode=TwoWay, Converter={StaticResource CheckConverter}}" HeightRequest="40" WidthRequest="40" CheckCommand="CheckCommand"/>
 
 
 			<StackLayout Grid.Column="1" VerticalOptions="Center">

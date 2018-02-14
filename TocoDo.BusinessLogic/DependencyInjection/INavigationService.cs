@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using TocoDo.BusinessLogic.ViewModels;
+﻿using System.Threading.Tasks;
 
 namespace TocoDo.BusinessLogic.DependencyInjection
 {

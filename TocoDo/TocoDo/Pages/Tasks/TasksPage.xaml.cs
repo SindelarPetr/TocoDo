@@ -14,6 +14,7 @@ namespace TocoDo.UI.Pages.Tasks
 
 		private void ButtonAddSomeday_OnClicked(object sender, EventArgs e)
 		{
+			// TODO: Creating a new task
 			//StorageServiceOld.AddTaskToTheList(new TaskViewModel());
 		}
 	}

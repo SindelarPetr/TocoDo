@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TocoDo.BusinessLogic.ViewModels;
+﻿using TocoDo.BusinessLogic.ViewModels;
 
 namespace TocoDo.BusinessLogic.DependencyInjection.Models
 {

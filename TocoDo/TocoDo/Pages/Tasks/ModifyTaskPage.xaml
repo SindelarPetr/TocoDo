@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-			 xmlns:customRenderers="clr-namespace:TocoDo.CustomRenderers;assembly=TocoDo"
-			 xmlns:markupExtensions="clr-namespace:TocoDo.MarkupExtensions;assembly=TocoDo"
-			 xmlns:views="clr-namespace:TocoDo.Views;assembly=TocoDo"
-			 xmlns:converters="clr-namespace:TocoDo.Converters;assembly=TocoDo"
-			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
-			 xmlns:properties="clr-namespace:TocoDo.Properties;assembly=TocoDo"
+			 xmlns:tasks="clr-namespace:TocoDo.UI.Converters.Tasks;assembly=TocoDo.UI"
+			 xmlns:converters="clr-namespace:TocoDo.UI.Converters;assembly=TocoDo.UI"
+			 xmlns:views="clr-namespace:TocoDo.UI.Views;assembly=TocoDo.UI"
+			 xmlns:markupExtensions="clr-namespace:TocoDo.UI.MarkupExtensions;assembly=TocoDo.UI"
+			 xmlns:customRenderers="clr-namespace:TocoDo.UI.CustomRenderers;assembly=TocoDo.UI"
+			 xmlns:todos="clr-namespace:TocoDo.UI.Views.Todos;assembly=TocoDo.UI"
 			 x:Class="TocoDo.UI.Pages.Tasks.ModifyTaskPage"
 			 Title="Modify the task"
              x:Name="This">
@@ -16,8 +16,8 @@
 				<Setter Property="FontSize" Value="Small" />
 				<Setter Property="TextColor" Value="Gray" />
 			</Style>
-			<converters:CheckConverter x:Key="CheckConverter" />
-			<converters:DescriptionToColorConverter x:Key="DescriptionToColorConverter" />
+			<tasks:CheckConverter x:Key="CheckConverter" />
+			<tasks:DescriptionToColorConverter x:Key="DescriptionToColorConverter" />
 			<converters:ValueCheckerConverter x:Key="ValueCheckerConverter"/>
 			<converters:IsNotNullOrWhitespaceConverter x:Key="IsNotNullOrWhitespaceConverter"/>
 		</ResourceDictionary>
@@ -39,7 +39,7 @@
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
 
-					<views:CheckerView x:Name="TodoBoxView" IsChecked="{Binding Done, Mode=TwoWay, Converter={StaticResource CheckConverter}}" UncheckedColor="WhiteSmoke" CheckedColor="White" />
+					<todos:CheckerView x:Name="TodoBoxView" IsChecked="{Binding Done, Mode=TwoWay, Converter={StaticResource CheckConverter}}" UncheckedColor="WhiteSmoke" CheckedColor="White" />
 					<customRenderers:NoLineEntry x:Name="EntryTitle" Text="{Binding Title, Mode=OneWay}" Grid.Column="1" Grid.Row="0" HorizontalOptions="FillAndExpand" TextColor="White" Unfocused="EntryTitle_OnCompleted" />
 				</Grid>
 			</Frame>

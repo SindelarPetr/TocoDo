@@ -1,30 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-			 xmlns:main="clr-namespace:TocoDo.Pages.Main;assembly=TocoDo"
+			 xmlns:tasks="clr-namespace:TocoDo.UI.Pages.Tasks;assembly=TocoDo.UI"
+			 xmlns:today="clr-namespace:TocoDo.UI.Pages.Today;assembly=TocoDo.UI"
+			 xmlns:habits="clr-namespace:TocoDo.UI.Pages.Habits;assembly=TocoDo.UI"
 			 x:Class="TocoDo.UI.Pages.Main.MainTabbedPage" >
 
-	<main:TasksPage Title="Tasks">
-		<main:TasksPage.Icon>
+	<tasks:TasksPage Title="Tasks">
+		<tasks:TasksPage.Icon>
 			<OnPlatform x:TypeArguments="FileImageSource">
 				<On Platform="iOS" Value="ic_done_white_24dp.png"/>
 			</OnPlatform>
-		</main:TasksPage.Icon>
-	</main:TasksPage>
+		</tasks:TasksPage.Icon>
+	</tasks:TasksPage>
 
-	<main:TodayPage Title="Calendar">
-		<main:TodayPage.Icon>
+	<today:TodayPage Title="Calendar">
+		<today:TodayPage.Icon>
 			<OnPlatform x:TypeArguments="FileImageSource">
 				<On Platform="iOS" Value="ic_today_white_24dp.png"/>
 			</OnPlatform>
-		</main:TodayPage.Icon>
-	</main:TodayPage>
+		</today:TodayPage.Icon>
+	</today:TodayPage>
 
-	<main:HabitsPage Title="Habits">
-		<main:HabitsPage.Icon>
+	<habits:HabitsPage Title="Habits">
+		<habits:HabitsPage.Icon>
 			<OnPlatform x:TypeArguments="FileImageSource">
 				<On Platform="iOS" Value="ic_event_available_white_24dp.png"/>
 			</OnPlatform>
-		</main:HabitsPage.Icon>
-	</main:HabitsPage>
+		</habits:HabitsPage.Icon>
+	</habits:HabitsPage>
 </TabbedPage>

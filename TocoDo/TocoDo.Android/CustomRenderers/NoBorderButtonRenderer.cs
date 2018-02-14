@@ -1,10 +1,9 @@
 ﻿using Android.Content;
-using TocoDo.CustomRenderers;
 using TocoDo.Droid.CustomRenderers;
+using TocoDo.UI.CustomRenderers;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Button = Xamarin.Forms.Button;
-using Color = Android.Graphics.Color;
 
 [assembly: ExportRenderer(typeof(NoBorderButton), typeof(NoBorderButtonRenderer))]
 namespace TocoDo.Droid.CustomRenderers

@@ -2,10 +2,9 @@
 
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:habits="clr-namespace:TocoDo.UI.Converters.Habits;assembly=TocoDo.UI"
              xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
-             xmlns:markupExtensions="clr-namespace:TocoDo.MarkupExtensions;assembly=TocoDo"
-             xmlns:converters="clr-namespace:TocoDo.Converters;assembly=TocoDo"
-             xmlns:habits="clr-namespace:TocoDo.Converters.Habits;assembly=TocoDo"
+             xmlns:markupExtensions="clr-namespace:TocoDo.UI.MarkupExtensions;assembly=TocoDo.UI"
              x:Class="TocoDo.UI.Views.Habits.HabitDetailView"
              x:Name="This">
 	<ContentView.Resources>

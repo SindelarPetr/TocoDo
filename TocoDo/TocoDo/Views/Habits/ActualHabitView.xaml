@@ -1,15 +1,13 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-			 xmlns:customRenderers="clr-namespace:TocoDo.CustomRenderers;assembly=TocoDo"
-			 xmlns:converters="clr-namespace:TocoDo.Converters;assembly=TocoDo"
-			 xmlns:habits="clr-namespace:TocoDo.Converters.Habits;assembly=TocoDo"
-			 xmlns:models="clr-namespace:TocoDo.Models;assembly=TocoDo"
+			 xmlns:habits="clr-namespace:TocoDo.UI.Converters.Habits;assembly=TocoDo.UI"
+			 xmlns:models="clr-namespace:TocoDo.BusinessLogic.DependencyInjection.Models;assembly=TocoDo.BusinessLogic"
 			 x:Class="TocoDo.UI.Views.Habits.ActualHabitView"
              x:Name="This">
 	<ContentView.Resources>
 		<ResourceDictionary>
-			<converters:HabitDaylyFillingCountConverter x:Key="FillingCountConverter"/>
+			<habits:HabitDaylyFillingCountConverter x:Key="FillingCountConverter"/>
 		</ResourceDictionary>
 	</ContentView.Resources>
 	<ContentView.Content>

@@ -1,24 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-			 xmlns:customRenderers="clr-namespace:TocoDo.CustomRenderers;assembly=TocoDo"
-			 xmlns:views="clr-namespace:TocoDo.Views;assembly=TocoDo"
-			 xmlns:tocoDo="clr-namespace:TocoDo;assembly=TocoDo"
-			 xmlns:markupExtensions="clr-namespace:TocoDo.MarkupExtensions;assembly=TocoDo"
-			 xmlns:habits="clr-namespace:TocoDo.Converters.Habits;assembly=TocoDo"
-			 xmlns:converters="clr-namespace:TocoDo.Converters;assembly=TocoDo"
-			 xmlns:habits1="clr-namespace:TocoDo.Views.Habits;assembly=TocoDo"
-			 xmlns:properties="clr-namespace:TocoDo.Properties;assembly=TocoDo"
-			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
-			 xmlns:models="clr-namespace:TocoDo.Models;assembly=TocoDo"
+			 xmlns:converters="clr-namespace:TocoDo.UI.Converters;assembly=TocoDo.UI"
+			 xmlns:customRenderers="clr-namespace:TocoDo.UI.CustomRenderers;assembly=TocoDo.UI"
+			 xmlns:views="clr-namespace:TocoDo.UI.Views;assembly=TocoDo.UI"
+			 xmlns:markupExtensions="clr-namespace:TocoDo.UI.MarkupExtensions;assembly=TocoDo.UI"
+			 xmlns:properties="clr-namespace:TocoDo.BusinessLogic.Properties;assembly=TocoDo.BusinessLogic"
+			 xmlns:habits="clr-namespace:TocoDo.UI.Views.Habits;assembly=TocoDo.UI"
+			 xmlns:models="clr-namespace:TocoDo.BusinessLogic.DependencyInjection.Models;assembly=TocoDo.BusinessLogic"
 			 x:Class="TocoDo.UI.Pages.Habits.ModifyHabitPage"
 			 Title="Modify the habit"
              x:Name="This">
-	<ContentPage.Resources>
-		<ResourceDictionary>
-			<converters:IsNotNullOrWhitespaceConverter x:Key="IsNotNullOrWhitespaceConverter"/>
-		</ResourceDictionary>
-	</ContentPage.Resources>
 	<ContentPage.Content>
 		<Grid BindingContext="{Binding Source={x:Reference This}, Path=Habit}" RowSpacing="0">
 			<Grid.RowDefinitions>
@@ -47,7 +39,7 @@
 						<StackLayout>
 							<views:DateButtonView x:Name="DateButtonView" SelectedDate="{Binding ModelStartDate, Mode=TwoWay}" ImageSource="{markupExtensions:PathResolver Source='ic_today_white_24dp'}" DateFormat="{x:Static properties:Resources.StartDateText}"/>
 
-							<habits1:RepeatTypeButton FormattedText="{x:Static properties:Resources.RepeatTypeText}" RepeatType="{Binding ModelRepeatType}" ImageSource="{markupExtensions:PathResolver 'ic_loop_white_24dp'}" IsActive="{Binding Source={x:Reference DateButtonView}, Path=IsActive}" HasRemoveButton="False" Clicked="IconButton_OnClicked" DaysToRepeat="{Binding ModelDaysToRepeat}"/>
+							<habits:RepeatTypeButton FormattedText="{x:Static properties:Resources.RepeatTypeText}" RepeatType="{Binding ModelRepeatType}" ImageSource="{markupExtensions:PathResolver 'ic_loop_white_24dp'}" IsActive="{Binding Source={x:Reference DateButtonView}, Path=IsActive}" HasRemoveButton="False" Clicked="IconButton_OnClicked" DaysToRepeat="{Binding ModelDaysToRepeat}"/>
 						</StackLayout>
 					</Frame>
 

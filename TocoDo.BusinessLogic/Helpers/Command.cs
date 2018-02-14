@@ -1,9 +1,7 @@
 ﻿// Originally from: https://github.com/xamarin/Xamarin.Forms/blob/master/Xamarin.Forms.Core/Command.cs
 
 using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 using System.Windows.Input;
 
 namespace TocoDo.BusinessLogic.Helpers

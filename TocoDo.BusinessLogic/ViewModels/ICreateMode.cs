@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace TocoDo.BusinessLogic.ViewModels
+﻿namespace TocoDo.BusinessLogic.ViewModels
 {
     public interface ICreateMode
     {

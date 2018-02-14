@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-			 xmlns:markupExtensions="clr-namespace:TocoDo.MarkupExtensions;assembly=TocoDo"
+			 xmlns:views="clr-namespace:TocoDo.UI.Views;assembly=TocoDo.UI"
+			 xmlns:triggerActions="clr-namespace:TocoDo.UI.TriggerActions;assembly=TocoDo.UI"
 			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
-			 xmlns:views="clr-namespace:TocoDo.Views;assembly=TocoDo"
-			 xmlns:triggerActions="clr-namespace:TocoDo.TriggerActions;assembly=TocoDo"
+			 xmlns:markupExtensions="clr-namespace:TocoDo.UI.MarkupExtensions;assembly=TocoDo.UI"
 			 x:Class="TocoDo.UI.Views.IconButton"
              x:Name="This">
 	<ContentView.Triggers>

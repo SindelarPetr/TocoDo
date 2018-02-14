@@ -3,11 +3,8 @@ using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using Android.Support.V7.Widget;
-using Android.Views;
 using Plugin.CrossPlatformTintedImage.Android;
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.Android;
-using Resource = TocoDo.Droid.Resources.Resource;
+using TocoDo.UI;
 
 namespace TocoDo.Droid
 {
@@ -28,16 +25,16 @@ namespace TocoDo.Droid
 			var app = new App();
 			LoadApplication(app);
 
-			App.BarColorChanged += () =>
-			{
+			//App.BarColorChanged += () =>
+			//{
 				//var colorPrimary = (Color)App.Current.Resources["ColorPrimary"];
 				//var colorPrimaryDark = (Color)App.Current.Resources["ColorPrimaryDark"];
 
-				var multiply = 0.7;
+			//	var multiply = 0.7;
 				//color = new Color(color.R * multiply, color.G * multiply, color.B * multiply);
 				//Window.SetStatusBarColor(colorPrimaryDark.ToAndroid());
 				//Window.SetNavigationBarColor(colorPrimary.ToAndroid());
-			};
+			//};
 
 			if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
 			{

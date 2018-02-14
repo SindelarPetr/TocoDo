@@ -1,34 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-			 xmlns:views="clr-namespace:TocoDo.Views;assembly=TocoDo"
-			 xmlns:habits="clr-namespace:TocoDo.Views.Habits;assembly=TocoDo"
-			 xmlns:services="clr-namespace:TocoDo.Services;assembly=TocoDo"
-			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
-			 xmlns:customRenderers="clr-namespace:TocoDo.CustomRenderers;assembly=TocoDo"
-			 xmlns:global="clr-namespace:TocoDo.Views.Global;assembly=TocoDo"
-			 xmlns:todos="clr-namespace:TocoDo.Views.Todos;assembly=TocoDo"
-			 xmlns:viewModels="clr-namespace:TocoDo.ViewModels;assembly=TocoDo"
-			 xmlns:helpers="clr-namespace:TocoDo.Helpers;assembly=TocoDo"
+			 xmlns:global="clr-namespace:TocoDo.UI.Views.Global;assembly=TocoDo.UI"
+			 xmlns:habits="clr-namespace:TocoDo.UI.Views.Habits;assembly=TocoDo.UI"
+			 xmlns:customRenderers="clr-namespace:TocoDo.UI.CustomRenderers;assembly=TocoDo.UI"
 			 x:Class="TocoDo.UI.Pages.Habits.HabitsPage"
 			 x:Name="This">
 	<ContentPage.Content>
 		<AbsoluteLayout>
 			<ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" BindingContext="{x:Reference This}">
-				<StackLayout Style="{StaticResource PageStackLayout}">
+
+				<StackLayout Style="{StaticResource PageStackLayout}" BindingContext="{x:Reference This}">
 					<!-- Current -->
 					<global:FrameWrapper Header="Current">
-						<habits:HabitCollection ItemsSource="{x:Static services:StorageServiceOld.CurrentHabits}" />
+						<habits:HabitCollection />
 					</global:FrameWrapper>
 
 					<!-- Scheduled -->
 					<global:FrameWrapper Header="Scheduled">
-						<habits:HabitCollection ItemsSource="{x:Static services:StorageServiceOld.ScheduledHabits}" />
+						<habits:HabitCollection />
 					</global:FrameWrapper>
 
 					<!-- Unscheduled -->
 					<global:FrameWrapper Header="Unscheduled">
-						<habits:HabitCollection ItemsSource="{x:Static services:StorageServiceOld.UnscheduledHabits}" />
+						<habits:HabitCollection />
 					</global:FrameWrapper>
 				</StackLayout>
 			</ScrollView>

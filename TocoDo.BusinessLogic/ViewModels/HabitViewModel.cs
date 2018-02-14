@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Newtonsoft.Json;
 using TocoDo.BusinessLogic.DependencyInjection;
 using TocoDo.BusinessLogic.DependencyInjection.Models;
 using TocoDo.BusinessLogic.Extensions;

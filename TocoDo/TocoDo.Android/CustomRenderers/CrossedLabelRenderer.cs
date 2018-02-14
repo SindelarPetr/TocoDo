@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using Android.Content;
 using Android.Graphics;
-using TocoDo.CustomRenderers;
+using TocoDo.UI.CustomRenderers;
 using TocoDo.Droid.CustomRenderers;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;

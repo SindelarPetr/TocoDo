@@ -1,9 +1,10 @@
 ﻿using System;
 using SQLite;
+using TocoDo.BusinessLogic.DependencyInjection.Models;
 
 namespace TocoDo.UI.Models
 {
-	public class TaskModel
+	public class TaskModel : ITaskModel
 	{
 		[PrimaryKey, AutoIncrement]
 		public int Id { get; set; }

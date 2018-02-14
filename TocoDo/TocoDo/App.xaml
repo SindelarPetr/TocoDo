@@ -1,12 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-			 xmlns:views="clr-namespace:TocoDo.Views;assembly=TocoDo"
-			 xmlns:habits="clr-namespace:TocoDo.Views.Habits;assembly=TocoDo"
-			 xmlns:global="clr-namespace:TocoDo.Views.Global;assembly=TocoDo"
-			 xmlns:todos="clr-namespace:TocoDo.Views.Todos;assembly=TocoDo"
-			 xmlns:converters="clr-namespace:TocoDo.Converters;assembly=TocoDo"
-			 xmlns:tasks="clr-namespace:TocoDo.Converters.Tasks;assembly=TocoDo"
+			 xmlns:converters="clr-namespace:TocoDo.UI.Converters;assembly=TocoDo.UI"
+			 xmlns:tasks="clr-namespace:TocoDo.UI.Converters.Tasks;assembly=TocoDo.UI"
+			 xmlns:habits="clr-namespace:TocoDo.UI.Views.Habits;assembly=TocoDo.UI"
+			 xmlns:todos="clr-namespace:TocoDo.UI.Views.Todos;assembly=TocoDo.UI"
+			 xmlns:global="clr-namespace:TocoDo.UI.Views.Global;assembly=TocoDo.UI"
 			 x:Class="TocoDo.UI.App">
 	<Application.Resources>
 		<ResourceDictionary>
@@ -70,7 +69,7 @@
 				<Setter Property="HeaderBackgroundColor" Value="{StaticResource ColorPrimary}"/>
 			</Style>
 
-			<Style TargetType="views:TodoSetView" ApplyToDerivedTypes="True">
+			<Style TargetType="todos:TodoSetView" ApplyToDerivedTypes="True">
 				<Setter Property="Padding" Value="15, 5, 15, 5"/>
 			</Style>
 			

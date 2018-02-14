@@ -52,9 +52,6 @@
 	  <Compile Update="Views\Habits\HabitView.xaml.cs">
 	    <SubType>Code</SubType>
 	  </Compile>
-	  <Compile Update="Views\Habits\TodayHabitView.xaml.cs">
-	    <SubType>Code</SubType>
-	  </Compile>
 	  <Compile Update="Views\Todos\CheckerView.xaml.cs">
 	    <DependentUpon>CheckerView.xaml</DependentUpon>
 	  </Compile>
@@ -100,9 +97,6 @@
 	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Views\Habits\HabitSetView.xaml">
-	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Views\Habits\TodayHabitView.xaml">
 	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Views\MyCalendarView.xaml">

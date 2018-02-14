@@ -1,12 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-			 xmlns:converters="clr-namespace:TocoDo.Converters;assembly=TocoDo"
-			 xmlns:habits="clr-namespace:TocoDo.Converters.Habits;assembly=TocoDo"
-			 xmlns:customRenderers="clr-namespace:TocoDo.CustomRenderers;assembly=TocoDo"
-			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
-			 xmlns:markupExtensions="clr-namespace:TocoDo.MarkupExtensions;assembly=TocoDo"
-			 xmlns:habits1="clr-namespace:TocoDo.Views.Habits;assembly=TocoDo"
+			 xmlns:converters="clr-namespace:TocoDo.UI.Converters;assembly=TocoDo.UI"
+			 xmlns:habits="clr-namespace:TocoDo.UI.Views.Habits;assembly=TocoDo.UI"
+			 xmlns:customRenderers="clr-namespace:TocoDo.UI.CustomRenderers;assembly=TocoDo.UI"
 			 x:Class="TocoDo.UI.Views.Habits.HabitView"
 			 x:Name="This"
 			 x:Key="This">
@@ -29,7 +26,7 @@
 				</customRenderers:NoLineEntry.Triggers>
 			</customRenderers:NoLineEntry>
 			<Label Text="{Binding ModelTitle}" IsVisible="{Binding Source={x:Reference EntryEditTitle}, Path=IsVisible, Converter={StaticResource BoolReverseConverter}}" Style="{StaticResource HabitHeader}"/>
-			<habits1:HabitDetailView ViewModel="{Binding .}" Margin="0,8,0,0" IsVisible="{Binding ModelStartDate, Converter={StaticResource IsNotNullConverter}}"/>
+			<habits:HabitDetailView ViewModel="{Binding .}" Margin="0,8,0,0" IsVisible="{Binding ModelStartDate, Converter={StaticResource IsNotNullConverter}}"/>
 		</StackLayout>
 	</ContentView.Content>
 </ContentView>

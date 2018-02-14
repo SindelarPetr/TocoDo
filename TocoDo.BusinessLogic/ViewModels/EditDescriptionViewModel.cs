@@ -3,7 +3,6 @@ using System.Windows.Input;
 using TocoDo.BusinessLogic.DependencyInjection;
 using TocoDo.BusinessLogic.Helpers;
 using TocoDo.BusinessLogic.Properties;
-using TocoDo.BusinessLogic.Services;
 
 namespace TocoDo.BusinessLogic.ViewModels
 {

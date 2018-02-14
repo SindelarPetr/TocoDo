@@ -2,9 +2,8 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
-			 xmlns:markupExtensions="clr-namespace:TocoDo.MarkupExtensions;assembly=TocoDo"
-			 xmlns:triggerActions="clr-namespace:TocoDo.TriggerActions;assembly=TocoDo"
-			 xmlns:checkbox="clr-namespace:TocoDo.TriggerActions.Checkbox;assembly=TocoDo"
+			 xmlns:markupExtensions="clr-namespace:TocoDo.UI.MarkupExtensions;assembly=TocoDo.UI"
+			 xmlns:checkbox="clr-namespace:TocoDo.UI.TriggerActions.Checkbox;assembly=TocoDo.UI"
 			 x:Class="TocoDo.UI.Views.Todos.CheckerView"
 			 x:Name="This">
 	<ContentView.GestureRecognizers>
@@ -25,7 +24,7 @@
 				<abstractions:TintedImage.Triggers>
 					<DataTrigger TargetType="abstractions:TintedImage"  Binding="{Binding IsChecked}" Value="True">
 						<DataTrigger.EnterActions>
-							<triggerActions:CheckboxCheckerCheckAction />
+							<checkbox:CheckboxCheckerCheckAction />
 						</DataTrigger.EnterActions>
 						<DataTrigger.ExitActions>
 							<checkbox:CheckboxCheckerUncheckAction/>

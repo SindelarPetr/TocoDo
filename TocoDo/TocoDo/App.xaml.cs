@@ -3,8 +3,10 @@ using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using TocoDo.BusinessLogic;
+using TocoDo.BusinessLogic.DependencyInjection.Models;
 using TocoDo.BusinessLogic.Services;
 using TocoDo.UI.DependencyInjection;
+using TocoDo.UI.Pages.Main;
 using TocoDo.UI.Properties;
 using Xamarin.Forms;
 
@@ -54,6 +56,11 @@ namespace TocoDo.UI
 			{
 				AppCenter.Start(string.Format(AppStrings.AppCenterMessage, AppStrings.AppCenterUwpSecret,
 						AppStrings.AppCenterAndroidSecret, AppStrings.AppCenterIosSecret), typeof(Analytics), typeof(Crashes));
+
+				Navigation = new NavigationService();
+				var persistance = new PersistanceProvider();
+				var modelFactory = new IModelFactory
+				Storage = new StorageService(persistance, Navigation, );
 			}
 			catch (Exception e)
 			{

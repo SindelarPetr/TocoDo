@@ -1,6 +1,6 @@
 ﻿using Android.Content;
-using TocoDo.CustomRenderers;
 using TocoDo.Droid.CustomRenderers;
+using TocoDo.UI.CustomRenderers;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Button = Xamarin.Forms.Button;
