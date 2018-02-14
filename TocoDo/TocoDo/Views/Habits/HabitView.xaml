@@ -7,7 +7,7 @@
 			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
 			 xmlns:markupExtensions="clr-namespace:TocoDo.MarkupExtensions;assembly=TocoDo"
 			 xmlns:habits1="clr-namespace:TocoDo.Views.Habits;assembly=TocoDo"
-			 x:Class="TocoDo.Views.Habits.HabitView"
+			 x:Class="TocoDo.UI.Views.Habits.HabitView"
 			 x:Name="This"
 			 x:Key="This">
 	<ContentView.Resources>

@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace TocoDo.Views
+namespace TocoDo.UI.Views.Todos
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class CheckerView : ContentView

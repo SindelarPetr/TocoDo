@@ -21,7 +21,7 @@ namespace TocoDo.UWP
 		{
 			this.InitializeComponent();
 
-			LoadApplication(new TocoDo.App());
+			LoadApplication(new UI.App());
 		}
 	}
 }

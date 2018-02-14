@@ -1,13 +1,12 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-			 x:Class="TocoDo.Views.TodoItemView"
+			 x:Class="TocoDo.UI.Views.Todos.TodoItemView"
 			 xmlns:tint="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
-			 xmlns:views="clr-namespace:TocoDo.Views;assembly=TocoDo"
-			 xmlns:customRenderers="clr-namespace:TocoDo.CustomRenderers;assembly=TocoDo"
-			 xmlns:converters="clr-namespace:TocoDo.Converters;assembly=TocoDo"
-			 xmlns:markupExtensions="clr-namespace:TocoDo.MarkupExtensions;assembly=TocoDo"
-			 xmlns:triggerActions="clr-namespace:TocoDo.TriggerActions;assembly=TocoDo"
+			 xmlns:tasks="clr-namespace:TocoDo.UI.Converters.Tasks;assembly=TocoDo.UI"
+			 xmlns:converters="clr-namespace:TocoDo.UI.Converters;assembly=TocoDo.UI"
+			 xmlns:customRenderers="clr-namespace:TocoDo.UI.CustomRenderers;assembly=TocoDo.UI"
+			 xmlns:views="clr-namespace:TocoDo.Views;assembly=TocoDo.UI"
 			 Padding="0,5,0,5" VerticalOptions="Center">
 	<ContentView.Resources>
 		<ResourceDictionary>
@@ -15,7 +14,7 @@
 				<Setter Property="Aspect" Value="AspectFit"/>
 				<Setter Property="IsOpaque" Value="True"/>
 			</Style>
-			<converters:CheckConverter x:Key="CheckConverter" />
+			<tasks:CheckConverter x:Key="CheckConverter" />
 			<converters:IsNotNullConverter x:Key="IsNotNullConverter" />
 			<converters:DoneOpacityConverter x:Key="DoneOpacityConverter" />
 			<converters:IsNotNullOrWhitespaceConverter x:Key="IsNotNullOrWhitespaceConverter"/>

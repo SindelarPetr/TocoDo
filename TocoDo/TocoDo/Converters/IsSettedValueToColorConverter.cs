@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Globalization;
-using TocoDo.Properties;
 using Xamarin.Forms;
 
-namespace TocoDo.Converters
+namespace TocoDo.UI.Converters
 {
 	// TODO: Get rid of this class by using trigger
 	public class IsSettedValueToColorConverter : IValueConverter

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 using Xamarin.Forms;
 
-namespace TocoDo.TypeConverters
+namespace TocoDo.UI.TypeConverters
 {
     public class EasingConverter : TypeConverter
     {

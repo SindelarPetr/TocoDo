@@ -2,7 +2,7 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:main="clr-namespace:TocoDo.Pages.Main;assembly=TocoDo"
-			 x:Class="TocoDo.Pages.Main.MainTabbedPage" >
+			 x:Class="TocoDo.UI.Pages.Main.MainTabbedPage" >
 
 	<main:TasksPage Title="Tasks">
 		<main:TasksPage.Icon>

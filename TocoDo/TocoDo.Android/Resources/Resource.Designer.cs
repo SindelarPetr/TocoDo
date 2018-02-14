@@ -11,7 +11,7 @@
 
 [assembly: global::Android.Runtime.ResourceDesignerAttribute("TocoDo.Droid.Resource", IsApplication=true)]
 
-namespace TocoDo.Droid
+namespace TocoDo.Droid.Resources
 {
 	
 	
@@ -26,8 +26,8 @@ namespace TocoDo.Droid
 		
 		public static void UpdateIdValues()
 		{
-			global::Microcharts.Droid.Resource.String.library_name = global::TocoDo.Droid.Resource.String.library_name;
-			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::TocoDo.Droid.Resource.Attribute.actionBarSize;
+			global::Microcharts.Droid.Resource.String.library_name = global::TocoDo.Droid.Resources.Resource.String.library_name;
+			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::TocoDo.Droid.Resources.Resource.Attribute.actionBarSize;
 		}
 		
 		public partial class Animation

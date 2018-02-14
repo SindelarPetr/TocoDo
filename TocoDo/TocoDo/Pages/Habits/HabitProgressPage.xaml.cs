@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Microcharts;
 using SkiaSharp.Views.Forms;
-using TocoDo.ViewModels;
+using TocoDo.BusinessLogic.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Entry = Microcharts.Entry;
 
-namespace TocoDo.Pages.Habits
+namespace TocoDo.UI.Pages.Habits
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class HabitProgressPage : ContentPage

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TocoDo.ViewModels;
-using TocoDo.Views.Todos;
+﻿using TocoDo.BusinessLogic.ViewModels;
+using TocoDo.UI.Views.Global;
 
-namespace TocoDo.Views.Habits
+namespace TocoDo.UI.Views.Habits
 {
     public class HabitCollection : ItemCollection<HabitViewModel, HabitView>
     {

@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using PropertyChangingEventArgs = Xamarin.Forms.PropertyChangingEventArgs;
 
-namespace TocoDo.Views.Global
+namespace TocoDo.UI.Views.Global
 {
 	[ContentProperty("InnerContent")]
 	[XamlCompilation(XamlCompilationOptions.Compile)]

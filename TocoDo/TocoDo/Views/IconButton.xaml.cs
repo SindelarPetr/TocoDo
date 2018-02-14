@@ -1,10 +1,10 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Windows.Input;
+using TocoDo.BusinessLogic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace TocoDo.Views
+namespace TocoDo.UI.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	[ContentProperty("InnerContent")]

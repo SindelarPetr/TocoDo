@@ -5,7 +5,7 @@
 			 xmlns:markupExtensions="clr-namespace:TocoDo.MarkupExtensions;assembly=TocoDo"
 			 xmlns:triggerActions="clr-namespace:TocoDo.TriggerActions;assembly=TocoDo"
 			 xmlns:checkbox="clr-namespace:TocoDo.TriggerActions.Checkbox;assembly=TocoDo"
-			 x:Class="TocoDo.Views.CheckerView"
+			 x:Class="TocoDo.UI.Views.Todos.CheckerView"
 			 x:Name="This">
 	<ContentView.GestureRecognizers>
 		<TapGestureRecognizer Tapped="TapCheckBox_OnTapped" />

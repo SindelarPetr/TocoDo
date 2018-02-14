@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TocoDo.TypeConverters;
-using TocoDo.Views;
+﻿using TocoDo.UI.TypeConverters;
+using TocoDo.UI.Views;
 using Xamarin.Forms;
 
-namespace TocoDo.TriggerActions
+namespace TocoDo.UI.TriggerActions
 {
     public class IconButtonColorChangeAction : TriggerAction<IconButton>
     {

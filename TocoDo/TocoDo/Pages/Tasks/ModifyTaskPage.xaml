@@ -7,7 +7,7 @@
 			 xmlns:converters="clr-namespace:TocoDo.Converters;assembly=TocoDo"
 			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
 			 xmlns:properties="clr-namespace:TocoDo.Properties;assembly=TocoDo"
-			 x:Class="TocoDo.Pages.Tasks.ModifyTaskPage"
+			 x:Class="TocoDo.UI.Pages.Tasks.ModifyTaskPage"
 			 Title="Modify the task"
              x:Name="This">
 	<ContentPage.Resources>

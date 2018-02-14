@@ -1,11 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Diagnostics;
-using TocoDo.ViewModels;
+using TocoDo.BusinessLogic.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace TocoDo.Views.Habits
+namespace TocoDo.UI.Views.Habits
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class HabitSetView : ContentView

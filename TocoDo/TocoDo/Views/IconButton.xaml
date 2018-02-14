@@ -5,7 +5,7 @@
 			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
 			 xmlns:views="clr-namespace:TocoDo.Views;assembly=TocoDo"
 			 xmlns:triggerActions="clr-namespace:TocoDo.TriggerActions;assembly=TocoDo"
-			 x:Class="TocoDo.Views.IconButton"
+			 x:Class="TocoDo.UI.Views.IconButton"
              x:Name="This">
 	<ContentView.Triggers>
 		<Trigger TargetType="views:IconButton" Property="IsActive" Value="False">

@@ -1,7 +1,7 @@
-﻿using System.Windows.Input;
-using Xamarin.Forms;
+﻿using System.Drawing;
+using System.Windows.Input;
 
-namespace TocoDo.ViewModels
+namespace TocoDo.BusinessLogic.ViewModels
 {
 	public class TodoBoxViewModel : BaseViewModel
 	{

@@ -2,7 +2,7 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace TocoDo.MarkupExtensions
+namespace TocoDo.UI.MarkupExtensions
 {
 	[ContentProperty("Source")]
 	public class PathResolver : IMarkupExtension

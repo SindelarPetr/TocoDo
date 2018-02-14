@@ -5,7 +5,7 @@
 			 xmlns:converters="clr-namespace:TocoDo.Converters;assembly=TocoDo"
 			 xmlns:habits="clr-namespace:TocoDo.Converters.Habits;assembly=TocoDo"
 			 xmlns:models="clr-namespace:TocoDo.Models;assembly=TocoDo"
-			 x:Class="TocoDo.Views.Habits.ActualHabitView"
+			 x:Class="TocoDo.UI.Views.Habits.ActualHabitView"
              x:Name="This">
 	<ContentView.Resources>
 		<ResourceDictionary>

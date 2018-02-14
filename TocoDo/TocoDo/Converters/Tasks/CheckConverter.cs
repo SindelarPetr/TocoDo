@@ -2,7 +2,7 @@
 using System.Globalization;
 using Xamarin.Forms;
 
-namespace TocoDo.Converters
+namespace TocoDo.UI.Converters.Tasks
 {
 	public class CheckConverter : IValueConverter
 	{

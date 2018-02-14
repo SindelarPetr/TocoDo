@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TocoDo.Views;
+using TocoDo.UI.Views;
 using Xamarin.Forms;
 
-namespace TocoDo.TriggerActions
+namespace TocoDo.UI.TriggerActions
 {
     public class ScaleAction : TriggerAction<IconButton>
     {

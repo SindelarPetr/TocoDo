@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Globalization;
-using TocoDo.Properties;
+using TocoDo.BusinessLogic.Properties;
 
-namespace TocoDo.Converters
+namespace TocoDo.UI.Converters.ModifyTask
 {
 	public class ReminderConverter : DateTimeConverter
 	{

@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TocoDo.Pages;
+using TocoDo.UI.Pages;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace TocoDo.Views
+namespace TocoDo.UI.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class DescriptionFrameView : ContentView

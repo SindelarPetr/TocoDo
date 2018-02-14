@@ -10,7 +10,7 @@
 			 xmlns:todos="clr-namespace:TocoDo.Views.Todos;assembly=TocoDo"
 			 xmlns:viewModels="clr-namespace:TocoDo.ViewModels;assembly=TocoDo"
 			 xmlns:helpers="clr-namespace:TocoDo.Helpers;assembly=TocoDo"
-			 x:Class="TocoDo.Pages.Main.HabitsPage"
+			 x:Class="TocoDo.UI.Pages.Habits.HabitsPage"
 			 x:Name="This">
 	<ContentPage.Content>
 		<AbsoluteLayout>
@@ -18,17 +18,17 @@
 				<StackLayout Style="{StaticResource PageStackLayout}">
 					<!-- Current -->
 					<global:FrameWrapper Header="Current">
-						<habits:HabitCollection ItemsSource="{x:Static services:StorageService.CurrentHabits}" />
+						<habits:HabitCollection ItemsSource="{x:Static services:StorageServiceOld.CurrentHabits}" />
 					</global:FrameWrapper>
 
 					<!-- Scheduled -->
 					<global:FrameWrapper Header="Scheduled">
-						<habits:HabitCollection ItemsSource="{x:Static services:StorageService.ScheduledHabits}" />
+						<habits:HabitCollection ItemsSource="{x:Static services:StorageServiceOld.ScheduledHabits}" />
 					</global:FrameWrapper>
 
 					<!-- Unscheduled -->
 					<global:FrameWrapper Header="Unscheduled">
-						<habits:HabitCollection ItemsSource="{x:Static services:StorageService.UnscheduledHabits}" />
+						<habits:HabitCollection ItemsSource="{x:Static services:StorageServiceOld.UnscheduledHabits}" />
 					</global:FrameWrapper>
 				</StackLayout>
 			</ScrollView>

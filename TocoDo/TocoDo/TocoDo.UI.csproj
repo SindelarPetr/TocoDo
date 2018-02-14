@@ -25,6 +25,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\TocoDo.BusinessLogic\TocoDo.BusinessLogic.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Compile Update="CustomRenderers\FloatingAddButton.xaml.cs">
 	    <SubType>Code</SubType>
 	  </Compile>
@@ -33,11 +37,6 @@
 	  </Compile>
 	  <Compile Update="Pages\Tasks\ModifyTaskPage.xaml.cs">
 	    <SubType>Code</SubType>
-	  </Compile>
-	  <Compile Update="Properties\Resources.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>Resources.resx</DependentUpon>
 	  </Compile>
 	  <Compile Update="Properties\AppStrings.Designer.cs">
 	    <DesignTime>True</DesignTime>
@@ -83,10 +82,6 @@
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Popups\HabitRepeatTypePopup.xaml">
 	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Properties\Resources.resx">
-	    <Generator>PublicResXFileCodeGenerator</Generator>
-	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Properties\AppStrings.resx">
 	    <Generator>PublicResXFileCodeGenerator</Generator>

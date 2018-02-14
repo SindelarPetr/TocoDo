@@ -1,8 +1,7 @@
-﻿
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace TocoDo.CustomRenderers
+namespace TocoDo.UI.CustomRenderers
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class NoBorderButton : Button

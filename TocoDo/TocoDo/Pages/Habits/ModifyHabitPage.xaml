@@ -11,7 +11,7 @@
 			 xmlns:properties="clr-namespace:TocoDo.Properties;assembly=TocoDo"
 			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
 			 xmlns:models="clr-namespace:TocoDo.Models;assembly=TocoDo"
-			 x:Class="TocoDo.Pages.Habits.ModifyHabitPage"
+			 x:Class="TocoDo.UI.Pages.Habits.ModifyHabitPage"
 			 Title="Modify the habit"
              x:Name="This">
 	<ContentPage.Resources>

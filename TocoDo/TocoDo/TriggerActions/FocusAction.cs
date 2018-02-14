@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
-namespace TocoDo.TriggerActions
+namespace TocoDo.UI.TriggerActions
 {
     public class FocusAction : TriggerAction<VisualElement>
     {

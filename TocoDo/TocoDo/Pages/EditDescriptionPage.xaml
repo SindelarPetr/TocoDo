@@ -4,7 +4,7 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
 			 xmlns:markupExtensions="clr-namespace:TocoDo.MarkupExtensions;assembly=TocoDo"
-			 x:Class="TocoDo.Pages.EditDescriptionPage"
+			 x:Class="TocoDo.UI.Pages.EditDescriptionPage"
              BackgroundColor="White"
              x:Name="This">
 	<ContentPage.Content>

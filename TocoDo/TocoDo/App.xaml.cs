@@ -1,18 +1,19 @@
 ﻿using System;
-using System.Diagnostics;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
-using Rg.Plugins.Popup.Extensions;
-using Rg.Plugins.Popup.Pages;
-using TocoDo.Pages.Main;
-using TocoDo.Properties;
+using TocoDo.BusinessLogic;
+using TocoDo.BusinessLogic.Services;
+using TocoDo.UI.DependencyInjection;
+using TocoDo.UI.Properties;
 using Xamarin.Forms;
 
-namespace TocoDo
+namespace TocoDo.UI
 {
 	public partial class App : Application
 	{
+		public static Action BarColorChanged;
+
 		public Color ColorPrimary
 		{
 			get => (Color)Resources["ColorPrimary"];
@@ -29,7 +30,8 @@ namespace TocoDo
 			set => Resources["ColorPrimaryDark"] = value;
 		}
 
-		public static Action BarColorChanged;
+		public StorageService Storage { get; set; }
+		public NavigationService Navigation { get; set; }
 
 		public App()
 		{

@@ -238,9 +238,9 @@
     <AndroidResource Include="Resources\values\styles.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TocoDo\TocoDo.csproj">
+    <ProjectReference Include="..\TocoDo\TocoDo.UI.csproj">
       <Project>{4c76a824-7bee-429c-8b97-9a911968d81b}</Project>
-      <Name>TocoDo</Name>
+      <Name>TocoDo.UI</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

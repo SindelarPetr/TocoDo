@@ -3,17 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace TocoDo.ViewModels
+namespace TocoDo.BusinessLogic.ViewModels
 {
 	public class BaseViewModel : INotifyPropertyChanged
 	{
 		protected bool SetValue<T>(ref T backingField, T value, [CallerMemberName] string propertyName = null)
 		{
-			if (propertyName == "ModelRepeatType")
-			{
-
-			}
-
 			if (EqualityComparer<T>.Default.Equals(backingField, value))
 				return false;
 			OnPropertyChanging(this, backingField, value, propertyName);

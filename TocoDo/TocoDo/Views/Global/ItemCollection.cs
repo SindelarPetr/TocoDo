@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using TocoDo.ViewModels;
-using TocoDo.Views.Habits;
+using TocoDo.BusinessLogic.ViewModels;
+using TocoDo.UI.Views.Habits;
 using Xamarin.Forms;
 
-namespace TocoDo.Views.Todos
+namespace TocoDo.UI.Views.Global
 {
 	public class ItemCollection<TViewModel, TView> : ContentView
 	where TViewModel : ICreateMode

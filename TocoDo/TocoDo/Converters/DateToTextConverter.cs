@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Globalization;
-using TocoDo.Properties;
+using TocoDo.BusinessLogic.Properties;
 using Xamarin.Forms;
 
-namespace TocoDo.Converters
+namespace TocoDo.UI.Converters
 {
 	public class DateToTextConverter : IValueConverter
 	{

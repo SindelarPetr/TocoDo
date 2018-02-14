@@ -2,7 +2,7 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:TocoDo.Views;assembly=TocoDo"
-             x:Class="TocoDo.Views.MyCalendarView">
+             x:Class="TocoDo.UI.Views.MyCalendarView">
 	<ContentView.Resources>
 		<ResourceDictionary>
 			<GridLength x:Key="CellSize">30</GridLength>
@@ -13,13 +13,6 @@
 	<ContentView.Content>
 		<Grid Padding="{StaticResource BorderThick}">
 			<Grid.ColumnDefinitions>
-				<!--<ColumnDefinition Width="{StaticResource CellSize}"/>
-				<ColumnDefinition Width="{StaticResource CellSize}"/>
-				<ColumnDefinition Width="{StaticResource CellSize}"/>
-				<ColumnDefinition Width="{StaticResource CellSize}"/>
-				<ColumnDefinition Width="{StaticResource CellSize}"/>
-				<ColumnDefinition Width="{StaticResource CellSize}"/>
-				<ColumnDefinition Width="{StaticResource CellSize}"/>-->
 				<ColumnDefinition Width="*" />
 				<ColumnDefinition Width="*" />
 				<ColumnDefinition Width="*" />

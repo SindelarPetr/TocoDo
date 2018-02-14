@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TocoDo.ViewModels;
+﻿using TocoDo.BusinessLogic.ViewModels;
+using TocoDo.UI.Views.Global;
 
-namespace TocoDo.Views.Todos
+namespace TocoDo.UI.Views.Todos
 {
     public class TaskCollection : ItemCollection<TaskViewModel, TodoItemView>
     {

@@ -3,7 +3,7 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:main="clr-namespace:TocoDo.Pages.Main;assembly=TocoDo"
 			 xmlns:m="clr-namespace:TocoDo.Pages;assembly=TocoDo"
-			 x:Class="TocoDo.Pages.Main.MainPage"
+			 x:Class="TocoDo.UI.Pages.Main.MainPage"
 			 Title="Toco Do">
 	<MasterDetailPage.Master>
 		<main:MainMasterPage Title="Toco Do"/>

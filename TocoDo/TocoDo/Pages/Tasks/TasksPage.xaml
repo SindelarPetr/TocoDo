@@ -7,7 +7,7 @@
 			 xmlns:customRenderers="clr-namespace:TocoDo.CustomRenderers;assembly=TocoDo"
 			 xmlns:global="clr-namespace:TocoDo.Views.Global;assembly=TocoDo"
 			 xmlns:todos="clr-namespace:TocoDo.Views.Todos;assembly=TocoDo"
-			 x:Class="TocoDo.Pages.Main.TasksPage"
+			 x:Class="TocoDo.UI.Pages.Tasks.TasksPage"
              Style="{DynamicResource ContentPageStyle}">
 	<ContentPage.Content>
 		<AbsoluteLayout>
@@ -15,12 +15,12 @@
 				<StackLayout Style="{StaticResource PageStackLayout}">
 					<!-- Someday -->
 					<global:FrameWrapper Header="Someday">
-						<todos:TaskCollection ItemsSource="{x:Static services:StorageService.SomedayTasks}"/>
+						<todos:TaskCollection ItemsSource="{x:Static services:StorageServiceOld.SomedayTasks}"/>
 					</global:FrameWrapper>
 
 					<!-- Scheduled -->
 					<global:FrameWrapper Header="Scheduled">
-						<views:ScheduledTasksView Margin="0,5,0,0"  TasksSource="{x:Static services:StorageService.ScheduledTasks}"/>
+						<views:ScheduledTasksView Margin="0,5,0,0"  TasksSource="{x:Static services:StorageServiceOld.ScheduledTasks}"/>
 					</global:FrameWrapper>
 				</StackLayout>
 			</ScrollView>

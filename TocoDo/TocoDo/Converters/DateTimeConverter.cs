@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace TocoDo.Converters
+namespace TocoDo.UI.Converters
 {
 	public class DateTimeConverter : DateToTextConverter
 	{

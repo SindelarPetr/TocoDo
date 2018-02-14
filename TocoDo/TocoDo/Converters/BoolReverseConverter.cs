@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Globalization;
 using Xamarin.Forms;
 
-namespace TocoDo.Converters
+namespace TocoDo.UI.Converters
 {
 	public class BoolReverseConverter : IValueConverter
 	{

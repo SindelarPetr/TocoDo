@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Diagnostics;
-using Rg.Plugins.Popup.Contracts;
-using Rg.Plugins.Popup.Extensions;
 using Rg.Plugins.Popup.Services;
-using TocoDo.Models;
-using TocoDo.Popups;
-using TocoDo.ViewModels;
+using TocoDo.BusinessLogic;
+using TocoDo.BusinessLogic.DependencyInjection.Models;
+using TocoDo.BusinessLogic.ViewModels;
+using TocoDo.UI.Popups;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace TocoDo.Pages.Habits
+namespace TocoDo.UI.Pages.Habits
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ModifyHabitPage : ContentPage
@@ -18,22 +16,6 @@ namespace TocoDo.Pages.Habits
 		{
 			get => (HabitViewModel)BindingContext;
 			set => BindingContext = value;
-		}
-
-		[Obsolete]
-		public ModifyHabitPage()
-		{
-			Habit = new HabitViewModel(new Models.HabitModel
-			{
-				Id = 1,
-				Description = "This is description of a habit.",
-				Title = "Habit title.",
-				HabitType = Models.HabitType.Daylong,
-				RepeatsADay = 2,
-				RepeatType = Models.RepeatType.Mon,
-				StartDate = DateTime.Today + TimeSpan.FromDays(3),
-			});
-			InitializeComponent();
 		}
 
 		public ModifyHabitPage(HabitViewModel habit)
@@ -45,18 +27,14 @@ namespace TocoDo.Pages.Habits
 			}
 			catch (Exception e)
 			{
-				Debug.WriteLine($"---------- Exception thrown in ModifyHabitPage constructor: {e.Message} <<--- with following stack trace: {Environment.NewLine} {e.StackTrace}");
+				MyLogger.WriteException(e);
 			}
 		}
 
 		private void EntryTitle_OnUnfocused(object sender, FocusEventArgs e)
 		{
-			//var title = EntryTitle.Text.Trim();
-
-			//if (string.IsNullOrWhiteSpace(title))
-			//	return;
-
-			//EntryTitle.Text = Habit.ModelTitle = title;
+			Habit.EditTitleCommand?.Execute(EntryTitle.Text);
+			EntryTitle.Text = Habit.ModelTitle;
 		}
 
 		private void TapGestureRecognizer_OnTapped(object sender, EventArgs e)

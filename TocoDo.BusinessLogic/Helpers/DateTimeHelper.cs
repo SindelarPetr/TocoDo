@@ -1,8 +1,7 @@
 ﻿using System;
-using TocoDo.Models;
-using TocoDo.ViewModels;
+using TocoDo.BusinessLogic.DependencyInjection.Models;
 
-namespace TocoDo.Helpers
+namespace TocoDo.BusinessLogic.Helpers
 {
 	public static class DateTimeHelper
 	{

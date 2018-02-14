@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TocoDo.Helpers
+﻿namespace TocoDo.BusinessLogic.Helpers
 {
     public static class FakeIdGenerator
     {

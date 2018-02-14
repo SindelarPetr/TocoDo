@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using TocoDo.Helpers;
-using TocoDo.ViewModels;
+using TocoDo.BusinessLogic.Helpers;
+using TocoDo.BusinessLogic.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace TocoDo.Views
+namespace TocoDo.UI.Views.Todos
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ScheduledTasksView : TodoSetView

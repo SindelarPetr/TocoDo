@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
-using TocoDo.Converters.Habits;
-using TocoDo.Models;
+﻿using System.ComponentModel;
+using TocoDo.BusinessLogic.DependencyInjection.Models;
+using TocoDo.UI.Converters.Habits;
 using Xamarin.Forms;
 
-namespace TocoDo.Views.Habits
+namespace TocoDo.UI.Views.Habits
 {
     public class RepeatTypeButton : IconButton
     {

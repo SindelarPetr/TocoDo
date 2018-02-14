@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
-using TocoDo.Controls;
-using TocoDo.Converters;
+using TocoDo.UI.Controls;
+using TocoDo.UI.Converters;
 using Xamarin.Forms;
 
-namespace TocoDo.Views
+namespace TocoDo.UI.Views
 {
 	public class DateButtonView : IconButton
 	{

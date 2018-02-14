@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 using System.Windows.Input;
-using TocoDo.Models;
+using TocoDo.BusinessLogic.DependencyInjection.Models;
 using Xamarin.Forms;
 
-namespace TocoDo.Controls
+namespace TocoDo.UI.Controls
 {
     public class SelectDayButton : Button
     {

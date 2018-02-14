@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
-using TocoDo.Models;
+using TocoDo.BusinessLogic.DependencyInjection.Models;
 using Xamarin.Forms;
 
-namespace TocoDo.Converters.Habits
+namespace TocoDo.UI.Converters.Habits
 {
     public class RepeatTypeToBoolConverter : IValueConverter
     {

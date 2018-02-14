@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TocoDo.Helpers
+namespace TocoDo.BusinessLogic.Helpers
 {
 	public class SemaphorDisabler
 	{

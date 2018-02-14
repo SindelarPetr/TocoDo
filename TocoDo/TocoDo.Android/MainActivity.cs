@@ -7,6 +7,7 @@ using Android.Views;
 using Plugin.CrossPlatformTintedImage.Android;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
+using Resource = TocoDo.Droid.Resources.Resource;
 
 namespace TocoDo.Droid
 {

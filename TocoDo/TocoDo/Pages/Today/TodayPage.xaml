@@ -8,7 +8,7 @@
 			 xmlns:global="clr-namespace:TocoDo.Views.Global;assembly=TocoDo"
 			 xmlns:habits="clr-namespace:TocoDo.Views.Habits;assembly=TocoDo"
 			 xmlns:todos="clr-namespace:TocoDo.Views.Todos;assembly=TocoDo"
-			 x:Class="TocoDo.Pages.Main.TodayPage"
+			 x:Class="TocoDo.UI.Pages.Today.TodayPage"
 			 x:Name="This">
 	<ContentPage.Content>
 		<AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BindingContext="{x:Reference This}">
@@ -55,11 +55,11 @@
 
 					<!--TODAY-->
 					<global:FrameWrapper Grid.Row="1" Header="Tasks">
-						<todos:TaskCollection ItemsSource="{x:Static services:StorageService.TodayTasks}" VerticalOptions="Start"/>
+						<todos:TaskCollection ItemsSource="{x:Static services:StorageServiceOld.TodayTasks}" VerticalOptions="Start"/>
 					</global:FrameWrapper>
 
 					<global:FrameWrapper Grid.Row="2" Header="Habits">
-						<habits:ActualHabitCollection ItemsSource="{x:Static services:StorageService.ActiveHabits}"/>
+						<habits:ActualHabitCollection ItemsSource="{x:Static services:StorageServiceOld.ActiveHabits}"/>
 					</global:FrameWrapper>
 				</Grid>
 			</ScrollView>

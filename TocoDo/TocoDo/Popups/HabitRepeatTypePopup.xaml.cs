@@ -4,13 +4,12 @@ using System.Linq;
 using System.Windows.Input;
 using Rg.Plugins.Popup.Extensions;
 using Rg.Plugins.Popup.Pages;
-using TocoDo.Controls;
-using TocoDo.Models;
+using TocoDo.BusinessLogic.DependencyInjection.Models;
+using TocoDo.UI.Controls;
 using Xamarin.Forms;
-using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
 
-namespace TocoDo.Popups
+namespace TocoDo.UI.Popups
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class HabitRepeatTypePopup : PopupPage
@@ -46,15 +45,15 @@ namespace TocoDo.Popups
 		{
 			
 			SelectDayCommand = new Command(SelectDayCommandExecute);
-			InitializeComponent ();
+			InitializeComponent();
 
 
 			_pickerValues = new List<KeyValuePair<int, string>>
 			{
-				new KeyValuePair<int, string>((int) RepeatType.Days, Properties.Resources.Days),
-				new KeyValuePair<int, string>(-1, Properties.Resources.Weeks),
-				new KeyValuePair<int, string>((int) RepeatType.Months, Properties.Resources.Months),
-				new KeyValuePair<int, string>((int) RepeatType.Years, Properties.Resources.Years)
+				new KeyValuePair<int, string>((int) RepeatType.Days, BusinessLogic.Properties.Resources.Days),
+				new KeyValuePair<int, string>(-1, BusinessLogic.Properties.Resources.Weeks),
+				new KeyValuePair<int, string>((int) RepeatType.Months, BusinessLogic.Properties.Resources.Months),
+				new KeyValuePair<int, string>((int) RepeatType.Years, BusinessLogic.Properties.Resources.Years)
 			};
 
 			var list = _pickerValues.Select(p => p.Value).ToList();

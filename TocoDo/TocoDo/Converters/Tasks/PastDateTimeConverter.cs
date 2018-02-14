@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
-using TocoDo.Properties;
+using TocoDo.BusinessLogic.Properties;
 using Xamarin.Forms;
 
-namespace TocoDo.Converters.Tasks
+namespace TocoDo.UI.Converters.Tasks
 {
     public class PastDateTimeConverter : IValueConverter
     {

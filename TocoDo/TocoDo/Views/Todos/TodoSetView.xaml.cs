@@ -1,11 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Diagnostics;
-using TocoDo.ViewModels;
+using TocoDo.BusinessLogic.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace TocoDo.Views
+namespace TocoDo.UI.Views.Todos
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class TodoSetView : ContentView

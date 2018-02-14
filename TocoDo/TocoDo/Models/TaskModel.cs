@@ -1,7 +1,7 @@
 ﻿using System;
 using SQLite;
 
-namespace TocoDo.Models
+namespace TocoDo.UI.Models
 {
 	public class TaskModel
 	{

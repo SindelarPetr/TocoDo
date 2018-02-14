@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TocoDo.Views;
 using Xamarin.Forms;
 
-namespace TocoDo.TriggerActions
+namespace TocoDo.UI.TriggerActions
 {
     public class ShakeAction : TriggerAction<VisualElement>
     {

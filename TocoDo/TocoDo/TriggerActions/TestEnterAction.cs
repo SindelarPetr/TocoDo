@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Plugin.CrossPlatformTintedImage.Abstractions;
+﻿using Plugin.CrossPlatformTintedImage.Abstractions;
 using Xamarin.Forms;
 
-namespace TocoDo.TriggerActions
+namespace TocoDo.UI.TriggerActions
 {
 	public class TestEnterAction : TriggerAction<TintedImage>
 	{

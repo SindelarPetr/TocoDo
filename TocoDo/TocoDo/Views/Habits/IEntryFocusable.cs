@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TocoDo.Views.Habits
+﻿namespace TocoDo.UI.Views.Habits
 {
     public interface IEntryFocusable<TViewModel>
     {

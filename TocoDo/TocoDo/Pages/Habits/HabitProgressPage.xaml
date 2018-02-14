@@ -5,7 +5,7 @@
              xmlns:forms="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
              xmlns:habits="clr-namespace:TocoDo.Views.Habits;assembly=TocoDo"
              xmlns:views="clr-namespace:TocoDo.Views;assembly=TocoDo"
-             x:Class="TocoDo.Pages.Habits.HabitProgressPage"
+             x:Class="TocoDo.UI.Pages.Habits.HabitProgressPage"
              x:Name="This"
              Title="{Binding Source={x:Reference This}, Path=ViewModel.ModelTitle}">
     <ContentPage.Content>

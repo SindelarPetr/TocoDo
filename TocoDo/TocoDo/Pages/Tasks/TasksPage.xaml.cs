@@ -1,27 +1,20 @@
 ﻿using System;
-using TocoDo.Services;
-using TocoDo.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace TocoDo.Pages.Main
+namespace TocoDo.UI.Pages.Tasks
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class TasksPage : ContentPage
 	{
-		// Todo: Remove static refence to the page
-		public static TasksPage Instance;
-		
 		public TasksPage()
 		{
 			InitializeComponent();
-
-			Instance = this;
 		}
 
 		private void ButtonAddSomeday_OnClicked(object sender, EventArgs e)
 		{
-			StorageService.AddTaskToTheList(new TaskViewModel());
+			//StorageServiceOld.AddTaskToTheList(new TaskViewModel());
 		}
 	}
 }

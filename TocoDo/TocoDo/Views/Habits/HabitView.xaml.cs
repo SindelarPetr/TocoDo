@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using TocoDo.Models;
-using TocoDo.Services;
-using TocoDo.ViewModels;
+﻿using TocoDo.BusinessLogic.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace TocoDo.Views.Habits
+namespace TocoDo.UI.Views.Habits
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class HabitView : ContentView, IEntryFocusable<HabitViewModel>
@@ -19,14 +13,6 @@ namespace TocoDo.Views.Habits
 			set => BindingContext = value;
 		}
 
-		[Obsolete("Creates example HabitView")]
-		public HabitView()
-		{
-			ViewModel = StorageService.GetExampleHabitViewModel();
-
-			InitializeComponent();
-		}
-
 		public HabitView(HabitViewModel habit)
 		{
 			ViewModel = habit;
@@ -35,17 +21,8 @@ namespace TocoDo.Views.Habits
 
 		private void EditTitle_OnUnfocused(object sender, FocusEventArgs e)
 		{
-			var title = ((Entry)e.VisualElement).Text;
-			// If user left the entry blank, then remove the habit from collection
-			if (string.IsNullOrWhiteSpace(title))
-			{
-				StorageService.RemoveHabitFromTheList(ViewModel);
-				return;
-			}
-			
-			ViewModel.InsertToStorage(title);
+			ViewModel.ConfirmCreationCommand?.Execute(null);
 		}
-
 
 		public void FocusEntry()
 		{

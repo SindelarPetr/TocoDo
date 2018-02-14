@@ -1,19 +1,21 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using TocoDo.Helpers;
-using TocoDo.Models;
-using TocoDo.Pages;
-using TocoDo.Pages.Main;
-using TocoDo.Properties;
-using TocoDo.Services;
-using TocoDo.Views.Habits;
+using TocoDo.BusinessLogic.DependencyInjection;
+using TocoDo.BusinessLogic.DependencyInjection.Models;
+using TocoDo.BusinessLogic.Helpers;
+using TocoDo.BusinessLogic.Properties;
+using TocoDo.BusinessLogic.Services;
 
-namespace TocoDo.ViewModels
+namespace TocoDo.BusinessLogic.ViewModels
 {
 	public class TaskViewModel : BaseViewModel, ICreateMode
 	{
+		#region Services
+		private readonly INavigationService _navigation;
+		private readonly IStorageService _storage;
+		#endregion
+
 		#region Backing fields
 		private DateTime? _deadline;
 		private string _description;
@@ -69,18 +71,22 @@ namespace TocoDo.ViewModels
 		#endregion
 
 		#region Commands
+		public ICommand EditCommand { get; set; }
+		public ICommand EditTitleCommand { get; set; }
 		public ICommand RemoveCommand { get; set; }
 		public ICommand UpdateCommand { get; set; }
 		public ICommand EditDescriptionCommand { get; set; }
 		#endregion
 
-		public TaskViewModel()
+		public TaskViewModel(INavigationService navigation, IStorageService storage)
 		{
+			_navigation = navigation;
+			_storage = storage;
 			IsCreateMode = true;
 			InitCommands();
 		}
 
-		public TaskViewModel(TaskModel taskModel)
+		public TaskViewModel(ITaskModel taskModel)
 		{
 			#region Copy taskModel properties
 			Id = taskModel.Id;
@@ -98,10 +104,22 @@ namespace TocoDo.ViewModels
 
 		private void InitCommands()
 		{
-			RemoveCommand = new MyCommand(async () => await RemoveTask());
-			UpdateCommand = new MyCommand(async () => await Update());
+			EditTitleCommand = new Command(EditTitle);
+			EditCommand = new Command(async () => await Edit());
+			RemoveCommand = new Command(async () => await RemoveTask());
+			UpdateCommand = new Command(async () => await Update());
 
-			EditDescriptionCommand = new MyCommand(EditDescription);
+			EditDescriptionCommand = new Command(EditDescription);
+		}
+
+		private void EditTitle(object o)
+		{
+			
+		}
+
+		private async Task Edit()
+		{
+			await _navigation.PushAsync(PageType.ModifyTaskPage, this);
 		}
 
 		protected override async void OnPropertyChanged(string propertyName = null)
@@ -117,47 +135,47 @@ namespace TocoDo.ViewModels
 
 		private async Task RemoveTask()
 		{
-			var result = await PageService.DisplayAlert(Resources.DeleteToDo, Resources.ConfirmDelete, Resources.Yes,
+			var result = await _navigation.DisplayAlert(Resources.DeleteToDo, Resources.ConfirmDelete, Resources.Yes,
 				Resources.Cancel);
 
 			if (!result) return;
 
-			await StorageService.DeleteTask(this);
+			await _storage.DeleteTask(this);
 
-			await PageService.PopAsync();
+			await _navigation.PopAsync();
 		}
 
-		public TaskModel GetTaskModel()
-		{
-			return new TaskModel
-			{
-				CreateTime = CreateTime,
-				Deadline = Deadline,
-				Description = Description,
-				Done = Done,
-				Id = Id,
-				Title = Title,
-				Reminder = Reminder,
-				ScheduleDate = ScheduleDate
-			};
-		}
+		//public ITaskModel GetTaskModel()
+		//{
+		//	return new ITaskModel
+		//	{
+		//		CreateTime = CreateTime,
+		//		Deadline = Deadline,
+		//		Description = Description,
+		//		Done = Done,
+		//		Id = Id,
+		//		Title = Title,
+		//		Reminder = Reminder,
+		//		ScheduleDate = ScheduleDate
+		//	};
+		//}
 
 		private async Task Update()
 		{
-			await StorageService.UpdateTask(this);
+			await _storage.UpdateTask(this);
 		}
 
 		// Todo: Get rid of this
 		private void SelectDateByPicker(Action<DateTime> pickedAction)
 		{
-			TodayPage.Instance.ShowGlobalDatePicker(Deadline ?? DateTime.Today, pickedAction);
+			//TODO: Showing date picker TodayPage.Instance.ShowGlobalDatePicker(Deadline ?? DateTime.Today, pickedAction);
 		}
 
 		private async Task SelectDate(Action<DateTime?> pickedAction, string actionSheetHeader)
 		{
 			string[] buttons = { Resources.Today, Resources.Tomorrow, Resources.TheDayAfterTomorrow, Resources.PickADate };
 
-			string result = await PageService.DisplayActionSheet(actionSheetHeader, Resources.Cancel, null, buttons);
+			string result = await _navigation.DisplayActionSheet(actionSheetHeader, Resources.Cancel, null, buttons);
 
 
 			DateTime selectedDate;
@@ -182,7 +200,7 @@ namespace TocoDo.ViewModels
 
 		private void SelectTimeByPicker(Action<TimeSpan> pickAction)
 		{
-			TodayPage.Instance.ShowGlobalTimePicker(pickAction);
+			// TODO: Wrkaround for showing the picker - TodayPage.Instance.ShowGlobalTimePicker(pickAction);
 		}
 
 		private async Task SelectDeadlineDate()
@@ -211,15 +229,7 @@ namespace TocoDo.ViewModels
 
 		private async void EditDescription()
 		{
-			await PageService.PushModalAsync(new EditDescriptionPage(Title, Description, d => Description = d));
-		}
-
-		public async void InsertToStorage(string title)
-		{
-			_title = title;
-			OnPropertyChanged(nameof(Title));
-			IsCreateMode = false;
-			await StorageService.InsertTask(this, false);
+			await _navigation.PushModalAsync(PageType.EditDescriptionPage, new { Title, Description, DescriptionSetter = new Action<string>(d => Description = d) });
 		}
 	}
 }

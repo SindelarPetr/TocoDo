@@ -1,13 +1,8 @@
 ﻿using System;
-using System.CodeDom.Compiler;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
 using System.Runtime.CompilerServices;
-using System.Text;
 
-namespace TocoDo
+namespace TocoDo.BusinessLogic
 {
     public static class MyLogger
     {
