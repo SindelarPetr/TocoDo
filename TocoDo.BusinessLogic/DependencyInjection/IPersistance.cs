@@ -8,8 +8,7 @@ namespace TocoDo.BusinessLogic.DependencyInjection
 {
 	public interface IPersistance
 	{
-		void Init();
-		Task CreateTables();
+		Task Init();
 		Task<List<ITaskModel>> GetTasks();
 		Task<List<IHabitModel>> GetHabits();
 

@@ -5,7 +5,7 @@ using TocoDo.UI.Views.Global;
 
 namespace TocoDo.UI.Views.Todos
 {
-	public class TaskCollection : ItemCollection<TaskViewModel, TodoItemView>
+	public class TaskCollection : ItemCollection<ITaskViewModel, TodoItemView>
 	{
 		public TaskCollection() : base(vm => new TodoItemView(vm))
 		{

@@ -16,8 +16,7 @@ namespace TocoDo.UI.Pages.Tasks
 
 		private void ButtonAddSomeday_OnClicked(object sender, EventArgs e)
 		{
-			// TODO: Creating a new task
-			((App)App.Current).StorageService.StartCreatingTask(null);
+			((App)App.Current).TaskService.StartCreation(null);
 		}
 	}
 }

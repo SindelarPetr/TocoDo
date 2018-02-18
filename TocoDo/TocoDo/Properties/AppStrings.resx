@@ -135,6 +135,9 @@
   <data name="DateTimeProvider" xml:space="preserve">
     <value>DateTimeProvider</value>
   </data>
+  <data name="HabitService" xml:space="preserve">
+    <value>HabitService</value>
+  </data>
   <data name="ModelFactory" xml:space="preserve">
     <value>ModelFactory</value>
   </data>
@@ -144,7 +147,7 @@
   <data name="Persistance" xml:space="preserve">
     <value>Persistance</value>
   </data>
-  <data name="StorageService" xml:space="preserve">
-    <value>StorageService</value>
+  <data name="TaskService" xml:space="preserve">
+    <value>TaskService</value>
   </data>
 </root>

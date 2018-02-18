@@ -11,15 +11,12 @@ namespace TocoDo.UI.Pages.Habits
 	{
 		public HabitsPage()
 		{
-			//Storage = ((App) Application.Current).StorageService;
 			InitializeComponent();
 		}
 
-		//public StorageService Storage { get; }
-
 		private void AddButton_OnTapped(object sender, EventArgs e)
 		{
-			((App) Application.Current).StorageService.StartCreatingHabit();
+			((App) Application.Current).HabitService.StartCreation();
 		}
 	}
 }

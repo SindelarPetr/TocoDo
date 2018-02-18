@@ -115,6 +115,15 @@ namespace TocoDo.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to HabitService.
+        /// </summary>
+        public static string HabitService {
+            get {
+                return ResourceManager.GetString("HabitService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ModelFactory.
         /// </summary>
         public static string ModelFactory {
@@ -142,11 +151,11 @@ namespace TocoDo.UI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to StorageService.
+        ///   Looks up a localized string similar to TaskService.
         /// </summary>
-        public static string StorageService {
+        public static string TaskService {
             get {
-                return ResourceManager.GetString("StorageService", resourceCulture);
+                return ResourceManager.GetString("TaskService", resourceCulture);
             }
         }
     }

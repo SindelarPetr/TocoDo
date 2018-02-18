@@ -9,13 +9,12 @@ using TocoDo.BusinessLogic.Services;
 
 namespace TocoDo.BusinessLogic.ViewModels
 {
-	// Unit test the model
 	public class TaskViewModel : BaseViewModel, ITaskViewModel
 	{
 		#region Services
 
 		private readonly INavigationService _navigation;
-		private readonly IStorageService    _storage;
+		private readonly ITaskService    _taskService;
 
 		#endregion
 
@@ -91,10 +90,10 @@ namespace TocoDo.BusinessLogic.ViewModels
 
 		#endregion
 
-		public TaskViewModel(IStorageService storage, INavigationService navigation)
+		public TaskViewModel(ITaskService taskService, INavigationService navigation)
 		{
 			_navigation  = navigation;
-			_storage     = storage;
+			_taskService     = taskService;
 			IsCreateMode = true;
 			InitCommands();
 		}
@@ -128,6 +127,7 @@ namespace TocoDo.BusinessLogic.ViewModels
 			EditDescriptionCommand = new Command(EditDescription);
 		}
 
+		// TODO: Create EditTitleAfterCreation
 		private void EditTitle(object o)
 		{
 			if (o is string title)
@@ -135,12 +135,12 @@ namespace TocoDo.BusinessLogic.ViewModels
 				// If the title is empty then remove yourself
 				if (string.IsNullOrWhiteSpace(title))
 				{
-					_storage.CancelCreationOfTask(this);
+					_taskService.CancelCreation(this);
 				}
 				else
 				{
 					Title = title.Trim();
-					_storage.ConfirmCreationOfTask(this);
+					_taskService.ConfirmCreationAsync(this);
 				}
 			}
 			else
@@ -172,14 +172,14 @@ namespace TocoDo.BusinessLogic.ViewModels
 
 			if (!result) return;
 
-			await _storage.DeleteTask(this);
+			await _taskService.DeleteAsync(this);
 
 			await _navigation.PopAsync();
 		}
 
 		private async Task Update()
 		{
-			await _storage.UpdateTask(this);
+			await _taskService.UpdateAsync(this);
 		}
 
 		// Todo: Get rid of this

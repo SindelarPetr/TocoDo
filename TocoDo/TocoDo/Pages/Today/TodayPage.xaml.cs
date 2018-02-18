@@ -39,7 +39,7 @@ namespace TocoDo.UI.Pages.Today
 
 		private void ButtonAddToday_OnClicked(object sender, EventArgs e)
 		{
-			((App) Application.Current).StorageService.StartCreatingTask(DateTime.Today);
+			((App) Application.Current).TaskService.StartCreation(DateTime.Today);
 		}
 	}
 }

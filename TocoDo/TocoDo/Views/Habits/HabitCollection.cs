@@ -3,7 +3,7 @@ using TocoDo.UI.Views.Global;
 
 namespace TocoDo.UI.Views.Habits
 {
-	public class HabitCollection : ItemCollection<HabitViewModel, HabitView>
+	public class HabitCollection : ItemCollection<IHabitViewModel, HabitView>
 	{
 		public HabitCollection() : base(vm => new HabitView(vm))
 		{

@@ -39,8 +39,9 @@ namespace TocoDo.UI
 		public IModelFactory ModelFactory => (IModelFactory) Resources[AppStrings.ModelFactory];
 		public IDateTimeProvider DateProvider => (IDateTimeProvider) Resources[AppStrings.DateTimeProvider];
 		public INavigationService Navigation => (INavigationService) Resources[AppStrings.Navigation];
-		public StorageService StorageService => (StorageService) Resources[AppStrings.StorageService];
-
+		public ITaskService TaskService => (ITaskService) Resources[AppStrings.TaskService];
+		public IHabitService HabitService => (IHabitService) Resources[AppStrings.HabitService];
+	
 		public Color ColorPrimary
 		{
 			get => (Color) Resources["ColorPrimary"];
@@ -67,8 +68,10 @@ namespace TocoDo.UI
 			{
 				//AppCenter.Start(string.Format(AppStrings.AppCenterMessage, AppStrings.AppCenterUwpSecret,
 				//AppStrings.AppCenterAndroidSecret, AppStrings.AppCenterIosSecret), typeof(Analytics), typeof(Crashes));
-				
-				await StorageService.InitAsync();
+
+				await Persistance.Init();
+				await TaskService.LoadAsync();
+				await HabitService.LoadAsync();
 			}
 			catch (Exception e)
 			{

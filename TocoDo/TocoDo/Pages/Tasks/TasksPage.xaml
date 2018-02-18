@@ -13,9 +13,9 @@
 			<ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
 				<StackLayout Style="{StaticResource PageStackLayout}">
 					<!-- Someday -->
-					<!--TODO: sources-->
+					<!-- TODO: sources -->
 					<global:FrameWrapper Header="Someday">
-						<todos:TaskCollection ItemsSource="{Binding Source={StaticResource StorageService}, Path=AllTasks}"/>
+						<todos:TaskCollection ItemsSource="{Binding Source={StaticResource TaskService}, Path=AllTasks}"/>
 					</global:FrameWrapper>
 
 					<!-- Scheduled -->

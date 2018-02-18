@@ -7,17 +7,17 @@ using Xamarin.Forms.Xaml;
 namespace TocoDo.UI.Views.Todos
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class TodoItemView : ContentView, IEntryFocusable<TaskViewModel>
+	public partial class TodoItemView : ContentView, IEntryFocusable<ITaskViewModel>
 	{
-		public TodoItemView(TaskViewModel model)
+		public TodoItemView(ITaskViewModel model)
 		{
 			BindingContext = model;
 			InitializeComponent();
 		}
 
-		public TaskViewModel ViewModel
+		public ITaskViewModel ViewModel
 		{
-			get => (TaskViewModel) BindingContext;
+			get => (ITaskViewModel) BindingContext;
 			set => BindingContext = value;
 		}
 

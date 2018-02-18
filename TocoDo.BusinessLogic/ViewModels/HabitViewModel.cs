@@ -17,7 +17,7 @@ namespace TocoDo.BusinessLogic.ViewModels
 	{
 		#region Dependency injection
 		private readonly INavigationService _navigation;
-		private readonly IStorageService _storage;
+		private readonly IHabitService _habitService;
 		#endregion
 
 		#region Backing fields
@@ -182,9 +182,9 @@ namespace TocoDo.BusinessLogic.ViewModels
 
 		#endregion
 
-		public HabitViewModel(IStorageService storageService, INavigationService navigation)
+		public HabitViewModel(IHabitService habitService, INavigationService navigation)
 		{
-			_storage    = storageService;
+			_habitService    = habitService;
 			_navigation = navigation;
 
 			// Set initial values
@@ -200,9 +200,9 @@ namespace TocoDo.BusinessLogic.ViewModels
 			SetupCommands();
 		}
 
-		public HabitViewModel(IStorageService storageService, INavigationService navigation, IHabitModel model)
+		public HabitViewModel(IHabitService habitService, INavigationService navigation, IHabitModel model)
 		{
-			_storage    = storageService;
+			_habitService    = habitService;
 			_navigation = navigation;
 
 			ModelCreationDate = model.CreationDate;
@@ -260,7 +260,7 @@ namespace TocoDo.BusinessLogic.ViewModels
 			                                            Resources.Yes, Resources.Cancel);
 
 			if (result)
-				await _storage.DeleteHabit(this);
+				await _habitService.DeleteAsync(this);
 		}
 
 		private async Task ConfirmCreation()
@@ -268,11 +268,11 @@ namespace TocoDo.BusinessLogic.ViewModels
 			// If user left the entry blank, then remove the habit from collection
 			if (string.IsNullOrWhiteSpace(ModelTitle))
 			{
-				_storage.CancelCreationOfHabit(this);
+				_habitService.CancelCreation(this);
 				return;
 			}
 
-			await _storage.ConfirmCreationOfHabit(this);
+			await _habitService.ConfirmCreationAsync(this);
 		}
 
 		private async Task SelectDate(Action<DateTime?> pickedAction, string actionSheetHeader)
@@ -306,8 +306,7 @@ namespace TocoDo.BusinessLogic.ViewModels
 
 			pickedAction(selectedDate);
 		}
-
-		// TODO: get rid of this
+		
 		private void SelectDateByPicker(Action<DateTime> pickedAction)
 		{
 			//TODO: Workaround for showing the date picker TodayPage.Instance.ShowGlobalDatePicker(ModelStartDate ?? DateTime.Today + TimeSpan.FromDays(1), pickedAction, DateTime.Today + TimeSpan.FromDays(1));
@@ -332,7 +331,7 @@ namespace TocoDo.BusinessLogic.ViewModels
 
 			if (!IsCreateMode)
 			{
-				await _storage.UpdateHabit(this);
+				await _habitService.UpdateAsync(this);
 				MyLogger.WriteInMethod($"Updated habit, changed property: {propertyName}");
 			}
 

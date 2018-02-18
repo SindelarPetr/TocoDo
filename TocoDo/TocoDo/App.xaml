@@ -108,14 +108,19 @@
 			<dependencyInjection:ModelFactory x:Key="ModelFactory"/>
 			<helpers:RealDateTimeProvider x:Key="DateTimeProvider"/>
 
-
-			<services:StorageService x:Key="StorageService"
+			<services:TaskService x:Key="TaskService"
 			                         DateTimeProvider="{StaticResource DateTimeProvider}"
 			                         Navigation="{StaticResource Navigation}"
 			                         ModelFactory="{StaticResource ModelFactory}"
 			                         Persistance="{StaticResource Persistance}">
+			</services:TaskService>
 
-			</services:StorageService>
+			<services:HabitService x:Key="HabitService"
+			                         DateTimeProvider="{StaticResource DateTimeProvider}"
+			                         Navigation="{StaticResource Navigation}"
+			                         ModelFactory="{StaticResource ModelFactory}"
+			                         Persistance="{StaticResource Persistance}">
+			</services:HabitService>
 		</ResourceDictionary>
 	</Application.Resources>
 </Application>

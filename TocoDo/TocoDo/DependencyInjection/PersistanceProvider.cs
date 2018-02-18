@@ -8,6 +8,7 @@ using TocoDo.BusinessLogic;
 using TocoDo.BusinessLogic.DependencyInjection;
 using TocoDo.BusinessLogic.DependencyInjection.Models;
 using TocoDo.UI.Models;
+using TocoDo.UI.Properties;
 using Xamarin.Forms;
 
 namespace TocoDo.UI.DependencyInjection
@@ -15,17 +16,20 @@ namespace TocoDo.UI.DependencyInjection
 	public class PersistanceProvider : IPersistance
 	{
 		private SQLiteAsyncConnection _connection;
-		private Dictionary<Type, Type> _typesDictionary;
 
-		public void Init()
+		public async Task Init()
 		{
 			MyLogger.WriteStartMethod();
-			var path    = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "MySQLite.db3");
+			MyLogger.WriteInMethod("Creating Database");
+			var path    = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), AppStrings.DatabaseName);
 			_connection = new SQLiteAsyncConnection(path);
+
+			MyLogger.WriteInMethod("Creating tables");
+			await _connection.CreateTablesAsync(CreateFlags.None, typeof(TaskModel), typeof(HabitModel));
+
 			MyLogger.WriteEndMethod();
 		}
 
-		public async Task CreateTables() => await _connection.CreateTablesAsync(CreateFlags.None, typeof(TaskModel), typeof(HabitModel));
 		public async Task<List<ITaskModel>> GetTasks() => (await _connection.QueryAsync<TaskModel>(
 			"SELECT * FROM TaskModel WHERE ScheduleDate IS NULL OR ScheduleDate >= '" + DateTime.Today.Ticks + "'")).OfType<ITaskModel>().ToList();
 		public async Task<List<IHabitModel>> GetHabits() => (await _connection.Table<HabitModel>().Where(h => h.IsFinished == false).ToListAsync()).OfType<IHabitModel>().ToList();
