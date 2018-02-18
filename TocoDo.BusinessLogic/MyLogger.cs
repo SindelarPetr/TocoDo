@@ -28,7 +28,7 @@ namespace TocoDo.BusinessLogic
 			[CallerLineNumber]                                                           int    callerLineNumber = 0)
 		{
 			_indent++;
-			Write(string.Format(WRITE_START + (message != null ? ": " + message : null), callerName, GetFileName(callerPath),
+			WriteLine(string.Format(WRITE_START + (message != null ? ": " + message : null), callerName, GetFileName(callerPath),
 				callerLineNumber));
 		}
 
@@ -37,7 +37,7 @@ namespace TocoDo.BusinessLogic
 			[CallerFilePath]                                                          string callerPath       = null,
 			[CallerLineNumber]                                                        int    callerLineNumber = 0)
 		{
-			Write(string.Format(WRITE_IN + (message != null ? ": " + message : null), callerName, GetFileName(callerPath),
+			WriteLine(string.Format(WRITE_IN + (message != null ? ": " + message : null), callerName, GetFileName(callerPath),
 				callerLineNumber));
 		}
 
@@ -46,7 +46,7 @@ namespace TocoDo.BusinessLogic
 			[CallerFilePath]                                                           string callerPath       = null,
 			[CallerLineNumber]                                                         int    callerLineNumber = 0)
 		{
-			Write(string.Format(WRITE_END + (message != null ? ": " + message : null), callerName, GetFileName(callerPath),
+			WriteLine(string.Format(WRITE_END + (message != null ? ": " + message : null), callerName, GetFileName(callerPath),
 				callerLineNumber));
 
 			_indent--;
