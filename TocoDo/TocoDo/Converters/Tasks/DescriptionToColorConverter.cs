@@ -8,7 +8,9 @@ namespace TocoDo.UI.Converters.Tasks
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			return string.IsNullOrWhiteSpace((string)value) ? App.Current.Resources["UnsetItemColor"] : App.Current.Resources["DescriptionColor"];
+			return string.IsNullOrWhiteSpace((string) value)
+				? Application.Current.Resources["UnsetItemColor"]
+				: Application.Current.Resources["DescriptionColor"];
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

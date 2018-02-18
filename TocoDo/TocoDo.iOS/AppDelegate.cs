@@ -1,5 +1,9 @@
 ﻿using Foundation;
+using Rg.Plugins.Popup;
+using TocoDo.UI;
 using UIKit;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.iOS;
 
 namespace TocoDo.iOS
 {
@@ -7,7 +11,7 @@ namespace TocoDo.iOS
 	// User Interface of the application, as well as listening (and optionally responding) to 
 	// application events from iOS.
 	[Register("AppDelegate")]
-	public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
+	public class AppDelegate : FormsApplicationDelegate
 	{
 		//
 		// This method is invoked when the application has loaded and is ready to run. In this 
@@ -18,8 +22,8 @@ namespace TocoDo.iOS
 		//
 		public override bool FinishedLaunching(UIApplication app, NSDictionary options)
 		{
-			Rg.Plugins.Popup.Popup.Init();
-			global::Xamarin.Forms.Forms.Init();
+			Popup.Init();
+			Forms.Init();
 			LoadApplication(new App());
 
 			return base.FinishedLaunching(app, options);

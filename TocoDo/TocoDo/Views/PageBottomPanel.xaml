@@ -1,22 +1,25 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
              xmlns:markupExtensions="clr-namespace:TocoDo.UI.MarkupExtensions;assembly=TocoDo.UI"
              x:Class="TocoDo.UI.Views.PageBottomPanel"
              x:Name="This">
-  <ContentView.Content>
+	<ContentView.Content>
 		<!--Bottom panel-->
-	  <Frame BindingContext="{x:Reference This}" Grid.Row="2" Grid.Column="0" CornerRadius="0" Margin="0" Padding="15, 0, 15, 0">
-		  <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Padding="0">
-			  <Label Text="{Binding Text}" HorizontalOptions="FillAndExpand"
-			         VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" />
-			  <abstractions:TintedImage x:Name="ButtonRemove" Source="{markupExtensions:PathResolver 'ic_delete_white_24dp.png'}" HeightRequest="42" WidthRequest="25" TintColor="Gray">
-				  <Image.GestureRecognizers>
-					  <TapGestureRecognizer Command="{Binding RemoveCommand}"/>
-				  </Image.GestureRecognizers>
-			  </abstractions:TintedImage>
-		  </StackLayout>
-	  </Frame>
+		<Frame BindingContext="{x:Reference This}" Grid.Row="2" Grid.Column="0" CornerRadius="0" Margin="0"
+		       Padding="15, 0, 15, 0">
+			<StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Padding="0">
+				<Label Text="{Binding Text}" HorizontalOptions="FillAndExpand"
+				       VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" />
+				<abstractions:TintedImage x:Name="ButtonRemove" Source="{markupExtensions:PathResolver 'ic_delete_white_24dp.png'}"
+				                          HeightRequest="42" WidthRequest="25" TintColor="Gray">
+					<Image.GestureRecognizers>
+						<TapGestureRecognizer Command="{Binding RemoveCommand}" />
+					</Image.GestureRecognizers>
+				</abstractions:TintedImage>
+			</StackLayout>
+		</Frame>
 	</ContentView.Content>
 </ContentView>

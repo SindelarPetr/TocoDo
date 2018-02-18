@@ -3,6 +3,7 @@ using TocoDo.BusinessLogic.DependencyInjection.Models;
 
 namespace TocoDo.BusinessLogic.Helpers
 {
+	// TODO: Unit test this class
 	public static class DateTimeHelper
 	{
 		public static int ZeroMondayBasedDay(this DateTime date)
@@ -10,6 +11,7 @@ namespace TocoDo.BusinessLogic.Helpers
 			return ((int) date.DayOfWeek + 6) % 7;
 		}
 
+		// TODO: Get rid of this
 		public static string GetDayExtension(this DateTime date)
 		{
 			var ext = date.Day % 10 == 1 && date.Day != 11
@@ -22,7 +24,7 @@ namespace TocoDo.BusinessLogic.Helpers
 
 			return ext;
 		}
-		
+
 		public static TimeSpan HabitLength(DateTime start, RepeatType repeatType, int daysToRepeat)
 		{
 			switch (repeatType)
@@ -35,7 +37,7 @@ namespace TocoDo.BusinessLogic.Helpers
 					return start.AddDays(daysToRepeat) - start;
 			}
 
-			int fromWeekMissing = 0;
+			var fromWeekMissing = 0;
 			switch (repeatType)
 			{
 				case RepeatType.Sat:
@@ -76,13 +78,13 @@ namespace TocoDo.BusinessLogic.Helpers
 					return start.Day == DateTime.Today.Day && start.Month == DateTime.Today.Month;
 			}
 
-			return repeat.HasFlag(RepeatType.Mon) && (int)DateTime.Today.DayOfWeek == 1 ||
-				   repeat.HasFlag(RepeatType.Tue) && (int)DateTime.Today.DayOfWeek == 2 ||
-				   repeat.HasFlag(RepeatType.Wed) && (int)DateTime.Today.DayOfWeek == 3 ||
-				   repeat.HasFlag(RepeatType.Thu) && (int)DateTime.Today.DayOfWeek == 4 ||
-				   repeat.HasFlag(RepeatType.Fri) && (int)DateTime.Today.DayOfWeek == 5 ||
-				   repeat.HasFlag(RepeatType.Sat) && (int)DateTime.Today.DayOfWeek == 6 ||
-				   repeat.HasFlag(RepeatType.Sun) && (int)DateTime.Today.DayOfWeek == 0;
+			return repeat.HasFlag(RepeatType.Mon) && (int) DateTime.Today.DayOfWeek == 1 ||
+			       repeat.HasFlag(RepeatType.Tue) && (int) DateTime.Today.DayOfWeek == 2 ||
+			       repeat.HasFlag(RepeatType.Wed) && (int) DateTime.Today.DayOfWeek == 3 ||
+			       repeat.HasFlag(RepeatType.Thu) && (int) DateTime.Today.DayOfWeek == 4 ||
+			       repeat.HasFlag(RepeatType.Fri) && (int) DateTime.Today.DayOfWeek == 5 ||
+			       repeat.HasFlag(RepeatType.Sat) && (int) DateTime.Today.DayOfWeek == 6 ||
+			       repeat.HasFlag(RepeatType.Sun) && (int) DateTime.Today.DayOfWeek == 0;
 		}
 
 

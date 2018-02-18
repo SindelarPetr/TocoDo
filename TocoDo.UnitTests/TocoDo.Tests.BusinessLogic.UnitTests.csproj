@@ -62,10 +62,6 @@
       <Project>{6B1E35E6-F905-4580-9724-128D4BC0CD83}</Project>
       <Name>TocoDo.BusinessLogic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TocoDo\TocoDo\TocoDo.UI.csproj">
-      <Project>{4c76a824-7bee-429c-8b97-9a911968d81b}</Project>
-      <Name>TocoDo.UI</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

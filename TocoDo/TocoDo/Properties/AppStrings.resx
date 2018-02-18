@@ -132,4 +132,19 @@
   <data name="DatabaseName" xml:space="preserve">
     <value>MySQLite.db3</value>
   </data>
+  <data name="DateTimeProvider" xml:space="preserve">
+    <value>DateTimeProvider</value>
+  </data>
+  <data name="ModelFactory" xml:space="preserve">
+    <value>ModelFactory</value>
+  </data>
+  <data name="Navigation" xml:space="preserve">
+    <value>Navigation</value>
+  </data>
+  <data name="Persistance" xml:space="preserve">
+    <value>Persistance</value>
+  </data>
+  <data name="StorageService" xml:space="preserve">
+    <value>StorageService</value>
+  </data>
 </root>

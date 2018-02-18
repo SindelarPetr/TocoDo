@@ -1,12 +1,20 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using TocoDo.BusinessLogic.DependencyInjection.Models;
+using Xamarin.Forms;
 
 namespace TocoDo.BusinessLogic.DependencyInjection
 {
-    public interface IPersistance
-    {
-	    Task InitAsync();
-	    Task InsertAsync<T>(T obj);
-	    Task UpdateAsync<T>(T obj);
-	    Task DeleteAsync<T>(T obj);
-    }
+	public interface IPersistance
+	{
+		void Init();
+		Task CreateTables();
+		Task<List<ITaskModel>> GetTasks();
+		Task<List<IHabitModel>> GetHabits();
+
+		Task InsertAsync(object item);
+		Task UpdateAsync(object obj);
+		Task DeleteAsync(object obj);
+	}
 }

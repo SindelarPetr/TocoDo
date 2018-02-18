@@ -7,7 +7,6 @@ namespace TocoDo.UI.TriggerActions
 	{
 		protected override void Invoke(TintedImage sender)
 		{
-			
 		}
 	}
 }

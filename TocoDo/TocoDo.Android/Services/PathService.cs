@@ -1,6 +1,4 @@
 ﻿
-using System;
-using TocoDo.Droid.Services;
 
 //[assembly: Xamarin.Forms.Dependency(typeof(PathService))]
 namespace TocoDo.Droid.Services

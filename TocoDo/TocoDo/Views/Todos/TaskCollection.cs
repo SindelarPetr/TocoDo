@@ -1,13 +1,16 @@
-﻿using TocoDo.BusinessLogic.ViewModels;
+﻿using System.Collections.ObjectModel;
+using TocoDo.BusinessLogic;
+using TocoDo.BusinessLogic.ViewModels;
 using TocoDo.UI.Views.Global;
 
 namespace TocoDo.UI.Views.Todos
 {
-    public class TaskCollection : ItemCollection<TaskViewModel, TodoItemView>
-    {
-	    public TaskCollection() : base(vm => new TodoItemView(vm))
-	    {
-
-	    }
-    }
+	public class TaskCollection : ItemCollection<TaskViewModel, TodoItemView>
+	{
+		public TaskCollection() : base(vm => new TodoItemView(vm))
+		{
+			MyLogger.WriteStartMethod();
+			MyLogger.WriteEndMethod();
+		}
+	}
 }

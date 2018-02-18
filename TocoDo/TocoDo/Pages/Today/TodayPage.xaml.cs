@@ -12,18 +12,9 @@ namespace TocoDo.UI.Pages.Today
 	{
 		public static TodayPage Instance;
 
-		private ObservableCollection<TaskModel> _todayTasks;
-		public ObservableCollection<TaskModel> TodayTasks
-		{
-			get => _todayTasks;
-			set
-			{
-				_todayTasks = value;
-				OnPropertyChanged();
-			}
-		}
-
 		private Action<DateTime> _globalDatePickerAction;
+
+		private ObservableCollection<TaskModel> _todayTasks;
 
 		public TodayPage()
 		{
@@ -36,10 +27,19 @@ namespace TocoDo.UI.Pages.Today
 			Debug.WriteLine("---------- Finished calling of constructor of TodayPage");
 		}
 
+		public ObservableCollection<TaskModel> TodayTasks
+		{
+			get => _todayTasks;
+			set
+			{
+				_todayTasks = value;
+				OnPropertyChanged();
+			}
+		}
+
 		private void ButtonAddToday_OnClicked(object sender, EventArgs e)
 		{
-			((App) App.Current).Storage.StartCreatingTask(DateTime.Today);
-
+			((App) Application.Current).StorageService.StartCreatingTask(DateTime.Today);
 		}
 	}
 }

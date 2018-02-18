@@ -9,18 +9,18 @@ namespace TocoDo.UI.Pages.Tasks
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ModifyTaskPage : ContentPage
 	{
-		public TaskViewModel TaskViewModel
-		{
-			get => (TaskViewModel)BindingContext;
-			set => BindingContext = value;
-		}
-
 		public ModifyTaskPage(TaskViewModel taskToModify)
 		{
 			MyLogger.WriteStartMethod();
 			BindingContext = taskToModify;
 			InitializeComponent();
 			MyLogger.WriteEndMethod();
+		}
+
+		public TaskViewModel TaskViewModel
+		{
+			get => (TaskViewModel) BindingContext;
+			set => BindingContext = value;
 		}
 
 		protected override void OnAppearing()

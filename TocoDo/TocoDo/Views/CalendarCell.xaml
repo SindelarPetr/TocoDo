@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TocoDo.UI.Views.CalendarCell"
              x:Name="This">
@@ -8,36 +9,39 @@
 		<AbsoluteLayout BindingContext="{x:Reference This}" Padding="0">
 			<AbsoluteLayout.Resources>
 				<ResourceDictionary>
-					<Style TargetType="Label" >
-						<Setter Property="Text" Value="•"/>
-						<Setter Property="FontAttributes" Value="Bold"/>
-						<Setter Property="TextColor" Value="White"/>
-						<Setter Property="Margin" Value="0, -6"/>
-						<Setter Property="HorizontalTextAlignment" Value="Center"/>
-						<Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+					<Style TargetType="Label">
+						<Setter Property="Text" Value="•" />
+						<Setter Property="FontAttributes" Value="Bold" />
+						<Setter Property="TextColor" Value="White" />
+						<Setter Property="Margin" Value="0, -6" />
+						<Setter Property="HorizontalTextAlignment" Value="Center" />
+						<Setter Property="HorizontalOptions" Value="FillAndExpand" />
 					</Style>
 					<Style TargetType="StackLayout">
-						<Setter Property="Padding" Value="0"/>
-						<Setter Property="Spacing" Value="0"/>
-						<Setter Property="Margin" Value="0"/>
-						<Setter Property="Orientation" Value="Horizontal"/>
+						<Setter Property="Padding" Value="0" />
+						<Setter Property="Spacing" Value="0" />
+						<Setter Property="Margin" Value="0" />
+						<Setter Property="Orientation" Value="Horizontal" />
 					</Style>
 				</ResourceDictionary>
 			</AbsoluteLayout.Resources>
 
-			<StackLayout AbsoluteLayout.LayoutBounds="0,0,1,30" AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional">
-				<Label HorizontalTextAlignment="End"/>
-				<Label HorizontalTextAlignment="Center"/>
-				<Label HorizontalTextAlignment="Start"/>
+			<StackLayout AbsoluteLayout.LayoutBounds="0,0,1,30"
+			             AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional">
+				<Label HorizontalTextAlignment="End" />
+				<Label HorizontalTextAlignment="Center" />
+				<Label HorizontalTextAlignment="Start" />
 			</StackLayout>
 
-			<Label AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" Text="{Binding Text}" FontSize="Small" VerticalOptions="Fill" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+			<Label AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" Text="{Binding Text}" FontSize="Small"
+			       VerticalOptions="Fill" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" />
 
-			<StackLayout AbsoluteLayout.LayoutBounds="0,1,1,30" AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional">
-				<Label VerticalTextAlignment="End" HorizontalTextAlignment="End"/>
-				<Label VerticalTextAlignment="End" HorizontalTextAlignment="Center"/>
-				<Label VerticalTextAlignment="End" HorizontalTextAlignment="Start"/>
+			<StackLayout AbsoluteLayout.LayoutBounds="0,1,1,30"
+			             AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional">
+				<Label VerticalTextAlignment="End" HorizontalTextAlignment="End" />
+				<Label VerticalTextAlignment="End" HorizontalTextAlignment="Center" />
+				<Label VerticalTextAlignment="End" HorizontalTextAlignment="Start" />
 			</StackLayout>
 		</AbsoluteLayout>
-  </ContentView.Content>
+	</ContentView.Content>
 </ContentView>

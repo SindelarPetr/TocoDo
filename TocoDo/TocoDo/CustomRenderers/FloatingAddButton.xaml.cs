@@ -6,9 +6,9 @@ namespace TocoDo.UI.CustomRenderers
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class FloatingAddButton : Button
 	{
-		public FloatingAddButton ()
+		public FloatingAddButton()
 		{
-			InitializeComponent ();
+			InitializeComponent();
 		}
 	}
 }

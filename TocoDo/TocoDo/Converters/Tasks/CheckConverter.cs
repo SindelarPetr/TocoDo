@@ -13,7 +13,7 @@ namespace TocoDo.UI.Converters.Tasks
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			return (bool)value == false ? null : (DateTime?)DateTime.Now;
+			return (bool) value == false ? null : (DateTime?) DateTime.Now;
 		}
 	}
 }

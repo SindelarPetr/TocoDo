@@ -11,7 +11,7 @@ namespace TocoDo.UI.CustomRenderers
 
 		public bool IsStrikeThrough
 		{
-			get => (bool)GetValue(IsStrikeThroughProperty);
+			get => (bool) GetValue(IsStrikeThroughProperty);
 			set => SetValue(IsStrikeThroughProperty, value);
 		}
 	}

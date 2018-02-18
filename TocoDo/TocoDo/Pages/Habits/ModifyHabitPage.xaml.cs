@@ -12,12 +12,6 @@ namespace TocoDo.UI.Pages.Habits
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ModifyHabitPage : ContentPage
 	{
-		public HabitViewModel Habit
-		{
-			get => (HabitViewModel)BindingContext;
-			set => BindingContext = value;
-		}
-
 		public ModifyHabitPage(HabitViewModel habit)
 		{
 			try
@@ -28,7 +22,14 @@ namespace TocoDo.UI.Pages.Habits
 			catch (Exception e)
 			{
 				MyLogger.WriteException(e);
+				throw;
 			}
+		}
+
+		public HabitViewModel Habit
+		{
+			get => (HabitViewModel) BindingContext;
+			set => BindingContext = value;
 		}
 
 		private void EntryTitle_OnUnfocused(object sender, FocusEventArgs e)
@@ -39,19 +40,17 @@ namespace TocoDo.UI.Pages.Habits
 
 		private void TapGestureRecognizer_OnTapped(object sender, EventArgs e)
 		{
-			
 		}
 
 		private async void IconButton_OnClicked(object sender, EventArgs e)
 		{
 			try
 			{
-				var repeatTypePopup = new HabitRepeatTypePopup(Habit.ModelRepeatType, Habit.ModelDaysToRepeat);
+				var repeatTypePopup  = new HabitRepeatTypePopup(Habit.ModelRepeatType, Habit.ModelDaysToRepeat);
 				repeatTypePopup.Save += (repeatType, daysToRepeat) =>
 				{
-					Habit.ModelRepeatType = repeatType;
+					Habit.ModelRepeatType   = repeatType;
 					Habit.ModelDaysToRepeat = daysToRepeat;
-					
 				};
 				await PopupNavigation.Instance.PushAsync(repeatTypePopup);
 			}

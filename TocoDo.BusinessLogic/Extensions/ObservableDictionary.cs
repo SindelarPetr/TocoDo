@@ -9,7 +9,7 @@ using System.Threading;
 namespace TocoDo.BusinessLogic.Extensions
 {
 	/// <summary>
-	/// Provides a thread-safe dictionary for use with data binding.
+	///     Provides a thread-safe dictionary for use with data binding.
 	/// </summary>
 	/// <typeparam name="TKey">Specifies the type of the keys in this collection.</typeparam>
 	/// <typeparam name="TValue">Specifies the type of the values in this collection.</typeparam>
@@ -18,38 +18,38 @@ namespace TocoDo.BusinessLogic.Extensions
 		ICollection<KeyValuePair<TKey, TValue>>, IDictionary<TKey, TValue>,
 		INotifyCollectionChanged, INotifyPropertyChanged
 	{
-		private readonly SynchronizationContext _context;
+		private readonly SynchronizationContext             _context;
 		private readonly ConcurrentDictionary<TKey, TValue> _dictionary;
 
 		/// <summary>
-		/// Initializes an instance of the ObservableDictionary class.
+		///     Initializes an instance of the ObservableDictionary class.
 		/// </summary>
 		public ObservableDictionary(IEnumerable<KeyValuePair<TKey, TValue>> dictionary = null)
 		{
-			_context = AsyncOperationManager.SynchronizationContext;
-			_dictionary = dictionary == null ? new ConcurrentDictionary<TKey, TValue>() : new ConcurrentDictionary<TKey, TValue>(dictionary);
+			_context    = AsyncOperationManager.SynchronizationContext;
+			_dictionary = dictionary == null
+				? new ConcurrentDictionary<TKey, TValue>()
+				: new ConcurrentDictionary<TKey, TValue>(dictionary);
 		}
 
 		/// <summary>Event raised when the collection changes.</summary>
 		public event NotifyCollectionChangedEventHandler CollectionChanged;
+
 		/// <summary>Event raised when a property on the collection changes.</summary>
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		/// <summary>
-		/// Notifies observers of CollectionChanged or PropertyChanged of an update to the dictionary.
+		///     Notifies observers of CollectionChanged or PropertyChanged of an update to the dictionary.
 		/// </summary>
 		private void NotifyObserversOfChange()
 		{
 			var collectionHandler = CollectionChanged;
-			var propertyHandler = PropertyChanged;
+			var propertyHandler   = PropertyChanged;
 			if (collectionHandler != null || propertyHandler != null)
-			{
 				_context.Post(s =>
 				{
 					if (collectionHandler != null)
-					{
 						collectionHandler(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-					}
 					if (propertyHandler != null)
 					{
 						propertyHandler(this, new PropertyChangedEventArgs("Count"));
@@ -57,7 +57,6 @@ namespace TocoDo.BusinessLogic.Extensions
 						propertyHandler(this, new PropertyChangedEventArgs("Values"));
 					}
 				}, null);
-			}
 		}
 
 		/// <summary>Attempts to add an item to the dictionary, notifying observers of any changes.</summary>
@@ -74,7 +73,7 @@ namespace TocoDo.BusinessLogic.Extensions
 		/// <returns>Whether the add was successful.</returns>
 		private bool TryAddWithNotification(TKey key, TValue value)
 		{
-			bool result = _dictionary.TryAdd(key, value);
+			var result = _dictionary.TryAdd(key, value);
 			if (result) NotifyObserversOfChange();
 			return result;
 		}
@@ -85,7 +84,7 @@ namespace TocoDo.BusinessLogic.Extensions
 		/// <returns>Whether the removal was successful.</returns>
 		private bool TryRemoveWithNotification(TKey key, out TValue value)
 		{
-			bool result = _dictionary.TryRemove(key, out value);
+			var result = _dictionary.TryRemove(key, out value);
 			if (result) NotifyObserversOfChange();
 			return result;
 		}
@@ -101,6 +100,7 @@ namespace TocoDo.BusinessLogic.Extensions
 		}
 
 		#region ICollection<KeyValuePair<TKey,TValue>> Members
+
 		void ICollection<KeyValuePair<TKey, TValue>>.Add(KeyValuePair<TKey, TValue> item)
 		{
 			TryAddWithNotification(item);
@@ -108,50 +108,49 @@ namespace TocoDo.BusinessLogic.Extensions
 
 		void ICollection<KeyValuePair<TKey, TValue>>.Clear()
 		{
-			((ICollection<KeyValuePair<TKey, TValue>>)_dictionary).Clear();
+			((ICollection<KeyValuePair<TKey, TValue>>) _dictionary).Clear();
 			NotifyObserversOfChange();
 		}
 
 		bool ICollection<KeyValuePair<TKey, TValue>>.Contains(KeyValuePair<TKey, TValue> item)
 		{
-			return ((ICollection<KeyValuePair<TKey, TValue>>)_dictionary).Contains(item);
+			return ((ICollection<KeyValuePair<TKey, TValue>>) _dictionary).Contains(item);
 		}
 
 		void ICollection<KeyValuePair<TKey, TValue>>.CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
 		{
-			((ICollection<KeyValuePair<TKey, TValue>>)_dictionary).CopyTo(array, arrayIndex);
+			((ICollection<KeyValuePair<TKey, TValue>>) _dictionary).CopyTo(array, arrayIndex);
 		}
 
-		int ICollection<KeyValuePair<TKey, TValue>>.Count
-		{
-			get { return ((ICollection<KeyValuePair<TKey, TValue>>)_dictionary).Count; }
-		}
+		int ICollection<KeyValuePair<TKey, TValue>>.Count => ((ICollection<KeyValuePair<TKey, TValue>>) _dictionary).Count;
 
-		bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly
-		{
-			get { return ((ICollection<KeyValuePair<TKey, TValue>>)_dictionary).IsReadOnly; }
-		}
+		bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly =>
+			((ICollection<KeyValuePair<TKey, TValue>>) _dictionary).IsReadOnly;
 
 		bool ICollection<KeyValuePair<TKey, TValue>>.Remove(KeyValuePair<TKey, TValue> item)
 		{
 			TValue temp;
 			return TryRemoveWithNotification(item.Key, out temp);
 		}
+
 		#endregion
 
 		#region IEnumerable<KeyValuePair<TKey,TValue>> Members
+
 		IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator()
 		{
-			return ((ICollection<KeyValuePair<TKey, TValue>>)_dictionary).GetEnumerator();
+			return ((ICollection<KeyValuePair<TKey, TValue>>) _dictionary).GetEnumerator();
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()
 		{
-			return ((ICollection<KeyValuePair<TKey, TValue>>)_dictionary).GetEnumerator();
+			return ((ICollection<KeyValuePair<TKey, TValue>>) _dictionary).GetEnumerator();
 		}
+
 		#endregion
 
 		#region IDictionary<TKey,TValue> Members
+
 		public void Add(TKey key, TValue value)
 		{
 			TryAddWithNotification(key, value);
@@ -162,10 +161,7 @@ namespace TocoDo.BusinessLogic.Extensions
 			return _dictionary.ContainsKey(key);
 		}
 
-		public ICollection<TKey> Keys
-		{
-			get { return _dictionary.Keys; }
-		}
+		public ICollection<TKey> Keys => _dictionary.Keys;
 
 		public bool Remove(TKey key)
 		{
@@ -178,16 +174,14 @@ namespace TocoDo.BusinessLogic.Extensions
 			return _dictionary.TryGetValue(key, out value);
 		}
 
-		public ICollection<TValue> Values
-		{
-			get { return _dictionary.Values; }
-		}
+		public ICollection<TValue> Values => _dictionary.Values;
 
 		public TValue this[TKey key]
 		{
-			get { return _dictionary[key]; }
-			set { UpdateWithNotification(key, value); }
+			get => _dictionary[key];
+			set => UpdateWithNotification(key, value);
 		}
+
 		#endregion
 	}
 }

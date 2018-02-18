@@ -8,7 +8,7 @@ namespace TocoDo.UI.Converters
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			var str = (string)value;
+			var str = (string) value;
 			return !string.IsNullOrWhiteSpace(str);
 		}
 

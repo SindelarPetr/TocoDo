@@ -1,14 +1,16 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-			 xmlns:global="clr-namespace:TocoDo.UI.Views.Global;assembly=TocoDo.UI"
-			 xmlns:habits="clr-namespace:TocoDo.UI.Views.Habits;assembly=TocoDo.UI"
-			 xmlns:customRenderers="clr-namespace:TocoDo.UI.CustomRenderers;assembly=TocoDo.UI"
-			 x:Class="TocoDo.UI.Pages.Habits.HabitsPage"
-			 x:Name="This">
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:global="clr-namespace:TocoDo.UI.Views.Global;assembly=TocoDo.UI"
+             xmlns:habits="clr-namespace:TocoDo.UI.Views.Habits;assembly=TocoDo.UI"
+             xmlns:customRenderers="clr-namespace:TocoDo.UI.CustomRenderers;assembly=TocoDo.UI"
+             x:Class="TocoDo.UI.Pages.Habits.HabitsPage"
+             x:Name="This">
 	<ContentPage.Content>
 		<AbsoluteLayout>
-			<ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" BindingContext="{x:Reference This}">
+			<ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All"
+			            BindingContext="{x:Reference This}">
 
 				<StackLayout Style="{StaticResource PageStackLayout}" BindingContext="{x:Reference This}">
 					<!-- Current -->
@@ -28,7 +30,9 @@
 				</StackLayout>
 			</ScrollView>
 
-			<customRenderers:FloatingAddButton AbsoluteLayout.LayoutBounds="1,1,88,88" AbsoluteLayout.LayoutFlags="PositionProportional" Margin="16" Clicked="AddButton_OnTapped"/>
+			<customRenderers:FloatingAddButton AbsoluteLayout.LayoutBounds="1,1,88,88"
+			                                   AbsoluteLayout.LayoutFlags="PositionProportional" Margin="16"
+			                                   Clicked="AddButton_OnTapped" />
 		</AbsoluteLayout>
 
 	</ContentPage.Content>

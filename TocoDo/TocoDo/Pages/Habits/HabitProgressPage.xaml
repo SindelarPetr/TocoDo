@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:global="clr-namespace:TocoDo.UI.Views.Global;assembly=TocoDo.UI"
@@ -8,21 +9,22 @@
              x:Class="TocoDo.UI.Pages.Habits.HabitProgressPage"
              x:Name="This"
              Title="{Binding Source={x:Reference This}, Path=ViewModel.ModelTitle}">
-    <ContentPage.Content>
-        <Grid BindingContext="{Binding Source={x:Reference This}, Path=ViewModel}" RowSpacing="0">
+	<ContentPage.Content>
+		<Grid BindingContext="{Binding Source={x:Reference This}, Path=ViewModel}" RowSpacing="0">
 			<Grid.RowDefinitions>
-				<RowDefinition Height="*"/>
-				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="*" />
+				<RowDefinition Height="Auto" />
 			</Grid.RowDefinitions>
 			<ScrollView>
 				<Grid Style="{StaticResource SecondayPageGrid}">
 					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto"/>
-						<RowDefinition Height="Auto"/>
-						<RowDefinition Height="*"/>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="*" />
 					</Grid.RowDefinitions>
 					<global:FrameWrapper Header="Progress" BackgroundColor="{StaticResource ColorPrimaryDark}" HeightRequest="200">
-						<forms:ChartView x:Name="ChartProgress" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"  Margin="-5,10"/>
+						<forms:ChartView x:Name="ChartProgress" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+						                 Margin="-5,10" />
 					</global:FrameWrapper>
 
 					<global:FrameWrapper Grid.Row="1" Header="Timing">
@@ -34,7 +36,9 @@
 				</Grid>
 			</ScrollView>
 
-			<views:PageBottomPanel Grid.Row="1" Text="{Binding ModelCreationDate, Converter={StaticResource PastDateTimeConverter}, StringFormat='Created: {0}'}" RemoveCommand="{Binding RemoveCommand}" BackgroundColor="CornflowerBlue"/> 
+			<views:PageBottomPanel Grid.Row="1"
+			                       Text="{Binding ModelCreationDate, Converter={StaticResource PastDateTimeConverter}, StringFormat='Created: {0}'}"
+			                       RemoveCommand="{Binding RemoveCommand}" BackgroundColor="CornflowerBlue" />
 		</Grid>
-    </ContentPage.Content>
+	</ContentPage.Content>
 </ContentPage>

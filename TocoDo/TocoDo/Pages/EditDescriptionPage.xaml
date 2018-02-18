@@ -1,51 +1,56 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <!--This page will be pushed as a modal page, so it must be able to go back in navigation stack.-->
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
-			 xmlns:markupExtensions="clr-namespace:TocoDo.UI.MarkupExtensions;assembly=TocoDo.UI"
-			 x:Class="TocoDo.UI.Pages.EditDescriptionPage"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
+             xmlns:markupExtensions="clr-namespace:TocoDo.UI.MarkupExtensions;assembly=TocoDo.UI"
+             x:Class="TocoDo.UI.Pages.EditDescriptionPage"
              BackgroundColor="White"
              x:Name="This">
 	<ContentPage.Content>
-		<Grid BindingContext="{Binding Source={x:Reference This}, Path=ViewModel}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+		<Grid BindingContext="{Binding Source={x:Reference This}, Path=ViewModel}" HorizontalOptions="FillAndExpand"
+		      VerticalOptions="FillAndExpand">
 			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="*"/>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
 
 			<!--Top panel-->
-			<Grid HorizontalOptions="FillAndExpand" VerticalOptions="Start" Padding="20, 10, 20, 10" BackgroundColor="{DynamicResource BarColor}" ColumnSpacing="15">
+			<Grid HorizontalOptions="FillAndExpand" VerticalOptions="Start" Padding="20, 10, 20, 10"
+			      BackgroundColor="{DynamicResource BarColor}" ColumnSpacing="15">
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
 
 				<!--Discard button-->
 				<abstractions:TintedImage Source="{markupExtensions:PathResolver 'ic_clear_white_24dp.png'}" TintColor="#ffd0d0">
 					<abstractions:TintedImage.GestureRecognizers>
-						<TapGestureRecognizer Command="{Binding DiscardCommand}"/>
+						<TapGestureRecognizer Command="{Binding DiscardCommand}" />
 					</abstractions:TintedImage.GestureRecognizers>
 				</abstractions:TintedImage>
 
-				<Label Grid.Column="1" Grid.Row="0" Text="{Binding Title}" TextColor="White" FontSize="Large" VerticalTextAlignment="Center" LineBreakMode="TailTruncation" FontAttributes="Bold"/>
+				<Label Grid.Column="1" Grid.Row="0" Text="{Binding Title}" TextColor="White" FontSize="Large"
+				       VerticalTextAlignment="Center" LineBreakMode="TailTruncation" FontAttributes="Bold" />
 
 				<!--Save button-->
-				<abstractions:TintedImage Grid.Column="2" Grid.Row="0" Source="{markupExtensions:PathResolver 'ic_done_white_24dp.png'}" TintColor="#d0ffd0">
+				<abstractions:TintedImage Grid.Column="2" Grid.Row="0"
+				                          Source="{markupExtensions:PathResolver 'ic_done_white_24dp.png'}" TintColor="#d0ffd0">
 					<abstractions:TintedImage.GestureRecognizers>
-						<TapGestureRecognizer Command="{Binding SaveCommand}"/>
+						<TapGestureRecognizer Command="{Binding SaveCommand}" />
 					</abstractions:TintedImage.GestureRecognizers>
 				</abstractions:TintedImage>
 			</Grid>
 
 			<ScrollView Grid.Row="1" Grid.Column="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
 				<!--Note text editor-->
-				<Editor 
-				x:Name="EditorNote"
-				VerticalOptions="FillAndExpand" 
-				HorizontalOptions="FillAndExpand"
-				Text="{Binding Description}" IsEnabled="{Binding IsReadonly, Converter={StaticResource BoolReverseConverter}}"/>
+				<Editor
+					x:Name="EditorNote"
+					VerticalOptions="FillAndExpand"
+					HorizontalOptions="FillAndExpand"
+					Text="{Binding Description}" IsEnabled="{Binding IsReadonly, Converter={StaticResource BoolReverseConverter}}" />
 			</ScrollView>
 		</Grid>
 	</ContentPage.Content>

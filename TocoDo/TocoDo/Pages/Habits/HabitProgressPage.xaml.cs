@@ -11,36 +11,38 @@ namespace TocoDo.UI.Pages.Habits
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class HabitProgressPage : ContentPage
 	{
-		public HabitViewModel ViewModel { get; set; }
-		public HabitProgressPage (HabitViewModel habit)
+		public HabitProgressPage(HabitViewModel habit)
 		{
 			ViewModel = habit;
-			InitializeComponent ();
+			InitializeComponent();
 			SetupProgressChart();
 		}
+
+		public HabitViewModel ViewModel { get; set; }
 
 		private async void SetupProgressChart()
 		{
 			var color = Color.White.ToSKColor();
-			
+
 			var list = ViewModel.ModelFilling.ToList();
-			list.Sort((p1, p2) => (p1.Key > p2.Key)? 1 : (p1.Key == p2.Key)? 0 : -1);
+			list.Sort((p1, p2) => p1.Key > p2.Key ? 1 :
+				p1.Key == p2.Key                     ? 0 : -1);
 			var entries = list.Select(p => new Entry(p.Value)
 			{
 				Color = color
 			});
 
-			var pointSize = (list.Count < 20) ? 15 :
-				(list.Count < 40) ? 10 : 0;
+			var pointSize = list.Count < 20 ? 15 :
+				list.Count < 40                ? 10 : 0;
 			var chart = new LineChart
 			{
-				LineAreaAlpha = 80,
-				LineMode = LineMode.Straight,
-				PointSize = pointSize,
-				LabelTextSize = 24,
-				LineSize = 5,
-				Entries = entries,
-				BackgroundColor = Color.Transparent.ToSKColor(),
+				LineAreaAlpha   = 80,
+				LineMode        = LineMode.Straight,
+				PointSize       = pointSize,
+				LabelTextSize   = 24,
+				LineSize        = 5,
+				Entries         = entries,
+				BackgroundColor = Color.Transparent.ToSKColor()
 			};
 
 			ChartProgress.Chart = chart;

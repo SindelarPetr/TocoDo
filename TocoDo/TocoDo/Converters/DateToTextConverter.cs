@@ -7,6 +7,18 @@ namespace TocoDo.UI.Converters
 {
 	public class DateToTextConverter : IValueConverter
 	{
+		public virtual object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			var date = value as DateTime?;
+
+			return Convert(date);
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			throw new NotImplementedException();
+		}
+
 		public static string Convert(DateTime? date)
 		{
 			if (date == null)
@@ -21,22 +33,10 @@ namespace TocoDo.UI.Converters
 			//if (date.Value.Date == DateTime.Today + TimeSpan.FromDays(2))
 			//	return Resources.TheDayAfterTomorrow;
 
-			string dateFormat = "ddd, d MMM";
+			var dateFormat = "ddd, d MMM";
 			if (date.Value.Date.Year == DateTime.Today.Year)
 				return date.Value.ToString(dateFormat);
 			return date.Value.ToString(dateFormat + " yyyy");
-		}
-
-		public virtual object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-		{
-			DateTime? date = value as DateTime?;
-
-			return Convert(date);
-		}
-
-		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-		{
-			throw new NotImplementedException();
 		}
 	}
 }

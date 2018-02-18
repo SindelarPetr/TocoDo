@@ -1,19 +1,22 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<Frame xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TocoDo.UI.Views.Global.FrameWrapper"
-             x:Name="This"
-		     Padding="0">
+
+<Frame xmlns="http://xamarin.com/schemas/2014/forms"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       x:Class="TocoDo.UI.Views.Global.FrameWrapper"
+       x:Name="This"
+       Padding="0">
 	<Frame.Content>
 		<Grid x:Name="Grid" RowSpacing="0" Padding="0" BindingContext="{x:Reference This}">
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="*"/>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
 
-			<Frame VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="{Binding HeaderBackgroundColor}" CornerRadius="0" Padding="0" HasShadow="True">
-				<Label Text="{Binding Source={x:Reference This}, Path=Header}" TextColor="{Binding HeaderTextColor}" HorizontalOptions="FillAndExpand" Margin="15,15,5,2" FontSize="Large"/>
+			<Frame VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="{Binding HeaderBackgroundColor}"
+			       CornerRadius="0" Padding="0" HasShadow="True">
+				<Label Text="{Binding Source={x:Reference This}, Path=Header}" TextColor="{Binding HeaderTextColor}"
+				       HorizontalOptions="FillAndExpand" Margin="15,15,5,2" FontSize="Large" />
 			</Frame>
 		</Grid>
 	</Frame.Content>

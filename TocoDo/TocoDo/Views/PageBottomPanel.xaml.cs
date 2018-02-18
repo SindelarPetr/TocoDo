@@ -7,8 +7,15 @@ namespace TocoDo.UI.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class PageBottomPanel : ContentView
 	{
-		public static BindableProperty RemoveCommandProperty = BindableProperty.Create(nameof(RemoveCommand), typeof(ICommand), typeof(ICommand));
+		public static BindableProperty RemoveCommandProperty =
+			BindableProperty.Create(nameof(RemoveCommand), typeof(ICommand), typeof(ICommand));
+
 		public static BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(string));
+
+		public PageBottomPanel()
+		{
+			InitializeComponent();
+		}
 
 		public ICommand RemoveCommand
 		{
@@ -20,11 +27,6 @@ namespace TocoDo.UI.Views
 		{
 			get => (string) GetValue(TextProperty);
 			set => SetValue(TextProperty, value);
-		}
-
-		public PageBottomPanel ()
-		{
-			InitializeComponent ();
 		}
 	}
 }

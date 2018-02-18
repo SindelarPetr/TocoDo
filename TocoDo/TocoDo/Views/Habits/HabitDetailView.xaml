@@ -9,12 +9,13 @@
              x:Name="This">
 	<ContentView.Resources>
 		<ResourceDictionary>
-			<habits:RepeatTypeConverter x:Key="RepeatTypeConverter"/>
+			<habits:RepeatTypeConverter x:Key="RepeatTypeConverter" />
 		</ResourceDictionary>
 	</ContentView.Resources>
 
 	<ContentView.Content>
-		<Grid BindingContext="{Binding Source={x:Reference This}, Path=ViewModel}" ColumnSpacing="4" RowSpacing="8" Padding="15, 0, 0, 0" IsVisible="{Binding ModelStartDate, Converter={StaticResource IsNotNullConverter}}">
+		<Grid BindingContext="{Binding Source={x:Reference This}, Path=ViewModel}" ColumnSpacing="4" RowSpacing="8"
+		      Padding="15, 0, 0, 0" IsVisible="{Binding ModelStartDate, Converter={StaticResource IsNotNullConverter}}">
 			<Grid.Resources>
 				<ResourceDictionary>
 					<Color x:Key="DetailColor">Gray</Color>

@@ -2,9 +2,9 @@
 
 namespace TocoDo.BusinessLogic.DependencyInjection.Models
 {
-    public interface IModelFactory
-    {
-	    ITaskModel CreateTaskModel(TaskViewModel task);
-	    IHabitModel CreateHabitModel(HabitViewModel habit);
-    }
+	public interface IModelFactory
+	{
+		ITaskModel  CreateTaskModel(ITaskViewModel task);
+		IHabitModel CreateHabitModel(IHabitViewModel habit);
+	}
 }

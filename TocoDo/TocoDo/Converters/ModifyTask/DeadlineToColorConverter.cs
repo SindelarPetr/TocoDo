@@ -8,7 +8,9 @@ namespace TocoDo.UI.Converters.ModifyTask
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			return value == null ? App.Current.Resources["UnsetItemColor"] : App.Current.Resources["DeadlineColor"];
+			return value == null
+				? Application.Current.Resources["UnsetItemColor"]
+				: Application.Current.Resources["DeadlineColor"];
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

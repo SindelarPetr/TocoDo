@@ -1,45 +1,49 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
-			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-			 xmlns:habits="clr-namespace:TocoDo.UI.Converters.Habits;assembly=TocoDo.UI"
-			 xmlns:models="clr-namespace:TocoDo.BusinessLogic.DependencyInjection.Models;assembly=TocoDo.BusinessLogic"
-			 x:Class="TocoDo.UI.Views.Habits.ActualHabitView"
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:habits="clr-namespace:TocoDo.UI.Converters.Habits;assembly=TocoDo.UI"
+             xmlns:models="clr-namespace:TocoDo.BusinessLogic.DependencyInjection.Models;assembly=TocoDo.BusinessLogic"
+             x:Class="TocoDo.UI.Views.Habits.ActualHabitView"
              x:Name="This">
 	<ContentView.Resources>
 		<ResourceDictionary>
-			<habits:HabitDaylyFillingCountConverter x:Key="FillingCountConverter"/>
+			<habits:HabitDaylyFillingCountConverter x:Key="FillingCountConverter" />
 		</ResourceDictionary>
 	</ContentView.Resources>
 	<ContentView.Content>
-		<StackLayout BindingContext="{Binding Source={x:Reference This}, Path=ViewModel}" >
+		<StackLayout BindingContext="{Binding Source={x:Reference This}, Path=ViewModel}">
 			<StackLayout.GestureRecognizers>
 				<TapGestureRecognizer Command="{Binding EditCommand}" />
 			</StackLayout.GestureRecognizers>
 
 			<Grid ColumnSpacing="0">
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
 				<Label Text="{Binding ModelTitle}" Style="{StaticResource HabitHeader}" />
-				<Label Grid.Column="1" Margin="5,0,0,0" FontSize="Small" Text="{Binding ModelMaxRepeatsADay, StringFormat='Goal: {0}'}" HorizontalOptions="Fill" HorizontalTextAlignment="Center" VerticalOptions="Fill" VerticalTextAlignment="Center">
+				<Label Grid.Column="1" Margin="5,0,0,0" FontSize="Small"
+				       Text="{Binding ModelMaxRepeatsADay, StringFormat='Goal: {0}'}" HorizontalOptions="Fill"
+				       HorizontalTextAlignment="Center" VerticalOptions="Fill" VerticalTextAlignment="Center">
 					<Label.Triggers>
 						<DataTrigger TargetType="Label" Binding="{Binding ModelHabitType}" Value="{x:Static models:HabitType.Daylong}">
-							<Setter Property="IsVisible" Value="False"/>
+							<Setter Property="IsVisible" Value="False" />
 						</DataTrigger>
 					</Label.Triggers>
 				</Label>
 			</Grid>
-			<Button Text="{Binding ModelRepeatsToday}" BackgroundColor="{StaticResource ColorPrimaryLight}" TextColor="White" Command="{Binding IncreaseTodayCommand}" Clicked="Button_OnClicked">
+			<Button Text="{Binding ModelRepeatsToday}" BackgroundColor="{StaticResource ColorPrimaryLight}" TextColor="White"
+			        Command="{Binding IncreaseTodayCommand}" Clicked="Button_OnClicked">
 				<Button.Triggers>
-					<DataTrigger TargetType="Button"  Binding="{Binding ModelHabitType}" Value="{x:Static models:HabitType.Daylong}" >
-						<Setter Property="BackgroundColor" Value="{StaticResource ColorPrimaryLight}"/>
-						<Setter Property="Text" Value="{Binding ModelRepeatsToday, StringFormat='Vioalted {0} times'}"></Setter>
+					<DataTrigger TargetType="Button" Binding="{Binding ModelHabitType}" Value="{x:Static models:HabitType.Daylong}">
+						<Setter Property="BackgroundColor" Value="{StaticResource ColorPrimaryLight}" />
+						<Setter Property="Text" Value="{Binding ModelRepeatsToday, StringFormat='Vioalted {0} times'}" />
 					</DataTrigger>
 				</Button.Triggers>
 			</Button>
 
-			
+
 		</StackLayout>
-  </ContentView.Content>
+	</ContentView.Content>
 </ContentView>

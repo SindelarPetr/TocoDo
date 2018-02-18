@@ -1,68 +1,73 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
-			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-			 xmlns:views="clr-namespace:TocoDo.UI.Views;assembly=TocoDo.UI"
-			 xmlns:triggerActions="clr-namespace:TocoDo.UI.TriggerActions;assembly=TocoDo.UI"
-			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
-			 xmlns:markupExtensions="clr-namespace:TocoDo.UI.MarkupExtensions;assembly=TocoDo.UI"
-			 x:Class="TocoDo.UI.Views.IconButton"
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:TocoDo.UI.Views;assembly=TocoDo.UI"
+             xmlns:triggerActions="clr-namespace:TocoDo.UI.TriggerActions;assembly=TocoDo.UI"
+             xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
+             xmlns:markupExtensions="clr-namespace:TocoDo.UI.MarkupExtensions;assembly=TocoDo.UI"
+             x:Class="TocoDo.UI.Views.IconButton"
              x:Name="This">
 	<ContentView.Triggers>
 		<Trigger TargetType="views:IconButton" Property="IsActive" Value="False">
 			<Trigger.EnterActions>
-				<triggerActions:ShakeAction Duration="500" ShakeRange="10"/>
-				<triggerActions:IconButtonColorChangeAction NewColor="Gray" Easing="SpringOut"/>
+				<triggerActions:ShakeAction Duration="500" ShakeRange="10" />
+				<triggerActions:IconButtonColorChangeAction NewColor="Gray" Easing="SpringOut" />
 			</Trigger.EnterActions>
 			<Trigger.ExitActions>
-				<triggerActions:IconButtonColorChangeAction x:Name="ColorChangeAction" NewColor="DodgerBlue" Easing="SpringOut"/>
+				<triggerActions:IconButtonColorChangeAction x:Name="ColorChangeAction" NewColor="DodgerBlue" Easing="SpringOut" />
 			</Trigger.ExitActions>
 		</Trigger>
 	</ContentView.Triggers>
 	<ContentView.Content>
 		<Grid ColumnSpacing="15" RowSpacing="0" BindingContext="{x:Reference This}">
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="Auto"/>
-				<ColumnDefinition Width="Auto"/>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="Auto" />
 			</Grid.ColumnDefinitions>
 			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="0"/>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="0" />
 			</Grid.RowDefinitions>
 
 			<Grid.GestureRecognizers>
-				<TapGestureRecognizer Tapped="ClickRecognise"/>
+				<TapGestureRecognizer Tapped="ClickRecognise" />
 			</Grid.GestureRecognizers>
 
 			<!-- Icon of the button -->
-			<abstractions:TintedImage Source="{Binding ImageSource}" TintColor="{Binding Color}"/>
+			<abstractions:TintedImage Source="{Binding ImageSource}" TintColor="{Binding Color}" />
 
 			<!-- Separation vertical line -->
-			<BoxView Grid.Row="0" Grid.Column="1" Color="DimGray" Opacity="0.5" WidthRequest="1" Margin="1,2,1,2" HeightRequest="5"/>
+			<BoxView Grid.Row="0" Grid.Column="1" Color="DimGray" Opacity="0.5" WidthRequest="1" Margin="1,2,1,2"
+			         HeightRequest="5" />
 
 			<!--Label text-->
-			<Label Grid.Row="0" Grid.Column="2" Text="{Binding Text}" VerticalTextAlignment="Center" VerticalOptions="Fill" TextColor="{Binding Color}" />
+			<Label Grid.Row="0" Grid.Column="2" Text="{Binding Text}" VerticalTextAlignment="Center" VerticalOptions="Fill"
+			       TextColor="{Binding Color}" />
 
 			<!--Remove button-->
-			<abstractions:TintedImage Grid.Row="0" Grid.Column="3" Source="{markupExtensions:PathResolver 'ic_clear_white_18dp' }" TintColor="DarkGray" IsVisible="False">
+			<abstractions:TintedImage Grid.Row="0" Grid.Column="3"
+			                          Source="{markupExtensions:PathResolver 'ic_clear_white_18dp' }" TintColor="DarkGray"
+			                          IsVisible="False">
 				<Image.GestureRecognizers>
-					<TapGestureRecognizer x:Name="RemoveTapRecogniser" Tapped="RemoveRecognise"/>
+					<TapGestureRecognizer x:Name="RemoveTapRecogniser" Tapped="RemoveRecognise" />
 				</Image.GestureRecognizers>
 				<abstractions:TintedImage.Triggers>
 					<MultiTrigger TargetType="abstractions:TintedImage">
 						<MultiTrigger.Conditions>
-							<BindingCondition Binding="{Binding IsActive}" Value="True"/>
-							<BindingCondition Binding="{Binding HasRemoveButton}" Value="True"/>
+							<BindingCondition Binding="{Binding IsActive}" Value="True" />
+							<BindingCondition Binding="{Binding HasRemoveButton}" Value="True" />
 						</MultiTrigger.Conditions>
 						<MultiTrigger.Setters>
-							<Setter Property="IsVisible" Value="True"/>
+							<Setter Property="IsVisible" Value="True" />
 						</MultiTrigger.Setters>
 					</MultiTrigger>
 				</abstractions:TintedImage.Triggers>
 			</abstractions:TintedImage>
 
-			<ContentView x:Name="_innerContent"  Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Padding="0" Margin="0"/>
+			<ContentView x:Name="_innerContent" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Padding="0" Margin="0" />
 		</Grid>
 	</ContentView.Content>
 </ContentView>

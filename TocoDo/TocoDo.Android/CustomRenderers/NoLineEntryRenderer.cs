@@ -8,11 +8,14 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
 [assembly: ExportRenderer(typeof(NoLineEntry), typeof(NoLineEntryRenderer))]
+
 namespace TocoDo.Droid.CustomRenderers
 {
 	public class NoLineEntryRenderer : EntryRenderer
 	{
-		public NoLineEntryRenderer(Context context) : base(context) { }
+		public NoLineEntryRenderer(Context context) : base(context)
+		{
+		}
 
 		protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
 		{
@@ -20,7 +23,7 @@ namespace TocoDo.Droid.CustomRenderers
 
 			if (Control == null) return;
 
-			var shape = new ShapeDrawable(new RectShape());
+			var shape         = new ShapeDrawable(new RectShape());
 			shape.Paint.Alpha = 0;
 			shape.Paint.SetStyle(Paint.Style.Stroke);
 			Control.SetBackground(shape);

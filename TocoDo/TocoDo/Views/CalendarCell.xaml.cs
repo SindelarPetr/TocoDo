@@ -8,15 +8,15 @@ namespace TocoDo.UI.Views
 	{
 		public static BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(string));
 
+		public CalendarCell()
+		{
+			InitializeComponent();
+		}
+
 		public string Text
 		{
 			get => (string) GetValue(TextProperty);
 			set => SetValue(TextProperty, value);
-		}
-
-		public CalendarCell ()
-		{
-			InitializeComponent ();
 		}
 	}
 }

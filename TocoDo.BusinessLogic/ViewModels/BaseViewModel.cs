@@ -7,6 +7,8 @@ namespace TocoDo.BusinessLogic.ViewModels
 {
 	public class BaseViewModel : INotifyPropertyChanged
 	{
+		public event PropertyChangedEventHandler PropertyChanged;
+
 		protected bool SetValue<T>(ref T backingField, T value, [CallerMemberName] string propertyName = null)
 		{
 			if (EqualityComparer<T>.Default.Equals(backingField, value))
@@ -20,12 +22,12 @@ namespace TocoDo.BusinessLogic.ViewModels
 		}
 
 		/// <summary>
-		/// sender, oldValue, newValue, propertyName
+		///     sender, oldValue, newValue, propertyName
 		/// </summary>
 		public event Action<object, object, object, string> PropertyChanging;
-		public event PropertyChangedEventHandler PropertyChanged;
 
-		protected virtual void OnPropertyChanging(object sender, object oldValue, object newValue, [CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanging(object sender, object oldValue, object newValue,
+			[CallerMemberName] string                       propertyName = null)
 		{
 			PropertyChanging?.Invoke(sender, oldValue, newValue, propertyName);
 		}

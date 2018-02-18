@@ -9,22 +9,24 @@ namespace TocoDo.UI.Views.Habits
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ActualHabitView : ContentView, IEntryFocusable<HabitViewModel>
 	{
-		public HabitViewModel ViewModel { get; set; }
-
-		public ActualHabitView (HabitViewModel model)
+		public ActualHabitView(HabitViewModel model)
 		{
 			ViewModel = model;
-			InitializeComponent ();
+			InitializeComponent();
 		}
 
-		public void FocusEntry() { }
+		public HabitViewModel ViewModel { get; set; }
+
+		public void FocusEntry()
+		{
+		}
 
 		private void Button_OnClicked(object sender, EventArgs e)
 		{
 			if (ViewModel.ModelHabitType == HabitType.Unit && ViewModel.ModelRepeatsToday >= ViewModel.ModelMaxRepeatsADay)
 			{
 				ViewModel.ModelRepeatsToday %= ViewModel.ModelMaxRepeatsADay + 1;
-				((Button) sender).IsEnabled = false;
+				((Button) sender).IsEnabled =  false;
 			}
 		}
 	}

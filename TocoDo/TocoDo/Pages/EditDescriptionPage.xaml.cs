@@ -8,13 +8,15 @@ namespace TocoDo.UI.Pages
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class EditDescriptionPage : ContentPage
 	{
-		public EditDescriptionViewModel ViewModel { get; set; }
-
-		public EditDescriptionPage(string title, string description, Action<string> setDescriptionAction, bool isReadonly = false)
+		public EditDescriptionPage(string title, string description, Action<string> setDescriptionAction,
+			bool                             isReadonly = false)
 		{
-			ViewModel = new EditDescriptionViewModel(((App)App.Current).Navigation, title, description, setDescriptionAction, isReadonly);
+			ViewModel = new EditDescriptionViewModel(((App) Application.Current).Navigation, title, description,
+				setDescriptionAction, isReadonly);
 			InitializeComponent();
 		}
+
+		public EditDescriptionViewModel ViewModel { get; set; }
 
 		protected override void OnAppearing()
 		{

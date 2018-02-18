@@ -1,61 +1,63 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-			 xmlns:global="clr-namespace:TocoDo.UI.Views.Global;assembly=TocoDo.UI"
-			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
-			 xmlns:views="clr-namespace:TocoDo.UI.Views;assembly=TocoDo.UI"
-			 xmlns:todos="clr-namespace:TocoDo.UI.Views.Todos;assembly=TocoDo.UI"
-			 xmlns:habits="clr-namespace:TocoDo.UI.Views.Habits;assembly=TocoDo.UI"
-			 xmlns:customRenderers="clr-namespace:TocoDo.UI.CustomRenderers;assembly=TocoDo.UI"
-			 x:Class="TocoDo.UI.Pages.Today.TodayPage"
-			 x:Name="This">
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:global="clr-namespace:TocoDo.UI.Views.Global;assembly=TocoDo.UI"
+             xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
+             xmlns:views="clr-namespace:TocoDo.UI.Views;assembly=TocoDo.UI"
+             xmlns:todos="clr-namespace:TocoDo.UI.Views.Todos;assembly=TocoDo.UI"
+             xmlns:habits="clr-namespace:TocoDo.UI.Views.Habits;assembly=TocoDo.UI"
+             xmlns:customRenderers="clr-namespace:TocoDo.UI.CustomRenderers;assembly=TocoDo.UI"
+             x:Class="TocoDo.UI.Pages.Today.TodayPage"
+             x:Name="This">
 	<ContentPage.Content>
 		<AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BindingContext="{x:Reference This}">
 			<ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
 				<Grid Style="{StaticResource PageGrid}">
 					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto"/>
-						<RowDefinition Height="Auto"/>
-						<RowDefinition Height="*"/>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="*" />
 					</Grid.RowDefinitions>
 
 					<!--Calendar-->
-					<global:FrameWrapper Header="January" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource ColorPrimaryDark}">
+					<global:FrameWrapper Header="January" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+					                     BackgroundColor="{StaticResource ColorPrimaryDark}">
 						<Grid ColumnSpacing="0">
 							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="Auto"/>
-								<ColumnDefinition Width="*"/>
-								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="Auto" />
 							</Grid.ColumnDefinitions>
 							<Grid.Resources>
 								<ResourceDictionary>
 									<Style TargetType="StackLayout">
-										<Setter Property="VerticalOptions" Value="CenterAndExpand"/>
-										<Setter Property="Padding" Value="10, 0, 10, 0"/>
+										<Setter Property="VerticalOptions" Value="CenterAndExpand" />
+										<Setter Property="Padding" Value="10, 0, 10, 0" />
 									</Style>
 									<Style TargetType="abstractions:TintedImage">
-										<Setter Property="TintColor" Value="White"/>
-										<Setter Property="VerticalOptions" Value="Center"/>
+										<Setter Property="TintColor" Value="White" />
+										<Setter Property="VerticalOptions" Value="Center" />
 									</Style>
 								</ResourceDictionary>
 							</Grid.Resources>
 
 							<StackLayout Padding="15, 0, 5, 0">
-								<abstractions:TintedImage Source="ic_keyboard_arrow_left_white_36dp.png"/>
+								<abstractions:TintedImage Source="ic_keyboard_arrow_left_white_36dp.png" />
 							</StackLayout>
-							
-							<views:MyCalendarView Grid.Column="1" HorizontalOptions="FillAndExpand"/>
-							
+
+							<views:MyCalendarView Grid.Column="1" HorizontalOptions="FillAndExpand" />
+
 							<StackLayout Grid.Column="2" Padding="5, 0, 15, 0">
-								<abstractions:TintedImage  Source="ic_keyboard_arrow_right_white_36dp.png" VerticalOptions="Center"/>
+								<abstractions:TintedImage Source="ic_keyboard_arrow_right_white_36dp.png" VerticalOptions="Center" />
 							</StackLayout>
 						</Grid>
 					</global:FrameWrapper>
 
 					<!--TODAY-->
 					<!--TODO: Sources-->
-						<global:FrameWrapper Grid.Row="1" Header="Tasks">
-						<todos:TaskCollection VerticalOptions="Start"/>
+					<global:FrameWrapper Grid.Row="1" Header="Tasks">
+						<todos:TaskCollection VerticalOptions="Start" />
 					</global:FrameWrapper>
 
 					<global:FrameWrapper Grid.Row="2" Header="Habits">
@@ -64,7 +66,9 @@
 				</Grid>
 			</ScrollView>
 
-			<customRenderers:FloatingAddButton AbsoluteLayout.LayoutBounds="1,1,88,88" AbsoluteLayout.LayoutFlags="PositionProportional" Margin="16" Clicked="ButtonAddToday_OnClicked" />
+			<customRenderers:FloatingAddButton AbsoluteLayout.LayoutBounds="1,1,88,88"
+			                                   AbsoluteLayout.LayoutFlags="PositionProportional" Margin="16"
+			                                   Clicked="ButtonAddToday_OnClicked" />
 		</AbsoluteLayout>
 	</ContentPage.Content>
 </ContentPage>

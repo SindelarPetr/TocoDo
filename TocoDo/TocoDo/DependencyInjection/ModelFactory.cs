@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using Newtonsoft.Json;
 using TocoDo.BusinessLogic.DependencyInjection.Models;
 using TocoDo.BusinessLogic.ViewModels;
 using TocoDo.UI.Models;
@@ -9,7 +9,7 @@ namespace TocoDo.UI.DependencyInjection
 {
 	public class ModelFactory : IModelFactory
 	{
-		public ITaskModel CreateTaskModel(TaskViewModel task)
+		public ITaskModel CreateTaskModel(ITaskViewModel task)
 		{
 			return new TaskModel
 			{
@@ -24,7 +24,25 @@ namespace TocoDo.UI.DependencyInjection
 			};
 		}
 
-		public IHabitModel CreateHabitModel(HabitViewModel habit)
+		public IHabitModel CreateHabitModel(IHabitViewModel habit) 
+		{
+			return new HabitModel
+			{
+				Id            = habit.ModelId,
+				CreationDate  = habit.ModelCreationDate,
+				RepeatType    = habit.ModelRepeatType,
+				Description   = habit.ModelDescription,
+				Filling       = JsonConvert.SerializeObject(new Dictionary<DateTime, int>(habit.ModelFilling)),
+				HabitType     = habit.ModelHabitType,
+				DaysToRepeat  = habit.ModelDaysToRepeat,
+				StartDate     = habit.ModelStartDate,
+				Title         = habit.ModelTitle,
+				IsRecommended = habit.ModelIsRecommended,
+				RepeatsADay   = habit.ModelMaxRepeatsADay
+			};
+		}
+
+		public T CreateHabitModel<T>(HabitViewModel habit) where T : IHabitModel, new()
 		{
 			throw new NotImplementedException();
 		}

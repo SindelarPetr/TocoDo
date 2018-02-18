@@ -1,14 +1,15 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-			 xmlns:tasks="clr-namespace:TocoDo.UI.Converters.Tasks;assembly=TocoDo.UI"
-			 xmlns:converters="clr-namespace:TocoDo.UI.Converters;assembly=TocoDo.UI"
-			 xmlns:views="clr-namespace:TocoDo.UI.Views;assembly=TocoDo.UI"
-			 xmlns:markupExtensions="clr-namespace:TocoDo.UI.MarkupExtensions;assembly=TocoDo.UI"
-			 xmlns:customRenderers="clr-namespace:TocoDo.UI.CustomRenderers;assembly=TocoDo.UI"
-			 xmlns:todos="clr-namespace:TocoDo.UI.Views.Todos;assembly=TocoDo.UI"
-			 x:Class="TocoDo.UI.Pages.Tasks.ModifyTaskPage"
-			 Title="Modify the task"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:tasks="clr-namespace:TocoDo.UI.Converters.Tasks;assembly=TocoDo.UI"
+             xmlns:converters="clr-namespace:TocoDo.UI.Converters;assembly=TocoDo.UI"
+             xmlns:views="clr-namespace:TocoDo.UI.Views;assembly=TocoDo.UI"
+             xmlns:markupExtensions="clr-namespace:TocoDo.UI.MarkupExtensions;assembly=TocoDo.UI"
+             xmlns:customRenderers="clr-namespace:TocoDo.UI.CustomRenderers;assembly=TocoDo.UI"
+             xmlns:todos="clr-namespace:TocoDo.UI.Views.Todos;assembly=TocoDo.UI"
+             x:Class="TocoDo.UI.Pages.Tasks.ModifyTaskPage"
+             Title="Modify the task"
              x:Name="This">
 	<ContentPage.Resources>
 		<ResourceDictionary>
@@ -18,59 +19,73 @@
 			</Style>
 			<tasks:CheckConverter x:Key="CheckConverter" />
 			<tasks:DescriptionToColorConverter x:Key="DescriptionToColorConverter" />
-			<converters:ValueCheckerConverter x:Key="ValueCheckerConverter"/>
-			<converters:IsNotNullOrWhitespaceConverter x:Key="IsNotNullOrWhitespaceConverter"/>
+			<converters:ValueCheckerConverter x:Key="ValueCheckerConverter" />
+			<converters:IsNotNullOrWhitespaceConverter x:Key="IsNotNullOrWhitespaceConverter" />
 		</ResourceDictionary>
 	</ContentPage.Resources>
 	<ContentPage.Content>
 		<Grid BindingContext="{Binding Source={x:Reference This}, Path=TaskViewModel}" RowSpacing="0">
 			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="*"/>
-				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+				<RowDefinition Height="Auto" />
 			</Grid.RowDefinitions>
 
 			<!--Top Panel-->
 			<Frame Margin="0" CornerRadius="0" HasShadow="False" Padding="0,5,0,0" OutlineColor="{DynamicResource ColorPrimary}"
-				   BackgroundColor="{DynamicResource ColorPrimary}">
+			       BackgroundColor="{DynamicResource ColorPrimary}">
 				<Grid HorizontalOptions="FillAndExpand" Padding="16,0,10,0" BackgroundColor="Transparent" ColumnSpacing="30">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="Auto" />
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
 
-					<todos:CheckerView x:Name="TodoBoxView" IsChecked="{Binding Done, Mode=TwoWay, Converter={StaticResource CheckConverter}}" UncheckedColor="WhiteSmoke" CheckedColor="White" />
-					<customRenderers:NoLineEntry x:Name="EntryTitle" Text="{Binding Title, Mode=OneWay}" Grid.Column="1" Grid.Row="0" HorizontalOptions="FillAndExpand" TextColor="White" Unfocused="EntryTitle_OnCompleted" />
+					<todos:CheckerView x:Name="TodoBoxView"
+					                   IsChecked="{Binding Done, Mode=TwoWay, Converter={StaticResource CheckConverter}}"
+					                   UncheckedColor="WhiteSmoke" CheckedColor="White" />
+					<customRenderers:NoLineEntry x:Name="EntryTitle" Text="{Binding Title, Mode=OneWay}" Grid.Column="1" Grid.Row="0"
+					                             HorizontalOptions="FillAndExpand" TextColor="White"
+					                             Unfocused="EntryTitle_OnCompleted" />
 				</Grid>
 			</Frame>
 
 			<!--Edit attributes-->
 			<Grid Grid.Row="1" Grid.Column="0" Style="{StaticResource SecondayPageGrid}">
 				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="*"/>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="*" />
 				</Grid.RowDefinitions>
-				<Frame Margin="0" >
+				<Frame Margin="0">
 					<StackLayout Spacing="10">
 						<!--Schedule date-->
-						<views:DateButtonView ImageSource="{markupExtensions:PathResolver 'ic_today_white_24dp'}" FormattedText="Schedule date: {0}" SelectedDate="{Binding Source={x:Reference This}, Path=TaskViewModel.ScheduleDate, Mode=TwoWay, Converter={StaticResource ValueCheckerConverter} }" />
+						<views:DateButtonView ImageSource="{markupExtensions:PathResolver 'ic_today_white_24dp'}"
+						                      FormattedText="Schedule date: {0}"
+						                      SelectedDate="{Binding Source={x:Reference This}, Path=TaskViewModel.ScheduleDate, Mode=TwoWay, Converter={StaticResource ValueCheckerConverter} }" />
 
 						<!--Deadline-->
-						<views:DateButtonView ImageSource="{markupExtensions:PathResolver 'ic_whatshot_white_24dp'}" FormattedText="Deadline: {0}" SelectedDate="{Binding Source={x:Reference This}, Path=TaskViewModel.Deadline, Mode=TwoWay, Converter={StaticResource ValueCheckerConverter} }" ActiveColor="OrangeRed"/>
+						<views:DateButtonView ImageSource="{markupExtensions:PathResolver 'ic_whatshot_white_24dp'}"
+						                      FormattedText="Deadline: {0}"
+						                      SelectedDate="{Binding Source={x:Reference This}, Path=TaskViewModel.Deadline, Mode=TwoWay, Converter={StaticResource ValueCheckerConverter} }"
+						                      ActiveColor="OrangeRed" />
 
 						<!--Reminder-->
-						<views:DateButtonView ImageSource="{markupExtensions:PathResolver 'ic_notifications_active_white_24dp'}" FormattedText="Reminder: {0}" SelectedDate="{Binding Source={x:Reference This}, Path=TaskViewModel.Reminder, Mode=TwoWay, Converter={StaticResource ValueCheckerConverter} }" />
+						<views:DateButtonView ImageSource="{markupExtensions:PathResolver 'ic_notifications_active_white_24dp'}"
+						                      FormattedText="Reminder: {0}"
+						                      SelectedDate="{Binding Source={x:Reference This}, Path=TaskViewModel.Reminder, Mode=TwoWay, Converter={StaticResource ValueCheckerConverter} }" />
 					</StackLayout>
 				</Frame>
 
 				<!--Note panel-->
-				<views:DescriptionFrameView Grid.Row="1" Description="{Binding Description}" Title="{Binding Title}"/>
-				</Grid>
+				<views:DescriptionFrameView Grid.Row="1" Description="{Binding Description}" Title="{Binding Title}" />
+			</Grid>
 
-			<views:PageBottomPanel Grid.Row="2" Text="{Binding CreateTime, Converter={StaticResource PastDateTimeConverter}, StringFormat='Created {0}'}">
+			<views:PageBottomPanel Grid.Row="2"
+			                       Text="{Binding CreateTime, Converter={StaticResource PastDateTimeConverter}, StringFormat='Created {0}'}">
 				<views:PageBottomPanel.Triggers>
-					<DataTrigger TargetType="views:PageBottomPanel"  Binding="{Binding Done, Converter={StaticResource IsNotNullConverter}}" Value="True">
-						<Setter Property="Text" Value="{Binding Done, Converter={StaticResource PastDateTimeConverter}, StringFormat='Done {0}'}"/>
+					<DataTrigger TargetType="views:PageBottomPanel"
+					             Binding="{Binding Done, Converter={StaticResource IsNotNullConverter}}" Value="True">
+						<Setter Property="Text"
+						        Value="{Binding Done, Converter={StaticResource PastDateTimeConverter}, StringFormat='Done {0}'}" />
 					</DataTrigger>
 				</views:PageBottomPanel.Triggers>
 			</views:PageBottomPanel>

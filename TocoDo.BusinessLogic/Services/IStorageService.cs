@@ -5,21 +5,20 @@ using TocoDo.BusinessLogic.ViewModels;
 
 namespace TocoDo.BusinessLogic.Services
 {
-    public interface IStorageService
+	public interface IStorageService
 	{
-		ReadOnlyObservableCollection<TaskViewModel> AllTasks { get; }
-		ReadOnlyObservableCollection<HabitViewModel> AllHabits { get; }
-
+		ReadOnlyObservableCollection<IHabitViewModel> AllHabits  { get; }
 		void StartCreatingHabit();
-	    Task ConfirmCreationOfHabit(HabitViewModel habit);
-	    void CancelCreationOfHabit(HabitViewModel habit);
-	    Task UpdateHabit(HabitViewModel habit);
-	    Task DeleteHabit(HabitViewModel habit);
+		Task ConfirmCreationOfHabit(IHabitViewModel habit);
+		void CancelCreationOfHabit(IHabitViewModel  habit);
+		Task UpdateHabit(IHabitViewModel            habit);
+		Task DeleteHabit(IHabitViewModel            habit);
 
-		Task StartCreatingTask(DateTime? date);
-		Task ConfirmCreationOfTask(TaskViewModel task);
-		Task CancelCreationOfTask(TaskViewModel task);
-		Task DeleteTask(TaskViewModel task);
-		Task UpdateTask(TaskViewModel task);
+		ReadOnlyObservableCollection<ITaskViewModel> AllTasks { get; }
+		void StartCreatingTask(DateTime?         date);
+		Task ConfirmCreationOfTask(ITaskViewModel task);
+		void CancelCreationOfTask(ITaskViewModel  task);
+		Task DeleteTask(ITaskViewModel            task);
+		Task UpdateTask(ITaskViewModel            task);
 	}
 }

@@ -3,33 +3,47 @@ using Xamarin.Forms;
 
 namespace TocoDo.UI.Controls
 {
-    class NullableDatePicker : DatePicker
-    {
-			private string _format = null;
-			public static readonly BindableProperty NullableDateProperty = BindableProperty.Create(nameof(NullableDate), typeof(DateTime?), typeof(DateTime?));
+	internal class NullableDatePicker : DatePicker
+	{
+		public static readonly BindableProperty NullableDateProperty =
+			BindableProperty.Create(nameof(NullableDate), typeof(DateTime?), typeof(DateTime?));
 
-			public DateTime? NullableDate
-			{
-				get { return (DateTime?)GetValue(NullableDateProperty); }
-				set { SetValue(NullableDateProperty, value); UpdateDate(); }
-			}
+		private string _format;
 
-			private void UpdateDate()
+		public DateTime? NullableDate
+		{
+			get => (DateTime?) GetValue(NullableDateProperty);
+			set
 			{
-				if (NullableDate.HasValue) { if (null != _format) Format = _format; Date = NullableDate.Value; }
-				else { _format = Format; Format = "pick ..."; }
-			}
-			protected override void OnBindingContextChanged()
-			{
-				base.OnBindingContextChanged();
+				SetValue(NullableDateProperty, value);
 				UpdateDate();
 			}
+		}
 
-			protected override void OnPropertyChanged(string propertyName = null)
+		private void UpdateDate()
+		{
+			if (NullableDate.HasValue)
 			{
-				base.OnPropertyChanged(propertyName);
-				if (propertyName == "Date") NullableDate = Date;
+				if (null != _format) Format = _format;
+				Date                        = NullableDate.Value;
 			}
-		
+			else
+			{
+				_format = Format;
+				Format  = "pick ...";
+			}
+		}
+
+		protected override void OnBindingContextChanged()
+		{
+			base.OnBindingContextChanged();
+			UpdateDate();
+		}
+
+		protected override void OnPropertyChanged(string propertyName = null)
+		{
+			base.OnPropertyChanged(propertyName);
+			if (propertyName == "Date") NullableDate = Date;
+		}
 	}
 }

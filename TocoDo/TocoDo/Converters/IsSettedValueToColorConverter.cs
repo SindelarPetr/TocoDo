@@ -9,12 +9,9 @@ namespace TocoDo.UI.Converters
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			if (value == null)
-			{
-				return (Color)App.Current.Resources["UnsetItemColor"];
-			}
+			if (value == null) return (Color) Application.Current.Resources["UnsetItemColor"];
 
-			return (Color)App.Current.Resources["SetItemColor"];
+			return (Color) Application.Current.Resources["SetItemColor"];
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

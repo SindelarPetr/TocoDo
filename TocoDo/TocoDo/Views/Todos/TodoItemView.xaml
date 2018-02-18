@@ -1,98 +1,115 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
-			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-			 x:Class="TocoDo.UI.Views.Todos.TodoItemView"
-			 xmlns:tint="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
-			 xmlns:tasks="clr-namespace:TocoDo.UI.Converters.Tasks;assembly=TocoDo.UI"
-			 xmlns:converters="clr-namespace:TocoDo.UI.Converters;assembly=TocoDo.UI"
-			 xmlns:customRenderers="clr-namespace:TocoDo.UI.CustomRenderers;assembly=TocoDo.UI"
-			 xmlns:markupExtensions="clr-namespace:TocoDo.UI.MarkupExtensions;assembly=TocoDo.UI"
-			 xmlns:todos="clr-namespace:TocoDo.UI.Views.Todos;assembly=TocoDo.UI"
-			 Padding="0,5,0,5" VerticalOptions="Center">
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TocoDo.UI.Views.Todos.TodoItemView"
+             xmlns:tint="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
+             xmlns:tasks="clr-namespace:TocoDo.UI.Converters.Tasks;assembly=TocoDo.UI"
+             xmlns:converters="clr-namespace:TocoDo.UI.Converters;assembly=TocoDo.UI"
+             xmlns:customRenderers="clr-namespace:TocoDo.UI.CustomRenderers;assembly=TocoDo.UI"
+             xmlns:markupExtensions="clr-namespace:TocoDo.UI.MarkupExtensions;assembly=TocoDo.UI"
+             xmlns:todos="clr-namespace:TocoDo.UI.Views.Todos;assembly=TocoDo.UI"
+             Padding="0,5,0,5" VerticalOptions="Center">
 	<ContentView.Resources>
 		<ResourceDictionary>
 			<Style TargetType="tint:TintedImage">
-				<Setter Property="Aspect" Value="AspectFit"/>
-				<Setter Property="IsOpaque" Value="True"/>
+				<Setter Property="Aspect" Value="AspectFit" />
+				<Setter Property="IsOpaque" Value="True" />
 			</Style>
 			<tasks:CheckConverter x:Key="CheckConverter" />
 			<converters:IsNotNullConverter x:Key="IsNotNullConverter" />
 			<converters:DoneOpacityConverter x:Key="DoneOpacityConverter" />
-			<converters:IsNotNullOrWhitespaceConverter x:Key="IsNotNullOrWhitespaceConverter"/>
-			<converters:BoolReverseConverter x:Key="BoolReverseConverter"/>
+			<converters:IsNotNullOrWhitespaceConverter x:Key="IsNotNullOrWhitespaceConverter" />
+			<converters:BoolReverseConverter x:Key="BoolReverseConverter" />
 			<Color x:Key="TitleColor">Gray</Color>
 			<x:Double x:Key="TitleFontSize">15</x:Double>
 		</ResourceDictionary>
 	</ContentView.Resources>
 	<ContentView.Content>
-		<Grid VerticalOptions="Center" Opacity="{Binding Done, Converter={StaticResource DoneOpacityConverter}}" ColumnSpacing="10">
+		<Grid VerticalOptions="Center" Opacity="{Binding Done, Converter={StaticResource DoneOpacityConverter}}"
+		      ColumnSpacing="10">
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="Auto"/>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="Auto" />
 			</Grid.ColumnDefinitions>
 			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto" />
 			</Grid.RowDefinitions>
 			<Grid.GestureRecognizers>
-				<TapGestureRecognizer Tapped="TapTitle_OnTapped"/>
+				<TapGestureRecognizer Tapped="TapTitle_OnTapped" />
 			</Grid.GestureRecognizers>
 
 			<!--Check box-->
-			<todos:CheckerView x:Name="TodoBoxView" IsChecked="{Binding Done, Mode=TwoWay, Converter={StaticResource CheckConverter}}" HeightRequest="40" WidthRequest="40" CheckCommand="CheckCommand"/>
+			<todos:CheckerView x:Name="TodoBoxView"
+			                   IsChecked="{Binding Done, Mode=TwoWay, Converter={StaticResource CheckConverter}}"
+			                   HeightRequest="40" WidthRequest="40" CheckCommand="CheckCommand" />
 
 
 			<StackLayout Grid.Column="1" VerticalOptions="Center">
-				<customRenderers:NoLineEntry x:Name="EntryEditTitle" Text="{Binding Title, Mode=OneWay}" Unfocused="EditTitle_OnUnfocused" FontSize="{StaticResource TitleFontSize}" TextColor="{StaticResource TitleColor}" Margin="-3, 0,0,0">
+				<customRenderers:NoLineEntry x:Name="EntryEditTitle" Text="{Binding Title, Mode=OneWay}"
+				                             Unfocused="EditTitle_OnUnfocused" FontSize="{StaticResource TitleFontSize}"
+				                             TextColor="{StaticResource TitleColor}" Margin="-3, 0,0,0">
 					<customRenderers:NoLineEntry.Triggers>
 						<Trigger TargetType="customRenderers:NoLineEntry" Property="IsFocused" Value="False">
-							<Setter Property="IsVisible" Value="False"/>
+							<Setter Property="IsVisible" Value="False" />
 						</Trigger>
 					</customRenderers:NoLineEntry.Triggers>
 				</customRenderers:NoLineEntry>
 
 				<!--Title label-->
-				<customRenderers:CrossedLabel x:Name="LabelTitle" Text="{Binding Title}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center" IsStrikeThrough="{Binding Done, Mode=OneWay, Converter={StaticResource IsNotNullConverter}}" HeightRequest="20" FontSize="{StaticResource TitleFontSize}" TextColor="{StaticResource TitleColor}" IsVisible="{Binding Source={x:Reference EntryEditTitle}, Path=IsVisible, Converter={StaticResource BoolReverseConverter}}">
-
-				</customRenderers:CrossedLabel>
+				<customRenderers:CrossedLabel x:Name="LabelTitle" Text="{Binding Title}" VerticalOptions="Center"
+				                              HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center"
+				                              IsStrikeThrough="{Binding Done, Mode=OneWay, Converter={StaticResource IsNotNullConverter}}"
+				                              HeightRequest="20" FontSize="{StaticResource TitleFontSize}"
+				                              TextColor="{StaticResource TitleColor}"
+				                              IsVisible="{Binding Source={x:Reference EntryEditTitle}, Path=IsVisible, Converter={StaticResource BoolReverseConverter}}" />
 
 			</StackLayout>
 
 			<!-- Task attributes -->
 			<Grid Grid.Column="2" HorizontalOptions="End" Opacity="0.7" ColumnSpacing="0" VerticalOptions="Center">
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
 				<Grid.Triggers>
 					<MultiTrigger TargetType="Grid">
 						<MultiTrigger.Conditions>
-							<BindingCondition Binding="{Binding Deadline}" Value="{x:Null}"/>
-							<BindingCondition Binding="{Binding Description, Converter={StaticResource IsNotNullOrWhitespaceConverter}}" Value="False"/>
-							<BindingCondition Binding="{Binding Reminder}" Value="{x:Null}"/>
+							<BindingCondition Binding="{Binding Deadline}" Value="{x:Null}" />
+							<BindingCondition Binding="{Binding Description, Converter={StaticResource IsNotNullOrWhitespaceConverter}}"
+							                  Value="False" />
+							<BindingCondition Binding="{Binding Reminder}" Value="{x:Null}" />
 						</MultiTrigger.Conditions>
 						<MultiTrigger.Setters>
-							<Setter Property="IsVisible" Value="False"/>
+							<Setter Property="IsVisible" Value="False" />
 						</MultiTrigger.Setters>
 					</MultiTrigger>
 				</Grid.Triggers>
 				<Grid.Resources>
 					<ResourceDictionary>
 						<Style TargetType="tint:TintedImage">
-							<Setter Property="IsVisible" Value="True"/>
-							<Setter Property="HeightRequest" Value="15"/>
+							<Setter Property="IsVisible" Value="True" />
+							<Setter Property="HeightRequest" Value="15" />
 						</Style>
 					</ResourceDictionary>
 				</Grid.Resources>
 
-				<tint:TintedImage Grid.Column="0" Source="{markupExtensions:PathResolver 'ic_whatshot_white_24dp'}" TintColor="{StaticResource DeadlineColor}" IsVisible="{Binding Deadline, Converter={StaticResource IsNotNullConverter}}"/>
+				<tint:TintedImage Grid.Column="0" Source="{markupExtensions:PathResolver 'ic_whatshot_white_24dp'}"
+				                  TintColor="{StaticResource DeadlineColor}"
+				                  IsVisible="{Binding Deadline, Converter={StaticResource IsNotNullConverter}}" />
 
 				<!-- Reminder attribute -->
-				<tint:TintedImage Grid.Column="1" Source="{markupExtensions:PathResolver 'ic_notifications_active_white_24dp'}"  TintColor="{StaticResource SetItemColor}" IsVisible="{Binding Reminder, Converter={StaticResource IsNotNullConverter}}" Margin="4, 0, 0, 0"/>
+				<tint:TintedImage Grid.Column="1" Source="{markupExtensions:PathResolver 'ic_notifications_active_white_24dp'}"
+				                  TintColor="{StaticResource SetItemColor}"
+				                  IsVisible="{Binding Reminder, Converter={StaticResource IsNotNullConverter}}" Margin="4, 0, 0, 0" />
 
 				<!-- Description attribute -->
-				<tint:TintedImage Grid.Column="2" Source="{markupExtensions:PathResolver 'ic_mode_edit_white_24dp'}" TintColor="{StaticResource DescriptionColor}" IsVisible="{Binding Description, Converter={StaticResource IsNotNullOrWhitespaceConverter}}" Margin="4, 0, 0, 0"/>
+				<tint:TintedImage Grid.Column="2" Source="{markupExtensions:PathResolver 'ic_mode_edit_white_24dp'}"
+				                  TintColor="{StaticResource DescriptionColor}"
+				                  IsVisible="{Binding Description, Converter={StaticResource IsNotNullOrWhitespaceConverter}}"
+				                  Margin="4, 0, 0, 0" />
 			</Grid>
 		</Grid>
 	</ContentView.Content>

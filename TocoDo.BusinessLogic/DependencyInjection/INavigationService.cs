@@ -2,26 +2,30 @@
 
 namespace TocoDo.BusinessLogic.DependencyInjection
 {
-	public enum PageType {
+	public enum PageType
+	{
 		EditDescriptionPage,
 		ModifyHabitPage,
 		HabitProgressPage,
 		ModifyTaskPage
 	}
-	public enum PopupType { }
 
-    public interface INavigationService
-    {
-	    Task<bool> DisplayAlert(string title, string message, string accept, string cancel);
-	    Task<string> DisplayActionSheet(string title, string cancel, string destruction, string[] buttons);
+	public enum PopupType
+	{
+	}
+
+	public interface INavigationService
+	{
+		Task<bool>   DisplayAlert(string       title, string message, string accept, string        cancel);
+		Task<string> DisplayActionSheet(string title, string cancel, string  destruction, string[] buttons);
 
 		Task PushAsync(PageType page, object param = null);
-	    Task PopAsync();
+		Task PopAsync();
 
-	    Task PushModalAsync(PageType page, object param = null);
-	    Task PopModalAsync();
+		Task PushModalAsync(PageType page, object param = null);
+		Task PopModalAsync();
 
-	    Task PushPopupAsync(PopupType page, object param = null);
-	    Task PopPopupAsync();
-    }
+		Task PushPopupAsync(PopupType page, object param = null);
+		Task PopPopupAsync();
+	}
 }

@@ -4,14 +4,14 @@ namespace TocoDo.BusinessLogic.Helpers
 {
 	public class SemaphorDisabler
 	{
-		private readonly Action _enableAction;
 		private readonly Action _disableAction;
+		private readonly Action _enableAction;
 
-		private int _counter = 0;
+		private int _counter;
 
 		public SemaphorDisabler(Action enableAction, Action disableAction)
 		{
-			_enableAction = enableAction;
+			_enableAction  = enableAction;
 			_disableAction = disableAction;
 		}
 

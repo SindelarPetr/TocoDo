@@ -1,20 +1,19 @@
 ﻿using System.ComponentModel;
 using Android.Content;
 using Android.Graphics;
-using TocoDo.UI.CustomRenderers;
 using TocoDo.Droid.CustomRenderers;
+using TocoDo.UI.CustomRenderers;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
 [assembly: ExportRenderer(typeof(CrossedLabel), typeof(CrossedLabelRenderer))]
+
 namespace TocoDo.Droid.CustomRenderers
 {
 	public class CrossedLabelRenderer : LabelRenderer
 	{
-
-		public CrossedLabelRenderer(Context con): base(con)
+		public CrossedLabelRenderer(Context con) : base(con)
 		{
-			
 		}
 
 		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -31,7 +30,7 @@ namespace TocoDo.Droid.CustomRenderers
 
 		private void StrikeThrough()
 		{
-			var crossedLabel = (CrossedLabel)Element;
+			var crossedLabel = (CrossedLabel) Element;
 			if (Control == null || crossedLabel == null) return;
 
 

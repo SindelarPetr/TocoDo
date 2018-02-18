@@ -1,18 +1,19 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
-			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-			 xmlns:main="clr-namespace:TocoDo.UI.Pages.Main;assembly=TocoDo.UI"
-			 x:Class="TocoDo.UI.Pages.Main.MainPage"
-			 Title="Toco Do">
+                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                  xmlns:main="clr-namespace:TocoDo.UI.Pages.Main;assembly=TocoDo.UI"
+                  x:Class="TocoDo.UI.Pages.Main.MainPage"
+                  Title="Toco Do">
 	<MasterDetailPage.Master>
-		<main:MainMasterPage Title="Toco Do"/>
+		<main:MainMasterPage Title="Toco Do" />
 	</MasterDetailPage.Master>
 	<MasterDetailPage.Detail>
 		<main:MainTabbedPage Title="Toco Do">
 			<main:MainTabbedPage.BarBackgroundColor>
-				<OnPlatform x:TypeArguments="Color" >
+				<OnPlatform x:TypeArguments="Color">
 					<On Platform="iOS">White</On>
-					<On Platform="Android" Value="{StaticResource BarColor}"/>
+					<On Platform="Android" Value="{StaticResource BarColor}" />
 					<On Platform="UWP">Black</On>
 				</OnPlatform>
 			</main:MainTabbedPage.BarBackgroundColor>

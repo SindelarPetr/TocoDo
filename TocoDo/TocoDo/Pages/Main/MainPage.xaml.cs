@@ -1,4 +1,5 @@
-﻿using TocoDo.BusinessLogic;
+﻿using System;
+using TocoDo.BusinessLogic;
 using Xamarin.Forms;
 
 namespace TocoDo.UI.Pages.Main
@@ -12,10 +13,12 @@ namespace TocoDo.UI.Pages.Main
 			{
 				InitializeComponent();
 			}
-			catch (System.Exception e)
+			catch (Exception e)
 			{
 				MyLogger.WriteException(e);
+				throw;
 			}
+
 			MyLogger.WriteEndMethod();
 		}
 	}

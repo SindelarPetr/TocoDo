@@ -7,69 +7,69 @@ using Xamarin.Forms;
 
 namespace TocoDo.UI.Converters.Habits
 {
-    public class HabitDateConverter : IValueConverter
-    {
-	    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-	    {
-			HabitViewModel habit = value as HabitViewModel;
+	public class HabitDateConverter : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			var habit = value as HabitViewModel;
 
-		    DateTime? date = habit?.ModelStartDate;
+			var date = habit?.ModelStartDate;
 
 			if (date == null)
-			    return string.Empty;
+				return string.Empty;
 
-		    string startDate = DateToTextConverter.Convert(date);
-			string repeatText = GetRepeatText(habit.ModelRepeatType, habit.ModelDaysToRepeat);
-		    string dayAmountText = habit.ModelHabitType == HabitType.Daylong
-			    ? $"{Resources.AllDay.ToLower()}"
-			    : $"{habit.ModelRepeatsToday} {Resources.TimesADay.ToLower()}";
-		    return $"From { startDate } - { repeatText } { dayAmountText}";
+			var startDate     = DateToTextConverter.Convert(date);
+			var repeatText    = GetRepeatText(habit.ModelRepeatType, habit.ModelDaysToRepeat);
+			var dayAmountText = habit.ModelHabitType == HabitType.Daylong
+				? $"{Resources.AllDay.ToLower()}"
+				: $"{habit.ModelRepeatsToday} {Resources.TimesADay.ToLower()}";
+			return $"From {startDate} - {repeatText} {dayAmountText}";
 		}
 
-	    public static  string GetRepeatText(RepeatType habitModelRepeatType, int modelRepeatNumber)
-	    {
-		    if (habitModelRepeatType.HasFlag(RepeatType.Days))
-			    return string.Format(Resources.RepeatTypeDays, modelRepeatNumber);
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			throw new NotImplementedException();
+		}
 
-		    if (habitModelRepeatType.HasFlag(RepeatType.Months))
-			    return string.Format(Resources.RepeatTypeMonths, modelRepeatNumber);
+		public static string GetRepeatText(RepeatType habitModelRepeatType, int modelRepeatNumber)
+		{
+			if (habitModelRepeatType.HasFlag(RepeatType.Days))
+				return string.Format(Resources.RepeatTypeDays, modelRepeatNumber);
 
-		    if (habitModelRepeatType.HasFlag(RepeatType.Years))
-			    return string.Format(Resources.RepeatTypeYears, modelRepeatNumber);
+			if (habitModelRepeatType.HasFlag(RepeatType.Months))
+				return string.Format(Resources.RepeatTypeMonths, modelRepeatNumber);
 
-		    return string.Format(Resources.RepeatTypeWeeks, GetWeekDays(habitModelRepeatType), modelRepeatNumber);
-	    }
+			if (habitModelRepeatType.HasFlag(RepeatType.Years))
+				return string.Format(Resources.RepeatTypeYears, modelRepeatNumber);
 
-	    public  static string GetWeekDays(RepeatType type)
-	    {
-		    string days = string.Empty;
-		    if (type.HasFlag(RepeatType.Mon))
-			    days += (days == String.Empty ? "" : ", ") + Resources.Mon;
+			return string.Format(Resources.RepeatTypeWeeks, GetWeekDays(habitModelRepeatType), modelRepeatNumber);
+		}
 
-		    if (type.HasFlag(RepeatType.Tue))
-			    days += (days == String.Empty ? "" : ", ") + Resources.Tue;
+		public static string GetWeekDays(RepeatType type)
+		{
+			var days = string.Empty;
+			if (type.HasFlag(RepeatType.Mon))
+				days += (days == string.Empty ? "" : ", ") + Resources.Mon;
 
-		    if (type.HasFlag(RepeatType.Wed))
-			    days += (days == String.Empty ? "" : ", ") + Resources.Wed;
+			if (type.HasFlag(RepeatType.Tue))
+				days += (days == string.Empty ? "" : ", ") + Resources.Tue;
 
-		    if (type.HasFlag(RepeatType.Thu))
-			    days += (days == String.Empty ? "" : ", ") + Resources.Thu;
+			if (type.HasFlag(RepeatType.Wed))
+				days += (days == string.Empty ? "" : ", ") + Resources.Wed;
 
-		    if (type.HasFlag(RepeatType.Fri))
-			    days += (days == String.Empty ? "" : ", ") + Resources.Fri;
+			if (type.HasFlag(RepeatType.Thu))
+				days += (days == string.Empty ? "" : ", ") + Resources.Thu;
 
-		    if (type.HasFlag(RepeatType.Sat))
-			    days += (days == String.Empty ? "" : ", ") + Resources.Sat;
+			if (type.HasFlag(RepeatType.Fri))
+				days += (days == string.Empty ? "" : ", ") + Resources.Fri;
 
-		    if (type.HasFlag(RepeatType.Sun))
-			    days += (days == String.Empty ? "" : ", ") + Resources.Sun;
+			if (type.HasFlag(RepeatType.Sat))
+				days += (days == string.Empty ? "" : ", ") + Resources.Sat;
 
-		    return days;
-	    }
+			if (type.HasFlag(RepeatType.Sun))
+				days += (days == string.Empty ? "" : ", ") + Resources.Sun;
 
-	    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-	    {
-		    throw new NotImplementedException();
-	    }
-    }
+			return days;
+		}
+	}
 }

@@ -19,7 +19,7 @@ namespace TocoDo.UI.Converters
 
 		private bool Reverse(object obj)
 		{
-			bool? bl = obj as bool?;
+			var bl = obj as bool?;
 
 			if (bl == null)
 			{
@@ -27,7 +27,7 @@ namespace TocoDo.UI.Converters
 				throw new TypeAccessException($"Cannot convert type {obj.GetType().FullName} to bool.");
 			}
 
-			return !(bool)obj;
+			return !(bool) obj;
 		}
 	}
 }

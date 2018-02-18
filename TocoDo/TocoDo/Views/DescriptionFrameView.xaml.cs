@@ -8,30 +8,9 @@ namespace TocoDo.UI.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class DescriptionFrameView : ContentView
 	{
-		#region Backing fields
-		public static BindableProperty TitleProperty = BindableProperty.Create(nameof(Title), typeof(string), typeof(string));
-		public static BindableProperty DescriptionProperty = BindableProperty.Create(nameof(Description), typeof(string), typeof(string), null, BindingMode.TwoWay);
-		#endregion
-
-		#region Properties
-		public string Title
+		public DescriptionFrameView()
 		{
-			get => (string)GetValue(TitleProperty);
-			set => SetValue(TitleProperty, value);
-		}
-		public string Description
-		{
-			get => (string)GetValue(DescriptionProperty);
-			set => SetValue(DescriptionProperty, value);
-		}
-
-		public bool IsReadonly { get; set; }
-
-		#endregion
-
-		public DescriptionFrameView ()
-		{
-			InitializeComponent ();
+			InitializeComponent();
 		}
 
 		private void TapGestureRecognizer_OnTapped(object sender, EventArgs e)
@@ -40,5 +19,32 @@ namespace TocoDo.UI.Views
 
 			Navigation.PushModalAsync(editDescriptionPage);
 		}
+
+		#region Backing fields
+
+		public static BindableProperty TitleProperty = BindableProperty.Create(nameof(Title), typeof(string), typeof(string));
+
+		public static BindableProperty DescriptionProperty =
+			BindableProperty.Create(nameof(Description), typeof(string), typeof(string), null, BindingMode.TwoWay);
+
+		#endregion
+
+		#region Properties
+
+		public string Title
+		{
+			get => (string) GetValue(TitleProperty);
+			set => SetValue(TitleProperty, value);
+		}
+
+		public string Description
+		{
+			get => (string) GetValue(DescriptionProperty);
+			set => SetValue(DescriptionProperty, value);
+		}
+
+		public bool IsReadonly { get; set; }
+
+		#endregion
 	}
 }

@@ -1,39 +1,42 @@
-﻿
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using Android.Support.V7.Widget;
 using Plugin.CrossPlatformTintedImage.Android;
+using Rg.Plugins.Popup;
 using TocoDo.UI;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.Android;
 
 namespace TocoDo.Droid
 {
-	[Activity(Label = "TocoDo", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-	public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+	[Activity(Label       = "TocoDo", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true,
+		ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+	public class MainActivity : FormsAppCompatActivity
 	{
 		protected override void OnCreate(Bundle bundle)
 		{
 			TabLayoutResource = Resource.Layout.Tabbar;
-			ToolbarResource = Resource.Layout.Toolbar;
+			ToolbarResource   = Resource.Layout.Toolbar;
 
 			base.OnCreate(bundle);
 
-			Rg.Plugins.Popup.Popup.Init(this, bundle);
+			Popup.Init(this, bundle);
 			TintedImageRenderer.Init();
-			global::Xamarin.Forms.Forms.Init(this, bundle);
+			Forms.Init(this, bundle);
 
 			var app = new App();
 			LoadApplication(app);
 
 			//App.BarColorChanged += () =>
 			//{
-				//var colorPrimary = (Color)App.Current.Resources["ColorPrimary"];
-				//var colorPrimaryDark = (Color)App.Current.Resources["ColorPrimaryDark"];
+			//var colorPrimary = (Color)App.Current.Resources["ColorPrimary"];
+			//var colorPrimaryDark = (Color)App.Current.Resources["ColorPrimaryDark"];
 
 			//	var multiply = 0.7;
-				//color = new Color(color.R * multiply, color.G * multiply, color.B * multiply);
-				//Window.SetStatusBarColor(colorPrimaryDark.ToAndroid());
-				//Window.SetNavigationBarColor(colorPrimary.ToAndroid());
+			//color = new Color(color.R * multiply, color.G * multiply, color.B * multiply);
+			//Window.SetStatusBarColor(colorPrimaryDark.ToAndroid());
+			//Window.SetNavigationBarColor(colorPrimary.ToAndroid());
 			//};
 
 			if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
@@ -53,7 +56,6 @@ namespace TocoDo.Droid
 				//statusBarHeightInfo?.SetValue(this, 0);
 
 				//Toolbar myToolbar = (Toolbar)FindViewById(ToolbarResource);
-
 			}
 
 			var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
@@ -61,4 +63,3 @@ namespace TocoDo.Droid
 		}
 	}
 }
-
