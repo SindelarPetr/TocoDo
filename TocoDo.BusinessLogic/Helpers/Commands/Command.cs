@@ -1,4 +1,4 @@
-﻿// Originally from: https://github.com/xamarin/Xamarin.Forms/blob/master/Xamarin.Forms.Core/Command.cs
+﻿// Credits: https://github.com/xamarin/Xamarin.Forms/blob/master/Xamarin.Forms.Core/Command.cs
 
 using System;
 using System.Reflection;
