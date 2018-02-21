@@ -33,7 +33,7 @@ namespace TocoDo.UI.Views.Todos
 
 		private void EditTitle_OnUnfocused(object sender, FocusEventArgs e)
 		{
-			ViewModel.EditTitleCommand?.Execute(EntryEditTitle.Text);
+			ViewModel.FinishCreationCommand?.Execute(EntryEditTitle.Text);
 			EntryEditTitle.Text = ViewModel.Title;
 		}
 	}

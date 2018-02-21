@@ -51,9 +51,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HabitServiceTests.cs" />
+    <Compile Include="Services\HabitServiceTests.cs" />
+    <Compile Include="ViewModels\EditDescriptionViewModelTests.cs" />
+    <Compile Include="ViewModels\HabitViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TaskServiceTests.cs" />
+    <Compile Include="Services\TaskServiceTests.cs" />
+    <Compile Include="ViewModels\TaskViewModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -64,6 +67,7 @@
       <Name>TocoDo.BusinessLogic</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

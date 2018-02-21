@@ -8,7 +8,7 @@
              xmlns:views="clr-namespace:TocoDo.UI.Views;assembly=TocoDo.UI"
              x:Class="TocoDo.UI.Pages.Habits.HabitProgressPage"
              x:Name="This"
-             Title="{Binding Source={x:Reference This}, Path=ViewModel.ModelTitle}">
+             Title="{Binding Source={x:Reference This}, Path=ViewModel.Title}">
 	<ContentPage.Content>
 		<Grid BindingContext="{Binding Source={x:Reference This}, Path=ViewModel}" RowSpacing="0">
 			<Grid.RowDefinitions>
@@ -32,12 +32,12 @@
 					</global:FrameWrapper>
 
 					<!-- Show description -->
-					<views:DescriptionFrameView Grid.Row="2" Description="{Binding ModelDescription}" Title="{Binding ModelTitle}" />
+					<views:DescriptionFrameView Grid.Row="2" Description="{Binding Description}" Title="{Binding Title}" />
 				</Grid>
 			</ScrollView>
 
 			<views:PageBottomPanel Grid.Row="1"
-			                       Text="{Binding ModelCreationDate, Converter={StaticResource PastDateTimeConverter}, StringFormat='Created: {0}'}"
+			                       Text="{Binding CreationDate, Converter={StaticResource PastDateTimeConverter}, StringFormat='Created: {0}'}"
 			                       RemoveCommand="{Binding RemoveCommand}" BackgroundColor="CornflowerBlue" />
 		</Grid>
 	</ContentPage.Content>

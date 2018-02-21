@@ -28,17 +28,17 @@ namespace TocoDo.UI.DependencyInjection
 		{
 			return new HabitModel
 			{
-				Id            = habit.ModelId,
-				CreationDate  = habit.ModelCreationDate,
-				RepeatType    = habit.ModelRepeatType,
-				Description   = habit.ModelDescription,
-				Filling       = JsonConvert.SerializeObject(new Dictionary<DateTime, int>(habit.ModelFilling)),
-				HabitType     = habit.ModelHabitType,
-				DaysToRepeat  = habit.ModelDaysToRepeat,
-				StartDate     = habit.ModelStartDate,
-				Title         = habit.ModelTitle,
-				IsRecommended = habit.ModelIsRecommended,
-				RepeatsADay   = habit.ModelMaxRepeatsADay
+				Id            = habit.Id,
+				CreationDate  = habit.CreationDate,
+				RepeatType    = habit.RepeatType,
+				Description   = habit.Description,
+				Filling       = JsonConvert.SerializeObject(new Dictionary<DateTime, int>(habit.Filling)),
+				HabitType     = habit.HabitType,
+				DaysToRepeat  = habit.DaysToRepeat,
+				StartDate     = habit.StartDate,
+				Title         = habit.Title,
+				IsRecommended = habit.IsRecommended,
+				RepeatsADay   = habit.MaxRepeatsADay
 			};
 		}
 

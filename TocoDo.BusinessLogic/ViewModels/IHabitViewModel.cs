@@ -7,32 +7,34 @@ namespace TocoDo.BusinessLogic.ViewModels
 {
 	public interface IHabitViewModel : ICreateMode
 	{
-		ICommand   ConfirmCreationCommand          { get; }
-		ICommand   EditCommand                     { get; }
-		ICommand   EditTitleCommand                { get; }
-		string     HabitDaysToRepeatWithRepeatType { get; }
-		string     HabitTypeWithRepeats            { get; }
-		ICommand   IncreaseTodayCommand            { get; }
-		bool       IsStarted                       { get; }
-		DateTime   ModelCreationDate               { get; }
-		int        ModelDaysToRepeat               { get; set; }
-		string     ModelDescription                { get; set; }
-		HabitType  ModelHabitType                  { get; set; }
-		int        ModelId                         { get; }
-		bool       ModelIsFinished                 { get; set; }
-		bool       ModelIsRecommended              { get; set; }
-		int        ModelMaxRepeatsADay             { get; set; }
-		int        ModelRepeatsToday               { get; set; }
-		RepeatType ModelRepeatType                 { get; set; }
-		DateTime?  ModelStartDate                  { get; set; }
-		string     ModelTitle                      { get; set; }
-		ICommand   RemoveCommand                   { get; }
-		ICommand   SelectRepeatCommand             { get; }
-		ICommand   SelectStartDateCommand          { get; }
-		ICommand   UnsetStartDateCommand           { get; }
-		ICommand   UpdateCommand                   { get; }
+		string HabitDaysToRepeatWithRepeatType { get; }
 
-		ObservableDictionary<DateTime, int> ModelFilling { get; }
+		string     HabitTypeWithRepeats { get; }
+		bool       IsStarted            { get; }
+		DateTime   CreationDate         { get; }
+		int        DaysToRepeat         { get; set; }
+		string     Description          { get; set; }
+		HabitType  HabitType            { get; set; }
+		int        Id                   { get; }
+		bool       IsFinished           { get; set; }
+		bool       IsRecommended        { get; set; }
+		int        MaxRepeatsADay       { get; set; }
+		int        RepeatsToday         { get; set; }
+		RepeatType RepeatType           { get; set; }
+		DateTime?  StartDate            { get; set; }
+		string     Title                { get; set; }
+
+		ICommand FinishCreationCommand   { get; }
+		ICommand EditCommand             { get; }
+		ICommand EditTitleCommand        { get; }
+		ICommand IncreaseTodayCommand    { get; }
+		ICommand RemoveCommand           { get; }
+		ICommand SelectRepeatCommand     { get; }
+		ICommand SelectStartDateCommand  { get; }
+		ICommand UnsetStartDateCommand   { get; }
+		ICommand UpdateCommand           { get; }
+
+		ObservableDictionary<DateTime, int> Filling { get; }
 
 		void SetModelId(int id);
 	}

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using TocoDo.BusinessLogic.DependencyInjection;
 using TocoDo.BusinessLogic.Helpers;
@@ -13,15 +14,15 @@ namespace TocoDo.BusinessLogic.ViewModels
 		private readonly Action<string>     _setDescriptionAction;
 
 		public EditDescriptionViewModel(INavigationService navigation, string         title, string description,
-			Action<string>                                    setDescriptionAction, bool isReadonly)
+		                                Action<string>     setDescriptionAction, bool isReadonly)
 		{
 			_navigation           = navigation;
 			_setDescriptionAction = setDescriptionAction;
 			Title                 = title;
 			IsReadonly            = isReadonly;
 			_originalDescription  = Description = description;
-			DiscardCommand        = new Command(Discard);
-			SaveCommand           = new Command(Save);
+			DiscardCommand        = new Command(async () => await Discard());
+			SaveCommand           = new Command(async () => await Save());
 		}
 
 		public string Title       { get; set; }
@@ -31,7 +32,7 @@ namespace TocoDo.BusinessLogic.ViewModels
 		public ICommand DiscardCommand { get; set; }
 		public ICommand SaveCommand    { get; set; }
 
-		private async void Discard()
+		private async Task Discard()
 		{
 			if (Description != _originalDescription)
 			{
@@ -44,9 +45,10 @@ namespace TocoDo.BusinessLogic.ViewModels
 			await _navigation.PopModalAsync();
 		}
 
-		private async void Save()
+		private async Task Save()
 		{
-			_setDescriptionAction?.Invoke(Description.Trim());
+			if(!IsReadonly)
+				_setDescriptionAction?.Invoke(Description.Trim());
 
 			await _navigation.PopModalAsync();
 		}

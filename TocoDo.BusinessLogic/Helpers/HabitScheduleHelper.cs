@@ -53,8 +53,8 @@ namespace TocoDo.BusinessLogic.Helpers
 
 			return start.AddDays(daysToRepeat * 7 - fromWeekMissing) - start;
 		}
-		public bool IsHabitToday(HabitViewModel habit) => DateTimeHelper.IsHabitToday(habit.ModelStartDate, habit.ModelRepeatType, habit.ModelDaysToRepeat);
-		public bool IsHabitFinished(HabitViewModel habit) => DateTimeHelper.IsHabitFinished(habit.ModelStartDate, habit.ModelRepeatType, habit.ModelDaysToRepeat);
-		public bool IsHabitCurrent(HabitViewModel habit) => DateTimeHelper.IsHabitCurrent(habit.ModelStartDate, habit.ModelRepeatType, habit.ModelDaysToRepeat);
+		public bool IsHabitToday(HabitViewModel habit) => DateTimeHelper.IsHabitToday(habit.StartDate, habit.RepeatType, habit.DaysToRepeat);
+		public bool IsHabitFinished(HabitViewModel habit) => DateTimeHelper.IsHabitFinished(habit.StartDate, habit.RepeatType, habit.DaysToRepeat);
+		public bool IsHabitCurrent(HabitViewModel habit) => DateTimeHelper.IsHabitCurrent(habit.StartDate, habit.RepeatType, habit.DaysToRepeat);
 	}
 }

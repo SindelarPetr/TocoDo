@@ -19,7 +19,7 @@
 			<StackLayout.GestureRecognizers>
 				<TapGestureRecognizer Command="{Binding EditCommand}" />
 			</StackLayout.GestureRecognizers>
-			<customRenderers:NoLineEntry x:Name="EntryEditTitle" Text="{Binding ModelTitle, Mode=OneWay}"
+			<customRenderers:NoLineEntry x:Name="EntryEditTitle" Text="{Binding Title, Mode=OneWay}"
 			                             Unfocused="EditTitle_OnUnfocused" FontSize="Medium"
 			                             TextColor="{StaticResource ColorPrimaryLight}">
 				<customRenderers:NoLineEntry.Triggers>
@@ -28,11 +28,11 @@
 					</Trigger>
 				</customRenderers:NoLineEntry.Triggers>
 			</customRenderers:NoLineEntry>
-			<Label Text="{Binding ModelTitle}"
+			<Label Text="{Binding Title}"
 			       IsVisible="{Binding Source={x:Reference EntryEditTitle}, Path=IsVisible, Converter={StaticResource BoolReverseConverter}}"
 			       Style="{StaticResource HabitHeader}" />
 			<habits:HabitDetailView ViewModel="{Binding .}" Margin="0,8,0,0"
-			                        IsVisible="{Binding ModelStartDate, Converter={StaticResource IsNotNullConverter}}" />
+			                        IsVisible="{Binding StartDate, Converter={StaticResource IsNotNullConverter}}" />
 		</StackLayout>
 	</ContentView.Content>
 </ContentView>

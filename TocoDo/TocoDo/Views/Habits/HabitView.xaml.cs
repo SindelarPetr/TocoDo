@@ -26,7 +26,7 @@ namespace TocoDo.UI.Views.Habits
 
 		private void EditTitle_OnUnfocused(object sender, FocusEventArgs e)
 		{
-			ViewModel.ConfirmCreationCommand?.Execute(null);
+			ViewModel.FinishCreationCommand?.Execute(null);
 		}
 	}
 }

@@ -35,7 +35,7 @@ namespace TocoDo.BusinessLogic.Services
 			var result = await Persistance.GetTasks();
 		    result.ForEach(t =>
 		    {
-			    var task = new TaskViewModel(t);
+			    var task = new TaskViewModel(this, Navigation, t);
 			    _tasks.Add(task);
 		    });
 

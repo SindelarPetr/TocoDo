@@ -22,7 +22,7 @@ namespace TocoDo.UnitTests
 		private IDateTimeProvider _dateTime;
 		private INavigationService _navigationService;
 		private IModelFactory _modelFactory;
-		private ITaskViewModel _taskViewModel;
+		private ITaskViewModel _habitViewModel;
 		#endregion
 
 		[TestInitialize]
@@ -39,7 +39,7 @@ namespace TocoDo.UnitTests
 				           ModelFactory     = _modelFactory,
 				           Navigation       = _navigationService,
 			           };
-			_taskViewModel = Mock.Create<ITaskViewModel>();
+			_habitViewModel = Mock.Create<ITaskViewModel>();
 		}
 
 		[TestMethod]
@@ -74,7 +74,7 @@ namespace TocoDo.UnitTests
 			// Arrange
 			Mock.Arrange(() => _persistance.InsertAsync(Arg.AnyObject)).Returns(Task.CompletedTask).OccursOnce();
 			Mock.Arrange(() => _persistance.UpdateAsync(Arg.AnyObject)).OccursNever();
-			Mock.Arrange(() => _modelFactory.CreateTaskModel(_taskViewModel)).Returns(new Model());
+			Mock.Arrange(() => _modelFactory.CreateTaskModel(_habitViewModel)).Returns(new Model());
 			
 			// Act
 			_taskService.StartCreation(null);

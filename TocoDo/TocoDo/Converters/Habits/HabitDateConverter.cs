@@ -13,16 +13,16 @@ namespace TocoDo.UI.Converters.Habits
 		{
 			var habit = value as HabitViewModel;
 
-			var date = habit?.ModelStartDate;
+			var date = habit?.StartDate;
 
 			if (date == null)
 				return string.Empty;
 
 			var startDate     = DateToTextConverter.Convert(date);
-			var repeatText    = GetRepeatText(habit.ModelRepeatType, habit.ModelDaysToRepeat);
-			var dayAmountText = habit.ModelHabitType == HabitType.Daylong
+			var repeatText    = GetRepeatText(habit.RepeatType, habit.DaysToRepeat);
+			var dayAmountText = habit.HabitType == HabitType.Daylong
 				? $"{Resources.AllDay.ToLower()}"
-				: $"{habit.ModelRepeatsToday} {Resources.TimesADay.ToLower()}";
+				: $"{habit.RepeatsToday} {Resources.TimesADay.ToLower()}";
 			return $"From {startDate} - {repeatText} {dayAmountText}";
 		}
 

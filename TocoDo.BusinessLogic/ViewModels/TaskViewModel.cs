@@ -14,15 +14,15 @@ namespace TocoDo.BusinessLogic.ViewModels
 		#region Services
 
 		private readonly INavigationService _navigation;
-		private readonly ITaskService    _taskService;
+		private readonly ITaskService _taskService;
 
 		#endregion
 
 		#region Backing fields
 
 		private DateTime? _deadline;
-		private string    _description;
-		private string    _title;
+		private string _description;
+		private string _title;
 		private DateTime? _reminder;
 		private DateTime? _done;
 		private DateTime? _scheduleDate;
@@ -82,24 +82,27 @@ namespace TocoDo.BusinessLogic.ViewModels
 
 		#region Commands
 
-		public ICommand EditCommand            { get; set; }
-		public ICommand EditTitleCommand       { get; set; }
-		public ICommand RemoveCommand          { get; set; }
-		public ICommand UpdateCommand          { get; set; }
-		public ICommand EditDescriptionCommand { get; set; }
+		public ICommand FinishCreationCommand { get; }
+		public ICommand EditCommand           { get; }
+		public ICommand EditTitleCommand      { get; }
+		public ICommand RemoveCommand         { get; }
+		public ICommand UpdateCommand         { get; }
 
 		#endregion
 
-		public TaskViewModel(ITaskService taskService, INavigationService navigation)
+		public TaskViewModel(ITaskService taskService, INavigationService navigation) : this()
 		{
 			_navigation  = navigation;
-			_taskService     = taskService;
+			_taskService = taskService;
+
 			IsCreateMode = true;
-			InitCommands();
 		}
 
-		public TaskViewModel(ITaskModel taskModel)
+		public TaskViewModel(ITaskService taskService, INavigationService navigation, ITaskModel taskModel) : this()
 		{
+			_taskService = taskService;
+			_navigation  = navigation;
+
 			#region Copy taskModel properties
 
 			Id            = taskModel.Id;
@@ -112,40 +115,39 @@ namespace TocoDo.BusinessLogic.ViewModels
 			_scheduleDate = taskModel.ScheduleDate;
 
 			#endregion
+		}
 
-			InitCommands();
+		private TaskViewModel()
+		{
+			FinishCreationCommand = new Command(ConfirmCreation);
+			EditTitleCommand      = new Command(EditTitle);
+			EditCommand           = new Command(async () => await Edit());
+			RemoveCommand         = new Command(async () => await RemoveTask());
+			UpdateCommand         = new Command(async () => await Update());
 		}
 
 		#region Private methods
-		private void InitCommands()
-		{
-			EditTitleCommand = new Command(EditTitle);
-			EditCommand = new Command(async () => await Edit());
-			RemoveCommand = new Command(async () => await RemoveTask());
-			UpdateCommand = new Command(async () => await Update());
 
-			EditDescriptionCommand = new Command(EditDescription);
-		}
-
-		// TODO: Create EditTitleAfterCreation
 		private void EditTitle(object o)
 		{
+			if (o is string title && !string.IsNullOrWhiteSpace(title))
+			{
+				Title = title.Trim();
+			}
+		}
+
+		private void ConfirmCreation(object o)
+		{
+			if (o == null || o is string && string.IsNullOrWhiteSpace((string) o))
+			{
+				_taskService.CancelCreation(this);
+				return;
+			}
+
 			if (o is string title)
 			{
-				// If the title is empty then remove yourself
-				if (string.IsNullOrWhiteSpace(title))
-				{
-					_taskService.CancelCreation(this);
-				}
-				else
-				{
-					Title = title.Trim();
-					_taskService.ConfirmCreationAsync(this);
-				}
-			}
-			else
-			{
-				throw new NotSupportedException();
+				Title = title.Trim();
+				_taskService.ConfirmCreationAsync(this);
 			}
 		}
 
@@ -168,7 +170,7 @@ namespace TocoDo.BusinessLogic.ViewModels
 		private async Task RemoveTask()
 		{
 			var result = await _navigation.DisplayAlert(Resources.DeleteToDo, Resources.ConfirmDelete, Resources.Yes,
-				Resources.Cancel);
+			                                            Resources.Cancel);
 
 			if (!result) return;
 
@@ -182,15 +184,9 @@ namespace TocoDo.BusinessLogic.ViewModels
 			await _taskService.UpdateAsync(this);
 		}
 
-		// Todo: Get rid of this
-		private void SelectDateByPicker(Action<DateTime> pickedAction)
-		{
-			//TODO: Showing date picker
-		}
-
 		private async Task SelectDate(Action<DateTime?> pickedAction, string actionSheetHeader)
 		{
-			string[] buttons = { Resources.Today, Resources.Tomorrow, Resources.TheDayAfterTomorrow, Resources.PickADate };
+			string[] buttons = {Resources.Today, Resources.Tomorrow, Resources.TheDayAfterTomorrow, Resources.PickADate};
 
 			var result = await _navigation.DisplayActionSheet(actionSheetHeader, Resources.Cancel, null, buttons);
 
@@ -206,7 +202,7 @@ namespace TocoDo.BusinessLogic.ViewModels
 			}
 			else if (result == Resources.PickADate)
 			{
-				SelectDateByPicker(d => pickedAction(d));
+				//SelectDateByPicker(d => pickedAction(d));
 				return;
 			}
 			else
@@ -217,40 +213,6 @@ namespace TocoDo.BusinessLogic.ViewModels
 			pickedAction(selectedDate);
 		}
 
-		private void SelectTimeByPicker(Action<TimeSpan> pickAction)
-		{
-			// TODO: Wrkaround for showing the picker
-		}
-
-		private async Task SelectDeadlineDate()
-		{
-			await SelectDate(d => Deadline = d, Resources.ChooseDeadlineDate);
-		}
-
-		private async Task SelectScheduleDate()
-		{
-			await SelectDate(d => ScheduleDate = d, Resources.ChooseScheduleDate);
-		}
-
-		private async Task SelectReminder()
-		{
-			await SelectDate(SelectReminderContinueWithTime, Resources.ChooseReminder);
-		}
-
-		private void SelectReminderContinueWithTime(DateTime? date)
-		{
-			Reminder = date;
-
-			if (Reminder == null) return;
-
-			SelectTimeByPicker(t => Reminder = Reminder.Value.Date + t);
-		}
-
-		private async void EditDescription()
-		{
-			await _navigation.PushModalAsync(PageType.EditDescriptionPage,
-				new { Title, Description, DescriptionSetter = new Action<string>(d => Description = d) });
-		} 
 		#endregion
 	}
 }

@@ -24,7 +24,7 @@ namespace TocoDo.UI.Pages.Habits
 		{
 			var color = Color.White.ToSKColor();
 
-			var list = ViewModel.ModelFilling.ToList();
+			var list = ViewModel.Filling.ToList();
 			list.Sort((p1, p2) => p1.Key > p2.Key ? 1 :
 				p1.Key == p2.Key                     ? 0 : -1);
 			var entries = list.Select(p => new Entry(p.Value)

@@ -23,9 +23,9 @@ namespace TocoDo.UI.Views.Habits
 
 		private void Button_OnClicked(object sender, EventArgs e)
 		{
-			if (ViewModel.ModelHabitType == HabitType.Unit && ViewModel.ModelRepeatsToday >= ViewModel.ModelMaxRepeatsADay)
+			if (ViewModel.HabitType == HabitType.Unit && ViewModel.RepeatsToday >= ViewModel.MaxRepeatsADay)
 			{
-				ViewModel.ModelRepeatsToday %= ViewModel.ModelMaxRepeatsADay + 1;
+				ViewModel.RepeatsToday %= ViewModel.MaxRepeatsADay + 1;
 				((Button) sender).IsEnabled =  false;
 			}
 		}

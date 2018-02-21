@@ -22,21 +22,21 @@ namespace TocoDo.BusinessLogic.ViewModels
 
 		#region Backing fields
 
-		private bool _modelIsRecommended;
-		private int _modelRepeatsToday;
-		private HabitType _modelHabitType;
-		private int _modelDaysToRepeat;
-		private DateTime? _modelStartDate;
-		private string _modelTitle;
-		private RepeatType _modelRepeatType;
-		private string _modelDescription;
-		private int _modelMaxRepeatsADay;
+		private bool _isRecommended;
+		private int _repeatsToday;
+		private HabitType _habitType;
+		private int _daysToRepeat;
+		private DateTime? _startDate;
+		private string _title;
+		private RepeatType _repeatType;
+		private string _description;
+		private int _maxRepeatsADay;
 
 		#endregion
 
 		#region Properties
 
-		public int ModelId { get; private set; }
+		public int Id { get; private set; }
 
 		/// <summary>
 		///     Is used for explicit setting of ModelId, so there is no possibility of setting ModelId accidentally.
@@ -44,109 +44,109 @@ namespace TocoDo.BusinessLogic.ViewModels
 		/// <param name="id">New id which will be assigned to the ModelId property.</param>
 		public void SetModelId(int id)
 		{
-			ModelId = id;
+			Id = id;
 		}
 
-		public bool ModelIsRecommended
+		public bool IsRecommended
 		{
-			get => _modelIsRecommended;
-			set => SetValue(ref _modelIsRecommended, value);
+			get => _isRecommended;
+			set => SetValue(ref _isRecommended, value);
 		}
 
 		/// <summary>
 		///     How many times the habit was violated / performed today
 		/// </summary>
-		public int ModelRepeatsToday
+		public int RepeatsToday
 		{
-			get => _modelRepeatsToday;
+			get => _repeatsToday;
 			set
 			{
-				if (DateTimeHelper.IsHabitToday(ModelStartDate, ModelRepeatType, ModelDaysToRepeat))
-					SetValue(ref _modelRepeatsToday, value);
+				if (DateTimeHelper.IsHabitToday(StartDate, RepeatType, DaysToRepeat))
+					SetValue(ref _repeatsToday, value);
 			}
 		}
 
-		public ObservableDictionary<DateTime, int> ModelFilling { get; private set; }
+		public ObservableDictionary<DateTime, int> Filling { get; private set; }
 
-		public DateTime ModelCreationDate { get; }
+		public DateTime CreationDate { get; }
 
-		public HabitType ModelHabitType
+		public HabitType HabitType
 		{
-			get => _modelHabitType;
+			get => _habitType;
 			set
 			{
-				SetValue(ref _modelHabitType, value);
+				SetValue(ref _habitType, value);
 				OnPropertyChanged(nameof(HabitTypeWithRepeats));
 			}
 		}
 
-		public int ModelDaysToRepeat
+		public int DaysToRepeat
 		{
-			get => _modelDaysToRepeat;
+			get => _daysToRepeat;
 			set
 			{
-				SetValue(ref _modelDaysToRepeat, value);
+				SetValue(ref _daysToRepeat, value);
 				OnPropertyChanged(nameof(HabitDaysToRepeatWithRepeatType));
 			}
 		}
 
-		public DateTime? ModelStartDate
+		public DateTime? StartDate
 		{
-			get => _modelStartDate;
-			set => SetValue(ref _modelStartDate, value);
+			get => _startDate;
+			set => SetValue(ref _startDate, value);
 		}
 
-		public string ModelTitle
+		public string Title
 		{
-			get => _modelTitle;
-			set => SetValue(ref _modelTitle, value);
+			get => _title;
+			set => SetValue(ref _title, value);
 		}
 
-		public RepeatType ModelRepeatType
+		public RepeatType RepeatType
 		{
-			get => _modelRepeatType;
+			get => _repeatType;
 			set
 			{
-				SetValue(ref _modelRepeatType, value);
+				SetValue(ref _repeatType, value);
 				OnPropertyChanged(nameof(HabitDaysToRepeatWithRepeatType));
 			}
 		}
 
-		public string ModelDescription
+		public string Description
 		{
-			get => _modelDescription;
-			set => SetValue(ref _modelDescription, value);
+			get => _description;
+			set => SetValue(ref _description, value);
 		}
 
 		/// <summary>
 		///     Only for Unit habit. Count of times to repeat the habit each day
 		/// </summary>
-		public int ModelMaxRepeatsADay
+		public int MaxRepeatsADay
 		{
-			get => _modelMaxRepeatsADay;
+			get => _maxRepeatsADay;
 			set
 			{
-				SetValue(ref _modelMaxRepeatsADay, value);
+				SetValue(ref _maxRepeatsADay, value);
 				OnPropertyChanged(nameof(HabitTypeWithRepeats));
 			}
 		}
 
 		public bool IsCreateMode { get; set; }
 
-		public bool IsStarted => ModelStartDate != null && ModelStartDate.Value < DateTime.Now;
+		public bool IsStarted => StartDate != null && StartDate.Value < DateTime.Now;
 
-		public bool ModelIsFinished { get; set; }
+		public bool IsFinished { get; set; }
 
-		public string HabitTypeWithRepeats => ModelHabitType == HabitType.Daylong
+		public string HabitTypeWithRepeats => HabitType == HabitType.Daylong
 			? Resources.HabitDetailHabitTypeDaylong
-			: string.Format(Resources.HabitDetailHabitTypeTextUnit, ModelMaxRepeatsADay);
+			: string.Format(Resources.HabitDetailHabitTypeTextUnit, MaxRepeatsADay);
 
 		public string HabitDaysToRepeatWithRepeatType
 		{
 			get
 			{
 				string timeScale;
-				switch (ModelRepeatType)
+				switch (RepeatType)
 				{
 					case RepeatType.Days:
 						timeScale = Resources.Days;
@@ -162,7 +162,7 @@ namespace TocoDo.BusinessLogic.ViewModels
 						break;
 				}
 
-				return $"{Resources.For} {ModelDaysToRepeat} {timeScale}";
+				return $"{Resources.For} {DaysToRepeat} {timeScale}";
 			}
 		}
 
@@ -172,67 +172,66 @@ namespace TocoDo.BusinessLogic.ViewModels
 
 		public ICommand EditTitleCommand       { get; private set; }
 		public ICommand EditCommand            { get; private set; }
+		public ICommand UnsetStartDateCommand { get; }
 		public ICommand UpdateCommand          { get; private set; }
-		public ICommand ConfirmCreationCommand { get; private set; }
-		public ICommand SelectStartDateCommand { get; private set; }
-		public ICommand UnsetStartDateCommand  { get; private set; }
-		public ICommand SelectRepeatCommand    { get; private set; }
+		public ICommand FinishCreationCommand { get; private set; }
 		public ICommand IncreaseTodayCommand   { get; private set; }
 		public ICommand RemoveCommand          { get; private set; }
+		public ICommand SelectRepeatCommand { get; }
+		public ICommand SelectStartDateCommand { get; }
 
 		#endregion
 
-		public HabitViewModel(IHabitService habitService, INavigationService navigation)
+		public HabitViewModel(IHabitService habitService, INavigationService navigation) 
+			: this()
 		{
 			_habitService    = habitService;
 			_navigation = navigation;
 
 			// Set initial values
-			ModelCreationDate    = DateTime.Now;
-			_modelRepeatType     = RepeatType.Days;
-			_modelHabitType      = HabitType.Daylong;
-			_modelMaxRepeatsADay = 1;
-			_modelDaysToRepeat   = 21;
+			CreationDate    = DateTime.Now;
+			_repeatType     = RepeatType.Days;
+			_habitType      = HabitType.Daylong;
+			_maxRepeatsADay = 1;
+			_daysToRepeat   = 21;
 
-			ModelFilling = new ObservableDictionary<DateTime, int>();
+			Filling = new ObservableDictionary<DateTime, int>();
 			IsCreateMode = true;
-
-			SetupCommands();
 		}
 
-		public HabitViewModel(IHabitService habitService, INavigationService navigation, IHabitModel model)
+		public HabitViewModel(IHabitService habitService, INavigationService navigation, IHabitModel model) 
+			: this()
 		{
 			_habitService    = habitService;
 			_navigation = navigation;
 
-			ModelCreationDate = model.CreationDate;
-			ModelId           = model.Id;
-			_modelRepeatType  = model.RepeatType;
-			_modelDescription = model.Description;
-			ModelFilling      =
+			CreationDate = model.CreationDate;
+			Id           = model.Id;
+			_repeatType  = model.RepeatType;
+			_description = model.Description;
+			Filling      =
 				new ObservableDictionary<DateTime, int>(
 					JsonConvert.DeserializeObject<Dictionary<DateTime, int>>(model.Filling));
-			_modelHabitType      = model.HabitType;
-			_modelDaysToRepeat   = model.DaysToRepeat;
-			_modelStartDate      = model.StartDate;
-			_modelTitle          = model.Title;
-			_modelRepeatsToday   = ModelFilling.ContainsKey(DateTime.Today) ? ModelFilling[DateTime.Today] : 0;
-			_modelIsRecommended  = model.IsRecommended;
-			_modelMaxRepeatsADay = model.RepeatsADay;
-
-			SetupCommands();
+			_habitType      = model.HabitType;
+			_daysToRepeat   = model.DaysToRepeat;
+			_startDate      = model.StartDate;
+			_title          = model.Title;
+			_repeatsToday   = Filling.ContainsKey(DateTime.Today) ? Filling[DateTime.Today] : 0;
+			_isRecommended  = model.IsRecommended;
+			_maxRepeatsADay = model.RepeatsADay;
 		}
 
-		private void SetupCommands()
+		private HabitViewModel()
 		{
+			UpdateCommand = new Command(async () => await _habitService.UpdateAsync(this));
 			EditTitleCommand       = new Command<string>(EditTitle);
-			ConfirmCreationCommand = new Command(async () => await ConfirmCreation());
+			FinishCreationCommand = new Command(async t => await ConfirmCreation(t));
 			EditCommand            = new Command(async () => await Edit());
 
 			SelectStartDateCommand                                        =
-				new Command(async () => await SelectDate(d => ModelStartDate = d, Resources.SelectStartDate));
-			UnsetStartDateCommand                                         = new Command(() => ModelStartDate = null);
-			IncreaseTodayCommand                                          = new Command(() => ModelRepeatsToday++);
+				new Command(async () => await SelectDate(d => StartDate = d, Resources.SelectStartDate));
+			UnsetStartDateCommand                                         = new Command(() => StartDate = null);
+			IncreaseTodayCommand                                          = new Command(() => RepeatsToday++);
 			RemoveCommand                                                 = new Command(async () => await Delete());
 		}
 
@@ -250,7 +249,7 @@ namespace TocoDo.BusinessLogic.ViewModels
 			if (string.IsNullOrWhiteSpace(newTitle))
 				return;
 
-			ModelTitle = newTitle;
+			Title = newTitle;
 		}
 
 		private async Task Delete()
@@ -263,16 +262,20 @@ namespace TocoDo.BusinessLogic.ViewModels
 				await _habitService.DeleteAsync(this);
 		}
 
-		private async Task ConfirmCreation()
+		private async Task ConfirmCreation(object title)
 		{
-			// If user left the entry blank, then remove the habit from collection
-			if (string.IsNullOrWhiteSpace(ModelTitle))
+			if (title is string tit)
 			{
-				_habitService.CancelCreation(this);
-				return;
-			}
+				// If user left the entry blank, then remove the habit from collection
+				if (string.IsNullOrWhiteSpace(tit))
+				{
+					_habitService.CancelCreation(this);
+					return;
+				}
 
-			await _habitService.ConfirmCreationAsync(this);
+				Title = tit.Trim();
+				await _habitService.ConfirmCreationAsync(this);
+			}
 		}
 
 		private async Task SelectDate(Action<DateTime?> pickedAction, string actionSheetHeader)
@@ -318,15 +321,15 @@ namespace TocoDo.BusinessLogic.ViewModels
 			base.OnPropertyChanged(propertyName);
 
 			// Init filling if needed and update it
-			if (propertyName == nameof(ModelRepeatsToday))
+			if (propertyName == nameof(RepeatsToday))
 			{
 				InitFilling();
-				if (ModelFilling == null || !ModelFilling.Any()) InitFilling();
+				if (Filling == null || !Filling.Any()) InitFilling();
 
 				var today   = DateTime.Today;
-				var filling = ModelFilling;
+				var filling = Filling;
 				if (filling.ContainsKey(today))
-					filling[today] = ModelRepeatsToday;
+					filling[today] = RepeatsToday;
 			}
 
 			if (!IsCreateMode)
@@ -343,8 +346,8 @@ namespace TocoDo.BusinessLogic.ViewModels
 		/// </summary>
 		private void InitFilling()
 		{
-			var modelStartDate  = ModelStartDate;
-			var modelRepeatType = ModelRepeatType;
+			var modelStartDate  = StartDate;
+			var modelRepeatType = RepeatType;
 
 			if (modelStartDate == null)
 				throw new ArgumentException("When a habit Filling is being initialized, it cannot have ModelStartDate set to null");
@@ -354,19 +357,19 @@ namespace TocoDo.BusinessLogic.ViewModels
 			switch (modelRepeatType)
 			{
 				case RepeatType.Days:
-					for (var i = 0; i < ModelDaysToRepeat; i++)
+					for (var i = 0; i < DaysToRepeat; i++)
 						newFilling.Add(startDate.AddDays(i), 0);
 					break;
 				case RepeatType.Months:
-					for (var i = 0; i < ModelDaysToRepeat; i++)
+					for (var i = 0; i < DaysToRepeat; i++)
 						newFilling.Add(startDate.AddMonths(i), 0);
 					break;
 				case RepeatType.Years:
-					for (var i = 0; i < ModelDaysToRepeat; i++)
+					for (var i = 0; i < DaysToRepeat; i++)
 						newFilling.Add(startDate.AddYears(i), 0);
 					break;
 				default:
-					for (var i = 0; i < ModelDaysToRepeat * 7; i++)
+					for (var i = 0; i < DaysToRepeat * 7; i++)
 					{
 						// For every day of a week check if the day is within the ModelRepeatType
 						if (modelRepeatType.HasFlag((RepeatType) (1 << startDate.ZeroMondayBasedDay()))) newFilling.Add(startDate, 0);
@@ -377,7 +380,7 @@ namespace TocoDo.BusinessLogic.ViewModels
 					break;
 			}
 
-			ModelFilling = newFilling;
+			Filling = newFilling;
 		}
 	}
 }

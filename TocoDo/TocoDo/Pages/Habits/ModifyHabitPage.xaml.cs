@@ -35,22 +35,18 @@ namespace TocoDo.UI.Pages.Habits
 		private void EntryTitle_OnUnfocused(object sender, FocusEventArgs e)
 		{
 			Habit.EditTitleCommand?.Execute(EntryTitle.Text);
-			EntryTitle.Text = Habit.ModelTitle;
-		}
-
-		private void TapGestureRecognizer_OnTapped(object sender, EventArgs e)
-		{
+			EntryTitle.Text = Habit.Title;
 		}
 
 		private async void IconButton_OnClicked(object sender, EventArgs e)
 		{
 			try
 			{
-				var repeatTypePopup  = new HabitRepeatTypePopup(Habit.ModelRepeatType, Habit.ModelDaysToRepeat);
+				var repeatTypePopup  = new HabitRepeatTypePopup(Habit.RepeatType, Habit.DaysToRepeat);
 				repeatTypePopup.Save += (repeatType, daysToRepeat) =>
 				{
-					Habit.ModelRepeatType   = repeatType;
-					Habit.ModelDaysToRepeat = daysToRepeat;
+					Habit.RepeatType   = repeatType;
+					Habit.DaysToRepeat = daysToRepeat;
 				};
 				await PopupNavigation.Instance.PushAsync(repeatTypePopup);
 			}
@@ -63,12 +59,12 @@ namespace TocoDo.UI.Pages.Habits
 
 		private void BtnUnit_Clicked(object sender, EventArgs e)
 		{
-			Habit.ModelHabitType = HabitType.Unit;
+			Habit.HabitType = HabitType.Unit;
 		}
 
 		private void BtnDaylong_Clicked(object sender, EventArgs e)
 		{
-			Habit.ModelHabitType = HabitType.Daylong;
+			Habit.HabitType = HabitType.Daylong;
 		}
 	}
 }

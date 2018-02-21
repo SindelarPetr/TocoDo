@@ -22,23 +22,23 @@
 					<ColumnDefinition Width="*" />
 					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
-				<Label Text="{Binding ModelTitle}" Style="{StaticResource HabitHeader}" />
+				<Label Text="{Binding Title}" Style="{StaticResource HabitHeader}" />
 				<Label Grid.Column="1" Margin="5,0,0,0" FontSize="Small"
-				       Text="{Binding ModelMaxRepeatsADay, StringFormat='Goal: {0}'}" HorizontalOptions="Fill"
+				       Text="{Binding MaxRepeatsADay, StringFormat='Goal: {0}'}" HorizontalOptions="Fill"
 				       HorizontalTextAlignment="Center" VerticalOptions="Fill" VerticalTextAlignment="Center">
 					<Label.Triggers>
-						<DataTrigger TargetType="Label" Binding="{Binding ModelHabitType}" Value="{x:Static models:HabitType.Daylong}">
+						<DataTrigger TargetType="Label" Binding="{Binding HabitType}" Value="{x:Static models:HabitType.Daylong}">
 							<Setter Property="IsVisible" Value="False" />
 						</DataTrigger>
 					</Label.Triggers>
 				</Label>
 			</Grid>
-			<Button Text="{Binding ModelRepeatsToday}" BackgroundColor="{StaticResource ColorPrimaryLight}" TextColor="White"
+			<Button Text="{Binding RepeatsToday}" BackgroundColor="{StaticResource ColorPrimaryLight}" TextColor="White"
 			        Command="{Binding IncreaseTodayCommand}" Clicked="Button_OnClicked">
 				<Button.Triggers>
-					<DataTrigger TargetType="Button" Binding="{Binding ModelHabitType}" Value="{x:Static models:HabitType.Daylong}">
+					<DataTrigger TargetType="Button" Binding="{Binding HabitType}" Value="{x:Static models:HabitType.Daylong}">
 						<Setter Property="BackgroundColor" Value="{StaticResource ColorPrimaryLight}" />
-						<Setter Property="Text" Value="{Binding ModelRepeatsToday, StringFormat='Vioalted {0} times'}" />
+						<Setter Property="Text" Value="{Binding RepeatsToday, StringFormat='Vioalted {0} times'}" />
 					</DataTrigger>
 				</Button.Triggers>
 			</Button>
