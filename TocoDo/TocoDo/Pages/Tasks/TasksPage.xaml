@@ -24,7 +24,7 @@
 
 					<!-- Scheduled -->
 					<global:FrameWrapper Header="Scheduled">
-						<todos:ScheduledTasksView Margin="0,5,0,0" TasksSource="{Binding Source={StaticResource TaskService}, Path=AllTasks}"/>
+						<todos:ScheduledTasksView ItemsSource="{Binding Source={StaticResource TaskService}, Path=AllTasks}"/>
 					</global:FrameWrapper>
 				</StackLayout>
 			</ScrollView>

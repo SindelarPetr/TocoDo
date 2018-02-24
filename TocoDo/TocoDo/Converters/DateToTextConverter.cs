@@ -33,7 +33,7 @@ namespace TocoDo.UI.Converters
 			//if (date.Value.Date == DateTime.Today + TimeSpan.FromDays(2))
 			//	return Resources.TheDayAfterTomorrow;
 
-			var dateFormat = "ddd, d MMM";
+			var dateFormat = "ddd, d MMMM";
 			if (date.Value.Date.Year == DateTime.Today.Year)
 				return date.Value.ToString(dateFormat);
 			return date.Value.ToString(dateFormat + " yyyy");

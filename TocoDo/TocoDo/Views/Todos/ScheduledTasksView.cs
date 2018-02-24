@@ -1,145 +1,116 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
+using System.Collections.Specialized;
 using System.Text;
-using TocoDo.BusinessLogic;
-using TocoDo.BusinessLogic.Helpers;
 using TocoDo.BusinessLogic.ViewModels;
+using TocoDo.UI.Converters;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace TocoDo.UI.Views.Todos
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class ScheduledTasksView : TodoSetView
-	{
-		private readonly List<KeyValuePair<DateTime, ObservableCollection<TaskViewModel>>> _items =
-			new List<KeyValuePair<DateTime, ObservableCollection<TaskViewModel>>>();
+    public class ScheduledTasksView : ContentView
+    {
+		public static BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(ReadOnlyObservableCollection<ITaskViewModel>), typeof(ReadOnlyObservableCollection<ITaskViewModel>));
 
-		private readonly Dictionary<ObservableCollection<TaskViewModel>, TodoSetView> _setsForItems =
-			new Dictionary<ObservableCollection<TaskViewModel>, TodoSetView>();
+	    public ReadOnlyObservableCollection<ITaskViewModel> ItemsSource
+	    {
+		    get => (ReadOnlyObservableCollection<ITaskViewModel>) GetValue(ItemsSourceProperty);
+		    set => SetValue(ItemsSourceProperty, value);
+	    }
 
-		public ScheduledTasksView()
+	    public StackLayout MainLayout;
+
+	    public ScheduledTasksView()
+	    {
+		    Content = MainLayout = new StackLayout {Spacing = 0};
+	    }
+
+		#region ItemsSource binding
+		protected override void OnPropertyChanging(string propertyName = null)
 		{
-			MyLogger.WriteStartMethod();
-			MainLayout.Spacing = 5;
-			MyLogger.WriteEndMethod();
+			base.OnPropertyChanging(propertyName);
+
+			if (propertyName == nameof(ItemsSource))
+				UnbindItemsSource();
 		}
 
-		protected override void AddTaskModel(TaskViewModel taskVm)
+		protected override void OnPropertyChanged(string propertyName = null)
 		{
-			MyLogger.WriteStartMethod();
-			if (taskVm.ScheduleDate == null)
-			{
-				MyLogger.WriteInMethod("Tried to add a task model with no schedule date to the collection of scheduled tasks");
+			base.OnPropertyChanged(propertyName);
+
+			if (propertyName == nameof(ItemsSource))
+				BindItemsSource();
+		}
+
+		private void UnbindItemsSource()
+		{
+			if(ItemsSource != null)
+				((INotifyCollectionChanged)ItemsSource).CollectionChanged -= OnCollectionChanged;
+		}
+
+	    private void BindItemsSource()
+	    {
+			if(ItemsSource != null)
+				((INotifyCollectionChanged)ItemsSource).CollectionChanged += OnCollectionChanged;
+		}
+
+	    #endregion
+
+	    private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+	    {
+		    switch (notifyCollectionChangedEventArgs.Action)
+		    {
+				case NotifyCollectionChangedAction.Add:
+					foreach (var newItem in notifyCollectionChangedEventArgs.NewItems)
+					{
+						if(newItem is ITaskViewModel task && task.ScheduleDate != null) AddTask(task);
+					}
+					break;
+
+				case NotifyCollectionChangedAction.Remove:
+					foreach (var oldItem in notifyCollectionChangedEventArgs.OldItems)
+					{
+						if (oldItem is ITaskViewModel task && task.ScheduleDate != null) RemoveTask(task);
+					}
+					break;
+		    }
+	    }
+
+	    private void AddTask(ITaskViewModel newTask)
+	    {
+			if(newTask.ScheduleDate == null) 
 				return;
-			}
 
-			DateTime scheduleDate = taskVm.ScheduleDate.Value.Date;
+			var scheduleDate = newTask.ScheduleDate.Value;
 
-			var collection = FindCollection(scheduleDate);
-			if (collection != null)
-			{
-				collection.Add(taskVm);
-				return;
-			}
+			// Find the right place
+		    int i = 0;
+		    for (; i < MainLayout.Children.Count; i++)
+		    {
+			    if(!(MainLayout.Children[i] is TodoItemView item) || item.ViewModel.ScheduleDate.Value.Date < scheduleDate.Date)
+				    continue;
 
-			collection = new ObservableCollection<TaskViewModel>();
-			var set    = new TodoSetView
-			             {
-				             TasksSource     = collection,
-				             IsHeaderVisible = true,
-				             HeaderText      = scheduleDate.ToString(
-					             (scheduleDate < DateTime.Today + TimeSpan.FromDays(7) ? "ddd, " : "") +
-					             "d'" + scheduleDate.GetDayExtension() + "' MMMM" +
-					             ((DateTime.Today.Year != scheduleDate.Year) ? " YYYY" : "")),
-				             HeaderBackgroundColor = Color.Transparent,
-				             HeaderTextSize        = 13,
-				             Padding               = new Thickness(0, 0, 0, 0)
-			             };
+				// just add at the bottom of the group if there is already a group for that date
+			    if (item.ViewModel.ScheduleDate.Value.Date == scheduleDate.Date)
+			    {
+					MainLayout.Children.Insert(i + 1, new TodoItemView(newTask));
+					return;
+			    }
 
-			int index = InsertCollection(scheduleDate, collection);
-			_setsForItems.Add(collection, set);
+				break;
+		    }
+			
+		    // Insert the Task and then insert also a header for its group
+			MainLayout.Children.Insert(i, new TodoItemView(newTask));
+			MainLayout.Children.Insert(i, new Label { Text = DateToTextConverter.Convert(scheduleDate), FontSize = 13, TextColor = ((App)App.Current).ColorPrimary});
+	    }
 
-			collection.Add(taskVm);
-			MainLayout.Children.Insert(index, set);
-			MyLogger.WriteEndMethod();
-		}
+	    private void RemoveTask(ITaskViewModel oldItem)
+	    {
+		    // Find the task
 
-		private ObservableCollection<TaskViewModel> FindCollection(DateTime date)
-		{
-			MyLogger.WriteStartMethod();
-			foreach (var keyValuePair in _items)
-			{
-				if (keyValuePair.Key == date)
-					return keyValuePair.Value;
-
-				if (keyValuePair.Key > date)
-					return null;
-			}
-
-			MyLogger.WriteEndMethod();
-			return null;
-		}
-
-		/// <summary>
-		/// Inserts the given pair to the right order in the _items List.
-		/// </summary>
-		/// <param name="date">Key in the pair</param>
-		/// <param name="collection">Value in the pair</param>
-		/// <returns>The index on which the pair has been inserted</returns>
-		private int InsertCollection(DateTime date, ObservableCollection<TaskViewModel> collection)
-		{
-			MyLogger.WriteStartMethod();
-			for (var i = 0; i < _items.Count; i++)
-			{
-				var keyValuePair = _items[i];
-				if (keyValuePair.Key > date)
-				{
-					_items.Insert(i, new KeyValuePair<DateTime, ObservableCollection<TaskViewModel>>(date, collection));
-					return i;
-				}
-			}
-
-			_items.Add(new KeyValuePair<DateTime, ObservableCollection<TaskViewModel>>(date, collection));
-			return _items.Count - 1;
-			MyLogger.WriteEndMethod();
-		}
-
-		protected override void RemoveTaskModel(TaskViewModel taskModel)
-		{
-			MyLogger.WriteStartMethod();
-			if (taskModel.ScheduleDate == null)
-			{
-				MyLogger.WriteInMethod("Tried to remove a task model with no schedule date from the collection of scheduled tasks");
-				return;
-			}
-
-			DateTime scheduleDate = taskModel.ScheduleDate.Value.Date;
-
-			var collection = FindCollection(scheduleDate);
-
-			if (collection == null)
-			{
-				return;
-			}
-
-			collection.Remove(taskModel);
-
-			if (collection.Count == 0)
-			{
-				RemoveCollection(scheduleDate, collection);
-			}
-			MyLogger.WriteEndMethod();
-		}
-
-		private void RemoveCollection(DateTime scheduleDate, ObservableCollection<TaskViewModel> collection)
-		{
-			var set = _setsForItems[collection];
-			_items.RemoveAll(p => p.Key == scheduleDate);
-			_setsForItems.Remove(collection);
-			MainLayout.Children.Remove(set);
-		}
-	}
+			// If there is a title above, then if there is anothere title below or no items, remove the title above
+	    }
+    }
 }
