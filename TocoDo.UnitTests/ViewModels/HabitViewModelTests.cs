@@ -28,14 +28,14 @@ namespace TocoDo.UnitTests
 		}
 
 		[TestMethod]
-		public void EditCommandShouldNavigateToAHabitModifyPage()
+		public async Task EditCommandShouldNavigateToAHabitModifyPage()
 		{
 			// Arrange
 			Mock.Arrange(() => _navigationService.PushAsync(PageType.ModifyHabitPage, _habitViewModel))
 				.Returns(Task.CompletedTask).OccursOnce();
 
 			// Act
-			_habitViewModel.EditCommand.Execute(null);
+			await _habitViewModel.EditCommand.ExecuteAsync(null);
 
 			// Assert
 			Mock.Assert(_navigationService);
@@ -107,7 +107,7 @@ namespace TocoDo.UnitTests
 		}
 
 		[TestMethod]
-		public void ConfirmFinishCommandShouldCallConfirmCreationOfHabitServiceAndWontCallUpdateWhenANotNullOrWhitespaceTitleIsProvided()
+		public async Task ConfirmFinishCommandShouldCallConfirmCreationOfHabitServiceAndWontCallUpdateWhenANotNullOrWhitespaceTitleIsProvided()
 		{
 			// Arrange
 			string finalTitle = "TITLE";
@@ -115,14 +115,14 @@ namespace TocoDo.UnitTests
 			Mock.Arrange(() => _habitService.UpdateAsync(_habitViewModel)).Returns(Task.CompletedTask).OccursNever();
 
 			// Act
-			_habitViewModel.FinishCreationCommand.Execute(finalTitle);
+			await _habitViewModel.FinishCreationCommand.ExecuteAsync(finalTitle);
 
 			// Assert
 			Mock.Assert(_habitService);
 		}
 
 		[TestMethod]
-		public void ConfirmFinishCommandShouldCallCancelCreationOfTaskServiceAndWontCallUpdateWhenANullTitleIsProvided()
+		public async Task ConfirmFinishCommandShouldCallCancelCreationOfTaskServiceAndWontCallUpdateWhenANullTitleIsProvided()
 		{
 			// Arrange
 			string finalTitle = null;
@@ -130,14 +130,14 @@ namespace TocoDo.UnitTests
 			Mock.Arrange(() => _habitService.UpdateAsync(_habitViewModel)).Returns(Task.CompletedTask).OccursNever();
 
 			// Act
-			_habitViewModel.FinishCreationCommand.Execute(finalTitle);
+			await _habitViewModel.FinishCreationCommand.ExecuteAsync(finalTitle);
 
 			// Assert
 			Mock.Assert(_habitService);
 		}
 
 		[TestMethod]
-		public void ConfirmFinishCommandShouldCallCancelCreationOfTaskServiceAndWontCallUpdateWhenAWhitespaceTitleIsProvided()
+		public async Task ConfirmFinishCommandShouldCallCancelCreationOfTaskServiceAndWontCallUpdateWhenAWhitespaceTitleIsProvided()
 		{
 			// Arrange
 			string finalTitle = "  ";
@@ -145,61 +145,61 @@ namespace TocoDo.UnitTests
 			Mock.Arrange(() => _habitService.UpdateAsync(_habitViewModel)).Returns(Task.CompletedTask).OccursNever();
 
 			// Act
-			_habitViewModel.FinishCreationCommand.Execute(finalTitle);
+			await _habitViewModel.FinishCreationCommand.ExecuteAsync(finalTitle);
 
 			// Assert
 			Mock.Assert(_habitService);
 		}
 
 		[TestMethod]
-		public void RemoveCommandShouldRiseAnAlert()
+		public async Task RemoveCommandShouldRiseAnAlert()
 		{
 			// Arrange
-			Mock.Arrange(() => _navigationService.DisplayAlert(Arg.AnyString, Arg.AnyString, Arg.AnyString, Arg.AnyString)).OccursOnce();
+			Mock.Arrange(() => _navigationService.DisplayAlert(Arg.AnyString, Arg.AnyString, Arg.AnyString, Arg.AnyString)).Returns(Task.FromResult(Arg.AnyBool)).OccursOnce();
 
 			// Act
-			_habitViewModel.RemoveCommand.Execute(null);
+			await _habitViewModel.RemoveCommand.ExecuteAsync(null);
 
 			// Assert
 			Mock.Assert(_navigationService);
 		}
 
 		[TestMethod]
-		public void RemoveCommandAfterAcceptingAlertShouldCallDeleteAsyncOfTaskService()
+		public async Task RemoveCommandAfterAcceptingAlertShouldCallDeleteAsyncOfTaskService()
 		{
 			// Arrange
 			Mock.Arrange(() => _navigationService.DisplayAlert(Arg.AnyString, Arg.AnyString, Arg.AnyString, Arg.AnyString)).Returns(Task.FromResult(true)).InOrder();
 			Mock.Arrange(() => _habitService.DeleteAsync(_habitViewModel)).Returns(Task.CompletedTask).InOrder().OccursOnce();
 
 			// Act
-			_habitViewModel.RemoveCommand.Execute(null);
+			await _habitViewModel.RemoveCommand.ExecuteAsync(null);
 
 			// Assert
 			Mock.Assert(_habitService);
 		}
 
 		[TestMethod]
-		public void RemoveCommandAfterRefusingTheAlertShouldntCallDeleteAsync()
+		public async Task RemoveCommandAfterRefusingTheAlertShouldntCallDeleteAsync()
 		{
 			// Arrange
 			Mock.Arrange(() => _navigationService.DisplayAlert(Arg.AnyString, Arg.AnyString, Arg.AnyString, Arg.AnyString)).Returns(Task.FromResult(false)).InOrder();
 			Mock.Arrange(() => _habitService.DeleteAsync(_habitViewModel)).Returns(Task.CompletedTask).OccursNever();
 
 			// Act
-			_habitViewModel.RemoveCommand.Execute(null);
+			await _habitViewModel.RemoveCommand.ExecuteAsync(null);
 
 			// Assert
 			Mock.Assert(_habitService);
 		}
 
 		[TestMethod]
-		public void UpdateCommandShouldCallUpdateAsyncOfTaskService()
+		public async Task UpdateCommandShouldCallUpdateAsyncOfTaskService()
 		{
 			// Arrange
 			Mock.Arrange(() => _habitService.UpdateAsync(_habitViewModel)).Returns(Task.CompletedTask).OccursOnce();
 
 			// Act
-			_habitViewModel.UpdateCommand.Execute(null);
+			await _habitViewModel.UpdateCommand.ExecuteAsync(null);
 
 			// Assert
 			Mock.Assert(_habitService);

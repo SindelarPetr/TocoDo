@@ -1,4 +1,5 @@
 ﻿using System;
+using TocoDo.BusinessLogic;
 using TocoDo.BusinessLogic.Services;
 using TocoDo.UI.DependencyInjection;
 using Xamarin.Forms;
@@ -11,7 +12,17 @@ namespace TocoDo.UI.Pages.Tasks
 	{
 		public TasksPage()
 		{
-			InitializeComponent();
+			MyLogger.WriteStartMethod();
+			try
+			{
+				InitializeComponent();
+			}
+			catch (Exception e)
+			{
+				MyLogger.WriteException(e);
+				throw;
+			}
+			MyLogger.WriteEndMethod();
 		}
 
 		private void ButtonAddSomeday_OnClicked(object sender, EventArgs e)

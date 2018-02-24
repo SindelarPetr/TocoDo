@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using TocoDo.BusinessLogic.DependencyInjection.Models;
 using TocoDo.BusinessLogic.Extensions;
+using TocoDo.BusinessLogic.Helpers.Commands;
 
 namespace TocoDo.BusinessLogic.ViewModels
 {
@@ -24,15 +25,12 @@ namespace TocoDo.BusinessLogic.ViewModels
 		DateTime?  StartDate            { get; set; }
 		string     Title                { get; set; }
 
-		ICommand FinishCreationCommand   { get; }
-		ICommand EditCommand             { get; }
+		IAsyncCommand<string> FinishCreationCommand   { get; }
+		IAsyncCommand EditCommand             { get; }
 		ICommand EditTitleCommand        { get; }
 		ICommand IncreaseTodayCommand    { get; }
-		ICommand RemoveCommand           { get; }
-		ICommand SelectRepeatCommand     { get; }
-		ICommand SelectStartDateCommand  { get; }
-		ICommand UnsetStartDateCommand   { get; }
-		ICommand UpdateCommand           { get; }
+		IAsyncCommand RemoveCommand           { get; }
+		IAsyncCommand UpdateCommand           { get; }
 
 		ObservableDictionary<DateTime, int> Filling { get; }
 

@@ -28,11 +28,11 @@ namespace TocoDo.UnitTests.ViewModels
 			_title = "TITLE";
 			_description = "DESCRIPTION";
 			SetDescriptionAction = d => _description = d;
-			_editDescriptionViewModel = new EditDescriptionViewModel(_navigation, _title, _description, SetDescriptionAction, false);
+			_editDescriptionViewModel = new EditDescriptionViewModel(_navigation, new EditDescriptionInfo(_title, _description, SetDescriptionAction, false));
 		}
 
 		[TestMethod]
-		public void SaveCommandCallsDescriptionActionAndPassesItsNewDescription()
+		public async Task SaveCommandCallsDescriptionActionAndPassesItsNewDescription()
 		{
 			// Arrange
 			bool called = false;
@@ -44,11 +44,11 @@ namespace TocoDo.UnitTests.ViewModels
 				description = s;
 			}
 			SetDescriptionAction += SaveAction;
-			_editDescriptionViewModel = new EditDescriptionViewModel(_navigation, _title, _description, SetDescriptionAction, false);
+			_editDescriptionViewModel = new EditDescriptionViewModel(_navigation, new EditDescriptionInfo(_title, _description, SetDescriptionAction, false));
 
 			// Act
 			_editDescriptionViewModel.Description = newDescription;
-			_editDescriptionViewModel.SaveCommand?.Execute(null);
+			await _editDescriptionViewModel.SaveCommand.ExecuteAsync(null);
 			SetDescriptionAction -= SaveAction;
 
 			// Assert
@@ -57,13 +57,13 @@ namespace TocoDo.UnitTests.ViewModels
 		}
 
 		[TestMethod]
-		public void DiscardCommandWontShowAnyAlertIfTheDescriptionHasNotBeenChanged()
+		public async Task DiscardCommandWontShowAnyAlertIfTheDescriptionHasNotBeenChanged()
 		{
 			// Arrange
 			Mock.Arrange(() => _navigation.DisplayAlert(Arg.AnyString, Arg.AnyString, Arg.AnyString, Arg.AnyString)).Returns(Task.FromResult(Arg.AnyBool)).OccursNever();
 
 			// Act
-			_editDescriptionViewModel.DiscardCommand.Execute(null);
+			await _editDescriptionViewModel.DiscardCommand.ExecuteAsync(null);
 
 			// Assert
 			Mock.Assert(_navigation);
@@ -72,18 +72,13 @@ namespace TocoDo.UnitTests.ViewModels
 		[TestMethod]
 		public async Task DiscardCommandShowsAlertIfTheDescriptionHasBeenChanged()
 		{
-			AwaitableCommand c = new AwaitableCommand(async () => await Task.Delay(10000));
-
-			await c.ExecuteAsync(null);
-			Assert.IsTrue(true);
-			return;
 			// Arrange
 			Mock.Arrange(() => _navigation.DisplayAlert(Arg.AnyString, Arg.AnyString, Arg.AnyString, Arg.AnyString)).Returns(Task.FromResult(Arg.AnyBool)).OccursOnce();
 			var newDescription = "NEW DESCRIPTION";
 
 			// Act
 			_editDescriptionViewModel.Description = newDescription;
-			_editDescriptionViewModel.DiscardCommand.Execute(null);
+			await _editDescriptionViewModel.DiscardCommand.ExecuteAsync(null);
 
 			// Assert
 			Mock.Assert(_navigation);
@@ -93,9 +88,20 @@ namespace TocoDo.UnitTests.ViewModels
 		[TestMethod]
 		public async Task DiscardCommandWontCallSaveIfTheAlertResponseIsNegative()
 		{
-			Command com = new Command(async () => await Task.Delay(10000));
+			// Arrange
+			bool called = false;
+			void SaveActionWhichShouldntBeCalled(string str)
+			{
+				called = true;
+			}
+			Mock.Arrange(() => _navigation.DisplayAlert(Arg.AnyString, Arg.AnyString, Arg.AnyString, Arg.AnyString)).Returns(Task.FromResult(false));
+			_editDescriptionViewModel = new EditDescriptionViewModel(_navigation, new EditDescriptionInfo(_title, _description, SaveActionWhichShouldntBeCalled, false));
 
-			com.Execute(null);
+			// Act
+			await _editDescriptionViewModel.DiscardCommand.ExecuteAsync(null);
+
+			// Assert
+			Assert.IsFalse(called);
 		}
 
 		[TestMethod]

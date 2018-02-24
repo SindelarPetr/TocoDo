@@ -13,29 +13,29 @@ using TocoDo.BusinessLogic.ViewModels;
 namespace TocoDo.UnitTests
 {
 	[TestClass]
-	public class TaskViewModelTests
+	public class ITaskViewModelTests
 	{
 		private ITaskService _taskService;
 		private INavigationService _navigationService;
-		private ITaskViewModel _taskViewModel;
+		private ITaskViewModel _ITaskViewModel;
 
 		[TestInitialize]
 		public void TestInit()
 		{
 			_taskService = Mock.Create<ITaskService>();
 			_navigationService = Mock.Create<INavigationService>();
-			_taskViewModel = new TaskViewModel(_taskService, _navigationService);
+			_ITaskViewModel = new TaskViewModel(_taskService, _navigationService);
 		}
 
 		[TestMethod]
-		public void EditCommandShouldNavigateToATaskModifyPage()
+		public async Task EditCommandShouldNavigateToATaskModifyPage()
 		{
 			// Arrange
 			Mock.Arrange(() => _navigationService.PushAsync(PageType.ModifyTaskPage, Arg.IsAny<ITaskViewModel>()))
 			    .Returns(Task.CompletedTask).OccursOnce();
 
 			// Act
-			_taskViewModel.EditCommand.Execute(null);
+			await _ITaskViewModel.EditCommand.ExecuteAsync(null);
 
 			// Assert
 			Mock.Assert(_navigationService);
@@ -47,13 +47,13 @@ namespace TocoDo.UnitTests
 			// Arrange
 			var oldTitle = "Tit";
 			var expectedTitle = "TITLE";
-			_taskViewModel.Title = oldTitle;
+			_ITaskViewModel.Title = oldTitle;
 
 			// Act
-			_taskViewModel.EditTitleCommand.Execute(expectedTitle);
+			_ITaskViewModel.EditTitleCommand.Execute(expectedTitle);
 
 			// Assert
-			Assert.AreEqual(expectedTitle, _taskViewModel.Title);
+			Assert.AreEqual(expectedTitle, _ITaskViewModel.Title);
 		}
 
 		[TestMethod]
@@ -63,13 +63,13 @@ namespace TocoDo.UnitTests
 			var oldTitle = "Tit";
 			var newTitle = "   TITLE";
 			var expectedTitle = "TITLE";
-			_taskViewModel.Title = oldTitle;
+			_ITaskViewModel.Title = oldTitle;
 
 			// Act
-			_taskViewModel.EditTitleCommand.Execute(newTitle);
+			_ITaskViewModel.EditTitleCommand.Execute(newTitle);
 
 			// Assert
-			Assert.AreEqual(expectedTitle, _taskViewModel.Title);
+			Assert.AreEqual(expectedTitle, _ITaskViewModel.Title);
 		}
 
 		[TestMethod]
@@ -79,13 +79,13 @@ namespace TocoDo.UnitTests
 			var oldTitle         = "Tit";
 			var newTitle         = "   ";
 			var expectedTitle    = "Tit";
-			_taskViewModel.Title = oldTitle;
+			_ITaskViewModel.Title = oldTitle;
 
 			// Act
-			_taskViewModel.EditTitleCommand.Execute(newTitle);
+			_ITaskViewModel.EditTitleCommand.Execute(newTitle);
 
 			// Assert
-			Assert.AreEqual(expectedTitle, _taskViewModel.Title);
+			Assert.AreEqual(expectedTitle, _ITaskViewModel.Title);
 		}
 
 		[TestMethod]
@@ -95,14 +95,14 @@ namespace TocoDo.UnitTests
 			var oldTitle         = "Tit";
 			var newTitle         = new Mock();
 			var expectedTitle    = "Tit";
-			_taskViewModel.Title = oldTitle;
-			Mock.Arrange(() => _taskService.UpdateAsync(_taskViewModel)).Returns(Task.CompletedTask).OccursNever();
+			_ITaskViewModel.Title = oldTitle;
+			Mock.Arrange(() => _taskService.UpdateAsync(_ITaskViewModel)).Returns(Task.CompletedTask).OccursNever();
 
 			// Act
-			_taskViewModel.EditTitleCommand.Execute(newTitle);
+			_ITaskViewModel.EditTitleCommand.Execute(newTitle);
 
 			// Assert
-			Assert.AreEqual(expectedTitle, _taskViewModel.Title);
+			Assert.AreEqual(expectedTitle, _ITaskViewModel.Title);
 			Mock.Assert(_taskService);
 		}
 
@@ -111,11 +111,11 @@ namespace TocoDo.UnitTests
 		{
 			// Arrange
 			string finalTitle = "TITLE";
-			Mock.Arrange(() => _taskService.ConfirmCreationAsync(_taskViewModel)).Returns(Task.CompletedTask).OccursOnce();
-			Mock.Arrange(() => _taskService.UpdateAsync(_taskViewModel)).Returns(Task.CompletedTask).OccursNever();
+			Mock.Arrange(() => _taskService.ConfirmCreationAsync(_ITaskViewModel)).Returns(Task.CompletedTask).OccursOnce();
+			Mock.Arrange(() => _taskService.UpdateAsync(_ITaskViewModel)).Returns(Task.CompletedTask).OccursNever();
 
 			// Act
-			_taskViewModel.FinishCreationCommand.Execute(finalTitle);
+			_ITaskViewModel.FinishCreationCommand.Execute(finalTitle);
 
 			// Assert
 			Mock.Assert(_taskService);
@@ -126,11 +126,11 @@ namespace TocoDo.UnitTests
 		{
 			// Arrange
 			string finalTitle = null;
-			Mock.Arrange(() => _taskService.CancelCreation(_taskViewModel)).OccursOnce();
-			Mock.Arrange(() => _taskService.UpdateAsync(_taskViewModel)).Returns(Task.CompletedTask).OccursNever();
+			Mock.Arrange(() => _taskService.CancelCreation(_ITaskViewModel)).OccursOnce();
+			Mock.Arrange(() => _taskService.UpdateAsync(_ITaskViewModel)).Returns(Task.CompletedTask).OccursNever();
 
 			// Act
-			_taskViewModel.FinishCreationCommand.Execute(finalTitle);
+			_ITaskViewModel.FinishCreationCommand.Execute(finalTitle);
 
 			// Assert
 			Mock.Assert(_taskService);
@@ -141,65 +141,65 @@ namespace TocoDo.UnitTests
 		{
 			// Arrange
 			string finalTitle = "  ";
-			Mock.Arrange(() => _taskService.CancelCreation(_taskViewModel)).OccursOnce();
-			Mock.Arrange(() => _taskService.UpdateAsync(_taskViewModel)).Returns(Task.CompletedTask).OccursNever();
+			Mock.Arrange(() => _taskService.CancelCreation(_ITaskViewModel)).OccursOnce();
+			Mock.Arrange(() => _taskService.UpdateAsync(_ITaskViewModel)).Returns(Task.CompletedTask).OccursNever();
 
 			// Act
-			_taskViewModel.FinishCreationCommand.Execute(finalTitle);
+			_ITaskViewModel.FinishCreationCommand.Execute(finalTitle);
 
 			// Assert
 			Mock.Assert(_taskService);
 		}
 
 		[TestMethod]
-		public void RemoveCommandShouldRiseAnAlert()
+		public async Task RemoveCommandShouldRiseAnAlert()
 		{
 			// Arrange
 			Mock.Arrange(() => _navigationService.DisplayAlert(Arg.AnyString, Arg.AnyString, Arg.AnyString, Arg.AnyString)).OccursOnce();
 
 			// Act
-			_taskViewModel.RemoveCommand.Execute(null);
+			await _ITaskViewModel.RemoveCommand.ExecuteAsync(null);
 
 			// Assert
 			Mock.Assert(_navigationService);
 		}
 
 		[TestMethod]
-		public void RemoveCommandAfterAcceptingAlertShouldCallDeleteAsyncOfTaskService()
+		public async Task RemoveCommandAfterAcceptingAlertShouldCallDeleteAsyncOfTaskService()
 		{
 			// Arrange
 			Mock.Arrange(() => _navigationService.DisplayAlert(Arg.AnyString,Arg.AnyString,Arg.AnyString,Arg.AnyString)).Returns(Task.FromResult(true)).InOrder();
-			Mock.Arrange(() => _taskService.DeleteAsync(_taskViewModel)).Returns(Task.CompletedTask).InOrder().OccursOnce();
+			Mock.Arrange(() => _taskService.DeleteAsync(_ITaskViewModel)).Returns(Task.CompletedTask).InOrder().OccursOnce();
 
 			// Act
-			_taskViewModel.RemoveCommand.Execute(null);
+			await _ITaskViewModel.RemoveCommand.ExecuteAsync(null);
 
 			// Assert
 			Mock.Assert(_taskService);
 		}
 
 		[TestMethod]
-		public void RemoveCommandAfterRefusingTheAlertShouldntCallDeleteAsync()
+		public async Task RemoveCommandAfterRefusingTheAlertShouldntCallDeleteAsync()
 		{
 			// Arrange
 			Mock.Arrange(() => _navigationService.DisplayAlert(Arg.AnyString, Arg.AnyString, Arg.AnyString, Arg.AnyString)).Returns(Task.FromResult(false)).InOrder();
-			Mock.Arrange(() => _taskService.DeleteAsync(_taskViewModel)).Returns(Task.CompletedTask).OccursNever();
+			Mock.Arrange(() => _taskService.DeleteAsync(_ITaskViewModel)).Returns(Task.CompletedTask).OccursNever();
 
 			// Act
-			_taskViewModel.RemoveCommand.Execute(null);
+			await _ITaskViewModel.RemoveCommand.ExecuteAsync(null);
 
 			// Assert
 			Mock.Assert(_taskService);
 		}
 
 		[TestMethod]
-		public void UpdateCommandShouldCallUpdateAsyncOfTaskService()
+		public async Task UpdateCommandShouldCallUpdateAsyncOfTaskService()
 		{
 			// Arrange
-			Mock.Arrange(() => _taskService.UpdateAsync(_taskViewModel)).Returns(Task.CompletedTask).OccursOnce();
+			Mock.Arrange(() => _taskService.UpdateAsync(_ITaskViewModel)).Returns(Task.CompletedTask).OccursOnce();
 
 			// Act
-			_taskViewModel.UpdateCommand.Execute(null);
+			await _ITaskViewModel.UpdateCommand.ExecuteAsync(null);
 
 			// Assert
 			Mock.Assert(_taskService);

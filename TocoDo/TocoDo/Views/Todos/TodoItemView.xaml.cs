@@ -26,9 +26,9 @@ namespace TocoDo.UI.Views.Todos
 			EntryEditTitle.Focus();
 		}
 
-		private void TapTitle_OnTapped(object sender, EventArgs e)
+		private async void TapTitle_OnTapped(object sender, EventArgs e)
 		{
-			ViewModel.EditCommand?.Execute(null);
+		    await ViewModel.EditCommand.ExecuteAsync(null);
 		}
 
 		private void EditTitle_OnUnfocused(object sender, FocusEventArgs e)

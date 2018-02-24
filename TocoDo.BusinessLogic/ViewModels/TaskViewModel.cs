@@ -4,6 +4,7 @@ using System.Windows.Input;
 using TocoDo.BusinessLogic.DependencyInjection;
 using TocoDo.BusinessLogic.DependencyInjection.Models;
 using TocoDo.BusinessLogic.Helpers;
+using TocoDo.BusinessLogic.Helpers.Commands;
 using TocoDo.BusinessLogic.Properties;
 using TocoDo.BusinessLogic.Services;
 
@@ -83,10 +84,10 @@ namespace TocoDo.BusinessLogic.ViewModels
 		#region Commands
 
 		public ICommand FinishCreationCommand { get; }
-		public ICommand EditCommand           { get; }
+		public IAsyncCommand EditCommand           { get; }
 		public ICommand EditTitleCommand      { get; }
-		public ICommand RemoveCommand         { get; }
-		public ICommand UpdateCommand         { get; }
+		public IAsyncCommand RemoveCommand         { get; }
+		public IAsyncCommand UpdateCommand         { get; }
 
 		#endregion
 
@@ -121,9 +122,9 @@ namespace TocoDo.BusinessLogic.ViewModels
 		{
 			FinishCreationCommand = new Command(ConfirmCreation);
 			EditTitleCommand      = new Command(EditTitle);
-			EditCommand           = new Command(async () => await Edit());
-			RemoveCommand         = new Command(async () => await RemoveTask());
-			UpdateCommand         = new Command(async () => await Update());
+			EditCommand           = new AwaitableCommand(async () => await Edit());
+			RemoveCommand         = new AwaitableCommand(async () => await RemoveTask());
+			UpdateCommand         = new AwaitableCommand(async () => await Update());
 		}
 
 		#region Private methods

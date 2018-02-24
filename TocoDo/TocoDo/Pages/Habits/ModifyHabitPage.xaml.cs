@@ -14,6 +14,7 @@ namespace TocoDo.UI.Pages.Habits
 	{
 		public ModifyHabitPage(HabitViewModel habit)
 		{
+			MyLogger.WriteStartMethod();
 			try
 			{
 				Habit = habit;
@@ -24,6 +25,7 @@ namespace TocoDo.UI.Pages.Habits
 				MyLogger.WriteException(e);
 				throw;
 			}
+			MyLogger.WriteEndMethod();
 		}
 
 		public HabitViewModel Habit

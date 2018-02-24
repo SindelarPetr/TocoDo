@@ -1,67 +1,80 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Rg.Plugins.Popup.Extensions;
+using Rg.Plugins.Popup.Pages;
+using TocoDo.BusinessLogic;
 using TocoDo.BusinessLogic.DependencyInjection;
+using TocoDo.BusinessLogic.Helpers;
+using TocoDo.BusinessLogic.ViewModels;
+using TocoDo.UI.Pages;
+using TocoDo.UI.Pages.Habits;
+using TocoDo.UI.Pages.Tasks;
 using Xamarin.Forms;
 
 namespace TocoDo.UI.DependencyInjection
 {
-	// TODO: Finish the implementation
 	public class NavigationService : INavigationService
 	{
 		private static NavigationPage NavigationPage => (NavigationPage) Application.Current.MainPage;
 
 		public async Task<bool> DisplayAlert(string title, string message, string accept, string cancel)
 		{
-			return await Application.Current.MainPage.DisplayAlert(title, message, accept, cancel);
+			return await NavigationPage.DisplayAlert(title, message, accept, cancel);
 		}
 
 		public async Task<string> DisplayActionSheet(string title, string cancel, string destruction, string[] buttons)
 		{
-			return await Application.Current.MainPage.DisplayActionSheet(title, cancel, destruction, buttons);
+			return await NavigationPage.DisplayActionSheet(title, cancel, destruction, buttons);
 		}
 
-		public Task PushAsync(PageType page, object param = null)
+		public async Task PushAsync(PageType pageType, object param = null)
 		{
-			throw new NotImplementedException();
-		}
-
-		public Task PopAsync()
-		{
-			throw new NotImplementedException();
-		}
-
-		public Task PushModalAsync(PageType page, object param = null)
-		{
-			throw new NotImplementedException();
-		}
-
-		public Task PopModalAsync()
-		{
-			throw new NotImplementedException();
-		}
-
-		public Task PushPopupAsync(PopupType page, object param = null)
-		{
-			throw new NotImplementedException();
-		}
-
-		public Task PopPopupAsync()
-		{
-			throw new NotImplementedException();
-		}
-
-		private async Task OldPushAsync(Page page)
-		{
+			MyLogger.WriteStartMethod();
 			var stack = NavigationPage.Navigation.NavigationStack;
-			if (stack.Count != 0 && stack[stack.Count - 1].GetType() == page.GetType())
+			if (stack.Count != 0 && stack[stack.Count - 1].GetType() == GetType(pageType))
+				return;
+			
+			Page page = CreatePage(pageType, param);
+
+			MyLogger.WriteInMethod("Before PushAsync");
+			await NavigationPage.PushAsync(page);
+			MyLogger.WriteInMethod("----------- After PushAsync");
+			MyLogger.WriteEndMethod();
+		}
+
+		public async Task PopAsync()
+		{
+			await NavigationPage.PopAsync();
+		}
+
+		public async Task PushModalAsync(PageType pageType, object param = null)
+		{
+			var stack = NavigationPage.Navigation.ModalStack;
+			Debug.WriteLine("-------------- Stack count is: " + stack.Count);
+			if (stack.Count != 0 && stack[stack.Count - 1].GetType() == GetType(pageType))
 				return;
 
-			Debug.Write("----------- Before PushAsync");
-			var nav  = NavigationPage;
-			var navi = NavigationPage.Navigation;
-			await navi.PushAsync(page);
-			Debug.Write("----------- After PushAsync");
+			var page = CreatePage(pageType, param);
+
+			Debug.Write("----------- Before PushModalAsync");
+			await NavigationPage.Navigation.PushModalAsync(page, true);
+			Debug.Write("----------- After PushModalAsync");
+		}
+
+		public async Task PopModalAsync()
+		{
+			await NavigationPage.Navigation.PopModalAsync();
+		}
+
+		public async Task PushPopupAsync(PageType page, object param = null)
+		{
+			await NavigationPage.Navigation.PushPopupAsync((PopupPage)CreatePage(page, param));
+		}
+
+		public async Task PopPopupAsync()
+		{
+			await NavigationPage.Navigation.PopPopupAsync();
 		}
 
 		private async Task OldPushModalAsync(Page page)
@@ -88,6 +101,52 @@ namespace TocoDo.UI.DependencyInjection
 			Debug.Write("----------- Before PopModalAsync");
 			await NavigationPage.Navigation.PopModalAsync(true);
 			Debug.Write("----------- After PopModalAsync");
+		}
+
+		private Page CreatePage(PageType pageType, object param)
+		{
+			MyLogger.WriteStartMethod();
+			switch (pageType)
+			{
+				case PageType.EditDescriptionPage:
+					return new EditDescriptionPage((EditDescriptionInfo)param);
+
+				case PageType.ModifyHabitPage:
+					return new ModifyHabitPage((HabitViewModel)param);
+
+				case PageType.HabitProgressPage:
+					return new HabitProgressPage((HabitViewModel)param);
+
+				case PageType.ModifyTaskPage:
+					return new ModifyTaskPage((TaskViewModel)param);
+					
+				default:
+					throw new ArgumentOutOfRangeException(nameof(pageType), pageType, null);
+			}
+			MyLogger.WriteEndMethod();
+		}
+
+		private Type GetType(PageType pageType)
+		{
+			MyLogger.WriteStartMethod();
+			switch (pageType)
+			{
+				case PageType.EditDescriptionPage:
+					return typeof(EditDescriptionPage);
+
+				case PageType.ModifyHabitPage:
+					return typeof(ModifyHabitPage);
+
+				case PageType.HabitProgressPage:
+					return typeof(HabitProgressPage);
+
+				case PageType.ModifyTaskPage:
+					return typeof(ModifyTaskPage);
+
+				default:
+					throw new ArgumentOutOfRangeException(nameof(pageType), pageType, null);
+			}
+			MyLogger.WriteEndMethod();
 		}
 	}
 }

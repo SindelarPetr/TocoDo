@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading.Tasks;
+using TocoDo.BusinessLogic.Helpers;
 using TocoDo.BusinessLogic.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -8,11 +10,9 @@ namespace TocoDo.UI.Pages
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class EditDescriptionPage : ContentPage
 	{
-		public EditDescriptionPage(string title, string description, Action<string> setDescriptionAction,
-			bool                             isReadonly = false)
+		public EditDescriptionPage(EditDescriptionInfo info)
 		{
-			ViewModel = new EditDescriptionViewModel(((App) Application.Current).Navigation, title, description,
-				setDescriptionAction, isReadonly);
+			ViewModel = new EditDescriptionViewModel(((App) Application.Current).Navigation, info);
 			InitializeComponent();
 		}
 
@@ -29,7 +29,7 @@ namespace TocoDo.UI.Pages
 
 		protected override bool OnBackButtonPressed()
 		{
-			ViewModel.DiscardCommand?.Execute(null);
+			ViewModel.DiscardCommand.ExecuteAsync(null).GetAwaiter().GetResult();
 			return true;
 		}
 	}

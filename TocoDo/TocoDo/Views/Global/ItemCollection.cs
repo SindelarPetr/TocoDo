@@ -2,7 +2,9 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using NetBox.Extensions;
 using TocoDo.BusinessLogic;
+using TocoDo.BusinessLogic.ItemFilters;
 using TocoDo.BusinessLogic.ViewModels;
 using TocoDo.UI.Views.Habits;
 using Xamarin.Forms;
@@ -14,6 +16,7 @@ namespace TocoDo.UI.Views.Global
 		where TView : View, IEntryFocusable<TViewModel>
 	{
 		private readonly StackLayout                      _mainLayout;
+		public ItemFilter<TViewModel> ItemFilter { get; set; } 
 
 		public ItemCollection(Func<TViewModel, TView> factoryFunc)
 		{
@@ -66,10 +69,10 @@ namespace TocoDo.UI.Views.Global
 			switch (e.Action)
 			{
 				case NotifyCollectionChangedAction.Add:
-					foreach (TViewModel task in e.NewItems) AddItem(task);
+					foreach (TViewModel item in e.NewItems) if(ItemFilter?.Filter(item) ?? false) AddItem(item);
 					break;
 				case NotifyCollectionChangedAction.Remove:
-					foreach (TViewModel task in e.OldItems) RemoveItem(task);
+					foreach (TViewModel item in e.OldItems) if(ItemFilter?.Filter(item) ?? false) RemoveItem(item);
 					break;
 			}
 		}

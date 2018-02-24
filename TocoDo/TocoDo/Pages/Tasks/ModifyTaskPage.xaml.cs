@@ -17,7 +17,7 @@ namespace TocoDo.UI.Pages.Tasks
 			MyLogger.WriteEndMethod();
 		}
 
-		public TaskViewModel TaskViewModel
+		public TaskViewModel ITaskViewModel
 		{
 			get => (TaskViewModel) BindingContext;
 			set => BindingContext = value;
@@ -30,7 +30,7 @@ namespace TocoDo.UI.Pages.Tasks
 			Debug.Write("------------ Finished calling  OnApearing of ModifyTaskPage.");
 		}
 
-		private void EntryTitle_OnCompleted(object sender, FocusEventArgs e)
+		private async void EntryTitle_OnCompleted(object sender, FocusEventArgs e)
 		{
 			var newTitle = EntryTitle.Text.Trim();
 
@@ -40,13 +40,13 @@ namespace TocoDo.UI.Pages.Tasks
 				return;
 			}
 
-			TaskViewModel.Title = newTitle;
-			TaskViewModel.UpdateCommand.Execute(sender);
+			ITaskViewModel.Title = newTitle;
+			await ITaskViewModel.UpdateCommand.ExecuteAsync(sender);
 		}
 
 		private void ResetEntryTitle()
 		{
-			EntryTitle.Text = TaskViewModel.Title;
+			EntryTitle.Text = ITaskViewModel.Title;
 		}
 	}
 }

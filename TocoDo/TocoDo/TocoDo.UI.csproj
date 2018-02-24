@@ -105,6 +105,9 @@
 	  <EmbeddedResource Update="Views\PageBottomPanel.xaml">
 	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 	  </EmbeddedResource>
+	  <EmbeddedResource Update="Views\Todos\TodoSetView.xaml">
+	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+	  </EmbeddedResource>
 	</ItemGroup>
 
 </Project>

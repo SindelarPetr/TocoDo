@@ -1,4 +1,5 @@
 ﻿using System;
+using TocoDo.BusinessLogic.Helpers;
 using TocoDo.UI.Pages;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -15,7 +16,7 @@ namespace TocoDo.UI.Views
 
 		private void TapGestureRecognizer_OnTapped(object sender, EventArgs e)
 		{
-			var editDescriptionPage = new EditDescriptionPage(Title, Description, d => Description = d, IsReadonly);
+			var editDescriptionPage = new EditDescriptionPage(new EditDescriptionInfo(Title, Description, d => Description = d, IsReadonly));
 
 			Navigation.PushModalAsync(editDescriptionPage);
 		}

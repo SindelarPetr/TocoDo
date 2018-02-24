@@ -5,6 +5,7 @@
              xmlns:global="clr-namespace:TocoDo.UI.Views.Global;assembly=TocoDo.UI"
              xmlns:habits="clr-namespace:TocoDo.UI.Views.Habits;assembly=TocoDo.UI"
              xmlns:customRenderers="clr-namespace:TocoDo.UI.CustomRenderers;assembly=TocoDo.UI"
+             xmlns:itemFilters="clr-namespace:TocoDo.BusinessLogic.ItemFilters;assembly=TocoDo.BusinessLogic"
              x:Class="TocoDo.UI.Pages.Habits.HabitsPage"
              x:Name="This">
 	<ContentPage.Content>
@@ -15,17 +16,29 @@
 				<StackLayout Style="{StaticResource PageStackLayout}" BindingContext="{x:Reference This}">
 					<!-- Current -->
 					<global:FrameWrapper Header="Current">
-						<habits:HabitCollection />
+						<habits:HabitCollection ItemsSource="{Binding Source={StaticResource HabitService}, Path=AllHabits}" >
+							<habits:HabitCollection.ItemFilter>
+								<itemFilters:HabitCurrentFilter />
+							</habits:HabitCollection.ItemFilter>
+						</habits:HabitCollection>
 					</global:FrameWrapper>
 
 					<!-- Scheduled -->
 					<global:FrameWrapper Header="Scheduled">
-						<habits:HabitCollection />
+						<habits:HabitCollection ItemsSource="{Binding Source={StaticResource HabitService}, Path=AllHabits}">
+							<habits:HabitCollection.ItemFilter>
+								<itemFilters:HabitScheduledFilter />
+							</habits:HabitCollection.ItemFilter>
+						</habits:HabitCollection>
 					</global:FrameWrapper>
 
 					<!-- Unscheduled -->
 					<global:FrameWrapper Header="Unscheduled">
-						<habits:HabitCollection />
+						<habits:HabitCollection ItemsSource="{Binding Source={StaticResource HabitService}, Path=AllHabits}">
+							<habits:HabitCollection.ItemFilter>
+								<itemFilters:HabitUnscheduledFilter />
+							</habits:HabitCollection.ItemFilter>
+						</habits:HabitCollection>
 					</global:FrameWrapper>
 				</StackLayout>
 			</ScrollView>

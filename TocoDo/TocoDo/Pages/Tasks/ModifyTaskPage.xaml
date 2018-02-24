@@ -24,7 +24,7 @@
 		</ResourceDictionary>
 	</ContentPage.Resources>
 	<ContentPage.Content>
-		<Grid BindingContext="{Binding Source={x:Reference This}, Path=TaskViewModel}" RowSpacing="0">
+		<Grid BindingContext="{Binding Source={x:Reference This}, Path=ITaskViewModel}" RowSpacing="0">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto" />
 				<RowDefinition Height="*" />
@@ -60,18 +60,18 @@
 						<!--Schedule date-->
 						<views:DateButtonView ImageSource="{markupExtensions:PathResolver 'ic_today_white_24dp'}"
 						                      FormattedText="Schedule date: {0}"
-						                      SelectedDate="{Binding Source={x:Reference This}, Path=TaskViewModel.ScheduleDate, Mode=TwoWay, Converter={StaticResource ValueCheckerConverter} }" />
+						                      SelectedDate="{Binding Source={x:Reference This}, Path=ITaskViewModel.ScheduleDate, Mode=TwoWay, Converter={StaticResource ValueCheckerConverter} }" />
 
 						<!--Deadline-->
 						<views:DateButtonView ImageSource="{markupExtensions:PathResolver 'ic_whatshot_white_24dp'}"
 						                      FormattedText="Deadline: {0}"
-						                      SelectedDate="{Binding Source={x:Reference This}, Path=TaskViewModel.Deadline, Mode=TwoWay, Converter={StaticResource ValueCheckerConverter} }"
+						                      SelectedDate="{Binding Source={x:Reference This}, Path=ITaskViewModel.Deadline, Mode=TwoWay, Converter={StaticResource ValueCheckerConverter} }"
 						                      ActiveColor="OrangeRed" />
 
 						<!--Reminder-->
 						<views:DateButtonView ImageSource="{markupExtensions:PathResolver 'ic_notifications_active_white_24dp'}"
 						                      FormattedText="Reminder: {0}"
-						                      SelectedDate="{Binding Source={x:Reference This}, Path=TaskViewModel.Reminder, Mode=TwoWay, Converter={StaticResource ValueCheckerConverter} }" />
+						                      SelectedDate="{Binding Source={x:Reference This}, Path=ITaskViewModel.Reminder, Mode=TwoWay, Converter={StaticResource ValueCheckerConverter} }" />
 					</StackLayout>
 				</Frame>
 

@@ -4,7 +4,7 @@ using System;
 using System.Reflection;
 using System.Windows.Input;
 
-namespace TocoDo.BusinessLogic.Helpers
+namespace TocoDo.BusinessLogic.Helpers.Commands
 {
 	public sealed class Command<T> : Command
 	{

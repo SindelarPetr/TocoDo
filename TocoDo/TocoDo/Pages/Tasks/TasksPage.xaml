@@ -5,6 +5,7 @@
              xmlns:ui="clr-namespace:TocoDo.UI;assembly=TocoDo.UI"
              xmlns:todos="clr-namespace:TocoDo.UI.Views.Todos;assembly=TocoDo.UI"
              xmlns:customRenderers="clr-namespace:TocoDo.UI.CustomRenderers;assembly=TocoDo.UI"
+             xmlns:itemFilters="clr-namespace:TocoDo.BusinessLogic.ItemFilters;assembly=TocoDo.BusinessLogic"
              x:Class="TocoDo.UI.Pages.Tasks.TasksPage"
              Style="{DynamicResource ContentPageStyle}"
              x:Name="This">
@@ -13,14 +14,17 @@
 			<ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
 				<StackLayout Style="{StaticResource PageStackLayout}">
 					<!-- Someday -->
-					<!-- TODO: sources -->
 					<global:FrameWrapper Header="Someday">
-						<todos:TaskCollection ItemsSource="{Binding Source={StaticResource TaskService}, Path=AllTasks}"/>
+						<todos:TaskCollection ItemsSource="{Binding Source={StaticResource TaskService}, Path=AllTasks}">
+							<todos:TaskCollection.ItemFilter>
+								<itemFilters:TaskUnscheduledFilter />
+							</todos:TaskCollection.ItemFilter>
+						</todos:TaskCollection>
 					</global:FrameWrapper>
 
 					<!-- Scheduled -->
 					<global:FrameWrapper Header="Scheduled">
-						<!--<todos:ScheduledTasksView Margin="0,5,0,0" />-->
+						<todos:ScheduledTasksView Margin="0,5,0,0" TasksSource="{Binding Source={StaticResource TaskService}, Path=AllTasks}"/>
 					</global:FrameWrapper>
 				</StackLayout>
 			</ScrollView>

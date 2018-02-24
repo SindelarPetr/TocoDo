@@ -8,6 +8,7 @@ using TocoDo.BusinessLogic.DependencyInjection;
 using TocoDo.BusinessLogic.DependencyInjection.Models;
 using TocoDo.BusinessLogic.Extensions;
 using TocoDo.BusinessLogic.Helpers;
+using TocoDo.BusinessLogic.Helpers.Commands;
 using TocoDo.BusinessLogic.Properties;
 using TocoDo.BusinessLogic.Services;
 
@@ -16,8 +17,10 @@ namespace TocoDo.BusinessLogic.ViewModels
 	public class HabitViewModel : BaseViewModel, IHabitViewModel
 	{
 		#region Dependency injection
+
 		private readonly INavigationService _navigation;
 		private readonly IHabitService _habitService;
+
 		#endregion
 
 		#region Backing fields
@@ -170,23 +173,20 @@ namespace TocoDo.BusinessLogic.ViewModels
 
 		#region Commands
 
-		public ICommand EditTitleCommand       { get; private set; }
-		public ICommand EditCommand            { get; private set; }
-		public ICommand UnsetStartDateCommand { get; }
-		public ICommand UpdateCommand          { get; private set; }
-		public ICommand FinishCreationCommand { get; private set; }
-		public ICommand IncreaseTodayCommand   { get; private set; }
-		public ICommand RemoveCommand          { get; private set; }
-		public ICommand SelectRepeatCommand { get; }
-		public ICommand SelectStartDateCommand { get; }
+		public ICommand              EditTitleCommand      { get; }
+		public IAsyncCommand         EditCommand           { get; }
+		public IAsyncCommand         UpdateCommand         { get; }
+		public IAsyncCommand<string> FinishCreationCommand { get; }
+		public ICommand              IncreaseTodayCommand  { get; }
+		public IAsyncCommand         RemoveCommand         { get; }
 
 		#endregion
 
-		public HabitViewModel(IHabitService habitService, INavigationService navigation) 
+		public HabitViewModel(IHabitService habitService, INavigationService navigation)
 			: this()
 		{
-			_habitService    = habitService;
-			_navigation = navigation;
+			_habitService = habitService;
+			_navigation   = navigation;
 
 			// Set initial values
 			CreationDate    = DateTime.Now;
@@ -195,15 +195,15 @@ namespace TocoDo.BusinessLogic.ViewModels
 			_maxRepeatsADay = 1;
 			_daysToRepeat   = 21;
 
-			Filling = new ObservableDictionary<DateTime, int>();
+			Filling      = new ObservableDictionary<DateTime, int>();
 			IsCreateMode = true;
 		}
 
-		public HabitViewModel(IHabitService habitService, INavigationService navigation, IHabitModel model) 
+		public HabitViewModel(IHabitService habitService, INavigationService navigation, IHabitModel model)
 			: this()
 		{
-			_habitService    = habitService;
-			_navigation = navigation;
+			_habitService = habitService;
+			_navigation   = navigation;
 
 			CreationDate = model.CreationDate;
 			Id           = model.Id;
@@ -223,16 +223,13 @@ namespace TocoDo.BusinessLogic.ViewModels
 
 		private HabitViewModel()
 		{
-			UpdateCommand = new Command(async () => await _habitService.UpdateAsync(this));
-			EditTitleCommand       = new Command<string>(EditTitle);
-			FinishCreationCommand = new Command(async t => await ConfirmCreation(t));
-			EditCommand            = new Command(async () => await Edit());
+			UpdateCommand         = new AwaitableCommand(async () => await _habitService.UpdateAsync(this));
+			EditTitleCommand      = new Command<string>(EditTitle);
+			FinishCreationCommand = new AwaitableCommand<string>(async t => await ConfirmCreation(t));
+			EditCommand           = new AwaitableCommand(async () => await Edit());
 
-			SelectStartDateCommand                                        =
-				new Command(async () => await SelectDate(d => StartDate = d, Resources.SelectStartDate));
-			UnsetStartDateCommand                                         = new Command(() => StartDate = null);
-			IncreaseTodayCommand                                          = new Command(() => RepeatsToday++);
-			RemoveCommand                                                 = new Command(async () => await Delete());
+			IncreaseTodayCommand = new Command(() => RepeatsToday++);
+			RemoveCommand        = new AwaitableCommand(async () => await DeleteAsync());
 		}
 
 		private async Task Edit()
@@ -252,7 +249,7 @@ namespace TocoDo.BusinessLogic.ViewModels
 			Title = newTitle;
 		}
 
-		private async Task Delete()
+		private async Task DeleteAsync()
 		{
 			// Ask user if he is sure
 			var result = await _navigation.DisplayAlert(Resources.DeleteHabitConfirmHeader, Resources.DeleteHabitConfirmText,
@@ -264,18 +261,15 @@ namespace TocoDo.BusinessLogic.ViewModels
 
 		private async Task ConfirmCreation(object title)
 		{
-			if (title is string tit)
+			// If user left the entry blank, then remove the habit from collection
+			if (!(title is string tit) || string.IsNullOrWhiteSpace(tit))
 			{
-				// If user left the entry blank, then remove the habit from collection
-				if (string.IsNullOrWhiteSpace(tit))
-				{
-					_habitService.CancelCreation(this);
-					return;
-				}
-
-				Title = tit.Trim();
-				await _habitService.ConfirmCreationAsync(this);
+				_habitService.CancelCreation(this);
+				return;
 			}
+
+			Title = tit.Trim();
+			await _habitService.ConfirmCreationAsync(this);
 		}
 
 		private async Task SelectDate(Action<DateTime?> pickedAction, string actionSheetHeader)
@@ -309,7 +303,7 @@ namespace TocoDo.BusinessLogic.ViewModels
 
 			pickedAction(selectedDate);
 		}
-		
+
 		private void SelectDateByPicker(Action<DateTime> pickedAction)
 		{
 			//TODO: Workaround for showing the date picker TodayPage.Instance.ShowGlobalDatePicker(ModelStartDate ?? DateTime.Today + TimeSpan.FromDays(1), pickedAction, DateTime.Today + TimeSpan.FromDays(1));
@@ -323,7 +317,6 @@ namespace TocoDo.BusinessLogic.ViewModels
 			// Init filling if needed and update it
 			if (propertyName == nameof(RepeatsToday))
 			{
-				InitFilling();
 				if (Filling == null || !Filling.Any()) InitFilling();
 
 				var today   = DateTime.Today;

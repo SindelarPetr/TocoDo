@@ -18,7 +18,6 @@ namespace TocoDo.UI.Pages.Main
 				MyLogger.WriteException(e);
 				throw;
 			}
-
 			MyLogger.WriteEndMethod();
 		}
 	}

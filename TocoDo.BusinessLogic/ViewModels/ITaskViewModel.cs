@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
+using TocoDo.BusinessLogic.Helpers.Commands;
 
 namespace TocoDo.BusinessLogic.ViewModels
 {
@@ -14,10 +15,10 @@ namespace TocoDo.BusinessLogic.ViewModels
 		string    Description  { get; set; }
 		DateTime? Done         { get; set; }
 
-		ICommand EditCommand            { get; }
+		IAsyncCommand EditCommand            { get; }
 		ICommand EditTitleCommand       { get; }
 		ICommand FinishCreationCommand { get; }
-		ICommand RemoveCommand          { get; }
-		ICommand UpdateCommand          { get; }
+		IAsyncCommand RemoveCommand          { get; }
+		IAsyncCommand UpdateCommand          { get; }
 	}
 }

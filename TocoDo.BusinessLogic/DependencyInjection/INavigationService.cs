@@ -7,11 +7,8 @@ namespace TocoDo.BusinessLogic.DependencyInjection
 		EditDescriptionPage,
 		ModifyHabitPage,
 		HabitProgressPage,
-		ModifyTaskPage
-	}
-
-	public enum PopupType
-	{
+		ModifyTaskPage,
+		RepeatTypePopup
 	}
 
 	public interface INavigationService
@@ -25,7 +22,7 @@ namespace TocoDo.BusinessLogic.DependencyInjection
 		Task PushModalAsync(PageType page, object param = null);
 		Task PopModalAsync();
 
-		Task PushPopupAsync(PopupType page, object param = null);
+		Task PushPopupAsync(PageType page, object param = null);
 		Task PopPopupAsync();
 	}
 }
