@@ -8,18 +8,21 @@ using TocoDo.BusinessLogic.ItemFilters;
 using TocoDo.BusinessLogic.ViewModels;
 using TocoDo.UI.Views.Habits;
 using Xamarin.Forms;
+using PropertyChangingEventArgs = System.ComponentModel.PropertyChangingEventArgs;
 
 namespace TocoDo.UI.Views.Global
 {
 	public class ItemCollection<TViewModel, TView> : ContentView
-		where TViewModel : ICreateMode
+		where TViewModel : ICreateMode, INotifyPropertyChanged, INotifyPropertyChanging
 		where TView : View, IEntryFocusable<TViewModel>
 	{
+		private readonly string _schedulePropertyName;
 		private readonly StackLayout                      _mainLayout;
 		public ItemFilter<TViewModel> ItemFilter { get; set; } 
 
-		public ItemCollection(Func<TViewModel, TView> factoryFunc)
+		public ItemCollection(Func<TViewModel, TView> factoryFunc, string schedulePropertyName)
 		{
+			_schedulePropertyName = schedulePropertyName;
 			MyLogger.WriteStartMethod();
 			FactoryFunc = factoryFunc;
 			Content     = _mainLayout = new StackLayout();
@@ -68,35 +71,77 @@ namespace TocoDo.UI.Views.Global
 		{
 			switch (e.Action)
 			{
+				// Subscribe to every Habit for schedule date chnaged and changing, add or remove the habit from the list
 				case NotifyCollectionChangedAction.Add:
-					foreach (TViewModel item in e.NewItems) if(ItemFilter?.Filter(item) ?? false) AddItem(item);
+					foreach (TViewModel item in e.NewItems)
+					{
+						item.PropertyChanging += ItemOnPropertyChanging;
+						item.PropertyChanged += ItemOnPropertyChanged;
+						if (ItemFilter?.Filter(item) ?? false) AddItem(item);
+					}
+
 					break;
 				case NotifyCollectionChangedAction.Remove:
-					foreach (TViewModel item in e.OldItems) if(ItemFilter?.Filter(item) ?? false) RemoveItem(item);
+					foreach (TViewModel item in e.OldItems)
+					{
+						item.PropertyChanged -= ItemOnPropertyChanged;
+						item.PropertyChanging -= ItemOnPropertyChanging;
+						if (ItemFilter?.Filter(item) ?? false) RemoveItem(item);
+					}
 					break;
 			}
 		}
 
-		private void AddItem(TViewModel habit)
+		protected virtual void AddItem(TViewModel viewModel)
 		{
-			var habitView = FactoryFunc(habit);
-			_mainLayout.Children.Add(habitView);
+			MyLogger.WriteStartMethod();
+			var itemView = FactoryFunc(viewModel);
+			_mainLayout.Children.Add(itemView);
 
-			if (habit.IsCreateMode)
-				habitView.FocusEntry();
+			if (viewModel.IsCreateMode)
+				itemView.FocusEntry();
+			MyLogger.WriteEndMethod();
 		}
 
-		private void RemoveItem(TViewModel habit)
+		protected virtual void RemoveItem(TViewModel viewModel)
 		{
-			var habitItem       = FindItem(habit);
-			habitItem.IsVisible = false;
+			MyLogger.WriteStartMethod();
+			var itemView       = FindItem(viewModel);
+			_mainLayout.Children.Remove(itemView);//itemView.IsVisible = false;
+			MyLogger.WriteEndMethod();
+		}
+
+		private void ItemOnPropertyChanging(object sender, PropertyChangingEventArgs propertyChangingEventArgs)
+		{
+			MyLogger.WriteStartMethod();
+			if (propertyChangingEventArgs.PropertyName == _schedulePropertyName && sender is TViewModel vm)
+			{
+				MyLogger.WriteInMethod("Before if");
+				if (ItemFilter.Filter(vm))
+				{
+					MyLogger.WriteInMethod("In if");
+					RemoveItem(vm);
+				}
+			}
+			MyLogger.WriteEndMethod();
+		}
+
+		private void ItemOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+		{
+			MyLogger.WriteStartMethod();
+			if (propertyChangedEventArgs.PropertyName == _schedulePropertyName && sender is TViewModel vm)
+			{
+				if (ItemFilter.Filter(vm))
+					AddItem(vm);
+			}
+			MyLogger.WriteEndMethod();
 		}
 
 		private TView FindItem(TViewModel viewModel)
 		{
 			foreach (var child in _mainLayout.Children)
 			{
-				if (!(child is TView view))
+				if (!(child is TView view) || !view.IsVisible)
 					continue;
 
 				if (view.ViewModel.Equals(viewModel))

@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Windows.Input;
 using TocoDo.BusinessLogic.Helpers.Commands;
 
 namespace TocoDo.BusinessLogic.ViewModels
 {
-	public interface ITaskViewModel : ICreateMode
+	public interface ITaskViewModel : IBaseViewModel, ICreateMode
 	{
 		int       Id           { get; set; }
 		DateTime? Reminder     { get; set; }

@@ -5,8 +5,9 @@ namespace TocoDo.UI.Views.Habits
 {
 	public class ActualHabitCollection : ItemCollection<HabitViewModel, ActualHabitView>
 	{
-		public ActualHabitCollection() : base(vm => new ActualHabitView(vm))
+		public ActualHabitCollection() : base(vm => new ActualHabitView(vm), nameof(HabitViewModel.StartDate))
 		{
+
 		}
 	}
 }

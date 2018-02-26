@@ -4,9 +4,9 @@ using Xamarin.Forms.Xaml;
 namespace TocoDo.UI.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class MyCalendarView : ContentView
+	public partial class CalendarView : ContentView
 	{
-		public MyCalendarView()
+		public CalendarView()
 		{
 			InitializeComponent();
 		}

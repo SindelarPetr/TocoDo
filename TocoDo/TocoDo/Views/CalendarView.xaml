@@ -3,7 +3,7 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:TocoDo.UI.Views;assembly=TocoDo.UI"
-             x:Class="TocoDo.UI.Views.MyCalendarView">
+             x:Class="TocoDo.UI.Views.CalendarView">
 	<ContentView.Resources>
 		<ResourceDictionary>
 			<GridLength x:Key="CellSize">30</GridLength>

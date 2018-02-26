@@ -4,9 +4,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TocoDo.UI.Views.CalendarCell"
              x:Name="This">
-
 	<ContentView.Content>
 		<AbsoluteLayout BindingContext="{x:Reference This}" Padding="0">
+			<AbsoluteLayout.GestureRecognizers>
+				<TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped"/>
+			</AbsoluteLayout.GestureRecognizers>
 			<AbsoluteLayout.Resources>
 				<ResourceDictionary>
 					<Style TargetType="Label">

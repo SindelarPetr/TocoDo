@@ -3,114 +3,94 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Text;
+using TocoDo.BusinessLogic;
+using TocoDo.BusinessLogic.ItemFilters;
 using TocoDo.BusinessLogic.ViewModels;
 using TocoDo.UI.Converters;
+using TocoDo.UI.Views.Global;
 using Xamarin.Forms;
 
 namespace TocoDo.UI.Views.Todos
 {
-    public class ScheduledTasksView : ContentView
+    public class ScheduledTasksView : TaskCollection
     {
-		public static BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(ReadOnlyObservableCollection<ITaskViewModel>), typeof(ReadOnlyObservableCollection<ITaskViewModel>));
-
-	    public ReadOnlyObservableCollection<ITaskViewModel> ItemsSource
-	    {
-		    get => (ReadOnlyObservableCollection<ITaskViewModel>) GetValue(ItemsSourceProperty);
-		    set => SetValue(ItemsSourceProperty, value);
-	    }
-
 	    public StackLayout MainLayout;
 
 	    public ScheduledTasksView()
 	    {
 		    Content = MainLayout = new StackLayout {Spacing = 0};
+			ItemFilter = new TaskScheduledFilter();
 	    }
 
-		#region ItemsSource binding
-		protected override void OnPropertyChanging(string propertyName = null)
-		{
-			base.OnPropertyChanging(propertyName);
-
-			if (propertyName == nameof(ItemsSource))
-				UnbindItemsSource();
-		}
-
-		protected override void OnPropertyChanged(string propertyName = null)
-		{
-			base.OnPropertyChanged(propertyName);
-
-			if (propertyName == nameof(ItemsSource))
-				BindItemsSource();
-		}
-
-		private void UnbindItemsSource()
-		{
-			if(ItemsSource != null)
-				((INotifyCollectionChanged)ItemsSource).CollectionChanged -= OnCollectionChanged;
-		}
-
-	    private void BindItemsSource()
+	    protected override void AddItem(ITaskViewModel newTask)
 	    {
-			if(ItemsSource != null)
-				((INotifyCollectionChanged)ItemsSource).CollectionChanged += OnCollectionChanged;
-		}
-
-	    #endregion
-
-	    private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
-	    {
-		    switch (notifyCollectionChangedEventArgs.Action)
-		    {
-				case NotifyCollectionChangedAction.Add:
-					foreach (var newItem in notifyCollectionChangedEventArgs.NewItems)
-					{
-						if(newItem is ITaskViewModel task && task.ScheduleDate != null) AddTask(task);
-					}
-					break;
-
-				case NotifyCollectionChangedAction.Remove:
-					foreach (var oldItem in notifyCollectionChangedEventArgs.OldItems)
-					{
-						if (oldItem is ITaskViewModel task && task.ScheduleDate != null) RemoveTask(task);
-					}
-					break;
-		    }
-	    }
-
-	    private void AddTask(ITaskViewModel newTask)
-	    {
+			MyLogger.WriteStartMethod();
 			if(newTask.ScheduleDate == null) 
 				return;
 
-			var scheduleDate = newTask.ScheduleDate.Value;
+			var scheduleDate = newTask.ScheduleDate.Value.Date;
 
 			// Find the right place
 		    int i = 0;
 		    for (; i < MainLayout.Children.Count; i++)
 		    {
-			    if(!(MainLayout.Children[i] is TodoItemView item) || item.ViewModel.ScheduleDate.Value.Date < scheduleDate.Date)
-				    continue;
+				// Skip all the elements with lower date or which are headers
+			    if (!(MainLayout.Children[i] is TodoItemView taskView) || taskView.ViewModel.ScheduleDate.Value.Date < scheduleDate)
+					continue;
 
-				// just add at the bottom of the group if there is already a group for that date
-			    if (item.ViewModel.ScheduleDate.Value.Date == scheduleDate.Date)
+			    if (taskView.ViewModel.ScheduleDate.Value.Date == scheduleDate)
 			    {
-					MainLayout.Children.Insert(i + 1, new TodoItemView(newTask));
+					// Iterate to the end of the section of TaskViews with the same ScheduleDate
+				    do
+				    {
+					    i++;
+				    } while (i < MainLayout.Children.Count && MainLayout.Children[i] is TodoItemView);
+
+					// Add at the end
+					MainLayout.Children.Insert(i, new TodoItemView(newTask));
+
 					return;
 			    }
 
-				break;
+			    i--;
+			    break;
 		    }
 			
-		    // Insert the Task and then insert also a header for its group
-			MainLayout.Children.Insert(i, new TodoItemView(newTask));
-			MainLayout.Children.Insert(i, new Label { Text = DateToTextConverter.Convert(scheduleDate), FontSize = 13, TextColor = ((App)App.Current).ColorPrimary});
+			// Add it one index above
+			InsertWithHeader(i, newTask);
+			MyLogger.WriteEndMethod();
+	    }
+		
+	    private void InsertWithHeader(int index, ITaskViewModel newTask)
+	    {
+			MainLayout.Children.Insert(index, new TodoItemView(newTask));
+			MainLayout.Children.Insert(index, new Label { Text = DateToTextConverter.Convert(newTask.ScheduleDate), FontSize = 13, TextColor = ((App)App.Current).ColorPrimary});
 	    }
 
-	    private void RemoveTask(ITaskViewModel oldItem)
+	    protected override void RemoveItem(ITaskViewModel oldItem)
 	    {
-		    // Find the task
+			MyLogger.WriteStartMethod();
+		    // Find the view of the task
+		    for (int i = 0; i < MainLayout.Children.Count; i++)
+		    {
+			    if (MainLayout.Children[i] is TodoItemView taskView && taskView.IsVisible && taskView.ViewModel.Id == oldItem.Id)
+			    {
+					// Remove item on this index.
+					// If there is a title above, then if there is anothere title below or no items, remove the title above
+					RemoveItemWithHeader(i, oldItem);
+			    }
+		    }
+			MyLogger.WriteEndMethod();
+	    }
 
-			// If there is a title above, then if there is anothere title below or no items, remove the title above
+	    private void RemoveItemWithHeader(int index, ITaskViewModel task)
+	    {
+			// Remove item from the main layout
+			MainLayout.Children.RemoveAt(index);
+
+			// If there is a header above and there is a header or no items below, remove the above header
+			if(MainLayout.Children.Count > 0 && MainLayout.Children[index - 1] is Label && (MainLayout.Children.Count == index || MainLayout.Children[index] is Label))
+				MainLayout.Children.RemoveAt(index - 1);
 	    }
     }
 }

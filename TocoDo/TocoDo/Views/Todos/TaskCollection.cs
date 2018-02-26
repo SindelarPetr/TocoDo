@@ -7,7 +7,7 @@ namespace TocoDo.UI.Views.Todos
 {
 	public class TaskCollection : ItemCollection<ITaskViewModel, TodoItemView>
 	{
-		public TaskCollection() : base(vm => new TodoItemView(vm))
+		public TaskCollection() : base(vm => new TodoItemView(vm), nameof(ITaskViewModel.ScheduleDate))
 		{
 			MyLogger.WriteStartMethod();
 			MyLogger.WriteEndMethod();

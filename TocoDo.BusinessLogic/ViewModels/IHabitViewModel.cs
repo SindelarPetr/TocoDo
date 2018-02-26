@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Windows.Input;
 using TocoDo.BusinessLogic.DependencyInjection.Models;
 using TocoDo.BusinessLogic.Extensions;
@@ -6,7 +8,7 @@ using TocoDo.BusinessLogic.Helpers.Commands;
 
 namespace TocoDo.BusinessLogic.ViewModels
 {
-	public interface IHabitViewModel : ICreateMode
+	public interface IHabitViewModel : IBaseViewModel, ICreateMode
 	{
 		string HabitDaysToRepeatWithRepeatType { get; }
 

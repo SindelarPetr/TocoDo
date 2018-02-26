@@ -5,15 +5,17 @@ using System.Runtime.CompilerServices;
 
 namespace TocoDo.BusinessLogic.ViewModels
 {
-	public class BaseViewModel : INotifyPropertyChanged
+	public class BaseViewModel :  INotifyPropertyChanged, INotifyPropertyChanging
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangingEventHandler PropertyChanging;
 
 		protected bool SetValue<T>(ref T backingField, T value, [CallerMemberName] string propertyName = null)
 		{
 			if (EqualityComparer<T>.Default.Equals(backingField, value))
 				return false;
-			OnPropertyChanging(this, backingField, value, propertyName);
+
+			OnPropertyChanging(propertyName);
 
 			backingField = value;
 
@@ -21,15 +23,9 @@ namespace TocoDo.BusinessLogic.ViewModels
 			return true;
 		}
 
-		/// <summary>
-		///     sender, oldValue, newValue, propertyName
-		/// </summary>
-		public event Action<object, object, object, string> PropertyChanging;
-
-		protected virtual void OnPropertyChanging(object sender, object oldValue, object newValue,
-			[CallerMemberName] string                       propertyName = null)
+		protected virtual void OnPropertyChanging([CallerMemberName] string propertyName = null)
 		{
-			PropertyChanging?.Invoke(sender, oldValue, newValue, propertyName);
+			PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(propertyName));
 		}
 
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
