@@ -105,9 +105,22 @@ namespace TocoDo.UnitTests.ViewModels
 		}
 
 		[TestMethod]
-		public void DiscardCommandCallsSaveIfTheAlertResponseIsPositive()
+		public async Task DiscardCommandCallsSaveIfTheAlertResponseIsPositive()
 		{
-			throw new NotImplementedException();
+			// Arrange
+			bool called = false;
+			void SaveActionWhichShouldntBeCalled(string str)
+			{
+				called = true;
+			}
+			Mock.Arrange(() => _navigation.DisplayAlert(Arg.AnyString, Arg.AnyString, Arg.AnyString, Arg.AnyString)).Returns(Task.FromResult(true));
+			_editDescriptionViewModel = new EditDescriptionViewModel(_navigation, new EditDescriptionInfo(_title, _description, SaveActionWhichShouldntBeCalled, false));
+			_editDescriptionViewModel.Description = "NEW ONE";
+			// Act
+			await _editDescriptionViewModel.DiscardCommand.ExecuteAsync(null);
+
+			// Assert
+			Assert.IsFalse(called);
 		}
 
 
