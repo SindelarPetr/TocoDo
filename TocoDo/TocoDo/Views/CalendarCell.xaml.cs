@@ -14,9 +14,7 @@ namespace TocoDo.UI.Views
 		public static BindableProperty TappedCommandProperty = BindableProperty.Create(nameof(TappedCommand), typeof(ICommand), typeof(ICommand));
 		public static BindableProperty IsSideMonthProperty = BindableProperty.Create(nameof(IsSideMonth), typeof(bool), typeof(bool), false);
 		public static BindableProperty IsSelectedProperty = BindableProperty.Create(nameof(IsSelected), typeof(bool), typeof(bool), false);
-
-		public static BindablePropertyKey ColorProperty =
-			BindableProperty.CreateReadOnly(nameof(Color), typeof(Color), typeof(Color), Color.White);
+		public static BindableProperty IsTodayProperty = BindableProperty.Create(nameof(IsToday), typeof(bool), typeof(bool), false);
 		#endregion
 
 		#region Properties
@@ -38,16 +36,16 @@ namespace TocoDo.UI.Views
 			set => SetValue(IsSideMonthProperty, value);
 		}
 
-		private Color Color
-		{
-			get => (Color) Resources["Color"];
-			set => Resources["Color"] = value;
-		}
-
 		public bool IsSelected
 		{
 			get => (bool) GetValue(IsSelectedProperty);
 			set => SetValue(IsSelectedProperty, value);
+		}
+
+		public bool IsToday
+		{
+			get => (bool) GetValue(IsTodayProperty);
+			set => SetValue(IsTodayProperty, value);
 		}
 		#endregion
 

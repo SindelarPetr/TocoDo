@@ -24,6 +24,9 @@
 					<Setter Property="BackgroundColor" Value="White" />
 					<Setter Property="Scale" Value="1.5"/>
 				</DataTrigger>
+				<DataTrigger TargetType="AbsoluteLayout" Binding="{Binding IsToday}" Value="True">
+					<Setter Property="BackgroundColor" Value="#60CCCCCC"/>
+				</DataTrigger>
 			</AbsoluteLayout.Triggers>
 			<AbsoluteLayout.GestureRecognizers>
 				<TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped" />
@@ -31,8 +34,7 @@
 			<AbsoluteLayout.Resources>
 				<ResourceDictionary>
 					<Style TargetType="Label">
-						<Setter Property="Text" Value="•" />
-						<Setter Property="FontAttributes" Value="Bold" />
+						<Setter Property="Text" Value="•••" />
 						<Setter Property="TextColor" Value="{DynamicResource Color}" />
 						<Setter Property="Margin" Value="0, -6" />
 						<Setter Property="HorizontalTextAlignment" Value="Center" />
@@ -40,6 +42,9 @@
 						<Style.Triggers>
 							<DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">
 								<Setter Property="TextColor" Value="{StaticResource ColorPrimary}"/>
+							</DataTrigger>
+							<DataTrigger TargetType="Label" Binding="{Binding IsToday}" Value="True">
+								<Setter Property="FontAttributes" Value="Bold"/>
 							</DataTrigger>
 						</Style.Triggers>
 					</Style>
@@ -66,9 +71,7 @@
 
 			<StackLayout AbsoluteLayout.LayoutBounds="0,1,1,30"
 						 AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional">
-				<Label VerticalTextAlignment="End" HorizontalTextAlignment="End" />
 				<Label VerticalTextAlignment="End" HorizontalTextAlignment="Center" />
-				<Label VerticalTextAlignment="End" HorizontalTextAlignment="Start" />
 			</StackLayout>
 		</AbsoluteLayout>
 	</ContentView.Content>
