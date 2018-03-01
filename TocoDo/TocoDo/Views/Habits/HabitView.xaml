@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:converters="clr-namespace:TocoDo.UI.Converters;assembly=TocoDo.UI"
-             xmlns:habits="clr-namespace:TocoDo.UI.Views.Habits;assembly=TocoDo.UI"
-             xmlns:customRenderers="clr-namespace:TocoDo.UI.CustomRenderers;assembly=TocoDo.UI"
-             x:Class="TocoDo.UI.Views.Habits.HabitView"
-             x:Name="This"
-             x:Key="This">
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:converters="clr-namespace:TocoDo.UI.Converters;assembly=TocoDo.UI"
+			 xmlns:habits="clr-namespace:TocoDo.UI.Views.Habits;assembly=TocoDo.UI"
+			 xmlns:customRenderers="clr-namespace:TocoDo.UI.CustomRenderers;assembly=TocoDo.UI"
+			 x:Class="TocoDo.UI.Views.Habits.HabitView"
+			 x:Name="This"
+			 x:Key="This">
 	<ContentView.Resources>
 		<ResourceDictionary>
 			<converters:BoolReverseConverter x:Key="BoolReverseConverter" />
@@ -20,8 +20,8 @@
 				<TapGestureRecognizer Command="{Binding EditCommand}" />
 			</StackLayout.GestureRecognizers>
 			<customRenderers:NoLineEntry x:Name="EntryEditTitle" Text="{Binding Title, Mode=OneWay}"
-			                             Unfocused="EditTitle_OnUnfocused" FontSize="Medium"
-			                             TextColor="{StaticResource ColorPrimaryLight}">
+										 Unfocused="EditTitle_OnUnfocused" FontSize="Medium"
+										 TextColor="{StaticResource ColorPrimaryLight}">
 				<customRenderers:NoLineEntry.Triggers>
 					<Trigger TargetType="customRenderers:NoLineEntry" Property="IsFocused" Value="False">
 						<Setter Property="IsVisible" Value="False" />
@@ -29,10 +29,10 @@
 				</customRenderers:NoLineEntry.Triggers>
 			</customRenderers:NoLineEntry>
 			<Label Text="{Binding Title}"
-			       IsVisible="{Binding Source={x:Reference EntryEditTitle}, Path=IsVisible, Converter={StaticResource BoolReverseConverter}}"
-			       Style="{StaticResource HabitHeader}" />
+				   IsVisible="{Binding Source={x:Reference EntryEditTitle}, Path=IsVisible, Converter={StaticResource BoolReverseConverter}}"
+				   Style="{StaticResource HabitHeader}" />
 			<habits:HabitDetailView ViewModel="{Binding .}" Margin="0,8,0,0"
-			                        IsVisible="{Binding StartDate, Converter={StaticResource IsNotNullConverter}}" />
+									IsVisible="{Binding StartDate, Converter={StaticResource IsNotNullConverter}}" />
 		</StackLayout>
 	</ContentView.Content>
 </ContentView>

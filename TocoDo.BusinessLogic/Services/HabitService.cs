@@ -70,7 +70,9 @@ namespace TocoDo.BusinessLogic.Services
 
 	    public void CancelCreation(IHabitViewModel habit)
 	    {
+			MyLogger.WriteStartMethod();
 		    _habits.Remove(habit);
+			MyLogger.WriteEndMethod();
 	    }
 
 	    public async Task UpdateAsync(IHabitViewModel habit)

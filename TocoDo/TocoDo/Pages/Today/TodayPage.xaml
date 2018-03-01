@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:global="clr-namespace:TocoDo.UI.Views.Global;assembly=TocoDo.UI"
-             xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
-             xmlns:views="clr-namespace:TocoDo.UI.Views;assembly=TocoDo.UI"
-             xmlns:todos="clr-namespace:TocoDo.UI.Views.Todos;assembly=TocoDo.UI"
-             xmlns:habits="clr-namespace:TocoDo.UI.Views.Habits;assembly=TocoDo.UI"
-             xmlns:customRenderers="clr-namespace:TocoDo.UI.CustomRenderers;assembly=TocoDo.UI"
-             x:Class="TocoDo.UI.Pages.Today.TodayPage"
-             x:Name="This">
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:global="clr-namespace:TocoDo.UI.Views.Global;assembly=TocoDo.UI"
+			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
+			 xmlns:views="clr-namespace:TocoDo.UI.Views;assembly=TocoDo.UI"
+			 xmlns:todos="clr-namespace:TocoDo.UI.Views.Todos;assembly=TocoDo.UI"
+			 xmlns:habits="clr-namespace:TocoDo.UI.Views.Habits;assembly=TocoDo.UI"
+			 xmlns:customRenderers="clr-namespace:TocoDo.UI.CustomRenderers;assembly=TocoDo.UI"
+			 x:Class="TocoDo.UI.Pages.Today.TodayPage"
+			 x:Name="This">
 	<ContentPage.Content>
 		<AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BindingContext="{x:Reference This}">
 			<ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
@@ -22,7 +22,7 @@
 
 					<!--Calendar-->
 					<global:FrameWrapper Header="January" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
-					                     BackgroundColor="{StaticResource ColorPrimaryDark}">
+										 BackgroundColor="{StaticResource ColorPrimaryDark}">
 						<Grid ColumnSpacing="0">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="Auto" />
@@ -43,13 +43,21 @@
 							</Grid.Resources>
 
 							<StackLayout Padding="15, 0, 5, 0">
-								<abstractions:TintedImage Source="ic_keyboard_arrow_left_white_36dp.png" />
+								<abstractions:TintedImage Source="ic_keyboard_arrow_left_white_36dp.png">
+									<abstractions:TintedImage.GestureRecognizers>
+										<TapGestureRecognizer Command="{Binding Source={x:Reference Calendar}, Path=MovePrevCommand}"/>
+									</abstractions:TintedImage.GestureRecognizers>
+								</abstractions:TintedImage>
 							</StackLayout>
 
-							<views:CalendarView Grid.Column="1" HorizontalOptions="FillAndExpand" />
+							<views:CalendarView x:Name="Calendar" Grid.Column="1" HorizontalOptions="FillAndExpand" />
 
 							<StackLayout Grid.Column="2" Padding="5, 0, 15, 0">
-								<abstractions:TintedImage Source="ic_keyboard_arrow_right_white_36dp.png" VerticalOptions="Center" />
+								<abstractions:TintedImage Source="ic_keyboard_arrow_right_white_36dp.png" VerticalOptions="Center" >
+									<abstractions:TintedImage.GestureRecognizers>
+										<TapGestureRecognizer Command="{Binding Source={x:Reference Calendar}, Path=MoveNextCommand}"/>
+									</abstractions:TintedImage.GestureRecognizers>
+								</abstractions:TintedImage>
 							</StackLayout>
 						</Grid>
 					</global:FrameWrapper>
@@ -67,8 +75,8 @@
 			</ScrollView>
 
 			<customRenderers:FloatingAddButton AbsoluteLayout.LayoutBounds="1,1,88,88"
-			                                   AbsoluteLayout.LayoutFlags="PositionProportional" Margin="16"
-			                                   Clicked="ButtonAddToday_OnClicked" />
+											   AbsoluteLayout.LayoutFlags="PositionProportional" Margin="16"
+											   Clicked="ButtonAddToday_OnClicked" />
 		</AbsoluteLayout>
 	</ContentPage.Content>
 </ContentPage>

@@ -107,7 +107,8 @@ namespace TocoDo.UI.Views.Global
 		{
 			MyLogger.WriteStartMethod();
 			var itemView       = FindItem(viewModel);
-			_mainLayout.Children.Remove(itemView);//itemView.IsVisible = false;
+			//_mainLayout.Children.Remove(itemView);
+			itemView.IsVisible = false;
 			MyLogger.WriteEndMethod();
 		}
 

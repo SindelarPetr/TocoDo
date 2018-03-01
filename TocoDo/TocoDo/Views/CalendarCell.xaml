@@ -34,7 +34,7 @@
 			<AbsoluteLayout.Resources>
 				<ResourceDictionary>
 					<Style TargetType="Label">
-						<Setter Property="Text" Value="•••" />
+						<Setter Property="Text" Value="{Binding BusynessText}" />
 						<Setter Property="TextColor" Value="{DynamicResource Color}" />
 						<Setter Property="Margin" Value="0, -6" />
 						<Setter Property="HorizontalTextAlignment" Value="Center" />

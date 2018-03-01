@@ -12,7 +12,7 @@ namespace TocoDo.UI.Views
 	public partial class CalendarView : ContentView
 	{
 		#region Backing fields
-		public static BindableProperty SelectedDateProperty = BindableProperty.Create(nameof(SelectedDate), typeof(DateTime), typeof(DateTime), DateTime.Now);
+		public static BindableProperty SelectedDateProperty = BindableProperty.Create(nameof(SelectedDate), typeof(DateTime?), typeof(DateTime?), null);
 
 		private static readonly BindablePropertyKey HighlightedMonthPropertyKey = BindableProperty.CreateReadOnly(nameof(HighlightedMonth), typeof(int), typeof(int), -1);
 		public static BindableProperty HighlightedMonthProperty = HighlightedMonthPropertyKey.BindableProperty;
@@ -32,15 +32,15 @@ namespace TocoDo.UI.Views
 			set => SetValue(HighlightedMonthPropertyKey, value);
 		}
 
-		public DateTime SelectedDate
+		public DateTime? SelectedDate
 		{
-			get => (DateTime) GetValue(SelectedDateProperty);
-			set => SetValue(SelectedDateProperty, value.Date);
+			get => (DateTime?) GetValue(SelectedDateProperty);
+			set => SetValue(SelectedDateProperty, value?.Date);
 		}
 
 
 		public ICommand MoveNextCommand => _moveNextCommand ?? (_moveNextCommand = new TocoDo.BusinessLogic.Helpers.Commands.Command(() => SetupCalendarGrid(_firstDayDate.AddDays(3 * 7))));
-		public ICommand MovePrevCommand => _movePrevCommand ?? (_movePrevCommand = new TocoDo.BusinessLogic.Helpers.Commands.Command(() => SetupCalendarGrid(_firstDayDate.AddDays(3 * 7))));
+		public ICommand MovePrevCommand => _movePrevCommand ?? (_movePrevCommand = new TocoDo.BusinessLogic.Helpers.Commands.Command(() => SetupCalendarGrid(_firstDayDate.AddDays(-3 * 7))));
 
 		#endregion
 
@@ -59,16 +59,6 @@ namespace TocoDo.UI.Views
 		}
 
 		#region Property change
-		protected override void OnPropertyChanging(string propertyName = null)
-		{
-			base.OnPropertyChanging(propertyName);
-
-			if (propertyName == nameof(SelectedDate) && _selectedCell != null)
-			{
-				_selectedCell.IsSelected = false;
-				_selectedCell = null;
-			}
-		}
 
 		protected override void OnPropertyChanged(string propertyName = null)
 		{
@@ -83,9 +73,12 @@ namespace TocoDo.UI.Views
 					_selectedCell            = null;
 				}
 
+				if(SelectedDate == null)
+					return;
+
 				// Find the cell with the SelectedDate, select it and save it to _selectedDate
 				// The cell can be in just in the column which corresonds to its day in week
-				int column = SelectedDate.ZeroMondayBasedDay();
+				int column = SelectedDate.Value.ZeroMondayBasedDay();
 
 				// Iterate the rows in the column and find the cell with the right date
 				int childrenCount = CalendarGrid.Children.Count;
@@ -98,7 +91,7 @@ namespace TocoDo.UI.Views
 						_selectedCell   = cell;
 
 						// if the newly selected cell is in different month than which is highlighted, then highlight the new month
-						HighlightedMonth = SelectedDate.Month;
+						HighlightedMonth = SelectedDate.Value.Month;
 						return;
 					}
 				}
@@ -122,8 +115,10 @@ namespace TocoDo.UI.Views
 			MyLogger.WriteStartMethod();
 
 			// Clean the calendar
-			CalendarGrid.ColumnDefinitions.Clear();
+			_selectedCell = null;
+			CalendarGrid.RowDefinitions.Clear();
 			CalendarGrid.Children.Clear();
+			HighlightedMonth = -1;
 			MyLogger.WriteInMethod("After clearing the calendar grid.");
 
 			int rows = 3;
@@ -141,7 +136,7 @@ namespace TocoDo.UI.Views
 				int row = i / daysInWeek;
 				int column = currentDate.ZeroMondayBasedDay();
 
-				CreateCell(currentDate, column, row, date.Month != currentDate.Month);
+				CreateCell(currentDate, column, row, date.Month != currentDate.Month && _selectedCell != null);
 			}
 
 
@@ -223,9 +218,8 @@ namespace TocoDo.UI.Views
 		private void CreateCell(DateTime date, int column, int row, bool isSide)
 		{
 			var today = DateTime.Today;
-			var cell = new CalendarCell
+			var cell = new CalendarCell(date)
 			           {
-				           Date          = date,
 				           TappedCommand = new TocoDo.BusinessLogic.Helpers.Commands.Command(c =>
 				           {
 					           SelectedDate = ((CalendarCell) c).Date;

@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using TocoDo.BusinessLogic;
 using TocoDo.BusinessLogic.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -25,9 +26,11 @@ namespace TocoDo.UI.Views.Habits
 			EntryEditTitle.Focus();
 		}
 
-		private async Task EditTitle_OnUnfocused(object sender, FocusEventArgs e)
+		private async void EditTitle_OnUnfocused(object sender, FocusEventArgs e)
 		{
+			MyLogger.WriteStartMethod();
 			await ViewModel.FinishCreationCommand.ExecuteAsync(EntryEditTitle.Text);
+			MyLogger.WriteEndMethod();
 		}
 	}
 }
