@@ -50,7 +50,8 @@
 								</abstractions:TintedImage>
 							</StackLayout>
 
-							<views:CalendarView x:Name="Calendar" Grid.Column="1" HorizontalOptions="FillAndExpand" />
+							<!-- Calendar -->
+							<views:CalendarView x:Name="Calendar" Grid.Column="1" HorizontalOptions="FillAndExpand" TasksSource="{Binding Source={StaticResource TaskService}, Path=AllTasks}" HabitsSource="{Binding Source={StaticResource HabitService}, Path=AllHabits}" />
 
 							<StackLayout Grid.Column="2" Padding="5, 0, 15, 0">
 								<abstractions:TintedImage Source="ic_keyboard_arrow_right_white_36dp.png" VerticalOptions="Center" >
