@@ -19,10 +19,10 @@ namespace TocoDo.UI.Views
 	public partial class CalendarView : ContentView
 	{
 		#region Backing fields
-		private static readonly BindablePropertyKey HighlightedMonthPropertyKey = BindableProperty.CreateReadOnly(nameof(HighlightedMonth), typeof(int), typeof(int), -1);
+		private static readonly BindablePropertyKey HighlightedDatePropertyKey = BindableProperty.CreateReadOnly(nameof(HighlightedDate), typeof(DateTime), typeof(DateTime), DateTime.Today);
 
 		public static BindableProperty SelectedDateProperty = BindableProperty.Create(nameof(SelectedDate), typeof(DateTime?), typeof(DateTime?));
-		public static BindableProperty HighlightedMonthProperty = HighlightedMonthPropertyKey.BindableProperty;
+		public static BindableProperty HighlightedDateProperty = HighlightedDatePropertyKey.BindableProperty;
 		public static BindableProperty HabitsSourceProperty = BindableProperty.Create(nameof(HabitsSource), typeof(ReadOnlyObservableCollection<IHabitViewModel>), typeof(ReadOnlyObservableCollection<IHabitViewModel>));
 		public static BindableProperty TasksSourceProperty = BindableProperty.Create(nameof(TasksSource), typeof(ReadOnlyObservableCollection<ITaskViewModel>), typeof(ReadOnlyObservableCollection<ITaskViewModel>));
 
@@ -34,10 +34,10 @@ namespace TocoDo.UI.Views
 		#endregion
 
 		#region Properties
-		public int HighlightedMonth
+		public DateTime HighlightedDate
 		{
-			get => (int)GetValue(HighlightedMonthProperty);
-			set => SetValue(HighlightedMonthPropertyKey, value);
+			get => (DateTime)GetValue(HighlightedDateProperty);
+			set => SetValue(HighlightedDatePropertyKey, value);
 		}
 		public DateTime? SelectedDate
 		{
@@ -99,7 +99,7 @@ namespace TocoDo.UI.Views
 			switch (propertyName)
 			{
 				case nameof(SelectedDate): SelectedDateChanged(); break;
-				case nameof(HighlightedMonth): HighlightedMonthChanged(); break;
+				case nameof(HighlightedDate): HighlightedMonthChanged(); break;
 				case nameof(HabitsSource): HabitsSourceChanged(); break;
 				case nameof(TasksSource): TasksSourceChanged(); break;
 			}
@@ -134,7 +134,7 @@ namespace TocoDo.UI.Views
 					_selectedCell = cell;
 
 					// if the newly selected cell is in different month than which is highlighted, then highlight the new month
-					HighlightedMonth = SelectedDate.Value.Month;
+					HighlightedDate = SelectedDate.Value;
 					return;
 				}
 			}
@@ -146,7 +146,7 @@ namespace TocoDo.UI.Views
 				if (!(child is CalendarCell cell))
 					continue;
 
-				cell.IsSideMonth = cell.Date.Month != HighlightedMonth;
+				cell.IsSideMonth = cell.Date.Month != HighlightedDate.Month;
 			}
 		}
 
@@ -160,7 +160,6 @@ namespace TocoDo.UI.Views
 			_selectedCell = null;
 			CalendarGrid.RowDefinitions.Clear();
 			CalendarGrid.Children.Clear();
-			HighlightedMonth = -1;
 			MyLogger.WriteInMethod("After clearing the calendar grid.");
 
 			int rows = 3;
@@ -180,6 +179,8 @@ namespace TocoDo.UI.Views
 
 				CreateCell(currentDate, column, row, date.Month != currentDate.Month && _selectedCell != null);
 			}
+
+			HighlightedDate = ((CalendarCell) CalendarGrid.Children[CalendarGrid.Children.Count / 2]).Date;
 
 			MyLogger.WriteInMethod("Before Fill Tasks Busyness");
 			FillTasksBusyness();

@@ -8,8 +8,14 @@
 			 xmlns:todos="clr-namespace:TocoDo.UI.Views.Todos;assembly=TocoDo.UI"
 			 xmlns:habits="clr-namespace:TocoDo.UI.Views.Habits;assembly=TocoDo.UI"
 			 xmlns:customRenderers="clr-namespace:TocoDo.UI.CustomRenderers;assembly=TocoDo.UI"
+			 xmlns:converters="clr-namespace:TocoDo.UI.Converters;assembly=TocoDo.UI"
 			 x:Class="TocoDo.UI.Pages.Today.TodayPage"
 			 x:Name="This">
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<converters:HighilghtedDateConverter x:Key="HighilghtedDateConverter" />
+		</ResourceDictionary>
+	</ContentPage.Resources>
 	<ContentPage.Content>
 		<AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BindingContext="{x:Reference This}">
 			<ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
@@ -20,8 +26,8 @@
 						<RowDefinition Height="*" />
 					</Grid.RowDefinitions>
 
-					<!--Calendar-->
-					<global:FrameWrapper Header="January" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+					<!-- Calendar Frame-->
+					<global:FrameWrapper Header="{Binding Source={x:Reference Calendar}, Path=HighlightedDate, Converter={StaticResource HighilghtedDateConverter}}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
 										 BackgroundColor="{StaticResource ColorPrimaryDark}">
 						<Grid ColumnSpacing="0">
 							<Grid.ColumnDefinitions>
