@@ -23,7 +23,6 @@ namespace TocoDo.BusinessLogic.DependencyInjection.Models
 		Sat    = 32,
 		Sun    = 64,
 		Days   = 128,
-		Months = 256,
 		Years  = 512
 	}
 

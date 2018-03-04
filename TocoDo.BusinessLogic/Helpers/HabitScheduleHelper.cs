@@ -32,10 +32,8 @@ namespace TocoDo.BusinessLogic.Helpers
 			{
 				case RepeatType.Days:
 					return true;
-				case RepeatType.Months:
-					return startDate.Day == DateTime.Today.Day;
 				case RepeatType.Years:
-					return startDate.Day == DateTime.Today.Day && startDate.Month == DateTime.Today.Month;
+					return startDate.Day == date.Day && startDate.Month == date.Month;
 			}
 
 			return repeatType.HasFlag(RepeatType.Mon) && (int)date.DayOfWeek == 1 ||
@@ -107,8 +105,6 @@ namespace TocoDo.BusinessLogic.Helpers
 			{
 				case RepeatType.Years:
 					return start.AddYears(weeksToRepeat) - start;
-				case RepeatType.Months:
-					return start.AddMonths(weeksToRepeat) - start;
 				case RepeatType.Days:
 					return start.AddDays(weeksToRepeat) - start;
 			}
@@ -166,8 +162,6 @@ namespace TocoDo.BusinessLogic.Helpers
 			{
 				case RepeatType.Days:
 					return startDate.Date.AddDays(index);
-				case RepeatType.Months:
-					return startDate.Date.AddMonths(index);
 				case RepeatType.Years:
 					return startDate.Date.AddYears(index);
 			}

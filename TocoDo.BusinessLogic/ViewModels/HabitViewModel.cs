@@ -188,10 +188,10 @@ namespace TocoDo.BusinessLogic.ViewModels
 					for (var i = 0; i < DaysToRepeat; i++)
 						newFilling.Add(startDate.AddDays(i), 0);
 					break;
-				case RepeatType.Months:
-					for (var i = 0; i < DaysToRepeat; i++)
-						newFilling.Add(startDate.AddMonths(i), 0);
-					break;
+				//case RepeatType.Months:
+				//	for (var i = 0; i < DaysToRepeat; i++)
+				//		newFilling.Add(startDate.AddMonths(i), 0);
+				//	break;
 				case RepeatType.Years:
 					for (var i = 0; i < DaysToRepeat; i++)
 						newFilling.Add(startDate.AddYears(i), 0);
@@ -352,9 +352,9 @@ namespace TocoDo.BusinessLogic.ViewModels
 					case RepeatType.Days:
 						timeScale = Resources.Days;
 						break;
-					case RepeatType.Months:
-						timeScale = Resources.Months;
-						break;
+					//case RepeatType.Months:
+					//	timeScale = Resources.Months;
+					//	break;
 					case RepeatType.Years:
 						timeScale = Resources.Years;
 						break;

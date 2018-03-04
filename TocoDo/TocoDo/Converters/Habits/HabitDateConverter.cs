@@ -36,8 +36,8 @@ namespace TocoDo.UI.Converters.Habits
 			if (habitModelRepeatType.HasFlag(RepeatType.Days))
 				return string.Format(Resources.RepeatTypeDays, modelRepeatNumber);
 
-			if (habitModelRepeatType.HasFlag(RepeatType.Months))
-				return string.Format(Resources.RepeatTypeMonths, modelRepeatNumber);
+			//if (habitModelRepeatType.HasFlag(RepeatType.Months))
+			//	return string.Format(Resources.RepeatTypeMonths, modelRepeatNumber);
 
 			if (habitModelRepeatType.HasFlag(RepeatType.Years))
 				return string.Format(Resources.RepeatTypeYears, modelRepeatNumber);

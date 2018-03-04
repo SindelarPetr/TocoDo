@@ -25,8 +25,8 @@ namespace TocoDo.UI.DependencyInjection
 			_connection = new SQLiteAsyncConnection(path);
 
 			MyLogger.WriteInMethod("Creating tables");
+			//await _connection.ExecuteAsync("DELETE FROM HabitModel");
 			await _connection.CreateTablesAsync(CreateFlags.None, typeof(TaskModel), typeof(HabitModel));
-
 			MyLogger.WriteEndMethod();
 		}
 

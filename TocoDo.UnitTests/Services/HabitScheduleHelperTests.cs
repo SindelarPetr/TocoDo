@@ -86,22 +86,22 @@ namespace TocoDo.UnitTests.Services
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
-		[TestMethod]
-		public void HabitLengthReturnsTheRightAmountOfDaysWhenRepeatTypeIsMonths()
-		{
-			// Arrange
-			var startDate = new DateTime(2010, 10, 2);
-			var repeatType = RepeatType.Months;
-			var monthsToRepeat = 200;
-			var expectedResult = startDate.AddMonths(monthsToRepeat) - startDate;
-			ArrangeHabit(startDate, repeatType, monthsToRepeat);
+		//[TestMethod]
+		//public void HabitLengthReturnsTheRightAmountOfDaysWhenRepeatTypeIsMonths()
+		//{
+		//	// Arrange
+		//	var startDate = new DateTime(2010, 10, 2);
+		//	var repeatType = RepeatType.Months;
+		//	var monthsToRepeat = 200;
+		//	var expectedResult = startDate.AddMonths(monthsToRepeat) - startDate;
+		//	ArrangeHabit(startDate, repeatType, monthsToRepeat);
 
-			// Act
-			var actualResult = _scheduleHelper.HabitLength(_habit);
+		//	// Act
+		//	var actualResult = _scheduleHelper.HabitLength(_habit);
 
-			// Assert
-			Assert.AreEqual(expectedResult, actualResult);
-		}
+		//	// Assert
+		//	Assert.AreEqual(expectedResult, actualResult);
+		//}
 
 		[TestMethod]
 		public void HabitLengthReturnsTheRightAmountOfDaysWhenRepeatTypeIsYears()
@@ -474,8 +474,6 @@ namespace TocoDo.UnitTests.Services
 			// Assert
 			Assert.IsFalse(actualResult);
 		}
-		[TestMethod]
-				public void IsHabitActiveReturnsTrueIfAHabitWithRepeatTypeMonths
 		#endregion
 
 

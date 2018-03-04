@@ -25,8 +25,8 @@ namespace TocoDo.UI.Converters.Habits
 			if (habitModelRepeatType.HasFlag(RepeatType.Days))
 				return Resources.EveryDay;
 
-			if (habitModelRepeatType.HasFlag(RepeatType.Months))
-				return Resources.EveryMonth;
+			//if (habitModelRepeatType.HasFlag(RepeatType.Months))
+			//	return Resources.EveryMonth;
 
 			if (habitModelRepeatType.HasFlag(RepeatType.Years))
 				return Resources.EveryYear;
