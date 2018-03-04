@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using TocoDo.BusinessLogic;
 using TocoDo.BusinessLogic.DependencyInjection.Models;
@@ -151,23 +152,27 @@ namespace TocoDo.UI.Views
 		}
 
 		#region Setup
-		private void SetupCalendarGrid(DateTime date)
+		private async Task SetupCalendarGrid(DateTime date)
 		{
 			// Create 3 week calendar
 			MyLogger.WriteStartMethod();
 
+			//CalendarGrid.Opacity = 0;
+			CalendarGrid.Scale = 0.75;
+			
+
 			// Clean the calendar
-			_selectedCell = null;
-			CalendarGrid.RowDefinitions.Clear();
-			CalendarGrid.Children.Clear();
+			SelectedDate = null;
+			//CalendarGrid.RowDefinitions.Clear();
+			//CalendarGrid.Children.Clear();
 			MyLogger.WriteInMethod("After clearing the calendar grid.");
 
 			int rows = 3;
 			int daysInWeek = 7;
 
 			// Create row definitions
-			for (int i = 0; i < rows; i++)
-				CalendarGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Star });
+			//for (int i = 0; i < rows; i++)
+			//	CalendarGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Star });
 
 			DateTime firstDay = _firstDayDate = date.AddDays(-date.ZeroMondayBasedDay());
 
@@ -187,6 +192,10 @@ namespace TocoDo.UI.Views
 			MyLogger.WriteInMethod("Before Fill Habits Busyness");
 			FillHabitsBusyness();
 
+
+			await CalendarGrid.ScaleTo(1, 250, Easing.CubicOut);
+			//await CalendarGrid.FadeTo(1, 250, Easing.CubicOut);
+			//await scaling;
 			MyLogger.WriteEndMethod();
 
 
@@ -276,19 +285,33 @@ namespace TocoDo.UI.Views
 		private void CreateCell(DateTime date, int column, int row, bool isSide)
 		{
 			var today = DateTime.Today;
-			var cell = new CalendarCell(date)
+			if (CalendarGrid.Children.Count != 7 * 3)
 			{
-				TappedCommand = new TocoDo.BusinessLogic.Helpers.Commands.Command(c =>
-				{
-					SelectedDate = ((CalendarCell)c).Date;
-				}),
-				IsSideMonth = isSide,
-				IsToday = date == today,
-			};
+				MyLogger.WriteInMethod("Creating a new cell");
+				var cell = new CalendarCell(date)
+				           {
+					           TappedCommand = new TocoDo.BusinessLogic.Helpers.Commands.Command(c => { SelectedDate = ((CalendarCell) c).Date; }),
+					           IsSideMonth   = isSide
+				           };
 
-			MyLogger.WriteInMethod("Before adding the cell to the children");
-			CalendarGrid.Children.Add(cell, column, row);
-			MyLogger.WriteInMethod("After adding the cell to the children");
+				MyLogger.WriteInMethod("Before adding the cell to the children");
+				CalendarGrid.Children.Add(cell, column, row);
+				cell.IsToday = date == today;
+				MyLogger.WriteInMethod("After adding the cell to the children");
+			}
+			else
+			{
+				MyLogger.WriteInMethod("Reusing a cell");
+				// Reuse of the previous cell
+				if (CalendarGrid.Children[row * 7 + column] is CalendarCell cell)
+				{
+					cell.Date = date;
+					cell.Busyness = 0;
+					cell.IsSideMonth = isSide;
+					cell.IsToday = date == today;
+					cell.IsSelected = false;
+				}
+			}
 		} 
 		#endregion
 
