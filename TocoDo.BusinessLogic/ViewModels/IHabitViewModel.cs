@@ -37,5 +37,6 @@ namespace TocoDo.BusinessLogic.ViewModels
 		ObservableDictionary<DateTime, int> Filling { get; }
 
 		void SetModelId(int id);
+		bool IsActive(DateTime? date = null);
 	}
 }

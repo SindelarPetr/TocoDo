@@ -25,7 +25,7 @@
 					<Setter Property="Scale" Value="1.5"/>
 				</DataTrigger>
 				<DataTrigger TargetType="AbsoluteLayout" Binding="{Binding IsToday}" Value="True">
-					<Setter Property="BackgroundColor" Value="#60CCCCCC"/>
+					<Setter Property="BackgroundColor" Value="#60FFFFFF"/>
 				</DataTrigger>
 			</AbsoluteLayout.Triggers>
 			<AbsoluteLayout.GestureRecognizers>
@@ -56,13 +56,6 @@
 					</Style>
 				</ResourceDictionary>
 			</AbsoluteLayout.Resources>
-
-			<!--<StackLayout AbsoluteLayout.LayoutBounds="0,0,1,30"
-						 AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional">
-				<Label HorizontalTextAlignment="End" />
-				<Label HorizontalTextAlignment="Center" />
-				<Label HorizontalTextAlignment="Start" />
-			</StackLayout>-->
 
 			<Label AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All"
 				   Text="{Binding Date, Converter={StaticResource GridCellDateConverter}}" FontSize="Small"

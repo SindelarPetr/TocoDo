@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using TocoDo.BusinessLogic;
+using TocoDo.BusinessLogic.DependencyInjection.Models;
 using TocoDo.BusinessLogic.Helpers;
 using TocoDo.BusinessLogic.Helpers.Commands;
 using TocoDo.BusinessLogic.ViewModels;
@@ -180,7 +181,10 @@ namespace TocoDo.UI.Views
 				CreateCell(currentDate, column, row, date.Month != currentDate.Month && _selectedCell != null);
 			}
 
+			MyLogger.WriteInMethod("Before Fill Tasks Busyness");
 			FillTasksBusyness();
+			MyLogger.WriteInMethod("Before Fill Habits Busyness");
+			FillHabitsBusyness();
 
 			MyLogger.WriteEndMethod();
 
@@ -258,6 +262,16 @@ namespace TocoDo.UI.Views
 			//MyLogger.WriteEndMethod(); 
 			#endregion
 		}
+
+		private void FillHabitsBusyness()
+		{
+			if(HabitsSource != null)
+			foreach (var habit in HabitsSource)
+			{
+				IncreaseBusyness(habit);
+			}
+		}
+
 		private void CreateCell(DateTime date, int column, int row, bool isSide)
 		{
 			var today = DateTime.Today;
@@ -286,12 +300,47 @@ namespace TocoDo.UI.Views
 		private void HabitsSourceChanged()
 		{
 			if (HabitsSource != null)
+			{
 				((INotifyCollectionChanged)HabitsSource).CollectionChanged += OnHabitsSourceCollectionChanged;
+
+				FillHabitsBusyness();
+			}
 		}
 		private void OnHabitsSourceCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
 		{
+			switch (notifyCollectionChangedEventArgs.Action)
+			{
+				case NotifyCollectionChangedAction.Add:
+					foreach (IHabitViewModel habit in notifyCollectionChangedEventArgs.NewItems)
+					{
+						IncreaseBusyness(habit);
+						habit.PropertyChanging += HabitOnPropertyChanging;
+						habit.PropertyChanged  += HabitOnPropertyChanged;
+					}
+					break;
+				case NotifyCollectionChangedAction.Remove:
+					foreach (IHabitViewModel habit in notifyCollectionChangedEventArgs.OldItems)
+					{
+						DecreaseBusyness(habit);
+						habit.PropertyChanging -= HabitOnPropertyChanging;
+						habit.PropertyChanged  -= HabitOnPropertyChanged;
+					}
+					break;
+			}
+		}
 
-		} 
+		private void HabitOnPropertyChanging(object sender, PropertyChangingEventArgs e)
+		{
+			if(e.PropertyName == nameof(IHabitViewModel.RepeatType) || e.PropertyName == nameof(IHabitViewModel.StartDate) || e.PropertyName == nameof(IHabitViewModel.DaysToRepeat))
+				DecreaseBusyness((IHabitViewModel)sender);
+		}
+
+		private void HabitOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName == nameof(IHabitViewModel.RepeatType) || e.PropertyName == nameof(IHabitViewModel.StartDate) || e.PropertyName == nameof(IHabitViewModel.DaysToRepeat))
+				IncreaseBusyness((IHabitViewModel)sender);
+		}
+
 		#endregion
 
 		#region Tasks
@@ -367,12 +416,35 @@ namespace TocoDo.UI.Views
 
 			return null;
 		}
+		private void DecreaseBusyness(IHabitViewModel habit)
+		{
+			if (habit.StartDate == null) return;
+
+			// Iterates all cells and increases their busyness by one if the habit is active on the cells date
+			foreach (var child in CalendarGrid.Children)
+			{
+				if (child is CalendarCell cell && habit.IsActive(cell.Date))
+					cell.Busyness--;
+			}
+		}
 		private void DecreaseBusyness(DateTime? date)
 		{
 			var cell = FindCell(date);
 
 			if (cell != null)
 				cell.Busyness--;
+		}
+
+		private void IncreaseBusyness(IHabitViewModel habit)
+		{
+			if(habit.StartDate == null) return;
+
+			// Iterates all cells and increases their busyness by one if the habit is active on the cells date
+			foreach (var child in CalendarGrid.Children)
+			{
+				if (child is CalendarCell cell && habit.IsActive(cell.Date))
+					cell.Busyness++;
+			}
 		}
 		private void IncreaseBusyness(DateTime? date)
 		{

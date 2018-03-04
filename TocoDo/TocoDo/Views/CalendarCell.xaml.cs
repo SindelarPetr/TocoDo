@@ -53,7 +53,7 @@ namespace TocoDo.UI.Views
 		public int Busyness
 		{
 			get => (int) GetValue(BusynessProperty);
-			set => SetValue(BusynessProperty, value);
+			set => SetValue(BusynessProperty, Math.Max(value, 0));
 		}
 		/// <summary>
 		/// Those are the points indicating the amount of tasks and habits for the day

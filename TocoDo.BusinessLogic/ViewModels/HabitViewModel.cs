@@ -16,177 +16,10 @@ namespace TocoDo.BusinessLogic.ViewModels
 {
 	public class HabitViewModel : BaseViewModel, IHabitViewModel
 	{
-		#region Dependency injection
-
-		private readonly INavigationService _navigation;
-		private readonly IHabitService _habitService;
-
-		#endregion
-
-		#region Backing fields
-
-		private bool _isRecommended;
-		private int _repeatsToday;
-		private HabitType _habitType;
-		private int _daysToRepeat;
-		private DateTime? _startDate;
-		private string _title;
-		private RepeatType _repeatType;
-		private string _description;
-		private int _maxRepeatsADay;
-
-		#endregion
-
-		#region Properties
-
-		public int Id { get; private set; }
-
-		/// <summary>
-		///     Is used for explicit setting of ModelId, so there is no possibility of setting ModelId accidentally.
-		/// </summary>
-		/// <param name="id">New id which will be assigned to the ModelId property.</param>
-		public void SetModelId(int id)
-		{
-			Id = id;
-		}
-
-		public bool IsRecommended
-		{
-			get => _isRecommended;
-			set => SetValue(ref _isRecommended, value);
-		}
-
-		/// <summary>
-		///     How many times the habit was violated / performed today
-		/// </summary>
-		public int RepeatsToday
-		{
-			get => _repeatsToday;
-			set
-			{
-				if (DateTimeHelper.IsHabitToday(StartDate, RepeatType, DaysToRepeat))
-					SetValue(ref _repeatsToday, value);
-			}
-		}
-
-		public ObservableDictionary<DateTime, int> Filling { get; private set; }
-
-		public DateTime CreationDate { get; }
-
-		public HabitType HabitType
-		{
-			get => _habitType;
-			set
-			{
-				SetValue(ref _habitType, value);
-				OnPropertyChanged(nameof(HabitTypeWithRepeats));
-			}
-		}
-
-		public int DaysToRepeat
-		{
-			get => _daysToRepeat;
-			set
-			{
-				SetValue(ref _daysToRepeat, value);
-				OnPropertyChanged(nameof(HabitDaysToRepeatWithRepeatType));
-			}
-		}
-
-		public DateTime? StartDate
-		{
-			get => _startDate;
-			set => SetValue(ref _startDate, value);
-		}
-
-		public string Title
-		{
-			get => _title;
-			set => SetValue(ref _title, value);
-		}
-
-		public RepeatType RepeatType
-		{
-			get => _repeatType;
-			set
-			{
-				SetValue(ref _repeatType, value);
-				OnPropertyChanged(nameof(HabitDaysToRepeatWithRepeatType));
-			}
-		}
-
-		public string Description
-		{
-			get => _description;
-			set => SetValue(ref _description, value);
-		}
-
-		/// <summary>
-		///     Only for Unit habit. Count of times to repeat the habit each day
-		/// </summary>
-		public int MaxRepeatsADay
-		{
-			get => _maxRepeatsADay;
-			set
-			{
-				SetValue(ref _maxRepeatsADay, value);
-				OnPropertyChanged(nameof(HabitTypeWithRepeats));
-			}
-		}
-
-		public bool IsCreateMode { get; set; }
-
-		public bool IsStarted => StartDate != null && StartDate.Value < DateTime.Now;
-
-		public bool IsFinished { get; set; }
-
-		public string HabitTypeWithRepeats => HabitType == HabitType.Daylong
-			? Resources.HabitDetailHabitTypeDaylong
-			: string.Format(Resources.HabitDetailHabitTypeTextUnit, MaxRepeatsADay);
-
-		public string HabitDaysToRepeatWithRepeatType
-		{
-			get
-			{
-				string timeScale;
-				switch (RepeatType)
-				{
-					case RepeatType.Days:
-						timeScale = Resources.Days;
-						break;
-					case RepeatType.Months:
-						timeScale = Resources.Months;
-						break;
-					case RepeatType.Years:
-						timeScale = Resources.Years;
-						break;
-					default:
-						timeScale = Resources.Weeks;
-						break;
-				}
-
-				return $"{Resources.For} {DaysToRepeat} {timeScale}";
-			}
-		}
-
-		#endregion
-
-		#region Commands
-
-		public ICommand              EditTitleCommand      { get; }
-		public IAsyncCommand         EditCommand           { get; }
-		public IAsyncCommand         UpdateCommand         { get; }
-		public IAsyncCommand<string> FinishCreationCommand { get; }
-		public ICommand              IncreaseTodayCommand  { get; }
-		public IAsyncCommand         RemoveCommand         { get; }
-
-		#endregion
-
 		public HabitViewModel(IHabitService habitService, INavigationService navigation)
-			: this()
+			: this(habitService)
 		{
-			_habitService = habitService;
-			_navigation   = navigation;
+			_navigation     = navigation;
 
 			// Set initial values
 			CreationDate    = DateTime.Now;
@@ -200,9 +33,8 @@ namespace TocoDo.BusinessLogic.ViewModels
 		}
 
 		public HabitViewModel(IHabitService habitService, INavigationService navigation, IHabitModel model)
-			: this()
+			: this(habitService)
 		{
-			_habitService = habitService;
 			_navigation   = navigation;
 
 			CreationDate = model.CreationDate;
@@ -221,8 +53,11 @@ namespace TocoDo.BusinessLogic.ViewModels
 			_maxRepeatsADay = model.RepeatsADay;
 		}
 
-		private HabitViewModel()
+		private HabitViewModel(IHabitService habitService)
 		{
+			_habitService = habitService;
+			_scheduleHelper = new HabitScheduleHelper(_habitService.DateTimeProvider);
+
 			UpdateCommand         = new AwaitableCommand(async () => await _habitService.UpdateAsync(this));
 			EditTitleCommand      = new Command<string>(EditTitle);
 			FinishCreationCommand = new AwaitableCommand<string>(async t => await ConfirmCreation(t));
@@ -375,5 +210,174 @@ namespace TocoDo.BusinessLogic.ViewModels
 
 			Filling = newFilling;
 		}
+
+		#region Dependency injection
+
+		private readonly INavigationService _navigation;
+		private readonly IHabitService _habitService;
+
+		#endregion
+
+		#region Backing fields
+
+		private bool _isRecommended;
+		private int _repeatsToday;
+		private HabitType _habitType;
+		private int _daysToRepeat;
+		private DateTime? _startDate;
+		private string _title;
+		private RepeatType _repeatType;
+		private string _description;
+		private int _maxRepeatsADay;
+		private readonly HabitScheduleHelper _scheduleHelper;
+
+		#endregion
+
+		#region Properties
+
+		public int Id { get; private set; }
+
+		/// <summary>
+		///     Is used for explicit setting of ModelId, so there is no possibility of setting ModelId accidentally.
+		/// </summary>
+		/// <param name="id">New id which will be assigned to the ModelId property.</param>
+		public void SetModelId(int id)
+		{
+			Id = id;
+		}
+
+		public bool IsActive(DateTime? date = null)
+		{
+			return _scheduleHelper.IsHabitActive(this, date);
+		}
+
+
+		public bool IsRecommended
+		{
+			get => _isRecommended;
+			set => SetValue(ref _isRecommended, value);
+		}
+
+		/// <summary>
+		///     How many times the habit was violated / performed today
+		/// </summary>
+		public int RepeatsToday
+		{
+			get => _repeatsToday;
+			set => SetValue(ref _repeatsToday, value);
+		}
+
+		public ObservableDictionary<DateTime, int> Filling { get; private set; }
+
+		public DateTime CreationDate { get; }
+
+		public HabitType HabitType
+		{
+			get => _habitType;
+			set
+			{
+				SetValue(ref _habitType, value);
+				OnPropertyChanged(nameof(HabitTypeWithRepeats));
+			}
+		}
+
+		public int DaysToRepeat
+		{
+			get => _daysToRepeat;
+			set
+			{
+				SetValue(ref _daysToRepeat, value);
+				OnPropertyChanged(nameof(HabitDaysToRepeatWithRepeatType));
+			}
+		}
+
+		public DateTime? StartDate
+		{
+			get => _startDate;
+			set => SetValue(ref _startDate, value);
+		}
+
+		public string Title
+		{
+			get => _title;
+			set => SetValue(ref _title, value);
+		}
+
+		public RepeatType RepeatType
+		{
+			get => _repeatType;
+			set
+			{
+				SetValue(ref _repeatType, value);
+				OnPropertyChanged(nameof(HabitDaysToRepeatWithRepeatType));
+			}
+		}
+
+		public string Description
+		{
+			get => _description;
+			set => SetValue(ref _description, value);
+		}
+
+		/// <summary>
+		///     Only for Unit habit. Count of times to repeat the habit each day
+		/// </summary>
+		public int MaxRepeatsADay
+		{
+			get => _maxRepeatsADay;
+			set
+			{
+				SetValue(ref _maxRepeatsADay, value);
+				OnPropertyChanged(nameof(HabitTypeWithRepeats));
+			}
+		}
+
+		public bool IsCreateMode { get; set; }
+
+		public bool IsStarted => StartDate != null && StartDate.Value < DateTime.Now;
+
+		public bool IsFinished { get; set; }
+
+		public string HabitTypeWithRepeats => HabitType == HabitType.Daylong
+			? Resources.HabitDetailHabitTypeDaylong
+			: string.Format(Resources.HabitDetailHabitTypeTextUnit, MaxRepeatsADay);
+
+		public string HabitDaysToRepeatWithRepeatType
+		{
+			get
+			{
+				string timeScale;
+				switch (RepeatType)
+				{
+					case RepeatType.Days:
+						timeScale = Resources.Days;
+						break;
+					case RepeatType.Months:
+						timeScale = Resources.Months;
+						break;
+					case RepeatType.Years:
+						timeScale = Resources.Years;
+						break;
+					default:
+						timeScale = Resources.Weeks;
+						break;
+				}
+
+				return $"{Resources.For} {DaysToRepeat} {timeScale}";
+			}
+		}
+
+		#endregion
+
+		#region Commands
+
+		public ICommand              EditTitleCommand      { get; }
+		public IAsyncCommand         EditCommand           { get; }
+		public IAsyncCommand         UpdateCommand         { get; }
+		public IAsyncCommand<string> FinishCreationCommand { get; }
+		public ICommand              IncreaseTodayCommand  { get; }
+		public IAsyncCommand         RemoveCommand         { get; }
+
+		#endregion
 	}
 }
