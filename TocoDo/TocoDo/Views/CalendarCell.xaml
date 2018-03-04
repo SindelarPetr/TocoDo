@@ -4,6 +4,7 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:converters="clr-namespace:TocoDo.UI.Converters;assembly=TocoDo.UI"
 			 xmlns:views="clr-namespace:TocoDo.UI.Views;assembly=TocoDo.UI"
+			 xmlns:triggerActions="clr-namespace:TocoDo.UI.TriggerActions;assembly=TocoDo.UI"
 			 x:Class="TocoDo.UI.Views.CalendarCell"
 			 x:Name="This">
 	<ContentView.Resources>
@@ -22,7 +23,12 @@
 			<AbsoluteLayout.Triggers>
 				<DataTrigger TargetType="AbsoluteLayout" Binding="{Binding IsSelected}" Value="True">
 					<Setter Property="BackgroundColor" Value="White" />
-					<Setter Property="Scale" Value="1.5"/>
+					<DataTrigger.EnterActions>
+						<triggerActions:ScaleAction Duration="250"/>
+					</DataTrigger.EnterActions>
+					<DataTrigger.ExitActions>
+						<triggerActions:ScaleAction Duration="250" TargetScale="1"/>
+					</DataTrigger.ExitActions>
 				</DataTrigger>
 				<DataTrigger TargetType="AbsoluteLayout" Binding="{Binding IsToday}" Value="True">
 					<Setter Property="BackgroundColor" Value="#60FFFFFF"/>

@@ -1,23 +1,29 @@
 ﻿using System;
-using TocoDo.UI.Views;
+using System.Collections.Generic;
+using System.Text;
+using TocoDo.UI.TypeConverters;
 using Xamarin.Forms;
 
 namespace TocoDo.UI.TriggerActions
 {
-	public class ScaleAction : TriggerAction<IconButton>
-	{
-		public ScaleAction()
-		{
-			MaxScale = 1.5;
-			Duration = 250;
-		}
+    public class ScaleAction : TriggerAction<VisualElement>
+    {
+	    public int Duration { get; set; }
+		public double TargetScale { get; set; }
+	    [TypeConverter(typeof(EasingConverter))]
+		public Easing Easing { get; set; }
 
-		public double MaxScale { get; set; }
-		public double Duration { get; set; }
+	    public ScaleAction()
+	    {
+		    Duration = 250;
+		    TargetScale = 1.5;
+			Easing = Easing.CubicOut;
+	    }
 
-		protected override void Invoke(IconButton sender)
-		{
-			sender.ScaleTo(MaxScale, (uint) Duration, new Easing(t => 1 + Math.Sin(t * Math.PI) * MaxScale));
-		}
-	}
+
+	    protected override void Invoke(VisualElement sender)
+	    {
+		    sender.ScaleTo(TargetScale, (uint)Duration, Easing);
+	    }
+    }
 }
