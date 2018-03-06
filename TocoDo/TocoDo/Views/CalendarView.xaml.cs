@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using NetBox.Extensions;
 using TocoDo.BusinessLogic;
 using TocoDo.BusinessLogic.DependencyInjection.Models;
 using TocoDo.BusinessLogic.Helpers;
@@ -31,10 +32,15 @@ namespace TocoDo.UI.Views
 		private ICommand _moveNextCommand;
 		private ICommand _movePrevCommand;
 		private DateTime _firstDayDate;
-
+		private ObservableCollection<ITaskViewModel> _selectedDayTasks;
+		private ObservableCollection<IHabitViewModel> _selectedDayHabits;
 		#endregion
 
 		#region Properties
+
+		public ReadOnlyObservableCollection<ITaskViewModel> SelectedDayTasks { get; }
+		public ReadOnlyObservableCollection<IHabitViewModel> SelectedDayHabits { get; }
+
 		public DateTime HighlightedDate
 		{
 			get => (DateTime)GetValue(HighlightedDateProperty);
@@ -75,9 +81,15 @@ namespace TocoDo.UI.Views
 			MyLogger.WriteInMethod("Before initialize component.");
 			InitializeComponent();
 
+			MyLogger.WriteInMethod("Initializing Tasks and Habits in The SelectedDate collections");
+			_selectedDayHabits = new ObservableCollection<IHabitViewModel>();
+			SelectedDayHabits = new ReadOnlyObservableCollection<IHabitViewModel>(_selectedDayHabits);
+
+			_selectedDayTasks = new ObservableCollection<ITaskViewModel>();
+			SelectedDayTasks = new ReadOnlyObservableCollection<ITaskViewModel>(_selectedDayTasks);
+
 			MyLogger.WriteInMethod("Before setup of calendar.");
-			SetupCalendarGrid(DateTime.Today);
-			SelectedDate = DateTime.Today;
+			SetupCalendarGrid(DateTime.Today).ContinueWith(r => SelectedDate = DateTime.Today);
 
 			MyLogger.WriteEndMethod();
 		}
@@ -118,7 +130,10 @@ namespace TocoDo.UI.Views
 			}
 
 			if (SelectedDate == null)
+			{
+				RefreshSelectedDayCollections();
 				return;
+			}
 
 			// Find the cell with the SelectedDate, select it and save it to _selectedDate
 			// The cell can be in just in the column which corresonds to its day in week
@@ -130,12 +145,13 @@ namespace TocoDo.UI.Views
 			{
 				if (CalendarGrid.Children[i] is CalendarCell cell && cell.Date == SelectedDate)
 				{
-					// Found the right cell -> lets select it
+					// FOUND THE RIGHT CELL -> lets select it
 					cell.IsSelected = true;
 					_selectedCell = cell;
 
 					// if the newly selected cell is in different month than which is highlighted, then highlight the new month
 					HighlightedDate = SelectedDate.Value;
+					RefreshSelectedDayCollections();
 					return;
 				}
 			}
@@ -151,28 +167,73 @@ namespace TocoDo.UI.Views
 			}
 		}
 
+		#region Manage SelectedDay Collections
+		private void RefreshSelectedDayCollections()
+		{
+			RefreshSelectedDayTasks();
+			RefreshSelectedDayHabits();
+		}
+
+		private void RefreshSelectedDayTasks()
+		{
+			//if (_selectedDayTasks == null)
+			//	return;
+
+			_selectedDayTasks.Clear();
+			if(SelectedDate != null)
+			foreach (var task in TasksSource)
+				if (task.ScheduleDate != null && task.ScheduleDate.Value == SelectedDate)
+					_selectedDayTasks.Add(task);
+
+		}
+
+		private void RefreshSelectedDayHabits()
+		{
+			//if (_selectedDayHabits == null)
+			//	return;
+
+			_selectedDayHabits.Clear();
+			if(SelectedDate != null)
+			foreach (var habit in HabitsSource)
+			{
+				if (habit.StartDate != null && habit.IsActive(habit.StartDate.Value))
+					_selectedDayHabits.Add(habit);
+			}
+		}
+
+		private void RefreshTaskInSelectedTasks(ITaskViewModel task)
+		{
+			//if(_selectedDayTasks == null)
+			//	return;
+
+			if (SelectedDate == null)
+			{
+				_selectedDayTasks.Remove(task);
+				return;
+			}
+
+			// if the task is active but it is not in the collection -> add it
+			if (task.ScheduleDate != null && task.ScheduleDate == SelectedDate && !_selectedDayTasks.Contains(task))
+				_selectedDayTasks.Add(task);
+			// if the task is not active but it is in the collection -> remove it
+			else if (task.ScheduleDate == null || task.ScheduleDate != SelectedDate)
+				_selectedDayTasks.Remove(task);
+		}
+		#endregion
+
 		#region Setup
 		private async Task SetupCalendarGrid(DateTime date)
 		{
 			// Create 3 week calendar
 			MyLogger.WriteStartMethod();
 
-			//CalendarGrid.Opacity = 0;
 			CalendarGrid.Scale = 0.75;
-			
 
 			// Clean the calendar
 			SelectedDate = null;
-			//CalendarGrid.RowDefinitions.Clear();
-			//CalendarGrid.Children.Clear();
-			MyLogger.WriteInMethod("After clearing the calendar grid.");
 
 			int rows = 3;
 			int daysInWeek = 7;
-
-			// Create row definitions
-			//for (int i = 0; i < rows; i++)
-			//	CalendarGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Star });
 
 			DateTime firstDay = _firstDayDate = date.AddDays(-date.ZeroMondayBasedDay());
 
@@ -185,7 +246,7 @@ namespace TocoDo.UI.Views
 				CreateCell(currentDate, column, row, date.Month != currentDate.Month && _selectedCell != null);
 			}
 
-			HighlightedDate = ((CalendarCell) CalendarGrid.Children[CalendarGrid.Children.Count / 2]).Date;
+			HighlightedDate = ((CalendarCell)CalendarGrid.Children[CalendarGrid.Children.Count / 2]).Date;
 
 			MyLogger.WriteInMethod("Before Fill Tasks Busyness");
 			FillTasksBusyness();
@@ -194,92 +255,18 @@ namespace TocoDo.UI.Views
 
 
 			await CalendarGrid.ScaleTo(1, 250, Easing.CubicOut);
-			//await CalendarGrid.FadeTo(1, 250, Easing.CubicOut);
-			//await scaling;
 			MyLogger.WriteEndMethod();
-
-
-			#region Full month calendar
-			// Making full month
-			//MyLogger.WriteStartMethod();
-			//// Clean the calendar
-			//CalendarGrid.ColumnDefinitions.Clear();
-			//CalendarGrid.Children.Clear();
-			//MyLogger.WriteInMethod("After clearing the calendar grid.");
-
-			//// Count rows
-			//// get days in the month and roundUp((that + startday num) / 7) is the number of rows
-			//int daysInMonth = DateTime.DaysInMonth(year, month);
-			//var startDate = new DateTime(year, month, 1);
-			//int startDay = startDate.ZeroMondayBasedDay();
-			//int rows = 3;//(int)Math.Ceiling((daysInMonth + startDay) / 7.0);
-
-			//// Create row definitions
-			//MyLogger.WriteInMethod($"Before creating the { rows } rows");
-			//for (int i = 0; i < rows; i++)
-			//	CalendarGrid.RowDefinitions.Add(new RowDefinition{Height = GridLength.Star});
-
-			//// TODO:Create previous month cells
-			////
-			//int prevMonthYear = startDate.Year - (month == 1 ? 1 : 0);
-			//int prevMonth = (prevMonthYear < startDate.Year) ? 12 : month - 1;
-			//int prevMonthDays = DateTime.DaysInMonth(prevMonthYear, prevMonth);
-
-			//for (int i = 0; i < startDay; i++)
-			//{
-			//	var dateOfTheDay = new DateTime(prevMonthYear, prevMonth, prevMonthDays - i);
-			//	var column = dateOfTheDay.ZeroMondayBasedDay();
-			//	var row = 0;
-
-			//	CreateCell(dateOfTheDay, column, row, true);
-			//}
-
-			//// Create current month cells
-			//MyLogger.WriteInMethod("Before creating days in the current month");
-			//DateTime date = startDate;
-			//for (int i = 0; i < daysInMonth; i++)
-			//{
-			//	DateTime currentDate = date.Add(TimeSpan.FromDays(i));
-			//	int row = (i + startDay) / 7;
-			//	int column = currentDate.ZeroMondayBasedDay();
-
-			//	CreateCell(currentDate, column, row, false);
-			//}
-			//MyLogger.WriteInMethod("After creating days in the current month");
-
-			//// TODO: Create upcomming month cells
-			//int nextMonthYear;
-			//int nextMonth;
-
-			//if (startDate.Month == 12)
-			//{
-			//	nextMonth = 1;
-			//	nextMonthYear = startDate.Year + 1;
-			//}
-			//else
-			//{
-			//	nextMonth = startDate.Month + 1;
-			//	nextMonthYear = year;
-			//}
-
-			//DateTime nextMonthFirstDay = new DateTime(nextMonthYear, nextMonth, 1);
-			//for (int i = 0; i < 7 - nextMonthFirstDay.ZeroMondayBasedDay(); i++)
-			//{
-			//	DateTime nextMonthdate = nextMonthFirstDay.AddDays(i);
-			//	CreateCell(nextMonthdate, nextMonthdate.ZeroMondayBasedDay(), rows - 1, true);
-			//}
-
-			//MyLogger.WriteEndMethod(); 
-			#endregion
 		}
 
 		private void FillHabitsBusyness()
 		{
-			if(HabitsSource != null)
-			foreach (var habit in HabitsSource)
-			{
-				IncreaseBusyness(habit);
-			}
+			MyLogger.WriteStartMethod();
+			if (HabitsSource != null)
+				foreach (var habit in HabitsSource)
+				{
+					IncreaseBusyness(habit);
+				}
+			MyLogger.WriteEndMethod();
 		}
 
 		private void CreateCell(DateTime date, int column, int row, bool isSide)
@@ -289,10 +276,10 @@ namespace TocoDo.UI.Views
 			{
 				MyLogger.WriteInMethod("Creating a new cell");
 				var cell = new CalendarCell(date)
-				           {
-					           TappedCommand = new TocoDo.BusinessLogic.Helpers.Commands.Command(c => { SelectedDate = ((CalendarCell) c).Date; }),
-					           IsSideMonth   = isSide
-				           };
+				{
+					TappedCommand = new TocoDo.BusinessLogic.Helpers.Commands.Command(c => { SelectedDate = ((CalendarCell)c).Date; }),
+					IsSideMonth = isSide
+				};
 
 				MyLogger.WriteInMethod("Before adding the cell to the children");
 				CalendarGrid.Children.Add(cell, column, row);
@@ -312,7 +299,7 @@ namespace TocoDo.UI.Views
 					cell.IsSelected = false;
 				}
 			}
-		} 
+		}
 		#endregion
 
 		#region Habits
@@ -339,7 +326,7 @@ namespace TocoDo.UI.Views
 					{
 						IncreaseBusyness(habit);
 						habit.PropertyChanging += HabitOnPropertyChanging;
-						habit.PropertyChanged  += HabitOnPropertyChanged;
+						habit.PropertyChanged += HabitOnPropertyChanged;
 					}
 					break;
 				case NotifyCollectionChangedAction.Remove:
@@ -347,7 +334,7 @@ namespace TocoDo.UI.Views
 					{
 						DecreaseBusyness(habit);
 						habit.PropertyChanging -= HabitOnPropertyChanging;
-						habit.PropertyChanged  -= HabitOnPropertyChanged;
+						habit.PropertyChanged -= HabitOnPropertyChanged;
 					}
 					break;
 			}
@@ -355,14 +342,17 @@ namespace TocoDo.UI.Views
 
 		private void HabitOnPropertyChanging(object sender, PropertyChangingEventArgs e)
 		{
-			if(e.PropertyName == nameof(IHabitViewModel.RepeatType) || e.PropertyName == nameof(IHabitViewModel.StartDate) || e.PropertyName == nameof(IHabitViewModel.DaysToRepeat))
+			if (e.PropertyName == nameof(IHabitViewModel.RepeatType) || e.PropertyName == nameof(IHabitViewModel.StartDate) || e.PropertyName == nameof(IHabitViewModel.DaysToRepeat))
 				DecreaseBusyness((IHabitViewModel)sender);
 		}
 
 		private void HabitOnPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
-			if (e.PropertyName == nameof(IHabitViewModel.RepeatType) || e.PropertyName == nameof(IHabitViewModel.StartDate) || e.PropertyName == nameof(IHabitViewModel.DaysToRepeat))
+			if (e.PropertyName == nameof(IHabitViewModel.RepeatType) || e.PropertyName == nameof(IHabitViewModel.StartDate) ||
+				e.PropertyName == nameof(IHabitViewModel.DaysToRepeat))
+			{
 				IncreaseBusyness((IHabitViewModel)sender);
+			}
 		}
 
 		#endregion
@@ -377,7 +367,7 @@ namespace TocoDo.UI.Views
 		{
 			if (TasksSource != null)
 			{
-				((INotifyCollectionChanged) TasksSource).CollectionChanged += OnTasksSourceCollectionChanged;
+				((INotifyCollectionChanged)TasksSource).CollectionChanged += OnTasksSourceCollectionChanged;
 
 				FillTasksBusyness();
 			}
@@ -392,6 +382,8 @@ namespace TocoDo.UI.Views
 						IncreaseBusyness(task.ScheduleDate);
 						task.PropertyChanging += TaskOnPropertyChanging;
 						task.PropertyChanged += TaskOnPropertyChanged;
+
+						RefreshTaskInSelectedTasks(task);
 					}
 					break;
 				case NotifyCollectionChangedAction.Remove:
@@ -400,6 +392,9 @@ namespace TocoDo.UI.Views
 						DecreaseBusyness(task.ScheduleDate);
 						task.PropertyChanging -= TaskOnPropertyChanging;
 						task.PropertyChanged -= TaskOnPropertyChanged;
+
+						if (_selectedDayTasks.Contains(task))
+							_selectedDayTasks.Remove(task);
 					}
 					break;
 			}
@@ -416,6 +411,7 @@ namespace TocoDo.UI.Views
 			if (propertyChangedEventArgs.PropertyName == nameof(ITaskViewModel.ScheduleDate) && sender is ITaskViewModel task)
 			{
 				IncreaseBusyness(task.ScheduleDate);
+				RefreshTaskInSelectedTasks(task);
 			}
 		}
 		#endregion
@@ -461,14 +457,24 @@ namespace TocoDo.UI.Views
 
 		private void IncreaseBusyness(IHabitViewModel habit)
 		{
-			if(habit.StartDate == null) return;
+			MyLogger.WriteStartMethod();
+			if (habit.StartDate == null)
+			{
+				MyLogger.WriteEndMethod("Ending soon because the habit has no StartDate");
+				return;
+			}
 
 			// Iterates all cells and increases their busyness by one if the habit is active on the cells date
 			foreach (var child in CalendarGrid.Children)
 			{
 				if (child is CalendarCell cell && habit.IsActive(cell.Date))
+				{
+					MyLogger.WriteInMethod("Increasing Busyness in a cell");
 					cell.Busyness++;
+				}
 			}
+
+			MyLogger.WriteEndMethod();
 		}
 		private void IncreaseBusyness(DateTime? date)
 		{
@@ -480,11 +486,11 @@ namespace TocoDo.UI.Views
 
 		private void FillTasksBusyness()
 		{
-			if(TasksSource != null)
-			foreach (var taskViewModel in TasksSource)
-			{
-				IncreaseBusyness(taskViewModel.ScheduleDate);
-			}
+			if (TasksSource != null)
+				foreach (var taskViewModel in TasksSource)
+				{
+					IncreaseBusyness(taskViewModel.ScheduleDate);
+				}
 		}
 
 	}

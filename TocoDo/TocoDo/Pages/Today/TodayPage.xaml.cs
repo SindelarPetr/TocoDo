@@ -39,7 +39,8 @@ namespace TocoDo.UI.Pages.Today
 
 		private void ButtonAddToday_OnClicked(object sender, EventArgs e)
 		{
-			((App) Application.Current).TaskService.StartCreation(DateTime.Today);
+			if(Calendar.SelectedDate != null)
+			((App) Application.Current).TaskService.StartCreation(Calendar.SelectedDate.Value);
 		}
 	}
 }

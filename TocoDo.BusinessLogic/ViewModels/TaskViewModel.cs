@@ -147,6 +147,7 @@ namespace TocoDo.BusinessLogic.ViewModels
 
 			if (o is string title)
 			{
+				IsCreateMode = false;
 				Title = title.Trim();
 				_taskService.ConfirmCreationAsync(this);
 			}
@@ -184,36 +185,6 @@ namespace TocoDo.BusinessLogic.ViewModels
 		{
 			await _taskService.UpdateAsync(this);
 		}
-
-		private async Task SelectDate(Action<DateTime?> pickedAction, string actionSheetHeader)
-		{
-			string[] buttons = {Resources.Today, Resources.Tomorrow, Resources.TheDayAfterTomorrow, Resources.PickADate};
-
-			var result = await _navigation.DisplayActionSheet(actionSheetHeader, Resources.Cancel, null, buttons);
-
-
-			DateTime selectedDate;
-			if (result == Resources.Today)
-			{
-				selectedDate = DateTime.Today;
-			}
-			else if (result == Resources.Tomorrow)
-			{
-				selectedDate = DateTime.Today + TimeSpan.FromDays(1);
-			}
-			else if (result == Resources.PickADate)
-			{
-				//SelectDateByPicker(d => pickedAction(d));
-				return;
-			}
-			else
-			{
-				return;
-			}
-
-			pickedAction(selectedDate);
-		}
-
 		#endregion
 	}
 }

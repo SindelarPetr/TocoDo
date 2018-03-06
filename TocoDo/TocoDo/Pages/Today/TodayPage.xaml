@@ -9,6 +9,7 @@
 			 xmlns:habits="clr-namespace:TocoDo.UI.Views.Habits;assembly=TocoDo.UI"
 			 xmlns:customRenderers="clr-namespace:TocoDo.UI.CustomRenderers;assembly=TocoDo.UI"
 			 xmlns:converters="clr-namespace:TocoDo.UI.Converters;assembly=TocoDo.UI"
+			 xmlns:itemFilters="clr-namespace:TocoDo.BusinessLogic.ItemFilters;assembly=TocoDo.BusinessLogic"
 			 x:Class="TocoDo.UI.Pages.Today.TodayPage"
 			 x:Name="This">
 	<ContentPage.Resources>
@@ -72,10 +73,14 @@
 					<!--TODAY-->
 					<!--TODO: Sources-->
 					<global:FrameWrapper Grid.Row="1" Header="Tasks">
-						<todos:TaskCollection VerticalOptions="Start" />
+						<todos:TaskCollection VerticalOptions="Start" ItemsSource="{Binding Source={x:Reference Calendar}, Path=SelectedDayTasks}">
+							<todos:TaskCollection.ItemFilter>
+								<itemFilters:TaskAlwaysTrueFilter/>
+							</todos:TaskCollection.ItemFilter>
+						</todos:TaskCollection>
 					</global:FrameWrapper>
 
-					<global:FrameWrapper Grid.Row="2" Header="Habits">
+					<global:FrameWrapper Grid.Row="2" Header="Habits" VerticalOptions="Start">
 						<habits:ActualHabitCollection />
 					</global:FrameWrapper>
 				</Grid>

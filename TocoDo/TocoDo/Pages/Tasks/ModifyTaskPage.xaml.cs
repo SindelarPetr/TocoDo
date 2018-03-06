@@ -9,18 +9,22 @@ namespace TocoDo.UI.Pages.Tasks
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ModifyTaskPage : ContentPage
 	{
+		#region Properties
+
+		public ITaskViewModel TaskViewModel
+		{
+			get => (ITaskViewModel) BindingContext;
+			set => BindingContext = value;
+		}
+
+		#endregion
+
 		public ModifyTaskPage(TaskViewModel taskToModify)
 		{
 			MyLogger.WriteStartMethod();
 			BindingContext = taskToModify;
 			InitializeComponent();
 			MyLogger.WriteEndMethod();
-		}
-
-		public TaskViewModel ITaskViewModel
-		{
-			get => (TaskViewModel) BindingContext;
-			set => BindingContext = value;
 		}
 
 		protected override void OnAppearing()
@@ -40,13 +44,13 @@ namespace TocoDo.UI.Pages.Tasks
 				return;
 			}
 
-			ITaskViewModel.Title = newTitle;
-			await ITaskViewModel.UpdateCommand.ExecuteAsync(sender);
+			TaskViewModel.Title = newTitle;
+			await TaskViewModel.UpdateCommand.ExecuteAsync(sender);
 		}
 
 		private void ResetEntryTitle()
 		{
-			EntryTitle.Text = ITaskViewModel.Title;
+			EntryTitle.Text = TaskViewModel.Title;
 		}
 	}
 }

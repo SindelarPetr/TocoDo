@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:converters="clr-namespace:TocoDo.UI.Converters;assembly=TocoDo.UI"
-             xmlns:customRenderers="clr-namespace:TocoDo.UI.CustomRenderers;assembly=TocoDo.UI"
-             xmlns:views="clr-namespace:TocoDo.UI.Views;assembly=TocoDo.UI"
-             xmlns:markupExtensions="clr-namespace:TocoDo.UI.MarkupExtensions;assembly=TocoDo.UI"
-             xmlns:properties="clr-namespace:TocoDo.BusinessLogic.Properties;assembly=TocoDo.BusinessLogic"
-             xmlns:habits="clr-namespace:TocoDo.UI.Views.Habits;assembly=TocoDo.UI"
-             xmlns:models="clr-namespace:TocoDo.BusinessLogic.DependencyInjection.Models;assembly=TocoDo.BusinessLogic"
-             x:Class="TocoDo.UI.Pages.Habits.ModifyHabitPage"
-             Title="Modify the habit"
-             x:Name="This">
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:converters="clr-namespace:TocoDo.UI.Converters;assembly=TocoDo.UI"
+			 xmlns:customRenderers="clr-namespace:TocoDo.UI.CustomRenderers;assembly=TocoDo.UI"
+			 xmlns:views="clr-namespace:TocoDo.UI.Views;assembly=TocoDo.UI"
+			 xmlns:markupExtensions="clr-namespace:TocoDo.UI.MarkupExtensions;assembly=TocoDo.UI"
+			 xmlns:properties="clr-namespace:TocoDo.BusinessLogic.Properties;assembly=TocoDo.BusinessLogic"
+			 xmlns:habits="clr-namespace:TocoDo.UI.Views.Habits;assembly=TocoDo.UI"
+			 xmlns:models="clr-namespace:TocoDo.BusinessLogic.DependencyInjection.Models;assembly=TocoDo.BusinessLogic"
+			 x:Class="TocoDo.UI.Pages.Habits.ModifyHabitPage"
+			 Title="Modify the habit"
+			 x:Name="This">
 	<ContentPage.Content>
 		<Grid BindingContext="{Binding Source={x:Reference This}, Path=Habit}" RowSpacing="0">
 			<Grid.RowDefinitions>
@@ -22,9 +22,9 @@
 
 			<!--Top Panel-->
 			<Frame Margin="0" CornerRadius="0" HasShadow="False" Padding="16,5,0,0" OutlineColor="{StaticResource ColorPrimary}"
-			       BackgroundColor="{StaticResource ColorPrimary}">
+				   BackgroundColor="{StaticResource ColorPrimary}">
 				<customRenderers:NoLineEntry x:Name="EntryTitle" Text="{Binding Title, Mode=OneWay}"
-				                             HorizontalOptions="FillAndExpand" TextColor="White" Unfocused="EntryTitle_OnUnfocused" />
+											 HorizontalOptions="FillAndExpand" TextColor="White" Unfocused="EntryTitle_OnUnfocused" />
 			</Frame>
 
 			<!--Body-->
@@ -40,15 +40,15 @@
 					<Frame Margin="0" VerticalOptions="Center">
 						<StackLayout>
 							<views:DateButtonView x:Name="DateButtonView" SelectedDate="{Binding StartDate, Mode=TwoWay}"
-							                      ImageSource="{markupExtensions:PathResolver Source='ic_today_white_24dp'}"
-							                      DateFormat="{x:Static properties:Resources.StartDateText}" />
+												  ImageSource="{markupExtensions:PathResolver Source='ic_today_white_24dp'}"
+												  DateFormat="{x:Static properties:Resources.StartDateText}" />
 
 							<habits:RepeatTypeButton FormattedText="{x:Static properties:Resources.RepeatTypeText}"
-							                         RepeatType="{Binding RepeatType}"
-							                         ImageSource="{markupExtensions:PathResolver 'ic_loop_white_24dp'}"
-							                         IsActive="{Binding Source={x:Reference DateButtonView}, Path=IsActive}"
-							                         HasRemoveButton="False" Clicked="IconButton_OnClicked"
-							                         DaysToRepeat="{Binding DaysToRepeat}" />
+													 RepeatType="{Binding RepeatType}"
+													 ImageSource="{markupExtensions:PathResolver 'ic_loop_white_24dp'}"
+													 IsActive="{Binding Source={x:Reference DateButtonView}, Path=IsActive}"
+													 HasRemoveButton="False" Clicked="IconButton_OnClicked"
+													 DaysToRepeat="{Binding DaysToRepeat}" />
 						</StackLayout>
 					</Frame>
 
@@ -73,7 +73,7 @@
 								<customRenderers:NoBorderButton Text="Unit" HorizontalOptions="FillAndExpand" Clicked="BtnUnit_Clicked">
 									<customRenderers:NoBorderButton.Triggers>
 										<DataTrigger TargetType="customRenderers:NoBorderButton" Binding="{Binding HabitType}"
-										             Value="{x:Static models:HabitType.Unit}">
+													 Value="{x:Static models:HabitType.Unit}">
 											<Setter Property="Style" Value="{StaticResource ToggledStyle}" />
 										</DataTrigger>
 									</customRenderers:NoBorderButton.Triggers>
@@ -83,7 +83,7 @@
 								<customRenderers:NoBorderButton Text="Daylong" HorizontalOptions="FillAndExpand" Clicked="BtnDaylong_Clicked">
 									<customRenderers:NoBorderButton.Triggers>
 										<DataTrigger TargetType="customRenderers:NoBorderButton" Binding="{Binding HabitType}"
-										             Value="{x:Static models:HabitType.Daylong}">
+													 Value="{x:Static models:HabitType.Daylong}">
 											<Setter Property="Style" Value="{StaticResource ToggledStyle}" />
 										</DataTrigger>
 									</customRenderers:NoBorderButton.Triggers>
@@ -94,13 +94,13 @@
 							<StackLayout Orientation="Horizontal" HorizontalOptions="Center" IsVisible="False">
 								<StackLayout.Triggers>
 									<DataTrigger TargetType="StackLayout" Binding="{Binding HabitType}"
-									             Value="{x:Static models:HabitType.Unit}">
+												 Value="{x:Static models:HabitType.Unit}">
 										<Setter Property="IsVisible" Value="True" />
 									</DataTrigger>
 								</StackLayout.Triggers>
 								<Label Text="Times a day:" VerticalOptions="Fill" VerticalTextAlignment="Center" />
 								<Entry Text="{Binding MaxRepeatsADay}" WidthRequest="40" HorizontalTextAlignment="Center"
-								       Keyboard="Numeric" />
+									   Keyboard="Numeric" />
 							</StackLayout>
 						</StackLayout>
 					</Frame>
@@ -112,7 +112,7 @@
 
 
 			<views:PageBottomPanel Grid.Row="2" RemoveCommand="{Binding RemoveCommand}"
-			                       Text="{Binding CreationDate, Converter={StaticResource PastDateTimeConverter}, StringFormat='Created {0}'}" />
+								   Text="{Binding CreationDate, Converter={StaticResource PastDateTimeConverter}, StringFormat='Created {0}'}" />
 		</Grid>
 	</ContentPage.Content>
 </ContentPage>

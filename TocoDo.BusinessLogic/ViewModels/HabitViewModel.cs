@@ -90,8 +90,11 @@ namespace TocoDo.BusinessLogic.ViewModels
 			var result = await _navigation.DisplayAlert(Resources.DeleteHabitConfirmHeader, Resources.DeleteHabitConfirmText,
 			                                            Resources.Yes, Resources.Cancel);
 
-			if (result)
-				await _habitService.DeleteAsync(this);
+			if (!result)
+				return;
+
+			await _habitService.DeleteAsync(this);
+			await _navigation.PopAsync();
 		}
 
 		private async Task ConfirmCreation(object title)
@@ -105,43 +108,6 @@ namespace TocoDo.BusinessLogic.ViewModels
 
 			Title = tit.Trim();
 			await _habitService.ConfirmCreationAsync(this);
-		}
-
-		private async Task SelectDate(Action<DateTime?> pickedAction, string actionSheetHeader)
-		{
-			string[] buttons = {Resources.Today, Resources.Tomorrow, Resources.TheDayAfterTomorrow, Resources.PickADate};
-
-			var result = await _navigation.DisplayActionSheet(actionSheetHeader, Resources.Cancel, null, buttons);
-
-			DateTime selectedDate;
-			if (result == Resources.Today)
-			{
-				selectedDate = DateTime.Today;
-			}
-			else if (result == Resources.Tomorrow)
-			{
-				selectedDate = DateTime.Today + TimeSpan.FromDays(1);
-			}
-			else if (result == Resources.TheDayAfterTomorrow)
-			{
-				selectedDate = DateTime.Today + TimeSpan.FromDays(2);
-			}
-			else if (result == Resources.PickADate)
-			{
-				SelectDateByPicker(d => pickedAction(d));
-				return;
-			}
-			else
-			{
-				return;
-			}
-
-			pickedAction(selectedDate);
-		}
-
-		private void SelectDateByPicker(Action<DateTime> pickedAction)
-		{
-			//TODO: Workaround for showing the date picker TodayPage.Instance.ShowGlobalDatePicker(ModelStartDate ?? DateTime.Today + TimeSpan.FromDays(1), pickedAction, DateTime.Today + TimeSpan.FromDays(1));
 		}
 
 		protected override async void OnPropertyChanged(string propertyName = null)

@@ -89,6 +89,9 @@ namespace TocoDo.UI.Views.Global
 						if (ItemFilter?.Filter(item) ?? false) RemoveItem(item);
 					}
 					break;
+				case NotifyCollectionChangedAction.Reset:
+					_mainLayout.Children.Clear();
+					break;
 			}
 		}
 

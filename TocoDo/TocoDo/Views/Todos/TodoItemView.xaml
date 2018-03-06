@@ -17,10 +17,7 @@
 				<Setter Property="IsOpaque" Value="True" />
 			</Style>
 			<tasks:CheckConverter x:Key="CheckConverter" />
-			<converters:IsNotNullConverter x:Key="IsNotNullConverter" />
 			<converters:DoneOpacityConverter x:Key="DoneOpacityConverter" />
-			<converters:IsNotNullOrWhitespaceConverter x:Key="IsNotNullOrWhitespaceConverter" />
-			<converters:BoolReverseConverter x:Key="BoolReverseConverter" />
 			<Color x:Key="TitleColor">Gray</Color>
 			<x:Double x:Key="TitleFontSize">15</x:Double>
 		</ResourceDictionary>

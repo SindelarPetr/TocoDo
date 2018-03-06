@@ -24,7 +24,7 @@
 		</ResourceDictionary>
 	</ContentPage.Resources>
 	<ContentPage.Content>
-		<Grid BindingContext="{Binding Source={x:Reference This}, Path=ITaskViewModel}" RowSpacing="0">
+		<Grid BindingContext="{Binding Source={x:Reference This}, Path=TaskViewModel}" RowSpacing="0">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto" />
 				<RowDefinition Height="*" />
@@ -80,7 +80,7 @@
 			</Grid>
 
 			<views:PageBottomPanel Grid.Row="2"
-			                       Text="{Binding CreateTime, Converter={StaticResource PastDateTimeConverter}, StringFormat='Created {0}'}">
+			                       Text="{Binding CreateTime, Converter={StaticResource PastDateTimeConverter}, StringFormat='Created {0}'}" RemoveCommand="{Binding RemoveCommand}">
 				<views:PageBottomPanel.Triggers>
 					<DataTrigger TargetType="views:PageBottomPanel"
 					             Binding="{Binding Done, Converter={StaticResource IsNotNullConverter}}" Value="True">
