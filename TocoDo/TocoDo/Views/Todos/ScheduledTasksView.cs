@@ -35,7 +35,7 @@ namespace TocoDo.UI.Views.Todos
 			for (; i < MainLayout.Children.Count; i++)
 			{
 				// Skip all the elements with lower date or which are headers
-				if (!(MainLayout.Children[i] is TodoItemView taskView) || taskView.ViewModel.ScheduleDate.Value.Date < scheduleDate)
+				if (!(MainLayout.Children[i] is TaskView taskView) || taskView.ViewModel.ScheduleDate.Value.Date < scheduleDate)
 					continue;
 
 				if (taskView.ViewModel.ScheduleDate.Value.Date == scheduleDate)
@@ -44,10 +44,10 @@ namespace TocoDo.UI.Views.Todos
 					do
 					{
 						i++;
-					} while (i < MainLayout.Children.Count && MainLayout.Children[i] is TodoItemView);
+					} while (i < MainLayout.Children.Count && MainLayout.Children[i] is TaskView);
 
 					// Add at the end
-					MainLayout.Children.Insert(i, new TodoItemView(newTask));
+					MainLayout.Children.Insert(i, new TaskView(newTask));
 
 					return;
 				}
@@ -63,7 +63,7 @@ namespace TocoDo.UI.Views.Todos
 		
 		private void InsertWithHeader(int index, ITaskViewModel newTask)
 		{
-			MainLayout.Children.Insert(index, new TodoItemView(newTask));
+			MainLayout.Children.Insert(index, new TaskView(newTask));
 			MainLayout.Children.Insert(index, new Label { Text = DateToTextConverter.Convert(newTask.ScheduleDate), FontSize = 13, TextColor = ((App)App.Current).ColorPrimary});
 		}
 
@@ -73,7 +73,7 @@ namespace TocoDo.UI.Views.Todos
 			// Find the view of the task
 			for (int i = 0; i < MainLayout.Children.Count; i++)
 			{
-				if (MainLayout.Children[i] is TodoItemView taskView && taskView.IsVisible && taskView.ViewModel.Id == oldItem.Id)
+				if (MainLayout.Children[i] is TaskView taskView && taskView.IsVisible && taskView.ViewModel.Id == oldItem.Id)
 				{
 					// Remove item on this index.
 					// If there is a title above, then if there is anothere title below or no items, remove the title above

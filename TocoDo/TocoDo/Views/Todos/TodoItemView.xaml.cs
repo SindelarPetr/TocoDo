@@ -6,11 +6,10 @@ using Xamarin.Forms.Xaml;
 
 namespace TocoDo.UI.Views.Todos
 {
-	// TODO: Rename to TaskView
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class TodoItemView : ContentView, IEntryFocusable<ITaskViewModel>
+	public partial class TaskView : ContentView, IEntryFocusable<ITaskViewModel>
 	{
-		public TodoItemView(ITaskViewModel model)
+		public TaskView(ITaskViewModel model)
 		{
 			BindingContext = model;
 			InitializeComponent();

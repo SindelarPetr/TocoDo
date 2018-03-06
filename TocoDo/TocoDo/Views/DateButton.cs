@@ -69,7 +69,7 @@ namespace TocoDo.UI.Views
 
 		private void OnClicked(object sender, EventArgs eventArgs)
 		{
-			// Show the action sheet with Today, Tomorrow, In one week, Pick a date
+			// TODO: Show the action sheet with Today, Tomorrow, In one week, Pick a date
 
 			_nullablePicker.Focus();
 		}
