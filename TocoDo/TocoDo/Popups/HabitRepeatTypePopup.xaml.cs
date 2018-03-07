@@ -29,7 +29,6 @@ namespace TocoDo.UI.Popups
 			{
 				new KeyValuePair<int, string>((int) RepeatType.Days,   BusinessLogic.Properties.Resources.Days),
 				new KeyValuePair<int, string>(-1,                      BusinessLogic.Properties.Resources.Weeks),
-				//new KeyValuePair<int, string>((int) RepeatType.Months, BusinessLogic.Properties.Resources.Months),
 				new KeyValuePair<int, string>((int) RepeatType.Years,  BusinessLogic.Properties.Resources.Years)
 			};
 

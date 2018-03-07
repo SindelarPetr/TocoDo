@@ -109,21 +109,24 @@ namespace TocoDo.UI.DependencyInjection
 			switch (pageType)
 			{
 				case PageType.EditDescriptionPage:
+					MyLogger.WriteEndMethod();
 					return new EditDescriptionPage((EditDescriptionInfo)param);
 
 				case PageType.ModifyHabitPage:
+					MyLogger.WriteEndMethod();
 					return new ModifyHabitPage((HabitViewModel)param);
 
 				case PageType.HabitProgressPage:
+					MyLogger.WriteEndMethod();
 					return new HabitProgressPage((HabitViewModel)param);
 
 				case PageType.ModifyTaskPage:
+					MyLogger.WriteEndMethod();
 					return new ModifyTaskPage((TaskViewModel)param);
 					
 				default:
 					throw new ArgumentOutOfRangeException(nameof(pageType), pageType, null);
 			}
-			MyLogger.WriteEndMethod();
 		}
 
 		private Type GetType(PageType pageType)
@@ -132,21 +135,24 @@ namespace TocoDo.UI.DependencyInjection
 			switch (pageType)
 			{
 				case PageType.EditDescriptionPage:
+					MyLogger.WriteEndMethod();
 					return typeof(EditDescriptionPage);
 
 				case PageType.ModifyHabitPage:
+					MyLogger.WriteEndMethod();
 					return typeof(ModifyHabitPage);
 
 				case PageType.HabitProgressPage:
+					MyLogger.WriteEndMethod();
 					return typeof(HabitProgressPage);
 
 				case PageType.ModifyTaskPage:
+					MyLogger.WriteEndMethod();
 					return typeof(ModifyTaskPage);
 
 				default:
 					throw new ArgumentOutOfRangeException(nameof(pageType), pageType, null);
 			}
-			MyLogger.WriteEndMethod();
 		}
 	}
 }

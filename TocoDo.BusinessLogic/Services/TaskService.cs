@@ -35,6 +35,7 @@ namespace TocoDo.BusinessLogic.Services
 		{
 			MyLogger.WriteStartMethod();
 
+			// TODO: Uncomment
 			var result = await Persistance.GetTasks();
 			result.ForEach(t =>
 			{

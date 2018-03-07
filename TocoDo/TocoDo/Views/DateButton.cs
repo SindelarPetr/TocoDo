@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using TocoDo.BusinessLogic.DependencyInjection;
 using TocoDo.UI.Controls;
 using TocoDo.UI.Converters;
 using Xamarin.Forms;
@@ -19,6 +20,8 @@ namespace TocoDo.UI.Views
 		public static BindableProperty SelectedDateProperty =
 			BindableProperty.Create(nameof(SelectedDate), typeof(DateTime?), typeof(DateTime?));
 
+		public static BindableProperty CanSelectTodayProperty =
+			BindableProperty.Create(nameof(CanSelectToday), typeof(bool), typeof(bool), true);
 		#endregion
 
 		#region Properties
@@ -41,6 +44,12 @@ namespace TocoDo.UI.Views
 			set => SetValue(SelectedDateProperty, value);
 		}
 
+		public bool CanSelectToday
+		{
+			get => (bool) GetValue(CanSelectTodayProperty);
+			set => SetValue(CanSelectTodayProperty, value);
+		}
+
 		#endregion
 
 		#region Fields
@@ -53,13 +62,17 @@ namespace TocoDo.UI.Views
 		{
 			Clicked         += OnClicked;
 			Removed         += OnRemoved;
-			_nullablePicker =  new NullableDatePicker();
-			_nullablePicker.SetBinding(NullableDatePicker.NullableDateProperty, new Binding("SelectedDate", BindingMode.TwoWay));
+			_nullablePicker =  new NullableDatePicker
+			                   {
+				                   MinimumDate = DateTime.Today
+			                   };
+			//_nullablePicker.SetBinding(NullableDatePicker.NullableDateProperty, new Binding("SelectedDate", BindingMode.TwoWay));
+			_nullablePicker.NullableDate = SelectedDate;
 			_nullablePicker.DateSelected += DatePicker_OnDateSelected;
 			InnerContent                 =  _nullablePicker;
 
 			PropertyChanged += OnPropertyChanged;
-			SetText();
+			FormattedText = TocoDo.BusinessLogic.Properties.Resources.StartDateText;
 		}
 
 		private void OnRemoved(object sender, EventArgs eventArgs)
@@ -67,11 +80,28 @@ namespace TocoDo.UI.Views
 			SelectedDate = null;
 		}
 
-		private void OnClicked(object sender, EventArgs eventArgs)
+		private async void OnClicked(object sender, EventArgs eventArgs)
 		{
-			// TODO: Show the action sheet with Today, Tomorrow, In one week, Pick a date
-
-			_nullablePicker.Focus();
+			var result = await ((App) Application.Current).Navigation.DisplayDatePickingActionSheet(CanSelectToday);
+			switch (result)
+			{
+				case DatePickingActionSheetResult.Canceled:
+					return;
+				case DatePickingActionSheetResult.Today:
+					SelectedDate = DateTime.Today;
+					break;
+				case DatePickingActionSheetResult.Tomorrow:
+					SelectedDate = DateTime.Today.AddDays(1);
+					break;
+				case DatePickingActionSheetResult.InOneWeek:
+					SelectedDate = DateTime.Today.AddDays(7);
+					break;
+				case DatePickingActionSheetResult.PickADate:
+					_nullablePicker.Focus();
+					break;
+				default:
+					throw new ArgumentOutOfRangeException("The given DatePickingActionSheetResult was not recognised.");
+			}
 		}
 
 		private void OnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
@@ -82,7 +112,15 @@ namespace TocoDo.UI.Views
 				if (SelectedDate != null)
 					MakeUpdateAnimation();
 				IsActive = SelectedDate != null;
+
+				if (propertyChangedEventArgs.PropertyName == nameof(SelectedDate))
+					_nullablePicker.NullableDate = SelectedDate;
+
 				SetText();
+			}
+			else if (propertyChangedEventArgs.PropertyName == nameof(CanSelectToday))
+			{
+				_nullablePicker.MinimumDate = CanSelectToday ? DateTime.Today : DateTime.Today.AddDays(1);
 			}
 		}
 

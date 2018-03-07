@@ -203,9 +203,7 @@ namespace TocoDo.UI.Views
 
 		private void RefreshTaskInSelectedTasks(ITaskViewModel task)
 		{
-			//if(_selectedDayTasks == null)
-			//	return;
-
+			MyLogger.WriteStartMethod();
 			if (SelectedDate == null)
 			{
 				_selectedDayTasks.Remove(task);
@@ -218,6 +216,8 @@ namespace TocoDo.UI.Views
 			// if the task is not active but it is in the collection -> remove it
 			else if (task.ScheduleDate == null || task.ScheduleDate != SelectedDate)
 				_selectedDayTasks.Remove(task);
+
+			MyLogger.WriteEndMethod();
 		}
 		#endregion
 
@@ -374,45 +374,56 @@ namespace TocoDo.UI.Views
 		}
 		private void OnTasksSourceCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
 		{
+			MyLogger.WriteStartMethod();
 			switch (notifyCollectionChangedEventArgs.Action)
 			{
 				case NotifyCollectionChangedAction.Add:
 					foreach (ITaskViewModel task in notifyCollectionChangedEventArgs.NewItems)
 					{
+						MyLogger.WriteInMethod("Starting Add loop");
 						IncreaseBusyness(task.ScheduleDate);
 						task.PropertyChanging += TaskOnPropertyChanging;
 						task.PropertyChanged += TaskOnPropertyChanged;
 
-						RefreshTaskInSelectedTasks(task);
+						//RefreshTaskInSelectedTasks(task);
+						_selectedDayTasks?.Add(task);
+						MyLogger.WriteInMethod("Ending Add loop");
 					}
 					break;
 				case NotifyCollectionChangedAction.Remove:
 					foreach (ITaskViewModel task in notifyCollectionChangedEventArgs.OldItems)
 					{
+						MyLogger.WriteInMethod("Starting Remove loop");
 						DecreaseBusyness(task.ScheduleDate);
 						task.PropertyChanging -= TaskOnPropertyChanging;
 						task.PropertyChanged -= TaskOnPropertyChanged;
 
-						if (_selectedDayTasks.Contains(task))
-							_selectedDayTasks.Remove(task);
+						//if (_selectedDayTasks.Contains(task))
+						_selectedDayTasks.Remove(task);
+						MyLogger.WriteInMethod("Ending Remove loop");
 					}
 					break;
 			}
+			MyLogger.WriteEndMethod();
 		}
 		private void TaskOnPropertyChanging(object sender, PropertyChangingEventArgs propertyChangingEventArgs)
 		{
+			MyLogger.WriteStartMethod();
 			if (propertyChangingEventArgs.PropertyName == nameof(ITaskViewModel.ScheduleDate) && sender is ITaskViewModel task)
 			{
 				DecreaseBusyness(task.ScheduleDate);
 			}
+			MyLogger.WriteEndMethod();
 		}
 		private void TaskOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
 		{
+			MyLogger.WriteStartMethod();
 			if (propertyChangedEventArgs.PropertyName == nameof(ITaskViewModel.ScheduleDate) && sender is ITaskViewModel task)
 			{
 				IncreaseBusyness(task.ScheduleDate);
 				RefreshTaskInSelectedTasks(task);
 			}
+			MyLogger.WriteEndMethod();
 		}
 		#endregion
 

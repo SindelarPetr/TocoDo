@@ -673,7 +673,7 @@ namespace TocoDo.BusinessLogic.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start date: {0}.
+        ///   Looks up a localized string similar to Start: {0}.
         /// </summary>
         public static string StartDateText {
             get {

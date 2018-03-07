@@ -111,7 +111,8 @@ namespace TocoDo.UI.Views.Global
 			MyLogger.WriteStartMethod();
 			var itemView       = FindItem(viewModel);
 			//_mainLayout.Children.Remove(itemView);
-			itemView.IsVisible = false;
+			if(itemView != null)
+				itemView.IsVisible = false;
 			MyLogger.WriteEndMethod();
 		}
 
@@ -143,15 +144,22 @@ namespace TocoDo.UI.Views.Global
 
 		private TView FindItem(TViewModel viewModel)
 		{
+			MyLogger.WriteStartMethod();
 			foreach (var child in _mainLayout.Children)
 			{
 				if (!(child is TView view) || !view.IsVisible)
 					continue;
 
-				if (view.ViewModel.Equals(viewModel))
-					return view;
-			}
+				if(view.ViewModel == null)
+					MyLogger.WriteInMethod("ViewModel of a View is null!!");
 
+				if (view.ViewModel.Equals(viewModel))
+				{
+					MyLogger.WriteEndMethod("FindItem found an item.");
+					return view;
+				}
+			}
+			MyLogger.WriteEndMethod("FindItem didnt find any item.");
 			return null;
 		}
 	}

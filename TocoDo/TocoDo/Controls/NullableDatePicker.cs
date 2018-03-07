@@ -15,6 +15,9 @@ namespace TocoDo.UI.Controls
 			get => (DateTime?) GetValue(NullableDateProperty);
 			set
 			{
+				if (NullableDate == value)
+					return;
+
 				SetValue(NullableDateProperty, value);
 				UpdateDate();
 			}
