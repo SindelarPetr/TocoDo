@@ -71,7 +71,6 @@
 					</global:FrameWrapper>
 
 					<!--TODAY-->
-					<!--TODO: Sources-->
 					<global:FrameWrapper Grid.Row="1" Header="Tasks">
 						<todos:TaskCollection VerticalOptions="Start" ItemsSource="{Binding Source={x:Reference Calendar}, Path=SelectedDayTasks}">
 							<todos:TaskCollection.ItemFilter>
@@ -81,7 +80,14 @@
 					</global:FrameWrapper>
 
 					<global:FrameWrapper Grid.Row="2" Header="Habits" VerticalOptions="Start">
-						<habits:ActualHabitCollection />
+						<habits:HabitCollection ItemsSource="{Binding Source={x:Reference Calendar}, Path=SelectedDayHabits}">
+							<x:Arguments>
+								<x:Boolean>True</x:Boolean>
+							</x:Arguments>
+							<habits:HabitCollection.ItemFilter>
+								<itemFilters:HabitAlwaysTrueFilter />
+							</habits:HabitCollection.ItemFilter>
+						</habits:HabitCollection>
 					</global:FrameWrapper>
 				</Grid>
 			</ScrollView>

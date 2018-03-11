@@ -16,10 +16,30 @@ namespace TocoDo.BusinessLogic.ViewModels
 {
 	public class HabitViewModel : BaseViewModel, IHabitViewModel
 	{
+		#region Fields
+
+		private readonly IHabitService _habitService;
+
+
+		private readonly INavigationService _navigation;
+		private readonly HabitScheduleHelper _scheduleHelper;
+		private int _daysToRepeat;
+		private string _description;
+		private HabitType _habitType;
+
+		private bool _isRecommended;
+		private int _maxRepeatsADay;
+		private int _repeatsToday;
+		private RepeatType _repeatType;
+		private DateTime? _startDate;
+		private string _title;
+
+		#endregion
+
 		public HabitViewModel(IHabitService habitService, INavigationService navigation)
 			: this(habitService)
 		{
-			_navigation     = navigation;
+			_navigation = navigation;
 
 			// Set initial values
 			CreationDate    = DateTime.Now;
@@ -35,7 +55,7 @@ namespace TocoDo.BusinessLogic.ViewModels
 		public HabitViewModel(IHabitService habitService, INavigationService navigation, IHabitModel model)
 			: this(habitService)
 		{
-			_navigation   = navigation;
+			_navigation = navigation;
 
 			CreationDate = model.CreationDate;
 			Id           = model.Id;
@@ -55,7 +75,7 @@ namespace TocoDo.BusinessLogic.ViewModels
 
 		private HabitViewModel(IHabitService habitService)
 		{
-			_habitService = habitService;
+			_habitService   = habitService;
 			_scheduleHelper = new HabitScheduleHelper(_habitService.DateTimeProvider);
 
 			UpdateCommand         = new AwaitableCommand(async () => await _habitService.UpdateAsync(this));
@@ -67,139 +87,7 @@ namespace TocoDo.BusinessLogic.ViewModels
 			RemoveCommand        = new AwaitableCommand(async () => await DeleteAsync());
 		}
 
-		private async Task Edit()
-		{
-			if (IsStarted)
-				await _navigation.PushAsync(PageType.HabitProgressPage, this);
-			else
-				await _navigation.PushAsync(PageType.ModifyHabitPage, this);
-		}
-
-		private void EditTitle(string newTitle)
-		{
-			newTitle = newTitle.Trim();
-			if (string.IsNullOrWhiteSpace(newTitle))
-				return;
-
-			Title = newTitle;
-		}
-
-		private async Task DeleteAsync()
-		{
-			// Ask user if he is sure
-			var result = await _navigation.DisplayAlert(Resources.DeleteHabitConfirmHeader, Resources.DeleteHabitConfirmText,
-			                                            Resources.Yes, Resources.Cancel);
-
-			if (!result)
-				return;
-
-			await _habitService.DeleteAsync(this);
-			await _navigation.PopAsync();
-		}
-
-		private async Task ConfirmCreation(object title)
-		{
-			// If user left the entry blank, then remove the habit from collection
-			if (!(title is string tit) || string.IsNullOrWhiteSpace(tit))
-			{
-				_habitService.CancelCreation(this);
-				return;
-			}
-
-			Title = tit.Trim();
-			await _habitService.ConfirmCreationAsync(this);
-		}
-
-		protected override async void OnPropertyChanged(string propertyName = null)
-		{
-			MyLogger.WriteStartMethod();
-			base.OnPropertyChanged(propertyName);
-
-			// Init filling if needed and update it
-			if (propertyName == nameof(RepeatsToday))
-			{
-				if (Filling == null || !Filling.Any()) InitFilling();
-
-				var today   = DateTime.Today;
-				var filling = Filling;
-				if (filling.ContainsKey(today))
-					filling[today] = RepeatsToday;
-			}
-
-			if (!IsCreateMode)
-			{
-				await _habitService.UpdateAsync(this);
-				MyLogger.WriteInMethod($"Updated habit, changed property: {propertyName}");
-			}
-
-			MyLogger.WriteEndMethod();
-		}
-
-		/// <summary>
-		///     Fills all dates when the habit will (or supposed to) be performed
-		/// </summary>
-		private void InitFilling()
-		{
-			var modelStartDate  = StartDate;
-			var modelRepeatType = RepeatType;
-
-			if (modelStartDate == null)
-				throw new ArgumentException("When a habit Filling is being initialized, it cannot have ModelStartDate set to null");
-
-			var newFilling = new ObservableDictionary<DateTime, int>();
-			var startDate  = modelStartDate.Value;
-			switch (modelRepeatType)
-			{
-				case RepeatType.Days:
-					for (var i = 0; i < DaysToRepeat; i++)
-						newFilling.Add(startDate.AddDays(i), 0);
-					break;
-				//case RepeatType.Months:
-				//	for (var i = 0; i < DaysToRepeat; i++)
-				//		newFilling.Add(startDate.AddMonths(i), 0);
-				//	break;
-				case RepeatType.Years:
-					for (var i = 0; i < DaysToRepeat; i++)
-						newFilling.Add(startDate.AddYears(i), 0);
-					break;
-				default:
-					for (var i = 0; i < DaysToRepeat * 7; i++)
-					{
-						// For every day of a week check if the day is within the ModelRepeatType
-						if (modelRepeatType.HasFlag((RepeatType) (1 << startDate.ZeroMondayBasedDay()))) newFilling.Add(startDate, 0);
-
-						startDate = startDate.AddDays(1);
-					}
-
-					break;
-			}
-
-			Filling = newFilling;
-		}
-
-		#region Dependency injection
-
-		private readonly INavigationService _navigation;
-		private readonly IHabitService _habitService;
-
-		#endregion
-
-		#region Backing fields
-
-		private bool _isRecommended;
-		private int _repeatsToday;
-		private HabitType _habitType;
-		private int _daysToRepeat;
-		private DateTime? _startDate;
-		private string _title;
-		private RepeatType _repeatType;
-		private string _description;
-		private int _maxRepeatsADay;
-		private readonly HabitScheduleHelper _scheduleHelper;
-
-		#endregion
-
-		#region Properties
+		#region Interface
 
 		public int Id { get; private set; }
 
@@ -216,7 +104,6 @@ namespace TocoDo.BusinessLogic.ViewModels
 		{
 			return _scheduleHelper.IsHabitActive(this, date);
 		}
-
 
 		public bool IsRecommended
 		{
@@ -333,10 +220,6 @@ namespace TocoDo.BusinessLogic.ViewModels
 			}
 		}
 
-		#endregion
-
-		#region Commands
-
 		public ICommand              EditTitleCommand      { get; }
 		public IAsyncCommand         EditCommand           { get; }
 		public IAsyncCommand         UpdateCommand         { get; }
@@ -345,5 +228,115 @@ namespace TocoDo.BusinessLogic.ViewModels
 		public IAsyncCommand         RemoveCommand         { get; }
 
 		#endregion
+
+		private async Task Edit()
+		{
+			if (IsStarted)
+				await _navigation.PushAsync(PageType.HabitProgressPage, this);
+			else
+				await _navigation.PushAsync(PageType.ModifyHabitPage, this);
+		}
+
+		private void EditTitle(string newTitle)
+		{
+			newTitle = newTitle.Trim();
+			if (string.IsNullOrWhiteSpace(newTitle))
+				return;
+
+			Title = newTitle;
+		}
+
+		private async Task DeleteAsync()
+		{
+			// Ask user if he is sure
+			var result = await _navigation.DisplayAlert(Resources.DeleteHabitConfirmHeader, Resources.DeleteHabitConfirmText,
+			                                            Resources.Yes, Resources.Cancel);
+
+			if (!result)
+				return;
+
+			await _habitService.DeleteAsync(this);
+			await _navigation.PopAsync();
+		}
+
+		private async Task ConfirmCreation(object title)
+		{
+			// If user left the entry blank, then remove the habit from collection
+			if (!(title is string tit) || string.IsNullOrWhiteSpace(tit))
+			{
+				_habitService.CancelCreation(this);
+				return;
+			}
+
+			Title = tit.Trim();
+			await _habitService.ConfirmCreationAsync(this);
+		}
+
+		protected override async void OnPropertyChanged(string propertyName = null)
+		{
+			MyLogger.WriteStartMethod();
+			base.OnPropertyChanged(propertyName);
+
+			// Init filling if needed and update it
+			if (propertyName == nameof(RepeatsToday))
+			{
+				if (Filling == null || !Filling.Any()) InitFilling();
+
+				var today   = DateTime.Today;
+				var filling = Filling;
+				if (filling.ContainsKey(today))
+					filling[today] = RepeatsToday;
+			}
+
+			if (!IsCreateMode)
+			{
+				await _habitService.UpdateAsync(this);
+				MyLogger.WriteInMethod($"Updated habit, changed property: {propertyName}");
+			}
+
+			MyLogger.WriteEndMethod();
+		}
+
+		/// <summary>
+		///     Fills all dates when the habit will (or supposed to) be performed
+		/// </summary>
+		private void InitFilling()
+		{
+			var modelStartDate  = StartDate;
+			var modelRepeatType = RepeatType;
+
+			if (modelStartDate == null)
+				throw new ArgumentException("When a habit Filling is being initialized, it cannot have ModelStartDate set to null");
+
+			var newFilling = new ObservableDictionary<DateTime, int>();
+			var startDate  = modelStartDate.Value;
+			switch (modelRepeatType)
+			{
+				case RepeatType.Days:
+					for (var i = 0; i < DaysToRepeat; i++)
+						newFilling.Add(startDate.AddDays(i), 0);
+					break;
+				//case RepeatType.Months:
+				//	for (var i = 0; i < DaysToRepeat; i++)
+				//		newFilling.Add(startDate.AddMonths(i), 0);
+				//	break;
+				case RepeatType.Years:
+					for (var i = 0; i < DaysToRepeat; i++)
+						newFilling.Add(startDate.AddYears(i), 0);
+					break;
+				default:
+					for (var i = 0; i < DaysToRepeat * 7; i++)
+					{
+						// For every day of a week check if the day is within the ModelRepeatType
+						if (modelRepeatType.HasFlag((RepeatType) (1 << startDate.ZeroMondayBasedDay()))) newFilling.Add(startDate, 0);
+
+						startDate = startDate.AddDays(1);
+					}
+
+					break;
+			}
+
+			Filling = newFilling;
+		}
 	}
 }

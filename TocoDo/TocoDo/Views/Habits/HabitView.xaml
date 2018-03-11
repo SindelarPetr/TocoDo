@@ -1,20 +1,21 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+<habits:BaseHabitView xmlns="http://xamarin.com/schemas/2014/forms"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:converters="clr-namespace:TocoDo.UI.Converters;assembly=TocoDo.UI"
 			 xmlns:habits="clr-namespace:TocoDo.UI.Views.Habits;assembly=TocoDo.UI"
 			 xmlns:customRenderers="clr-namespace:TocoDo.UI.CustomRenderers;assembly=TocoDo.UI"
+			 xmlns:viewModels="clr-namespace:TocoDo.BusinessLogic.ViewModels;assembly=TocoDo.BusinessLogic"
 			 x:Class="TocoDo.UI.Views.Habits.HabitView"
 			 x:Name="This"
 			 x:Key="This">
-	<ContentView.Resources>
+	<habits:BaseHabitView.Resources>
 		<ResourceDictionary>
 			<converters:BoolReverseConverter x:Key="BoolReverseConverter" />
 		</ResourceDictionary>
-	</ContentView.Resources>
+	</habits:BaseHabitView.Resources>
 
-	<ContentView.Content>
+	<habits:BaseHabitView.Content>
 		<StackLayout Spacing="0" Padding="0, 3" BindingContext="{Binding Source={x:Reference This}, Path=ViewModel}">
 			<StackLayout.GestureRecognizers>
 				<TapGestureRecognizer Command="{Binding EditCommand}" />
@@ -34,5 +35,5 @@
 			<habits:HabitDetailView ViewModel="{Binding .}" Margin="0,8,0,0"
 									IsVisible="{Binding StartDate, Converter={StaticResource IsNotNullConverter}}" />
 		</StackLayout>
-	</ContentView.Content>
-</ContentView>
+	</habits:BaseHabitView.Content>
+</habits:BaseHabitView>

@@ -1,22 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:global="clr-namespace:TocoDo.UI.Views.Global;assembly=TocoDo.UI"
-             xmlns:habits="clr-namespace:TocoDo.UI.Views.Habits;assembly=TocoDo.UI"
-             xmlns:customRenderers="clr-namespace:TocoDo.UI.CustomRenderers;assembly=TocoDo.UI"
-             xmlns:itemFilters="clr-namespace:TocoDo.BusinessLogic.ItemFilters;assembly=TocoDo.BusinessLogic"
-             x:Class="TocoDo.UI.Pages.Habits.HabitsPage"
-             x:Name="This">
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:global="clr-namespace:TocoDo.UI.Views.Global;assembly=TocoDo.UI"
+			 xmlns:habits="clr-namespace:TocoDo.UI.Views.Habits;assembly=TocoDo.UI"
+			 xmlns:customRenderers="clr-namespace:TocoDo.UI.CustomRenderers;assembly=TocoDo.UI"
+			 xmlns:itemFilters="clr-namespace:TocoDo.BusinessLogic.ItemFilters;assembly=TocoDo.BusinessLogic"
+			 x:Class="TocoDo.UI.Pages.Habits.HabitsPage"
+			 x:Name="This">
 	<ContentPage.Content>
 		<AbsoluteLayout>
 			<ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All"
-			            BindingContext="{x:Reference This}">
+						BindingContext="{x:Reference This}">
 
 				<StackLayout Style="{StaticResource PageStackLayout}" BindingContext="{x:Reference This}">
 					<!-- Current -->
 					<global:FrameWrapper Header="Current">
 						<habits:HabitCollection ItemsSource="{Binding Source={StaticResource HabitService}, Path=AllHabits}" >
+							<x:Arguments>
+								<x:Boolean>False</x:Boolean>
+							</x:Arguments>
 							<habits:HabitCollection.ItemFilter>
 								<itemFilters:HabitCurrentFilter />
 							</habits:HabitCollection.ItemFilter>
@@ -26,6 +28,9 @@
 					<!-- Scheduled -->
 					<global:FrameWrapper Header="Scheduled">
 						<habits:HabitCollection ItemsSource="{Binding Source={StaticResource HabitService}, Path=AllHabits}">
+							<x:Arguments>
+								<x:Boolean>False</x:Boolean>
+							</x:Arguments>
 							<habits:HabitCollection.ItemFilter>
 								<itemFilters:HabitScheduledFilter />
 							</habits:HabitCollection.ItemFilter>
@@ -35,6 +40,9 @@
 					<!-- Unscheduled -->
 					<global:FrameWrapper Header="Unscheduled">
 						<habits:HabitCollection ItemsSource="{Binding Source={StaticResource HabitService}, Path=AllHabits}">
+							<x:Arguments>
+								<x:Boolean>False</x:Boolean>
+							</x:Arguments>
 							<habits:HabitCollection.ItemFilter>
 								<itemFilters:HabitUnscheduledFilter />
 							</habits:HabitCollection.ItemFilter>
@@ -44,8 +52,8 @@
 			</ScrollView>
 
 			<customRenderers:FloatingAddButton AbsoluteLayout.LayoutBounds="1,1,88,88"
-			                                   AbsoluteLayout.LayoutFlags="PositionProportional" Margin="16"
-			                                   Clicked="AddButton_OnTapped" />
+											   AbsoluteLayout.LayoutFlags="PositionProportional" Margin="16"
+											   Clicked="AddButton_OnTapped" />
 		</AbsoluteLayout>
 
 	</ContentPage.Content>

@@ -1,17 +1,18 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:habits="clr-namespace:TocoDo.UI.Converters.Habits;assembly=TocoDo.UI"
-             xmlns:models="clr-namespace:TocoDo.BusinessLogic.DependencyInjection.Models;assembly=TocoDo.BusinessLogic"
-             x:Class="TocoDo.UI.Views.Habits.ActualHabitView"
-             x:Name="This">
-	<ContentView.Resources>
+<habits1:BaseHabitView xmlns="http://xamarin.com/schemas/2014/forms"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:habits="clr-namespace:TocoDo.UI.Converters.Habits;assembly=TocoDo.UI"
+			 xmlns:models="clr-namespace:TocoDo.BusinessLogic.DependencyInjection.Models;assembly=TocoDo.BusinessLogic"
+			 xmlns:habits1="clr-namespace:TocoDo.UI.Views.Habits;assembly=TocoDo.UI"
+			 x:Class="TocoDo.UI.Views.Habits.ActualHabitView"
+			 x:Name="This">
+	<habits1:BaseHabitView.Resources>
 		<ResourceDictionary>
 			<habits:HabitDaylyFillingCountConverter x:Key="FillingCountConverter" />
 		</ResourceDictionary>
-	</ContentView.Resources>
-	<ContentView.Content>
+	</habits1:BaseHabitView.Resources>
+	<habits1:BaseHabitView.Content>
 		<StackLayout BindingContext="{Binding Source={x:Reference This}, Path=ViewModel}">
 			<StackLayout.GestureRecognizers>
 				<TapGestureRecognizer Command="{Binding EditCommand}" />
@@ -24,8 +25,8 @@
 				</Grid.ColumnDefinitions>
 				<Label Text="{Binding Title}" Style="{StaticResource HabitHeader}" />
 				<Label Grid.Column="1" Margin="5,0,0,0" FontSize="Small"
-				       Text="{Binding MaxRepeatsADay, StringFormat='Goal: {0}'}" HorizontalOptions="Fill"
-				       HorizontalTextAlignment="Center" VerticalOptions="Fill" VerticalTextAlignment="Center">
+					   Text="{Binding MaxRepeatsADay, StringFormat='Goal: {0}'}" HorizontalOptions="Fill"
+					   HorizontalTextAlignment="Center" VerticalOptions="Fill" VerticalTextAlignment="Center">
 					<Label.Triggers>
 						<DataTrigger TargetType="Label" Binding="{Binding HabitType}" Value="{x:Static models:HabitType.Daylong}">
 							<Setter Property="IsVisible" Value="False" />
@@ -34,7 +35,7 @@
 				</Label>
 			</Grid>
 			<Button Text="{Binding RepeatsToday}" BackgroundColor="{StaticResource ColorPrimaryLight}" TextColor="White"
-			        Command="{Binding IncreaseTodayCommand}" Clicked="Button_OnClicked">
+					Command="{Binding IncreaseTodayCommand}" Clicked="Button_OnClicked">
 				<Button.Triggers>
 					<DataTrigger TargetType="Button" Binding="{Binding HabitType}" Value="{x:Static models:HabitType.Daylong}">
 						<Setter Property="BackgroundColor" Value="{StaticResource ColorPrimaryLight}" />
@@ -42,8 +43,6 @@
 					</DataTrigger>
 				</Button.Triggers>
 			</Button>
-
-
 		</StackLayout>
-	</ContentView.Content>
-</ContentView>
+	</habits1:BaseHabitView.Content>
+</habits1:BaseHabitView>

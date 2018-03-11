@@ -4,6 +4,7 @@ using TocoDo.BusinessLogic.DependencyInjection;
 using TocoDo.BusinessLogic.DependencyInjection.Models;
 using TocoDo.BusinessLogic.Helpers;
 using TocoDo.BusinessLogic.Services;
+using TocoDo.UI.Pages.Main;
 using TocoDo.UI.Properties;
 using Xamarin.Forms;
 

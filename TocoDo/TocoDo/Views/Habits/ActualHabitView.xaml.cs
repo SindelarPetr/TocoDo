@@ -7,17 +7,14 @@ using Xamarin.Forms.Xaml;
 namespace TocoDo.UI.Views.Habits
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class ActualHabitView : ContentView, IEntryFocusable<HabitViewModel>
+	public partial class ActualHabitView : BaseHabitView
 	{
-		public ActualHabitView(HabitViewModel model)
+		public ActualHabitView(IHabitViewModel model) : base(model)
 		{
-			ViewModel = model;
 			InitializeComponent();
 		}
 
-		public HabitViewModel ViewModel { get; set; }
-
-		public void FocusEntry()
+		public override void FocusEntry()
 		{
 		}
 

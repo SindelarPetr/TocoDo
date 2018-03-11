@@ -11,9 +11,9 @@ using TocoDo.BusinessLogic.ViewModels;
 
 namespace TocoDo.BusinessLogic.Services
 {
-    public class HabitService : IHabitService
+	public class HabitService : IHabitService
 	{
-	    private readonly ObservableCollection<IHabitViewModel> _habits;
+		private readonly ObservableCollection<IHabitViewModel> _habits;
 		public ReadOnlyObservableCollection<IHabitViewModel> AllHabits { get; }
 
 		private IDateTimeProvider _dateTimeProvider;
@@ -31,59 +31,59 @@ namespace TocoDo.BusinessLogic.Services
 		public INavigationService Navigation  { get; set; }
 		public IPersistance       Persistance { get; set; }
 
-	    public HabitService()
-	    {
+		public HabitService()
+		{
 			_habits      = new ObservableCollection<IHabitViewModel>();
-		    AllHabits = new ReadOnlyObservableCollection<IHabitViewModel>(_habits);
+			AllHabits = new ReadOnlyObservableCollection<IHabitViewModel>(_habits);
 		}
 
-	    public async Task LoadAsync()
-	    {
-		    var models    = await Persistance.GetHabits();
-		    var habitList = models.Select(m => new HabitViewModel(this, Navigation, m));
+		public async Task LoadAsync()
+		{
+			var models    = await Persistance.GetHabits();
+			var habitList = models.Select(m => new HabitViewModel(this, Navigation, m));
 
-		    var filtred                 = new List<HabitViewModel>();
-		    var yesterdayFinishedHabits = new List<HabitViewModel>();
-		    foreach (var habit in habitList)
-		    {
-			    if (_scheduleHelper.IsHabitFinished(habit))
-			    {
-				    yesterdayFinishedHabits.Add(habit);
-				    continue;
-			    }
+			var filtred                 = new List<HabitViewModel>();
+			var yesterdayFinishedHabits = new List<HabitViewModel>();
+			foreach (var habit in habitList)
+			{
+				if (_scheduleHelper.IsHabitFinished(habit))
+				{
+					yesterdayFinishedHabits.Add(habit);
+					continue;
+				}
 
-			    filtred.Add(habit);
-		    }
+				filtred.Add(habit);
+			}
 
-		    filtred.ForEach(_habits.Add);
+			filtred.ForEach(_habits.Add);
 		}
 
-	    public void StartCreation()
-	    {
-		    _habits.Add(new HabitViewModel(this, Navigation));
-	    }
+		public void StartCreation()
+		{
+			_habits.Add(new HabitViewModel(this, Navigation));
+		}
 
-	    public async Task ConfirmCreationAsync(IHabitViewModel habit)
-	    {
-		    await Persistance.InsertAsync(ModelFactory.CreateHabitModel(habit));
-	    }
+		public async Task ConfirmCreationAsync(IHabitViewModel habit)
+		{
+			await Persistance.InsertAsync(ModelFactory.CreateHabitModel(habit));
+		}
 
-	    public void CancelCreation(IHabitViewModel habit)
-	    {
+		public void CancelCreation(IHabitViewModel habit)
+		{
 			MyLogger.WriteStartMethod();
-		    _habits.Remove(habit);
+			_habits.Remove(habit);
 			MyLogger.WriteEndMethod();
-	    }
+		}
 
-	    public async Task UpdateAsync(IHabitViewModel habit)
-	    {
-		    await Persistance.UpdateAsync(ModelFactory.CreateHabitModel(habit));
-	    }
+		public async Task UpdateAsync(IHabitViewModel habit)
+		{
+			await Persistance.UpdateAsync(ModelFactory.CreateHabitModel(habit));
+		}
 
-	    public async Task DeleteAsync(IHabitViewModel habit)
-	    {
-		    _habits.Remove(habit);
-		    await Persistance.DeleteAsync(ModelFactory.CreateHabitModel(habit));
-	    }
+		public async Task DeleteAsync(IHabitViewModel habit)
+		{
+			_habits.Remove(habit);
+			await Persistance.DeleteAsync(ModelFactory.CreateHabitModel(habit));
+		}
 	}
 }

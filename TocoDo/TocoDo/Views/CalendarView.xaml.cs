@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -140,20 +141,15 @@ namespace TocoDo.UI.Views
 			int column = SelectedDate.Value.ZeroMondayBasedDay();
 
 			// Iterate the rows in the column and find the cell with the right date
-			int childrenCount = CalendarGrid.Children.Count;
-			for (int i = column; i < childrenCount; i += 7)
+			var cell = FindCell(SelectedDate);
+			if (cell != null)
 			{
-				if (CalendarGrid.Children[i] is CalendarCell cell && cell.Date == SelectedDate)
-				{
-					// FOUND THE RIGHT CELL -> lets select it
-					cell.IsSelected = true;
-					_selectedCell = cell;
+				cell.IsSelected = true;
+				_selectedCell   = cell;
 
-					// if the newly selected cell is in different month than which is highlighted, then highlight the new month
-					HighlightedDate = SelectedDate.Value;
-					RefreshSelectedDayCollections();
-					return;
-				}
+				// if the newly selected cell is in different month than which is highlighted, then highlight the new month
+				HighlightedDate = cell.Date;
+				RefreshSelectedDayCollections();
 			}
 		}
 		private void HighlightedMonthChanged()
@@ -176,9 +172,6 @@ namespace TocoDo.UI.Views
 
 		private void RefreshSelectedDayTasks()
 		{
-			//if (_selectedDayTasks == null)
-			//	return;
-
 			_selectedDayTasks.Clear();
 			if(SelectedDate != null)
 			foreach (var task in TasksSource)
@@ -189,14 +182,11 @@ namespace TocoDo.UI.Views
 
 		private void RefreshSelectedDayHabits()
 		{
-			//if (_selectedDayHabits == null)
-			//	return;
-
 			_selectedDayHabits.Clear();
 			if(SelectedDate != null)
 			foreach (var habit in HabitsSource)
 			{
-				if (habit.StartDate != null && habit.IsActive(habit.StartDate.Value))
+				if (habit.StartDate != null && habit.IsActive(habit.StartDate.Value) && !_selectedDayHabits.Contains(habit))
 					_selectedDayHabits.Add(habit);
 			}
 		}
@@ -216,6 +206,22 @@ namespace TocoDo.UI.Views
 			// if the task is not active but it is in the collection -> remove it
 			else if (task.ScheduleDate == null || task.ScheduleDate != SelectedDate)
 				_selectedDayTasks.Remove(task);
+
+			MyLogger.WriteEndMethod();
+		}
+		private void RefreshHabitInSelectedHabits(IHabitViewModel habit)
+		{
+			MyLogger.WriteStartMethod();
+			if (SelectedDate == null || habit.StartDate == null)
+			{
+				_selectedDayHabits.Remove(habit);
+				return;
+			}
+			
+			// If the habit should be there but its not there, add it, othervise remove it
+			if (habit.IsActive(SelectedDate) && !_selectedDayHabits.Contains(habit))
+				_selectedDayHabits.Add(habit);
+			else _selectedDayHabits.Remove(habit);
 
 			MyLogger.WriteEndMethod();
 		}
@@ -327,6 +333,10 @@ namespace TocoDo.UI.Views
 						IncreaseBusyness(habit);
 						habit.PropertyChanging += HabitOnPropertyChanging;
 						habit.PropertyChanged += HabitOnPropertyChanged;
+						if (SelectedDate != null && habit.IsActive(SelectedDate) && _selectedDayHabits.First(h => h.Id == habit.Id) == null)
+						{
+							_selectedDayHabits.Add(habit);
+						}
 					}
 					break;
 				case NotifyCollectionChangedAction.Remove:
@@ -335,6 +345,7 @@ namespace TocoDo.UI.Views
 						DecreaseBusyness(habit);
 						habit.PropertyChanging -= HabitOnPropertyChanging;
 						habit.PropertyChanged -= HabitOnPropertyChanged;
+						_selectedDayHabits.Remove(habit);
 					}
 					break;
 			}
@@ -348,10 +359,11 @@ namespace TocoDo.UI.Views
 
 		private void HabitOnPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
-			if (e.PropertyName == nameof(IHabitViewModel.RepeatType) || e.PropertyName == nameof(IHabitViewModel.StartDate) ||
-				e.PropertyName == nameof(IHabitViewModel.DaysToRepeat))
+			if (e.PropertyName == nameof(IHabitViewModel.RepeatType) || e.PropertyName == nameof(IHabitViewModel.StartDate) || e.PropertyName == nameof(IHabitViewModel.DaysToRepeat))
 			{
-				IncreaseBusyness((IHabitViewModel)sender);
+				var habit = (IHabitViewModel) sender;
+				IncreaseBusyness(habit);
+				RefreshHabitInSelectedHabits(habit);
 			}
 		}
 
@@ -386,7 +398,8 @@ namespace TocoDo.UI.Views
 						task.PropertyChanged += TaskOnPropertyChanged;
 
 						//RefreshTaskInSelectedTasks(task);
-						_selectedDayTasks?.Add(task);
+						if (SelectedDate != null && task.ScheduleDate == SelectedDate)
+							_selectedDayTasks?.Add(task);
 						MyLogger.WriteInMethod("Ending Add loop");
 					}
 					break;
