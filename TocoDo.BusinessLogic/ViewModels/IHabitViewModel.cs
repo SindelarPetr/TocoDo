@@ -31,7 +31,6 @@ namespace TocoDo.BusinessLogic.ViewModels
 		IAsyncCommand EditCommand             { get; }
 		ICommand EditTitleCommand        { get; }
 		ICommand IncreaseTodayCommand    { get; }
-		IAsyncCommand RemoveCommand           { get; }
 		IAsyncCommand UpdateCommand           { get; }
 
 		ObservableDictionary<DateTime, int> Filling { get; }

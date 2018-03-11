@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using NetBox.Extensions;
 using TocoDo.BusinessLogic;
 using TocoDo.BusinessLogic.ItemFilters;
 using TocoDo.BusinessLogic.ViewModels;
@@ -16,11 +15,44 @@ namespace TocoDo.UI.Views.Global
 		where TViewModel : ICreateMode, INotifyPropertyChanged, INotifyPropertyChanging
 		where TView : View, IEntryFocusable<TViewModel>
 	{
-		private readonly string _schedulePropertyName;
-		private readonly StackLayout                      _mainLayout;
-		public ItemFilter<TViewModel> ItemFilter { get; set; } 
+		#region Static
 
-		public ItemCollection(Func<TViewModel, TView> factoryFunc, string schedulePropertyName)
+		public static BindableProperty ItemsSourceProperty = BindableProperty.Create(
+			nameof(ItemsSource), typeof(ReadOnlyObservableCollection<TViewModel>),
+			typeof(ReadOnlyObservableCollection<TViewModel>));
+
+		public static BindableProperty FuncParameterProperty = BindableProperty.Create(
+			nameof(FuncParameter), typeof(object), typeof(object));
+		#endregion
+
+		#region Properties
+
+		public ItemFilter<TViewModel> ItemFilter { get; set; }
+
+		public Func<TViewModel, object, TView> FactoryFunc { get; set; }
+
+		public ReadOnlyObservableCollection<TViewModel> ItemsSource
+		{
+			get => (ReadOnlyObservableCollection<TViewModel>) GetValue(ItemsSourceProperty);
+			set => SetValue(ItemsSourceProperty, value);
+		}
+
+		public object FuncParameter
+		{
+			get => GetValue(FuncParameterProperty);
+			set => SetValue(FuncParameterProperty, value);
+		}
+
+		#endregion
+
+		#region Fields
+
+		private readonly StackLayout _mainLayout;
+		private readonly string _schedulePropertyName;
+
+		#endregion
+
+		public ItemCollection(Func<TViewModel, object, TView> factoryFunc, string schedulePropertyName)
 		{
 			_schedulePropertyName = schedulePropertyName;
 			MyLogger.WriteStartMethod();
@@ -29,20 +61,11 @@ namespace TocoDo.UI.Views.Global
 			MyLogger.WriteEndMethod();
 		}
 
-		public Func<TViewModel, TView> FactoryFunc { get; set; }
-
-		public static BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(ReadOnlyObservableCollection<TViewModel>), typeof(ReadOnlyObservableCollection<TViewModel>));
-		public ReadOnlyObservableCollection<TViewModel> ItemsSource
-		{
-			get => (ReadOnlyObservableCollection<TViewModel>)GetValue(ItemsSourceProperty);
-			set => SetValue(ItemsSourceProperty, value);
-		}
-
 		protected override void OnPropertyChanging(string propertyName = null)
 		{
 			base.OnPropertyChanging(propertyName);
 
-			if(propertyName == nameof(ItemsSource))
+			if (propertyName == nameof(ItemsSource))
 				UnbindSource();
 		}
 
@@ -57,14 +80,14 @@ namespace TocoDo.UI.Views.Global
 		private void BindSource()
 		{
 			MyLogger.WriteStartMethod();
-			((INotifyCollectionChanged)ItemsSource).CollectionChanged += ItemsSourceOnCollectionChanged;
+			((INotifyCollectionChanged) ItemsSource).CollectionChanged += ItemsSourceOnCollectionChanged;
 			MyLogger.WriteEndMethod();
 		}
 
 		private void UnbindSource()
 		{
 			if (ItemsSource != null)
-				((INotifyCollectionChanged)ItemsSource).CollectionChanged -= ItemsSourceOnCollectionChanged;
+				((INotifyCollectionChanged) ItemsSource).CollectionChanged -= ItemsSourceOnCollectionChanged;
 		}
 
 		private void ItemsSourceOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -76,7 +99,7 @@ namespace TocoDo.UI.Views.Global
 					foreach (TViewModel item in e.NewItems)
 					{
 						item.PropertyChanging += ItemOnPropertyChanging;
-						item.PropertyChanged += ItemOnPropertyChanged;
+						item.PropertyChanged  += ItemOnPropertyChanged;
 						if (ItemFilter?.Filter(item) ?? false) AddItem(item);
 					}
 
@@ -84,10 +107,11 @@ namespace TocoDo.UI.Views.Global
 				case NotifyCollectionChangedAction.Remove:
 					foreach (TViewModel item in e.OldItems)
 					{
-						item.PropertyChanged -= ItemOnPropertyChanged;
+						item.PropertyChanged  -= ItemOnPropertyChanged;
 						item.PropertyChanging -= ItemOnPropertyChanging;
 						if (ItemFilter?.Filter(item) ?? false) RemoveItem(item);
 					}
+
 					break;
 				case NotifyCollectionChangedAction.Reset:
 					_mainLayout.Children.Clear();
@@ -98,7 +122,7 @@ namespace TocoDo.UI.Views.Global
 		protected virtual void AddItem(TViewModel viewModel)
 		{
 			MyLogger.WriteStartMethod();
-			var itemView = FactoryFunc(viewModel);
+			var itemView = FactoryFunc(viewModel, FuncParameter);
 			_mainLayout.Children.Add(itemView);
 
 			if (viewModel.IsCreateMode)
@@ -109,9 +133,9 @@ namespace TocoDo.UI.Views.Global
 		protected virtual void RemoveItem(TViewModel viewModel)
 		{
 			MyLogger.WriteStartMethod();
-			var itemView       = FindItem(viewModel);
+			var itemView = FindItem(viewModel);
 			//_mainLayout.Children.Remove(itemView);
-			if(itemView != null)
+			if (itemView != null)
 				itemView.IsVisible = false;
 			MyLogger.WriteEndMethod();
 		}
@@ -128,6 +152,7 @@ namespace TocoDo.UI.Views.Global
 					RemoveItem(vm);
 				}
 			}
+
 			MyLogger.WriteEndMethod();
 		}
 
@@ -135,10 +160,8 @@ namespace TocoDo.UI.Views.Global
 		{
 			MyLogger.WriteStartMethod();
 			if (propertyChangedEventArgs.PropertyName == _schedulePropertyName && sender is TViewModel vm)
-			{
 				if (ItemFilter.Filter(vm))
 					AddItem(vm);
-			}
 			MyLogger.WriteEndMethod();
 		}
 
@@ -150,7 +173,7 @@ namespace TocoDo.UI.Views.Global
 				if (!(child is TView view) || !view.IsVisible)
 					continue;
 
-				if(view.ViewModel == null)
+				if (view.ViewModel == null)
 					MyLogger.WriteInMethod("ViewModel of a View is null!!");
 
 				if (view.ViewModel.Equals(viewModel))
@@ -159,6 +182,7 @@ namespace TocoDo.UI.Views.Global
 					return view;
 				}
 			}
+
 			MyLogger.WriteEndMethod("FindItem didnt find any item.");
 			return null;
 		}

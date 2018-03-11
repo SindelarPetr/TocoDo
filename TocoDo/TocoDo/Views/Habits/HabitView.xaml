@@ -2,18 +2,11 @@
 
 <habits:BaseHabitView xmlns="http://xamarin.com/schemas/2014/forms"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-			 xmlns:converters="clr-namespace:TocoDo.UI.Converters;assembly=TocoDo.UI"
 			 xmlns:habits="clr-namespace:TocoDo.UI.Views.Habits;assembly=TocoDo.UI"
 			 xmlns:customRenderers="clr-namespace:TocoDo.UI.CustomRenderers;assembly=TocoDo.UI"
-			 xmlns:viewModels="clr-namespace:TocoDo.BusinessLogic.ViewModels;assembly=TocoDo.BusinessLogic"
 			 x:Class="TocoDo.UI.Views.Habits.HabitView"
 			 x:Name="This"
 			 x:Key="This">
-	<habits:BaseHabitView.Resources>
-		<ResourceDictionary>
-			<converters:BoolReverseConverter x:Key="BoolReverseConverter" />
-		</ResourceDictionary>
-	</habits:BaseHabitView.Resources>
 
 	<habits:BaseHabitView.Content>
 		<StackLayout Spacing="0" Padding="0, 3" BindingContext="{Binding Source={x:Reference This}, Path=ViewModel}">

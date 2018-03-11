@@ -10,49 +10,7 @@ namespace TocoDo.UI.Views
 	[ContentProperty("InnerContent")]
 	public partial class IconButton : ContentView
 	{
-		public IconButton()
-		{
-			try
-			{
-				MyLogger.WriteStartMethod();
-				Clicked += (a, b) => ClickCommand?.Execute(null);
-				Removed += (a, b) => RemoveCommand?.Execute(null);
-				MyLogger.WriteInMethod("Before InitializeComponent");
-				InitializeComponent();
-				MyLogger.WriteInMethod("After InitializeComponent");
-
-				var maxScale   = 1.25;
-				ScaleAnimation += () => this.ScaleTo(maxScale, 250, new Easing(t =>
-				{
-					var val = Math.Sin(t * Math.PI) * (maxScale - 1);
-					MyLogger.WriteInMethod(val.ToString());
-					return val;
-				}));
-				MyLogger.WriteEndMethod();
-			}
-			catch (Exception e)
-			{
-				MyLogger.WriteException(e);
-				throw;
-			}
-		}
-
-		private void ClickRecognise(object sender, EventArgs e)
-		{
-			Clicked?.Invoke(this, e);
-		}
-
-		private void RemoveRecognise(object sender, EventArgs e)
-		{
-			Removed?.Invoke(this, e);
-		}
-
-		public void MakeUpdateAnimation()
-		{
-			ScaleAnimation();
-		}
-
-		#region Backing fields
+		#region Static
 
 		public static readonly BindableProperty ImageSourceProperty =
 			BindableProperty.Create(nameof(ImageSource), typeof(string), typeof(string));
@@ -72,6 +30,8 @@ namespace TocoDo.UI.Views
 		public static readonly BindableProperty ColorProperty =
 			BindableProperty.Create(nameof(Color), typeof(Color), typeof(Color), Color.Gray);
 
+		public static readonly BindableProperty ClickCommandProperty 
+			= BindableProperty.Create(nameof(ClickCommand), typeof(ICommand), typeof(ICommand));
 		#endregion
 
 		#region Properties
@@ -132,23 +92,63 @@ namespace TocoDo.UI.Views
 			set => _innerContent.Content = value;
 		}
 
+		public ICommand ClickCommand
+		{
+			get => (ICommand) GetValue(ClickCommandProperty);
+			set => SetValue(ClickCommandProperty, value);
+		}
+		public ICommand RemoveCommand { get; set; }
+		#endregion
+
+		#region Fields
+
 		public Action ScaleAnimation;
 
 		#endregion
 
-		#region Commands
+		public IconButton()
+		{
+			try
+			{
+				MyLogger.WriteStartMethod();
+				Clicked += (a, b) => ClickCommand?.Execute(null);
+				Removed += (a, b) => RemoveCommand?.Execute(null);
+				MyLogger.WriteInMethod("Before InitializeComponent");
+				InitializeComponent();
+				MyLogger.WriteInMethod("After InitializeComponent");
 
-		public ICommand ClickCommand  { get; set; }
-		public ICommand RemoveCommand { get; set; }
+				var maxScale   = 1.25;
+				ScaleAnimation += () => this.ScaleTo(maxScale, 250, new Easing(t =>
+				{
+					var val = Math.Sin(t * Math.PI) * (maxScale - 1);
+					MyLogger.WriteInMethod(val.ToString());
+					return val;
+				}));
+				MyLogger.WriteEndMethod();
+			}
+			catch (Exception e)
+			{
+				MyLogger.WriteException(e);
+				throw;
+			}
+		}
 
-		#endregion
+		private void ClickRecognise(object sender, EventArgs e)
+		{
+			Clicked?.Invoke(this, e);
+		}
 
-		#region Events
+		private void RemoveRecognise(object sender, EventArgs e)
+		{
+			Removed?.Invoke(this, e);
+		}
+
+		public void MakeUpdateAnimation()
+		{
+			ScaleAnimation();
+		}
 
 		public event EventHandler Clicked;
 		public event EventHandler Removed;
-		public event Action       ValueUpdated;
-
-		#endregion
 	}
 }

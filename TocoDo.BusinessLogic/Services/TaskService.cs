@@ -34,13 +34,15 @@ namespace TocoDo.BusinessLogic.Services
 		public async Task LoadAsync()
 		{
 			MyLogger.WriteStartMethod();
-
-			// TODO: Uncomment
+			
 			var result = await Persistance.GetTasks();
 			result.ForEach(t =>
 			{
+				MyLogger.WriteStartMethod("null", "Start of Loop of LoadAsync");
 				var task = new TaskViewModel(this, Navigation, t);
+				MyLogger.WriteInMethod("Adding a task");
 				_tasks.Add(task);
+				MyLogger.WriteEndMethod("null", "End of Loop of LoadAsync");
 			});
 
 			MyLogger.WriteEndMethod();

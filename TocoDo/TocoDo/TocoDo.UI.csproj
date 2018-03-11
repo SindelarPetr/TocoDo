@@ -37,6 +37,9 @@
 	  <Compile Update="Pages\Tasks\ModifyTaskPage.xaml.cs">
 	    <SubType>Code</SubType>
 	  </Compile>
+	  <Compile Update="Popups\ModifyRepeatTypePopup.xaml.cs">
+	    <DependentUpon>ModifyRepeatTypePopup.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Properties\AppStrings.Designer.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
@@ -76,7 +79,7 @@
 	  <EmbeddedResource Update="Pages\Tasks\ModifyTaskPage.xaml">
 	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 	  </EmbeddedResource>
-	  <EmbeddedResource Update="Popups\HabitRepeatTypePopup.xaml">
+	  <EmbeddedResource Update="Popups\ModifyRepeatTypePopup.xaml">
 	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Properties\AppStrings.resx">

@@ -16,9 +16,6 @@
 					<!-- Current -->
 					<global:FrameWrapper Header="Current">
 						<habits:HabitCollection ItemsSource="{Binding Source={StaticResource HabitService}, Path=AllHabits}" >
-							<x:Arguments>
-								<x:Boolean>False</x:Boolean>
-							</x:Arguments>
 							<habits:HabitCollection.ItemFilter>
 								<itemFilters:HabitCurrentFilter />
 							</habits:HabitCollection.ItemFilter>
@@ -28,9 +25,6 @@
 					<!-- Scheduled -->
 					<global:FrameWrapper Header="Scheduled">
 						<habits:HabitCollection ItemsSource="{Binding Source={StaticResource HabitService}, Path=AllHabits}">
-							<x:Arguments>
-								<x:Boolean>False</x:Boolean>
-							</x:Arguments>
 							<habits:HabitCollection.ItemFilter>
 								<itemFilters:HabitScheduledFilter />
 							</habits:HabitCollection.ItemFilter>
@@ -40,9 +34,6 @@
 					<!-- Unscheduled -->
 					<global:FrameWrapper Header="Unscheduled">
 						<habits:HabitCollection ItemsSource="{Binding Source={StaticResource HabitService}, Path=AllHabits}">
-							<x:Arguments>
-								<x:Boolean>False</x:Boolean>
-							</x:Arguments>
 							<habits:HabitCollection.ItemFilter>
 								<itemFilters:HabitUnscheduledFilter />
 							</habits:HabitCollection.ItemFilter>

@@ -20,7 +20,6 @@ namespace TocoDo.BusinessLogic.ViewModels
 
 		private readonly IHabitService _habitService;
 
-
 		private readonly INavigationService _navigation;
 		private readonly HabitScheduleHelper _scheduleHelper;
 		private int _daysToRepeat;
@@ -84,7 +83,6 @@ namespace TocoDo.BusinessLogic.ViewModels
 			EditCommand           = new AwaitableCommand(async () => await Edit());
 
 			IncreaseTodayCommand = new Command(() => RepeatsToday++);
-			RemoveCommand        = new AwaitableCommand(async () => await DeleteAsync());
 		}
 
 		#region Interface
@@ -225,7 +223,6 @@ namespace TocoDo.BusinessLogic.ViewModels
 		public IAsyncCommand         UpdateCommand         { get; }
 		public IAsyncCommand<string> FinishCreationCommand { get; }
 		public ICommand              IncreaseTodayCommand  { get; }
-		public IAsyncCommand         RemoveCommand         { get; }
 
 		#endregion
 
@@ -244,19 +241,6 @@ namespace TocoDo.BusinessLogic.ViewModels
 				return;
 
 			Title = newTitle;
-		}
-
-		private async Task DeleteAsync()
-		{
-			// Ask user if he is sure
-			var result = await _navigation.DisplayAlert(Resources.DeleteHabitConfirmHeader, Resources.DeleteHabitConfirmText,
-			                                            Resources.Yes, Resources.Cancel);
-
-			if (!result)
-				return;
-
-			await _habitService.DeleteAsync(this);
-			await _navigation.PopAsync();
 		}
 
 		private async Task ConfirmCreation(object title)

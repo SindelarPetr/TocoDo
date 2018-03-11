@@ -22,6 +22,8 @@ namespace TocoDo.BusinessLogic.DependencyInjection.Models
 		Fri    = 16,
 		Sat    = 32,
 		Sun    = 64,
+		WorkWeek = 31,
+		Weekend = 96,
 		Days   = 128,
 		Years  = 512
 	}

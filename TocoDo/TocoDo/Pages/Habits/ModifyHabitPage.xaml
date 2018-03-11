@@ -2,7 +2,6 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-			 xmlns:converters="clr-namespace:TocoDo.UI.Converters;assembly=TocoDo.UI"
 			 xmlns:customRenderers="clr-namespace:TocoDo.UI.CustomRenderers;assembly=TocoDo.UI"
 			 xmlns:views="clr-namespace:TocoDo.UI.Views;assembly=TocoDo.UI"
 			 xmlns:markupExtensions="clr-namespace:TocoDo.UI.MarkupExtensions;assembly=TocoDo.UI"
@@ -13,7 +12,7 @@
 			 Title="Modify the habit"
 			 x:Name="This">
 	<ContentPage.Content>
-		<Grid BindingContext="{Binding Source={x:Reference This}, Path=Habit}" RowSpacing="0">
+		<Grid BindingContext="{Binding Source={x:Reference This}, Path=ViewModel}" RowSpacing="0">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto" />
 				<RowDefinition Height="*" />
@@ -48,7 +47,7 @@
 													 RepeatType="{Binding RepeatType}"
 													 ImageSource="{markupExtensions:PathResolver 'ic_loop_white_24dp'}"
 													 IsActive="{Binding Source={x:Reference DateButtonView}, Path=IsActive}"
-													 HasRemoveButton="False" Clicked="IconButton_OnClicked"
+													 HasRemoveButton="False" ClickCommand="{Binding ModifyRepeatTypeCommand}"
 													 DaysToRepeat="{Binding DaysToRepeat}" />
 						</StackLayout>
 					</Frame>
@@ -70,8 +69,9 @@
 										</Style>
 									</ResourceDictionary>
 								</StackLayout.Resources>
+
 								<!--Button for setting Unit type-->
-								<customRenderers:NoBorderButton Text="Unit" HorizontalOptions="FillAndExpand" Clicked="BtnUnit_Clicked">
+								<customRenderers:NoBorderButton Text="Unit" HorizontalOptions="FillAndExpand" Command="{Binding ChangeHabitTypeCommand}" CommandParameter="{x:Static models:HabitType.Unit}">
 									<customRenderers:NoBorderButton.Triggers>
 										<DataTrigger TargetType="customRenderers:NoBorderButton" Binding="{Binding HabitType}"
 													 Value="{x:Static models:HabitType.Unit}">
@@ -81,7 +81,7 @@
 								</customRenderers:NoBorderButton>
 
 								<!--Button for setting Daylong type-->
-								<customRenderers:NoBorderButton Text="Daylong" HorizontalOptions="FillAndExpand" Clicked="BtnDaylong_Clicked">
+								<customRenderers:NoBorderButton Text="Daylong" HorizontalOptions="FillAndExpand" Command="{Binding ChangeHabitTypeCommand}" CommandParameter="{x:Static models:HabitType.Daylong}">
 									<customRenderers:NoBorderButton.Triggers>
 										<DataTrigger TargetType="customRenderers:NoBorderButton" Binding="{Binding HabitType}"
 													 Value="{x:Static models:HabitType.Daylong}">
@@ -91,7 +91,7 @@
 								</customRenderers:NoBorderButton>
 							</StackLayout>
 
-							<!--Times a day setter-->
+							<!--MAx times a day setter-->
 							<StackLayout Orientation="Horizontal" HorizontalOptions="Center" IsVisible="False">
 								<StackLayout.Triggers>
 									<DataTrigger TargetType="StackLayout" Binding="{Binding HabitType}"
@@ -112,7 +112,7 @@
 			</ScrollView>
 
 
-			<views:PageBottomPanel Grid.Row="2" RemoveCommand="{Binding RemoveCommand}"
+			<views:PageBottomPanel Grid.Row="2" RemoveCommand="{Binding DeleteCommand}"
 								   Text="{Binding CreationDate, Converter={StaticResource PastDateTimeConverter}, StringFormat='Created {0}'}" />
 		</Grid>
 	</ContentPage.Content>

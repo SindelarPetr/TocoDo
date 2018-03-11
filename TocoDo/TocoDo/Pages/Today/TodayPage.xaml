@@ -80,10 +80,7 @@
 					</global:FrameWrapper>
 
 					<global:FrameWrapper Grid.Row="2" Header="Habits" VerticalOptions="Start">
-						<habits:HabitCollection ItemsSource="{Binding Source={x:Reference Calendar}, Path=SelectedDayHabits}">
-							<x:Arguments>
-								<x:Boolean>True</x:Boolean>
-							</x:Arguments>
+						<habits:HabitCollection FuncParameter="{x:Reference Calendar}" ItemsSource="{Binding Source={x:Reference Calendar}, Path=SelectedDayHabits}">
 							<habits:HabitCollection.ItemFilter>
 								<itemFilters:HabitAlwaysTrueFilter />
 							</habits:HabitCollection.ItemFilter>

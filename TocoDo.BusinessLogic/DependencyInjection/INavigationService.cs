@@ -26,8 +26,7 @@ namespace TocoDo.BusinessLogic.DependencyInjection
 		Task PushPopupAsync(PageType page, object param = null);
 		Task PopPopupAsync();
 	}
-
-	// TODO: Use the DisplayDatePickingActionSheet where is needed
+	
 	public enum DatePickingActionSheetResult
 	{
 		Canceled,

@@ -151,46 +151,47 @@ namespace TocoDo.UnitTests
 			Mock.Assert(_habitService);
 		}
 
-		[TestMethod]
-		public async Task RemoveCommandShouldRiseAnAlert()
-		{
-			// Arrange
-			Mock.Arrange(() => _navigationService.DisplayAlert(Arg.AnyString, Arg.AnyString, Arg.AnyString, Arg.AnyString)).Returns(Task.FromResult(Arg.AnyBool)).OccursOnce();
+		// Move following code to ModifyHabitViewModelTests
+		//[TestMethod]
+		//public async Task RemoveCommandShouldRiseAnAlert()
+		//{
+		//	// Arrange
+		//	Mock.Arrange(() => _navigationService.DisplayAlert(Arg.AnyString, Arg.AnyString, Arg.AnyString, Arg.AnyString)).Returns(Task.FromResult(Arg.AnyBool)).OccursOnce();
 
-			// Act
-			await _habitViewModel.RemoveCommand.ExecuteAsync(null);
+		//	// Act
+		//	await _habitViewModel.DeleteCommand.ExecuteAsync(null);
 
-			// Assert
-			Mock.Assert(_navigationService);
-		}
+		//	// Assert
+		//	Mock.Assert(_navigationService);
+		//}
 
-		[TestMethod]
-		public async Task RemoveCommandAfterAcceptingAlertShouldCallDeleteAsyncOfTaskService()
-		{
-			// Arrange
-			Mock.Arrange(() => _navigationService.DisplayAlert(Arg.AnyString, Arg.AnyString, Arg.AnyString, Arg.AnyString)).Returns(Task.FromResult(true)).InOrder();
-			Mock.Arrange(() => _habitService.DeleteAsync(_habitViewModel)).Returns(Task.CompletedTask).InOrder().OccursOnce();
+		//[TestMethod]
+		//public async Task RemoveCommandAfterAcceptingAlertShouldCallDeleteAsyncOfTaskService()
+		//{
+		//	// Arrange
+		//	Mock.Arrange(() => _navigationService.DisplayAlert(Arg.AnyString, Arg.AnyString, Arg.AnyString, Arg.AnyString)).Returns(Task.FromResult(true)).InOrder();
+		//	Mock.Arrange(() => _habitService.DeleteAsync(_habitViewModel)).Returns(Task.CompletedTask).InOrder().OccursOnce();
 
-			// Act
-			await _habitViewModel.RemoveCommand.ExecuteAsync(null);
+		//	// Act
+		//	await _habitViewModel.RemoveCommand.ExecuteAsync(null);
 
-			// Assert
-			Mock.Assert(_habitService);
-		}
+		//	// Assert
+		//	Mock.Assert(_habitService);
+		//}
 
-		[TestMethod]
-		public async Task RemoveCommandAfterRefusingTheAlertShouldntCallDeleteAsync()
-		{
-			// Arrange
-			Mock.Arrange(() => _navigationService.DisplayAlert(Arg.AnyString, Arg.AnyString, Arg.AnyString, Arg.AnyString)).Returns(Task.FromResult(false)).InOrder();
-			Mock.Arrange(() => _habitService.DeleteAsync(_habitViewModel)).Returns(Task.CompletedTask).OccursNever();
+		//[TestMethod]
+		//public async Task RemoveCommandAfterRefusingTheAlertShouldntCallDeleteAsync()
+		//{
+		//	// Arrange
+		//	Mock.Arrange(() => _navigationService.DisplayAlert(Arg.AnyString, Arg.AnyString, Arg.AnyString, Arg.AnyString)).Returns(Task.FromResult(false)).InOrder();
+		//	Mock.Arrange(() => _habitService.DeleteAsync(_habitViewModel)).Returns(Task.CompletedTask).OccursNever();
 
-			// Act
-			await _habitViewModel.RemoveCommand.ExecuteAsync(null);
+		//	// Act
+		//	await _habitViewModel.RemoveCommand.ExecuteAsync(null);
 
-			// Assert
-			Mock.Assert(_habitService);
-		}
+		//	// Assert
+		//	Mock.Assert(_habitService);
+		//}
 
 		[TestMethod]
 		public async Task UpdateCommandShouldCallUpdateAsyncOfTaskService()

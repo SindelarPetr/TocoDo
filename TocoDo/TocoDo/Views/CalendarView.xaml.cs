@@ -186,7 +186,7 @@ namespace TocoDo.UI.Views
 			if(SelectedDate != null)
 			foreach (var habit in HabitsSource)
 			{
-				if (habit.StartDate != null && habit.IsActive(habit.StartDate.Value) && !_selectedDayHabits.Contains(habit))
+				if (habit.StartDate != null && habit.IsActive(SelectedDate) && !_selectedDayHabits.Contains(habit))
 					_selectedDayHabits.Add(habit);
 			}
 		}
@@ -321,6 +321,7 @@ namespace TocoDo.UI.Views
 				((INotifyCollectionChanged)HabitsSource).CollectionChanged += OnHabitsSourceCollectionChanged;
 
 				FillHabitsBusyness();
+				RefreshSelectedDayHabits();
 			}
 		}
 		private void OnHabitsSourceCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
@@ -333,7 +334,7 @@ namespace TocoDo.UI.Views
 						IncreaseBusyness(habit);
 						habit.PropertyChanging += HabitOnPropertyChanging;
 						habit.PropertyChanged += HabitOnPropertyChanged;
-						if (SelectedDate != null && habit.IsActive(SelectedDate) && _selectedDayHabits.First(h => h.Id == habit.Id) == null)
+						if (SelectedDate != null && habit.IsActive(SelectedDate) && _selectedDayHabits.All(h => h.Id != habit.Id))
 						{
 							_selectedDayHabits.Add(habit);
 						}

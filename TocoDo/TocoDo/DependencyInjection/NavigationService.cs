@@ -10,6 +10,7 @@ using TocoDo.BusinessLogic.ViewModels;
 using TocoDo.UI.Pages;
 using TocoDo.UI.Pages.Habits;
 using TocoDo.UI.Pages.Tasks;
+using TocoDo.UI.Popups;
 using Xamarin.Forms;
 
 namespace TocoDo.UI.DependencyInjection
@@ -77,32 +78,6 @@ namespace TocoDo.UI.DependencyInjection
 			await NavigationPage.Navigation.PopPopupAsync();
 		}
 
-		private async Task OldPushModalAsync(Page page)
-		{
-			var stack = NavigationPage.Navigation.ModalStack;
-			Debug.WriteLine("-------------- Stack count is: " + stack.Count);
-			if (stack.Count != 0 && stack[stack.Count - 1].GetType() == page.GetType())
-				return;
-
-			Debug.Write("----------- Before PushModalAsync");
-			await NavigationPage.Navigation.PushModalAsync(page, true);
-			Debug.Write("----------- After PushModalAsync");
-		}
-
-		private async Task OldPopAsync()
-		{
-			Debug.Write("----------- Before PopAsync");
-			await NavigationPage.PopAsync();
-			Debug.Write("----------- After PopAsync");
-		}
-
-		private async Task OldPopModalAsync()
-		{
-			Debug.Write("----------- Before PopModalAsync");
-			await NavigationPage.Navigation.PopModalAsync(true);
-			Debug.Write("----------- After PopModalAsync");
-		}
-
 		private Page CreatePage(PageType pageType, object param)
 		{
 			MyLogger.WriteStartMethod();
@@ -123,7 +98,9 @@ namespace TocoDo.UI.DependencyInjection
 				case PageType.ModifyTaskPage:
 					MyLogger.WriteEndMethod();
 					return new ModifyTaskPage((TaskViewModel)param);
-					
+				case PageType.RepeatTypePopup:
+					return new ModifyRepeatTypePopup((ModifyRepeatTypeViewModel)param);
+
 				default:
 					throw new ArgumentOutOfRangeException(nameof(pageType), pageType, null);
 			}
