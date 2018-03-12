@@ -1,4 +1,5 @@
 ﻿using System.Windows.Input;
+using TocoDo.BusinessLogic.Helpers.Commands;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -8,7 +9,7 @@ namespace TocoDo.UI.Views
 	public partial class PageBottomPanel : ContentView
 	{
 		public static BindableProperty RemoveCommandProperty =
-			BindableProperty.Create(nameof(RemoveCommand), typeof(ICommand), typeof(ICommand));
+			BindableProperty.Create(nameof(RemoveCommand), typeof(IAsyncCommand), typeof(IAsyncCommand));
 
 		public static BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(string));
 
@@ -17,9 +18,9 @@ namespace TocoDo.UI.Views
 			InitializeComponent();
 		}
 
-		public ICommand RemoveCommand
+		public IAsyncCommand RemoveCommand
 		{
-			get => (ICommand) GetValue(RemoveCommandProperty);
+			get => (IAsyncCommand) GetValue(RemoveCommandProperty);
 			set => SetValue(RemoveCommandProperty, value);
 		}
 

@@ -16,6 +16,12 @@ namespace TocoDo.BusinessLogic.ViewModels
 {
 	public class HabitViewModel : BaseViewModel, IHabitViewModel
 	{
+		#region Properties
+
+		public IAsyncCommand DeleteCommand => _deleteCommand ?? (_deleteCommand = new AwaitableCommand(DeleteAsync));
+
+		#endregion
+
 		#region Fields
 
 		private readonly IHabitService _habitService;
@@ -23,8 +29,13 @@ namespace TocoDo.BusinessLogic.ViewModels
 		private readonly INavigationService _navigation;
 		private readonly HabitScheduleHelper _scheduleHelper;
 		private int _daysToRepeat;
+		private IAsyncCommand _deleteCommand;
 		private string _description;
+		private IAsyncCommand _editCommand;
+		private ICommand _editTitleCommand;
+		private IAsyncCommand<string> _finishCreationCommand;
 		private HabitType _habitType;
+		private ICommand _increaseTodayCommand;
 
 		private bool _isRecommended;
 		private int _maxRepeatsADay;
@@ -32,6 +43,7 @@ namespace TocoDo.BusinessLogic.ViewModels
 		private RepeatType _repeatType;
 		private DateTime? _startDate;
 		private string _title;
+		private IAsyncCommand _updateCommand;
 
 		#endregion
 
@@ -76,19 +88,11 @@ namespace TocoDo.BusinessLogic.ViewModels
 		{
 			_habitService   = habitService;
 			_scheduleHelper = new HabitScheduleHelper(_habitService.DateTimeProvider);
-
-			UpdateCommand         = new AwaitableCommand(async () => await _habitService.UpdateAsync(this));
-			EditTitleCommand      = new Command<string>(EditTitle);
-			FinishCreationCommand = new AwaitableCommand<string>(async t => await ConfirmCreation(t));
-			EditCommand           = new AwaitableCommand(async () => await Edit());
-
-			IncreaseTodayCommand = new Command(() => RepeatsToday++);
 		}
 
 		#region Interface
 
 		public int Id { get; private set; }
-
 		/// <summary>
 		///     Is used for explicit setting of ModelId, so there is no possibility of setting ModelId accidentally.
 		/// </summary>
@@ -97,18 +101,15 @@ namespace TocoDo.BusinessLogic.ViewModels
 		{
 			Id = id;
 		}
-
 		public bool IsActive(DateTime? date = null)
 		{
 			return _scheduleHelper.IsHabitActive(this, date);
 		}
-
 		public bool IsRecommended
 		{
 			get => _isRecommended;
 			set => SetValue(ref _isRecommended, value);
 		}
-
 		/// <summary>
 		///     How many times the habit was violated / performed today
 		/// </summary>
@@ -117,11 +118,8 @@ namespace TocoDo.BusinessLogic.ViewModels
 			get => _repeatsToday;
 			set => SetValue(ref _repeatsToday, value);
 		}
-
 		public ObservableDictionary<DateTime, int> Filling { get; private set; }
-
 		public DateTime CreationDate { get; }
-
 		public HabitType HabitType
 		{
 			get => _habitType;
@@ -131,7 +129,6 @@ namespace TocoDo.BusinessLogic.ViewModels
 				OnPropertyChanged(nameof(HabitTypeWithRepeats));
 			}
 		}
-
 		public int DaysToRepeat
 		{
 			get => _daysToRepeat;
@@ -141,19 +138,16 @@ namespace TocoDo.BusinessLogic.ViewModels
 				OnPropertyChanged(nameof(HabitDaysToRepeatWithRepeatType));
 			}
 		}
-
 		public DateTime? StartDate
 		{
 			get => _startDate;
 			set => SetValue(ref _startDate, value);
 		}
-
 		public string Title
 		{
 			get => _title;
 			set => SetValue(ref _title, value);
 		}
-
 		public RepeatType RepeatType
 		{
 			get => _repeatType;
@@ -163,13 +157,11 @@ namespace TocoDo.BusinessLogic.ViewModels
 				OnPropertyChanged(nameof(HabitDaysToRepeatWithRepeatType));
 			}
 		}
-
 		public string Description
 		{
 			get => _description;
 			set => SetValue(ref _description, value);
 		}
-
 		/// <summary>
 		///     Only for Unit habit. Count of times to repeat the habit each day
 		/// </summary>
@@ -182,17 +174,13 @@ namespace TocoDo.BusinessLogic.ViewModels
 				OnPropertyChanged(nameof(HabitTypeWithRepeats));
 			}
 		}
-
 		public bool IsCreateMode { get; set; }
-
 		public bool IsStarted => StartDate != null && StartDate.Value < DateTime.Now;
-
-		public bool IsFinished { get; set; }
-
+		public bool IsFinished
+		{ get; set; }
 		public string HabitTypeWithRepeats => HabitType == HabitType.Daylong
 			? Resources.HabitDetailHabitTypeDaylong
 			: string.Format(Resources.HabitDetailHabitTypeTextUnit, MaxRepeatsADay);
-
 		public string HabitDaysToRepeatWithRepeatType
 		{
 			get
@@ -218,13 +206,20 @@ namespace TocoDo.BusinessLogic.ViewModels
 			}
 		}
 
-		public ICommand              EditTitleCommand      { get; }
-		public IAsyncCommand         EditCommand           { get; }
-		public IAsyncCommand         UpdateCommand         { get; }
-		public IAsyncCommand<string> FinishCreationCommand { get; }
-		public ICommand              IncreaseTodayCommand  { get; }
-
+		public ICommand EditTitleCommand =>
+			_editTitleCommand ?? (_editTitleCommand = new Command(t => EditTitle((string) t)));
+		public IAsyncCommand EditCommand => _editCommand ?? (_editCommand = new AwaitableCommand(Edit));
+		public IAsyncCommand UpdateCommand => _updateCommand ??
+		                                      (_updateCommand =
+			                                      new AwaitableCommand(async () => await _habitService.UpdateAsync(this)));
+		public IAsyncCommand<string> FinishCreationCommand => _finishCreationCommand ??
+		                                                      (_finishCreationCommand =
+			                                                      new AwaitableCommand<string>(FinishCreationAsync));
+		public ICommand IncreaseTodayCommand =>
+			_increaseTodayCommand ?? (_increaseTodayCommand = new Command(() => RepeatsToday++));
 		#endregion
+
+		#region  private and protected
 
 		private async Task Edit()
 		{
@@ -243,7 +238,7 @@ namespace TocoDo.BusinessLogic.ViewModels
 			Title = newTitle;
 		}
 
-		private async Task ConfirmCreation(object title)
+		private async Task FinishCreationAsync(object title)
 		{
 			// If user left the entry blank, then remove the habit from collection
 			if (!(title is string tit) || string.IsNullOrWhiteSpace(tit))
@@ -252,7 +247,8 @@ namespace TocoDo.BusinessLogic.ViewModels
 				return;
 			}
 
-			Title = tit.Trim();
+			IsCreateMode = false;
+			Title        = tit.Trim();
 			await _habitService.ConfirmCreationAsync(this);
 		}
 
@@ -322,5 +318,20 @@ namespace TocoDo.BusinessLogic.ViewModels
 
 			Filling = newFilling;
 		}
+
+		private async Task DeleteAsync()
+		{
+			// Ask user if he is sure
+			var userIsSure = await _navigation.DisplayAlert(Resources.DeleteHabitConfirmHeader, Resources.DeleteHabitConfirmText,
+			                                                Resources.Yes, Resources.Cancel);
+
+			if (!userIsSure)
+				return;
+
+			await _habitService.DeleteAsync(this);
+			await _navigation.PopAsync();
+		}
+
+		#endregion
 	}
 }

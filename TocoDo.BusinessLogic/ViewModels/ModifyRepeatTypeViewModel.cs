@@ -37,7 +37,7 @@ namespace TocoDo.BusinessLogic.ViewModels
 
 		public IAsyncCommand ApplyAndPopCommand => _applyAndPopCommand ??
 		                                           (_applyAndPopCommand =
-			                                           new AwaitableCommand(async () => await ApplyAndPop()));
+			                                           new AwaitableCommand(ApplyAndPop));
 
 		public IAsyncCommand CancelCommand =>
 			_cancelCommand ?? (_cancelCommand = new AwaitableCommand(async () => await Cancel()));
@@ -65,7 +65,7 @@ namespace TocoDo.BusinessLogic.ViewModels
 			_navigation = navigation;
 			_modifyVm   = modifyVm;
 
-			_repeatType   = _modifyVm.RepeatType;
+			RepeatType = _modifyVm.RepeatType;
 			_daysToRepeat = _modifyVm.DaysToRepeat;
 
 			PickValues = new List<string>
@@ -75,9 +75,9 @@ namespace TocoDo.BusinessLogic.ViewModels
 				             Resources.Years
 			             };
 
-			SelectedItem = _repeatType == RepeatType.Days ? Resources.Days :
-				_repeatType == RepeatType.Years              ? Resources.Years : Resources.Weeks;
 			_lastRepeatTypeWeeks = _repeatType < RepeatType.Days ? _repeatType : RepeatType.WorkWeek;
+			SelectedItem = _repeatType == RepeatType.Days ? Resources.Days :
+							_repeatType == RepeatType.Years              ? Resources.Years : Resources.Weeks;
 		}
 
 		protected override void OnPropertyChanging(string propertyName = null)
@@ -113,8 +113,8 @@ namespace TocoDo.BusinessLogic.ViewModels
 		private async Task ApplyAndPop()
 		{
 			// Apply
-			_modifyVm.RepeatType   = RepeatType;
 			_modifyVm.DaysToRepeat = DaysToRepeat;
+			_modifyVm.RepeatType   = RepeatType;
 
 			// Pop
 			await _navigation.PopPopupAsync();

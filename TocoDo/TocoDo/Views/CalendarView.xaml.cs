@@ -30,8 +30,8 @@ namespace TocoDo.UI.Views
 		public static BindableProperty TasksSourceProperty = BindableProperty.Create(nameof(TasksSource), typeof(ReadOnlyObservableCollection<ITaskViewModel>), typeof(ReadOnlyObservableCollection<ITaskViewModel>));
 
 		private CalendarCell _selectedCell;
-		private ICommand _moveNextCommand;
-		private ICommand _movePrevCommand;
+		private IAsyncCommand _moveNextCommand;
+		private IAsyncCommand _movePrevCommand;
 		private DateTime _firstDayDate;
 		private ObservableCollection<ITaskViewModel> _selectedDayTasks;
 		private ObservableCollection<IHabitViewModel> _selectedDayHabits;
@@ -70,8 +70,8 @@ namespace TocoDo.UI.Views
 
 
 		#region Commands
-		public ICommand MoveNextCommand => _moveNextCommand ?? (_moveNextCommand = new TocoDo.BusinessLogic.Helpers.Commands.Command(() => SetupCalendarGrid(_firstDayDate.AddDays(3 * 7))));
-		public ICommand MovePrevCommand => _movePrevCommand ?? (_movePrevCommand = new TocoDo.BusinessLogic.Helpers.Commands.Command(() => SetupCalendarGrid(_firstDayDate.AddDays(-3 * 7))));
+		public IAsyncCommand MoveNextCommand => _moveNextCommand ?? (_moveNextCommand = new AwaitableCommand(async () => await SetupCalendarGrid(_firstDayDate.AddDays(3 * 7))));
+		public IAsyncCommand MovePrevCommand => _movePrevCommand ?? (_movePrevCommand = new AwaitableCommand(async () => await SetupCalendarGrid(_firstDayDate.AddDays(-3 * 7))));
 		#endregion
 		#endregion
 

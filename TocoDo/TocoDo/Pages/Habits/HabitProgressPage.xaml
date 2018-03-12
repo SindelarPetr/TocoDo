@@ -1,14 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:global="clr-namespace:TocoDo.UI.Views.Global;assembly=TocoDo.UI"
-             xmlns:forms="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
-             xmlns:habits="clr-namespace:TocoDo.UI.Views.Habits;assembly=TocoDo.UI"
-             xmlns:views="clr-namespace:TocoDo.UI.Views;assembly=TocoDo.UI"
-             x:Class="TocoDo.UI.Pages.Habits.HabitProgressPage"
-             x:Name="This"
-             Title="{Binding Source={x:Reference This}, Path=ViewModel.Title}">
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:global="clr-namespace:TocoDo.UI.Views.Global;assembly=TocoDo.UI"
+			 xmlns:forms="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+			 xmlns:habits="clr-namespace:TocoDo.UI.Views.Habits;assembly=TocoDo.UI"
+			 xmlns:views="clr-namespace:TocoDo.UI.Views;assembly=TocoDo.UI"
+			 xmlns:viewModels="clr-namespace:TocoDo.BusinessLogic.ViewModels;assembly=TocoDo.BusinessLogic"
+			 x:Class="TocoDo.UI.Pages.Habits.HabitProgressPage"
+			 x:Name="This"
+			 Title="{Binding Source={x:Reference This}, Path=ViewModel.Title}">
 	<ContentPage.Content>
 		<Grid BindingContext="{Binding Source={x:Reference This}, Path=ViewModel}" RowSpacing="0">
 			<Grid.RowDefinitions>
@@ -24,11 +25,11 @@
 					</Grid.RowDefinitions>
 					<global:FrameWrapper Header="Progress" BackgroundColor="{StaticResource ColorPrimaryDark}" HeightRequest="200">
 						<forms:ChartView x:Name="ChartProgress" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
-						                 Margin="-5,10" />
+										 Margin="-5,10" />
 					</global:FrameWrapper>
 
 					<global:FrameWrapper Grid.Row="1" Header="Timing">
-						<habits:HabitDetailView Margin="0,10,15,10" ViewModel="{Binding Source={x:Reference This}, Path=ViewModel}" />
+						<habits:HabitDetailView Margin="0,10,15,10" ViewModel="{Binding Habit}" />
 					</global:FrameWrapper>
 
 					<!-- Show description -->
@@ -37,8 +38,8 @@
 			</ScrollView>
 
 			<views:PageBottomPanel Grid.Row="1"
-			                       Text="{Binding CreationDate, Converter={StaticResource PastDateTimeConverter}, StringFormat='Created: {0}'}"
-			                       RemoveCommand="{Binding RemoveCommand}" BackgroundColor="CornflowerBlue" />
+								   Text="{Binding CreationDate, Converter={StaticResource PastDateTimeConverter}, StringFormat='Created: {0}'}"
+								   RemoveCommand="{Binding DeleteCommand}" BackgroundColor="CornflowerBlue" />
 		</Grid>
 	</ContentPage.Content>
 </ContentPage>

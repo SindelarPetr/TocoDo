@@ -26,9 +26,8 @@
 	</pages:PopupPage.Animation>
 	<!-- Content -->
 	<ContentPage.Content>
-		<global:FrameWrapper Header="Repeat for..." HeaderBackgroundColor="White" BindingContext="{Binding Source={x:Reference This}, Path=ViewModel}"
-								 HeaderTextColor="{StaticResource ColorPrimary}" Margin="35">
-				<StackLayout Padding="10">
+		<global:FrameWrapper Header="Repeat for..." HeaderBackgroundColor="White" HeaderTextColor="{StaticResource ColorPrimary}" Margin="35" VerticalOptions="Center">
+			<StackLayout Padding="10" BindingContext="{Binding Source={x:Reference This}, Path=ViewModel}">
 					<StackLayout Orientation="Horizontal" Padding="10" Spacing="15">
 						<Entry Keyboard="Numeric" Text="{Binding DaysToRepeat}" WidthRequest="40" HorizontalTextAlignment="Center" />
 						<controls:ResizablePicker x:Name="Picker" ItemsSource="{Binding PickValues}" SelectedItem="{Binding SelectedItem}"/>

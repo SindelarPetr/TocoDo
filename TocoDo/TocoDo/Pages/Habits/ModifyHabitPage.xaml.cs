@@ -38,5 +38,12 @@ namespace TocoDo.UI.Pages.Habits
 		{
 			ViewModel.EditTitleCommand.Execute(EntryTitle.Text);
 		}
+
+		protected override async void OnDisappearing()
+		{
+			base.OnDisappearing();
+
+			await ViewModel.WriteAndUpdateCommand.ExecuteAsync(null);
+		}
 	}
 }

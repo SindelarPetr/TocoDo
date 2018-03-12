@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using TocoDo.BusinessLogic.DependencyInjection;
 using TocoDo.BusinessLogic.DependencyInjection.Models;
+using TocoDo.BusinessLogic.Helpers;
 using TocoDo.BusinessLogic.Helpers.Commands;
 using TocoDo.BusinessLogic.Properties;
 using TocoDo.BusinessLogic.Services;
@@ -55,14 +56,8 @@ namespace TocoDo.BusinessLogic.ViewModels
 		}
 		public DateTime CreationDate { get; }
 
-		public IAsyncCommand WriteAndUpdateCommand
-		{
-			get
-			{
-				return _writeAndUpdateCommand ?? (_writeAndUpdateCommand =
-						   new AwaitableCommand(async () => { await WriteAndUpdateAsync(); }));
-			}
-		}
+		public IAsyncCommand WriteAndUpdateCommand => _writeAndUpdateCommand ?? (_writeAndUpdateCommand =
+			                                              new AwaitableCommand(WriteAndUpdateAsync));
 
 		public IAsyncCommand ModifyRepeatTypeCommand => _modifyRepeatTypeCommand ??
 														(_modifyRepeatTypeCommand = new AwaitableCommand(async () => await ModifyRepeatType()));
@@ -74,8 +69,7 @@ namespace TocoDo.BusinessLogic.ViewModels
 		public ICommand EditTitleCommand =>
 			_editTitleCommand ?? (_editTitleCommand = new Command(t => EditTitle((string) t)));
 
-		public IAsyncCommand DeleteCommand =>
-			_deleteCommand ?? (_deleteCommand = new AwaitableCommand(async () => await DeleteAsync()));
+		public IAsyncCommand DeleteCommand => _habit.DeleteCommand;
 		#endregion
 
 		#region Fields
@@ -91,7 +85,6 @@ namespace TocoDo.BusinessLogic.ViewModels
 
 		private IAsyncCommand _writeAndUpdateCommand;
 		private IAsyncCommand _modifyRepeatTypeCommand;
-		private IAsyncCommand _deleteCommand;
 		private ICommand _changeHabitTypeCommand;
 		private ICommand _editTitleCommand;
 		private string _title;
@@ -118,6 +111,14 @@ namespace TocoDo.BusinessLogic.ViewModels
 
 		private async Task WriteAndUpdateAsync()
 		{
+			// if there is no change -> finish
+			if (_habit.Title == _title && _habit.Description == _description && _habit.HabitType == _habitType &&
+			    _habit.MaxRepeatsADay == _maxRepeatsADay && _habit.RepeatType == _repeatType &&
+			    _habit.DaysToRepeat == _daysToRepeat && _habit.StartDate == _startDate)
+			{
+				return;
+			}
+
 			// Write changes
 			_habit.EditTitleCommand.Execute(_title);
 			_habit.Description = _description;
@@ -130,9 +131,25 @@ namespace TocoDo.BusinessLogic.ViewModels
 			await _habit.UpdateCommand.ExecuteAsync(null);
 		}
 
+		protected override void OnPropertyChanged(string propertyName = null)
+		{
+			base.OnPropertyChanged(propertyName);
+
+			if ((propertyName == nameof(RepeatType) && StartDate != null) || propertyName == nameof(StartDate))
+			{
+				// Synchronise StartDate with selected RepeatType
+				// Makes sense just when the RepeatType are days in week
+				if (RepeatType < RepeatType.CompleteWeek)
+				{
+					StartDate = RepeatTypeHelper.AdjustDateToRepeatType(StartDate, RepeatType);
+				}
+			}
+		}
+
 		private async Task ModifyRepeatType()
 		{
-			await _navigation.PushPopupAsync(PageType.RepeatTypePopup, new ModifyRepeatTypeViewModel(_navigation, this));
+			var modifyRepeatTypeViewModel = new ModifyRepeatTypeViewModel(_navigation, this);
+			await _navigation.PushPopupAsync(PageType.RepeatTypePopup, modifyRepeatTypeViewModel);
 		}
 
 		private void EditTitle(string title)
@@ -143,19 +160,6 @@ namespace TocoDo.BusinessLogic.ViewModels
 			{
 				Title = title.Trim();
 			}
-		}
-
-		private async Task DeleteAsync()
-		{
-			// Ask user if he is sure
-			var userIsSure = await _navigation.DisplayAlert(Resources.DeleteHabitConfirmHeader, Resources.DeleteHabitConfirmText,
-			                                            Resources.Yes, Resources.Cancel);
-
-			if (!userIsSure)
-				return;
-
-			await _habitService.DeleteAsync(_habit);
-			await _navigation.PopAsync();
 		}
 	}
 }

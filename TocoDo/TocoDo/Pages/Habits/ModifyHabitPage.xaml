@@ -112,8 +112,7 @@
 			</ScrollView>
 
 
-			<views:PageBottomPanel Grid.Row="2" RemoveCommand="{Binding DeleteCommand}"
-								   Text="{Binding CreationDate, Converter={StaticResource PastDateTimeConverter}, StringFormat='Created {0}'}" />
+			<views:PageBottomPanel Grid.Row="2" RemoveCommand="{Binding Source={x:Reference This}, Path=ViewModel.DeleteCommand}" Text="{Binding CreationDate, Converter={StaticResource PastDateTimeConverter}, StringFormat='Created {0}'}" />
 		</Grid>
 	</ContentPage.Content>
 </ContentPage>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TocoDo.BusinessLogic.Helpers;
 
 namespace TocoDo.BusinessLogic.DependencyInjection.Models
 {
@@ -52,6 +53,20 @@ namespace TocoDo.BusinessLogic.DependencyInjection.Models
 			throw new ArgumentException($"There is no RepeatType day acctording to the number: { zeroBasedDay }");
 
 			return (RepeatType) (1 << zeroBasedDay);
+		}
+
+		public static DateTime? AdjustDateToRepeatType(DateTime? date, RepeatType repeatType)
+		{
+			if (date == null)
+				return null;
+
+			var maxIterations = 7;
+			while (!repeatType.HasFlag(RepeatTypeHelper.GetRepeatTypeForAZeroBasedDay(date.Value.ZeroMondayBasedDay())) && maxIterations-- > 0)
+			{
+				date = date.Value.AddDays(1);
+			}
+
+			return date;
 		}
 	}
 }

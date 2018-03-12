@@ -16,9 +16,9 @@ namespace TocoDo.UI.Popups
 	public partial class ModifyRepeatTypePopup : PopupPage
 	{
 		public ModifyRepeatTypeViewModel ViewModel { get; }
-		public ModifyRepeatTypePopup(ModifyRepeatTypeViewModel popupInfo)
+		public ModifyRepeatTypePopup(ModifyRepeatTypeViewModel viewModel)
 		{
-			ViewModel = popupInfo;
+			ViewModel = viewModel;
 			InitializeComponent();
 		}
 	}
