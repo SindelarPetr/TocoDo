@@ -73,7 +73,7 @@ namespace TocoDo.UI.Views.Todos
 			// Find the view of the task
 			for (int i = 0; i < MainLayout.Children.Count; i++)
 			{
-				if (MainLayout.Children[i] is TaskView taskView && taskView.IsVisible && taskView.ViewModel.Id == oldItem.Id)
+				if (MainLayout.Children[i] is TaskView taskView && taskView.IsVisible && taskView.ViewModel == oldItem)
 				{
 					// Remove item on this index.
 					// If there is a title above, then if there is anothere title below or no items, remove the title above

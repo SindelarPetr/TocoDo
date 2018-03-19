@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
-             xmlns:markupExtensions="clr-namespace:TocoDo.UI.MarkupExtensions;assembly=TocoDo.UI"
-             xmlns:checkbox="clr-namespace:TocoDo.UI.TriggerActions.Checkbox;assembly=TocoDo.UI"
-             x:Class="TocoDo.UI.Views.Todos.CheckerView"
-             x:Name="This">
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
+			 xmlns:markupExtensions="clr-namespace:TocoDo.UI.MarkupExtensions;assembly=TocoDo.UI"
+			 xmlns:checkbox="clr-namespace:TocoDo.UI.TriggerActions.Checkbox;assembly=TocoDo.UI"
+			 x:Class="TocoDo.UI.Views.Todos.CheckerView"
+			 x:Name="This">
 	<ContentView.GestureRecognizers>
 		<TapGestureRecognizer Tapped="TapCheckBox_OnTapped" />
 	</ContentView.GestureRecognizers>
@@ -14,8 +14,8 @@
 
 		<AbsoluteLayout HorizontalOptions="Start" HeightRequest="32" WidthRequest="32" BindingContext="{x:Reference This}">
 			<abstractions:TintedImage Source="{markupExtensions:PathResolver 'ic_checkbox_background_36dp.png'}"
-			                          TintColor="{Binding UncheckedColor}" AbsoluteLayout.LayoutBounds="0,0,1,1"
-			                          AbsoluteLayout.LayoutFlags="All">
+									  TintColor="{Binding UncheckedColor}" AbsoluteLayout.LayoutBounds="0,0,1,1"
+									  AbsoluteLayout.LayoutFlags="All">
 				<abstractions:TintedImage.Triggers>
 					<DataTrigger TargetType="abstractions:TintedImage" Binding="{Binding IsChecked}" Value="True">
 						<Setter Property="TintColor" Value="{Binding UncheckedColor}" />
@@ -24,8 +24,8 @@
 			</abstractions:TintedImage>
 
 			<abstractions:TintedImage Source="{markupExtensions:PathResolver 'ic_checkbox_checker_36dp.png'}"
-			                          TintColor="{Binding CheckedColor}" AbsoluteLayout.LayoutBounds="0,0,1,1"
-			                          AbsoluteLayout.LayoutFlags="All" Scale="0.5" Opacity="0">
+									  TintColor="{Binding CheckedColor}" AbsoluteLayout.LayoutBounds="0,0,1,1"
+									  AbsoluteLayout.LayoutFlags="All" Scale="0.5" Opacity="0" Rotation="10">
 				<abstractions:TintedImage.Triggers>
 					<DataTrigger TargetType="abstractions:TintedImage" Binding="{Binding IsChecked}" Value="True">
 						<DataTrigger.EnterActions>

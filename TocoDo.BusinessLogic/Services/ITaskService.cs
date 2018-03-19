@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using TocoDo.BusinessLogic.DependencyInjection;
@@ -22,5 +23,6 @@ namespace TocoDo.BusinessLogic.Services
 		void CancelCreation(ITaskViewModel task);
 		Task DeleteAsync(ITaskViewModel task);
 		Task UpdateAsync(ITaskViewModel task);
+		Task<List<ITaskViewModel>> LoadPastTasksAsync();
 	}
 }

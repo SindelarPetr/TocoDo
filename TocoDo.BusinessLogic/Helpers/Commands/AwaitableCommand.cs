@@ -40,17 +40,23 @@ namespace TocoDo.BusinessLogic.Helpers.Commands
 
 		public async Task ExecuteAsync(T obj)
 		{
+			MyLogger.WriteStartMethod();
 			try
 			{
 				_isExecuting = true;
 				RaiseCanExecuteChanged();
 				await _executeMethod(obj);
 			}
+			catch (Exception e)
+			{
+				MyLogger.WriteException(e);
+			}
 			finally
 			{
 				_isExecuting = false;
 				RaiseCanExecuteChanged();
 			}
+			MyLogger.WriteEndMethod();
 		}
 
 		public ICommand Command { get { return this; } }

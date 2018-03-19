@@ -95,6 +95,7 @@ namespace TocoDo.BusinessLogic.ViewModels
 		{
 			_navigation  = navigation;
 			_taskService = taskService;
+			CreateTime = DateTime.Now;
 
 			IsCreateMode = true;
 		}

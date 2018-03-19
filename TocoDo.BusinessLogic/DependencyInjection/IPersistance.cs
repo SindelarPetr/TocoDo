@@ -10,7 +10,9 @@ namespace TocoDo.BusinessLogic.DependencyInjection
 	{
 		Task Init();
 		Task<List<ITaskModel>> GetTasks();
+		Task<List<ITaskModel>> GetPastTasks();
 		Task<List<IHabitModel>> GetHabits();
+		Task<List<IHabitModel>> GetPastHabits();
 
 		Task InsertAsync(object item);
 		Task UpdateAsync(object obj);

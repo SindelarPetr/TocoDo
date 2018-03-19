@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.JustMock;
 using TocoDo.BusinessLogic.DependencyInjection;
+using TocoDo.BusinessLogic.DependencyInjection.Models;
+using TocoDo.BusinessLogic.Extensions;
 using TocoDo.BusinessLogic.Helpers;
 using TocoDo.BusinessLogic.Services;
 using TocoDo.BusinessLogic.ViewModels;
@@ -18,13 +21,15 @@ namespace TocoDo.UnitTests
 		private INavigationService _navigationService;
 		private IHabitService _habitService;
 		private HabitViewModel _habitViewModel;
+		private IDateTimeProvider _dateProvider;
 
 		[TestInitialize]
 		public void TestInit()
 		{
+			_dateProvider = Mock.Create<IDateTimeProvider>();
 			_navigationService = Mock.Create<INavigationService>();
 			_habitService = Mock.Create<IHabitService>();
-			_habitViewModel = new HabitViewModel(_habitService, _navigationService);
+			_habitViewModel = new HabitViewModel(_dateProvider, _habitService, _navigationService);
 		}
 
 		[TestMethod]
@@ -151,47 +156,46 @@ namespace TocoDo.UnitTests
 			Mock.Assert(_habitService);
 		}
 
-		// Move following code to ModifyHabitViewModelTests
-		//[TestMethod]
-		//public async Task RemoveCommandShouldRiseAnAlert()
-		//{
-		//	// Arrange
-		//	Mock.Arrange(() => _navigationService.DisplayAlert(Arg.AnyString, Arg.AnyString, Arg.AnyString, Arg.AnyString)).Returns(Task.FromResult(Arg.AnyBool)).OccursOnce();
+		[TestMethod]
+		public async Task RemoveCommandShouldRiseAnAlert()
+		{
+			// Arrange
+			Mock.Arrange(() => _navigationService.DisplayAlert(Arg.AnyString, Arg.AnyString, Arg.AnyString, Arg.AnyString)).Returns(Task.FromResult(Arg.AnyBool)).OccursOnce();
 
-		//	// Act
-		//	await _habitViewModel.DeleteCommand.ExecuteAsync(null);
+			// Act
+			await _habitViewModel.DeleteCommand.ExecuteAsync(null);
 
-		//	// Assert
-		//	Mock.Assert(_navigationService);
-		//}
+			// Assert
+			Mock.Assert(_navigationService);
+		}
 
-		//[TestMethod]
-		//public async Task RemoveCommandAfterAcceptingAlertShouldCallDeleteAsyncOfTaskService()
-		//{
-		//	// Arrange
-		//	Mock.Arrange(() => _navigationService.DisplayAlert(Arg.AnyString, Arg.AnyString, Arg.AnyString, Arg.AnyString)).Returns(Task.FromResult(true)).InOrder();
-		//	Mock.Arrange(() => _habitService.DeleteAsync(_habitViewModel)).Returns(Task.CompletedTask).InOrder().OccursOnce();
+		[TestMethod]
+		public async Task RemoveCommandAfterAcceptingAlertShouldCallDeleteAsyncOfTaskService()
+		{
+			// Arrange
+			Mock.Arrange(() => _navigationService.DisplayAlert(Arg.AnyString, Arg.AnyString, Arg.AnyString, Arg.AnyString)).Returns(Task.FromResult(true)).InOrder();
+			Mock.Arrange(() => _habitService.DeleteAsync(_habitViewModel)).Returns(Task.CompletedTask).InOrder().OccursOnce();
 
-		//	// Act
-		//	await _habitViewModel.RemoveCommand.ExecuteAsync(null);
+			// Act
+			await _habitViewModel.DeleteCommand.ExecuteAsync(null);
 
-		//	// Assert
-		//	Mock.Assert(_habitService);
-		//}
+			// Assert
+			Mock.Assert(_habitService);
+		}
 
-		//[TestMethod]
-		//public async Task RemoveCommandAfterRefusingTheAlertShouldntCallDeleteAsync()
-		//{
-		//	// Arrange
-		//	Mock.Arrange(() => _navigationService.DisplayAlert(Arg.AnyString, Arg.AnyString, Arg.AnyString, Arg.AnyString)).Returns(Task.FromResult(false)).InOrder();
-		//	Mock.Arrange(() => _habitService.DeleteAsync(_habitViewModel)).Returns(Task.CompletedTask).OccursNever();
+		[TestMethod]
+		public async Task RemoveCommandAfterRefusingTheAlertShouldntCallDeleteAsync()
+		{
+			// Arrange
+			Mock.Arrange(() => _navigationService.DisplayAlert(Arg.AnyString, Arg.AnyString, Arg.AnyString, Arg.AnyString)).Returns(Task.FromResult(false)).InOrder();
+			Mock.Arrange(() => _habitService.DeleteAsync(_habitViewModel)).Returns(Task.CompletedTask).OccursNever();
 
-		//	// Act
-		//	await _habitViewModel.RemoveCommand.ExecuteAsync(null);
+			// Act
+			await _habitViewModel.DeleteCommand.ExecuteAsync(null);
 
-		//	// Assert
-		//	Mock.Assert(_habitService);
-		//}
+			// Assert
+			Mock.Assert(_habitService);
+		}
 
 		[TestMethod]
 		public async Task UpdateCommandShouldCallUpdateAsyncOfTaskService()
@@ -204,6 +208,66 @@ namespace TocoDo.UnitTests
 
 			// Assert
 			Mock.Assert(_habitService);
+		}
+
+		// Test habit filling - initialization, increment, save, load, increment, save, load
+		[TestMethod]
+		public void HabitInitializesFillingToEmptyCollectionIfStartDateIsLaterThanToday()
+		{
+			// Arrange
+			var firstMondayDate = new DateTime(2017, 3, 5);
+			var today = new DateTime(2017, 3, 4);
+			var startDate = firstMondayDate.AddDays(2);
+			var repeatType = RepeatType.Mon | RepeatType.Wed;
+			var daysToRepeat = 3;
+
+			var model = Mock.Create<IHabitModel>();
+			Mock.Arrange(() => model.RepeatType).Returns(repeatType);
+			Mock.Arrange(() => model.DaysToRepeat).Returns(daysToRepeat);
+			Mock.Arrange(() => model.StartDate).Returns(startDate);
+			Mock.Arrange(() => _dateProvider.Now).Returns(today);
+
+			// Act
+			var habit = new HabitViewModel(_dateProvider, _habitService, _navigationService, model);
+
+			// Assert
+			Assert.IsNotNull(habit.Filling);
+			Assert.AreEqual(0, habit.Filling.Count());
+		}
+
+		// Test habit filling - initialization, increment, save, load, increment, save, load
+		[TestMethod]
+		public void HabitInitializesFillingWhenTheDateTodayIsStartDay()
+		{
+			// Arrange
+			var firstMondayDate = new DateTime(2017, 3, 5);
+			var startDate = firstMondayDate.AddDays(2);
+			var repeatType = RepeatType.Mon | RepeatType.Wed;
+			var daysToRepeat = 3;
+			var expectedFilling = new ObservableDictionary<DateTime, int>
+								  {
+									  // First Week
+				                      { startDate, 0},
+
+									  { startDate.AddDays(5), 0},
+									  { startDate.AddDays(7), 0},
+
+									  { startDate.AddDays(5 + 7), 0},
+									  { startDate.AddDays(7 + 7), 0},
+								  };
+
+			var model = Mock.Create<IHabitModel>();
+			Mock.Arrange(() => model.RepeatType).Returns(repeatType);
+			Mock.Arrange(() => model.DaysToRepeat).Returns(daysToRepeat);
+			Mock.Arrange(() => model.StartDate).Returns(startDate);
+			Mock.Arrange(() => _dateProvider.Now).Returns(firstMondayDate);
+
+			// Act
+			var habit = new HabitViewModel(_dateProvider, _habitService, _navigationService, model);
+
+
+			// Assert
+			CustomAsserts.DictionariesAreEqual(expectedFilling, habit.Filling);
 		}
 	}
 }

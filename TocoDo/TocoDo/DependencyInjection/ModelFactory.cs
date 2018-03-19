@@ -32,7 +32,7 @@ namespace TocoDo.UI.DependencyInjection
 				CreationDate  = habit.CreationDate,
 				RepeatType    = habit.RepeatType,
 				Description   = habit.Description,
-				Filling       = JsonConvert.SerializeObject(new Dictionary<DateTime, int>(habit.Filling)),
+				Filling       = JsonConvert.SerializeObject(habit.Filling),
 				HabitType     = habit.HabitType,
 				DaysToRepeat  = habit.DaysToRepeat,
 				StartDate     = habit.StartDate,
@@ -40,11 +40,6 @@ namespace TocoDo.UI.DependencyInjection
 				IsRecommended = habit.IsRecommended,
 				RepeatsADay   = habit.MaxRepeatsADay
 			};
-		}
-
-		public T CreateHabitModel<T>(HabitViewModel habit) where T : IHabitModel, new()
-		{
-			throw new NotImplementedException();
 		}
 	}
 }

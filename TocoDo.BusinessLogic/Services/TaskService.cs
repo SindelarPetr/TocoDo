@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using TocoDo.BusinessLogic.DependencyInjection;
 using TocoDo.BusinessLogic.DependencyInjection.Models;
@@ -69,6 +71,11 @@ namespace TocoDo.BusinessLogic.Services
 		public async Task UpdateAsync(ITaskViewModel task)
 		{
 			await Persistance.UpdateAsync(ModelFactory.CreateTaskModel(task));
+		}
+
+		public async Task<List<ITaskViewModel>> LoadPastTasksAsync()
+		{
+			return (await Persistance.GetPastTasks()).Select(m => (ITaskViewModel)new TaskViewModel(this, Navigation, m)).ToList();
 		}
 
 		public async Task DeleteAsync(ITaskViewModel task)

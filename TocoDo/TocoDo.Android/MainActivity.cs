@@ -30,12 +30,12 @@ namespace TocoDo.Droid
 
 			//App.BarColorChanged += () =>
 			//{
-			//var colorPrimary = (Color)App.Current.Resources["ColorPrimary"];
-			//var colorPrimaryDark = (Color)App.Current.Resources["ColorPrimaryDark"];
+			var colorPrimary = (Color)App.Current.Resources["ColorPrimary"];
+			var colorPrimaryDark = (Color)App.Current.Resources["ColorPrimaryDark"];
 
 			//	var multiply = 0.7;
 			//color = new Color(color.R * multiply, color.G * multiply, color.B * multiply);
-			//Window.SetStatusBarColor(colorPrimaryDark.ToAndroid());
+			Window.SetStatusBarColor(colorPrimaryDark.ToAndroid());
 			//Window.SetNavigationBarColor(colorPrimary.ToAndroid());
 			//};
 
@@ -59,6 +59,7 @@ namespace TocoDo.Droid
 			}
 
 			var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
+			toolbar.SetBackgroundColor(colorPrimary.ToAndroid());
 			SetSupportActionBar(toolbar);
 		}
 	}

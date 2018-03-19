@@ -100,7 +100,7 @@ namespace TocoDo.UI.Views.Global
 					{
 						item.PropertyChanging += ItemOnPropertyChanging;
 						item.PropertyChanged  += ItemOnPropertyChanged;
-						if (ItemFilter?.Filter(item) ?? false) AddItem(item);
+						if (ItemFilter?.Filter(item) ?? true) AddItem(item);
 					}
 
 					break;
@@ -109,7 +109,7 @@ namespace TocoDo.UI.Views.Global
 					{
 						item.PropertyChanged  -= ItemOnPropertyChanged;
 						item.PropertyChanging -= ItemOnPropertyChanging;
-						if (ItemFilter?.Filter(item) ?? false) RemoveItem(item);
+						if (ItemFilter?.Filter(item) ?? true) RemoveItem(item);
 					}
 
 					break;

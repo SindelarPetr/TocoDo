@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using TocoDo.BusinessLogic.DependencyInjection;
 using TocoDo.BusinessLogic.DependencyInjection.Models;
@@ -21,5 +22,6 @@ namespace TocoDo.BusinessLogic.Services
 		Task DeleteAsync(IHabitViewModel habit);
 		Task LoadAsync();
 		Task UpdateAsync(IHabitViewModel habit);
+		Task<List<HabitViewModel>> LoadPastHabitsAsync();
 	}
 }

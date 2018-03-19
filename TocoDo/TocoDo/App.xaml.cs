@@ -70,9 +70,6 @@ namespace TocoDo.UI
 			MyLogger.WriteStartMethod();
 			try
 			{
-				//AppCenter.Start(string.Format(AppStrings.AppCenterMessage, AppStrings.AppCenterUwpSecret,
-				//AppStrings.AppCenterAndroidSecret, AppStrings.AppCenterIosSecret), typeof(Analytics), typeof(Crashes));
-
 				await Persistance.Init();
 				await TaskService.LoadAsync();
 				await HabitService.LoadAsync();

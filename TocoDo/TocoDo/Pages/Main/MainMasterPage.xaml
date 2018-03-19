@@ -1,12 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TocoDo.UI.Pages.Main.MainMasterPage"
-             Title="TocoDo">
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:viewModels="clr-namespace:TocoDo.BusinessLogic.ViewModels;assembly=TocoDo.BusinessLogic"
+			 x:Class="TocoDo.UI.Pages.Main.MainMasterPage"
+			 Title="TocoDo"
+			 x:Name="This"
+			 BackgroundColor="White">
 	<ContentPage.Content>
-		<StackLayout>
-			<Label Text="Welcome to Xamarin Forms!" />
+		<StackLayout BindingContext="{Binding Source={x:Reference This}, Path=ViewModel}" Padding="10">
+			<StackLayout.Resources>
+				<ResourceDictionary>
+					<Style TargetType="Button">
+						<Setter Property="BackgroundColor" Value="White"/>
+						<Setter Property="TextColor" Value="{StaticResource ColorPrimaryDark}"></Setter>
+					</Style>
+				</ResourceDictionary>
+			</StackLayout.Resources>
+			<Button Text="Show past tasks" Command="{Binding OpenTasksPastCommand}"/>
+			<Button Text="Show past habits" Command="{Binding OpenHabitsPastCommand}"/>
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:converters="clr-namespace:TocoDo.UI.Converters;assembly=TocoDo.UI"
-             xmlns:tasks="clr-namespace:TocoDo.UI.Converters.Tasks;assembly=TocoDo.UI"
-             xmlns:habits="clr-namespace:TocoDo.UI.Views.Habits;assembly=TocoDo.UI"
-             xmlns:todos="clr-namespace:TocoDo.UI.Views.Todos;assembly=TocoDo.UI"
-             xmlns:global="clr-namespace:TocoDo.UI.Views.Global;assembly=TocoDo.UI"
-             xmlns:services="clr-namespace:TocoDo.BusinessLogic.Services;assembly=TocoDo.BusinessLogic"
-             xmlns:dependencyInjection="clr-namespace:TocoDo.UI.DependencyInjection;assembly=TocoDo.UI"
-             xmlns:helpers="clr-namespace:TocoDo.BusinessLogic.Helpers;assembly=TocoDo.BusinessLogic"
-             xmlns:properties="clr-namespace:TocoDo.UI.Properties;assembly=TocoDo.UI"
-             x:Class="TocoDo.UI.App"
-             x:Name="This"
-             BindingContext="{x:Reference This}">
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:converters="clr-namespace:TocoDo.UI.Converters;assembly=TocoDo.UI"
+			 xmlns:tasks="clr-namespace:TocoDo.UI.Converters.Tasks;assembly=TocoDo.UI"
+			 xmlns:habits="clr-namespace:TocoDo.UI.Views.Habits;assembly=TocoDo.UI"
+			 xmlns:todos="clr-namespace:TocoDo.UI.Views.Todos;assembly=TocoDo.UI"
+			 xmlns:global="clr-namespace:TocoDo.UI.Views.Global;assembly=TocoDo.UI"
+			 xmlns:services="clr-namespace:TocoDo.BusinessLogic.Services;assembly=TocoDo.BusinessLogic"
+			 xmlns:dependencyInjection="clr-namespace:TocoDo.UI.DependencyInjection;assembly=TocoDo.UI"
+			 xmlns:helpers="clr-namespace:TocoDo.BusinessLogic.Helpers;assembly=TocoDo.BusinessLogic"
+			 xmlns:properties="clr-namespace:TocoDo.UI.Properties;assembly=TocoDo.UI"
+			 x:Class="TocoDo.UI.App"
+			 x:Name="This"
+			 BindingContext="{x:Reference This}">
 	<Application.Resources>
 		<ResourceDictionary>
 			<converters:IsNotNullConverter x:Key="IsNotNullConverter" />
@@ -22,16 +22,17 @@
 			<converters:IsNotNullOrWhitespaceConverter x:Key="IsNotNullOrWhitespaceConverter" />
 			<converters:BoolReverseConverter x:Key="BoolReverseConverter" />
 
-			<Color x:Key="ColorPrimary">#3F51B5</Color>
-			<Color x:Key="ColorPrimaryDark">#283593</Color>
-			<Color x:Key="ColorPrimaryLight">#5C6BC0</Color>
+			<Color x:Key="ColorPrimary">#1976D2</Color>
+			<Color x:Key="ColorPrimaryDark">#0D47A1</Color>
+			<Color x:Key="ColorPrimaryLight">#1E88E5</Color>
 
-			<Color x:Key="ColorSecondary">#795548</Color>
-			<Color x:Key="ColorSecondaryDark">#4b2c20</Color>
-			<Color x:Key="ColorSecondaryLight">#a98274</Color>
+			<Color x:Key="ColorSecondary">#757575</Color>
+			<Color x:Key="ColorSecondaryDark">#616161</Color>
+			<Color x:Key="ColorSecondaryLight">#757575</Color>
 
-			<Color x:Key="BarColor">#3F51B5</Color>
-			<Color x:Key="BackgroundColor">#cccccc</Color>
+			<Color x:Key="BarColor">#1976D2</Color>
+			<!--<Color x:Key="BackgroundColor">#cccccc</Color>-->
+			<Color x:Key="BackgroundColor">#404040</Color>
 
 			<Color x:Key="UnsetItemColor">DarkGray</Color>
 			<Color x:Key="DeadlineColor">Red</Color>
@@ -74,7 +75,7 @@
 
 			<Thickness x:Key="ItemFramePadding" >15, 5, 15, 15</Thickness>
 			<Style TargetType="global:FrameWrapper" BasedOn="{StaticResource BaseFrame}">
-				<Setter Property="HeaderBackgroundColor" Value="{StaticResource ColorPrimary}" />
+				<Setter Property="HeaderBackgroundColor" Value="{StaticResource ColorSecondary}" />
 			</Style>
 
 			<Style TargetType="habits:HabitCollection">
@@ -110,17 +111,17 @@
 			<helpers:RealDateTimeProvider x:Key="DateTimeProvider"/>
 
 			<services:TaskService x:Key="TaskService"
-			                         DateTimeProvider="{StaticResource DateTimeProvider}"
-			                         Navigation="{StaticResource Navigation}"
-			                         ModelFactory="{StaticResource ModelFactory}"
-			                         Persistance="{StaticResource Persistance}">
+									 DateTimeProvider="{StaticResource DateTimeProvider}"
+									 Navigation="{StaticResource Navigation}"
+									 ModelFactory="{StaticResource ModelFactory}"
+									 Persistance="{StaticResource Persistance}">
 			</services:TaskService>
 
 			<services:HabitService x:Key="HabitService"
-			                         DateTimeProvider="{StaticResource DateTimeProvider}"
-			                         Navigation="{StaticResource Navigation}"
-			                         ModelFactory="{StaticResource ModelFactory}"
-			                         Persistance="{StaticResource Persistance}">
+									 DateTimeProvider="{StaticResource DateTimeProvider}"
+									 Navigation="{StaticResource Navigation}"
+									 ModelFactory="{StaticResource ModelFactory}"
+									 Persistance="{StaticResource Persistance}">
 			</services:HabitService>
 		</ResourceDictionary>
 	</Application.Resources>

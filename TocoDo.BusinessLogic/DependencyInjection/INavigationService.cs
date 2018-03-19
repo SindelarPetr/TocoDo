@@ -9,7 +9,9 @@ namespace TocoDo.BusinessLogic.DependencyInjection
 		ModifyHabitPage,
 		HabitProgressPage,
 		ModifyTaskPage,
-		RepeatTypePopup
+		RepeatTypePopup,
+		HabitsPastPage,
+		TasksPastPage
 	}
 
 	public interface INavigationService

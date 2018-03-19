@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:global="clr-namespace:TocoDo.UI.Views.Global;assembly=TocoDo.UI"
-             xmlns:ui="clr-namespace:TocoDo.UI;assembly=TocoDo.UI"
-             xmlns:todos="clr-namespace:TocoDo.UI.Views.Todos;assembly=TocoDo.UI"
-             xmlns:customRenderers="clr-namespace:TocoDo.UI.CustomRenderers;assembly=TocoDo.UI"
-             xmlns:itemFilters="clr-namespace:TocoDo.BusinessLogic.ItemFilters;assembly=TocoDo.BusinessLogic"
-             x:Class="TocoDo.UI.Pages.Tasks.TasksPage"
-             Style="{DynamicResource ContentPageStyle}"
-             x:Name="This">
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:global="clr-namespace:TocoDo.UI.Views.Global;assembly=TocoDo.UI"
+			 xmlns:ui="clr-namespace:TocoDo.UI;assembly=TocoDo.UI"
+			 xmlns:todos="clr-namespace:TocoDo.UI.Views.Todos;assembly=TocoDo.UI"
+			 xmlns:customRenderers="clr-namespace:TocoDo.UI.CustomRenderers;assembly=TocoDo.UI"
+			 xmlns:itemFilters="clr-namespace:TocoDo.BusinessLogic.ItemFilters;assembly=TocoDo.BusinessLogic"
+			 x:Class="TocoDo.UI.Pages.Tasks.TasksPage"
+			 Style="{DynamicResource ContentPageStyle}"
+			 x:Name="This">
 	<ContentPage.Content>
 		<AbsoluteLayout>
 			<ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
@@ -29,8 +29,8 @@
 				</StackLayout>
 			</ScrollView>
 			<customRenderers:FloatingAddButton AbsoluteLayout.LayoutBounds="1,1,88,88"
-			                                   AbsoluteLayout.LayoutFlags="PositionProportional" Margin="16"
-			                                   Clicked="ButtonAddSomeday_OnClicked" />
+											   AbsoluteLayout.LayoutFlags="PositionProportional" Margin="16"
+											   Clicked="ButtonAddSomeday_OnClicked" />
 		</AbsoluteLayout>
 	</ContentPage.Content>
 </ContentPage>

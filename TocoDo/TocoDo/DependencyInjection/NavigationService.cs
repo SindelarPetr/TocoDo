@@ -90,6 +90,10 @@ namespace TocoDo.UI.DependencyInjection
 				case PageType.ModifyHabitPage:
 					MyLogger.WriteEndMethod();
 					return new ModifyHabitPage((HabitViewModel)param);
+				case PageType.HabitsPastPage:
+					MyLogger.WriteEndMethod();
+					return new HabitsPastPage();
+					
 
 				case PageType.HabitProgressPage:
 					MyLogger.WriteEndMethod();
@@ -100,6 +104,10 @@ namespace TocoDo.UI.DependencyInjection
 					return new ModifyTaskPage((TaskViewModel)param);
 				case PageType.RepeatTypePopup:
 					return new ModifyRepeatTypePopup((ModifyRepeatTypeViewModel)param);
+
+				case PageType.TasksPastPage:
+					MyLogger.WriteEndMethod();
+					return new TasksPastPage();
 
 				default:
 					throw new ArgumentOutOfRangeException(nameof(pageType), pageType, null);
@@ -126,6 +134,17 @@ namespace TocoDo.UI.DependencyInjection
 				case PageType.ModifyTaskPage:
 					MyLogger.WriteEndMethod();
 					return typeof(ModifyTaskPage);
+
+				case PageType.RepeatTypePopup:
+					MyLogger.WriteEndMethod();
+					return typeof(ModifyRepeatTypePopup);
+
+				case PageType.HabitsPastPage:
+					MyLogger.WriteEndMethod();
+					return typeof(HabitsPastPage);
+				case PageType.TasksPastPage:
+					MyLogger.WriteEndMethod();
+					return typeof(TasksPastPage);
 
 				default:
 					throw new ArgumentOutOfRangeException(nameof(pageType), pageType, null);

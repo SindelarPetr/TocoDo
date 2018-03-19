@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:todos="clr-namespace:TocoDo.UI.Views.Todos;assembly=TocoDo.UI"
+			 x:Class="TocoDo.UI.Pages.Tasks.TasksPastPage"
+			 x:Name="This"
+			 BackgroundColor="White"
+			 Title="Past tasks">
+	<ContentPage.Content>
+		<ScrollView BindingContext="{Binding Source={x:Reference This}, Path=ViewModel}">
+			<todos:TaskCollection ItemsSource="{Binding PastTasks}" IsEnabled="False"/>
+		</ScrollView>
+	</ContentPage.Content>
+</ContentPage>

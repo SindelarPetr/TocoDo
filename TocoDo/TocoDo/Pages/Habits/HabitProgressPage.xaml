@@ -23,7 +23,7 @@
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="*" />
 					</Grid.RowDefinitions>
-					<global:FrameWrapper Header="Progress" BackgroundColor="{StaticResource ColorPrimaryDark}" HeightRequest="200">
+					<global:FrameWrapper Header="Progress" BackgroundColor="{StaticResource ColorSecondaryDark}" HeightRequest="200">
 						<forms:ChartView x:Name="ChartProgress" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
 										 Margin="-5,10" />
 					</global:FrameWrapper>

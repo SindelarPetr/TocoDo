@@ -40,7 +40,7 @@ namespace TocoDo.BusinessLogic.Services
 		public async Task LoadAsync()
 		{
 			var models    = await Persistance.GetHabits();
-			var habitList = models.Select(m => new HabitViewModel(this, Navigation, m));
+			var habitList = models.Select(m => new HabitViewModel(_dateTimeProvider, this, Navigation, m));
 
 			var filtred                 = new List<HabitViewModel>();
 			var yesterdayFinishedHabits = new List<HabitViewModel>();
@@ -60,7 +60,7 @@ namespace TocoDo.BusinessLogic.Services
 
 		public void StartCreation()
 		{
-			_habits.Add(new HabitViewModel(this, Navigation));
+			_habits.Add(new HabitViewModel(_dateTimeProvider, this, Navigation));
 		}
 
 		public async Task ConfirmCreationAsync(IHabitViewModel habit)
@@ -78,6 +78,12 @@ namespace TocoDo.BusinessLogic.Services
 		public async Task UpdateAsync(IHabitViewModel habit)
 		{
 			await Persistance.UpdateAsync(ModelFactory.CreateHabitModel(habit));
+		}
+
+		public async Task<List<HabitViewModel>> LoadPastHabitsAsync()
+		{
+			var habits = await Persistance.GetPastHabits();
+			return habits.Select(m => new HabitViewModel(DateTimeProvider,this, Navigation, m)).ToList();
 		}
 
 		public async Task DeleteAsync(IHabitViewModel habit)

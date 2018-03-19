@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:habits="clr-namespace:TocoDo.UI.Views.Habits;assembly=TocoDo.UI"
+			 xmlns:itemFilters="clr-namespace:TocoDo.BusinessLogic.ItemFilters;assembly=TocoDo.BusinessLogic"
+			 x:Class="TocoDo.UI.Pages.Habits.HabitsPastPage"
+			 x:Name="This"
+			 BackgroundColor="White"
+             Title="Past habits">
+	<ContentPage.Content>
+		<AbsoluteLayout BindingContext="{Binding Source={x:Reference This}, Path=ViewModel}">
+			<ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" IsVisible="{Binding IsLoading, Converter={StaticResource BoolReverseConverter}}" Padding="10">
+				<habits:HabitCollection ItemsSource="{Binding PastHabits}" IsEnabled="False">
+					<habits:HabitCollection.ItemFilter>
+						<itemFilters:HabitAlwaysTrueFilter />
+					</habits:HabitCollection.ItemFilter>
+				</habits:HabitCollection>
+			</ScrollView>
+			<ActivityIndicator AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" HeightRequest="40" WidthRequest="40"/>
+		</AbsoluteLayout>
+	</ContentPage.Content>
+</ContentPage>

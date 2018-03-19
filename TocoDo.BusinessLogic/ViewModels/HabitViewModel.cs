@@ -26,6 +26,7 @@ namespace TocoDo.BusinessLogic.ViewModels
 
 		private readonly IHabitService _habitService;
 
+		private readonly IDateTimeProvider _dateTimeProvider;
 		private readonly INavigationService _navigation;
 		private readonly HabitScheduleHelper _scheduleHelper;
 		private int _daysToRepeat;
@@ -47,8 +48,8 @@ namespace TocoDo.BusinessLogic.ViewModels
 
 		#endregion
 
-		public HabitViewModel(IHabitService habitService, INavigationService navigation)
-			: this(habitService)
+		public HabitViewModel(IDateTimeProvider dateTimeProvider, IHabitService habitService, INavigationService navigation)
+			: this(dateTimeProvider, habitService)
 		{
 			_navigation = navigation;
 
@@ -63,8 +64,8 @@ namespace TocoDo.BusinessLogic.ViewModels
 			IsCreateMode = true;
 		}
 
-		public HabitViewModel(IHabitService habitService, INavigationService navigation, IHabitModel model)
-			: this(habitService)
+		public HabitViewModel(IDateTimeProvider dateTimeProvider, IHabitService habitService, INavigationService navigation, IHabitModel model)
+			: this(dateTimeProvider, habitService)
 		{
 			_navigation = navigation;
 
@@ -72,9 +73,21 @@ namespace TocoDo.BusinessLogic.ViewModels
 			Id           = model.Id;
 			_repeatType  = model.RepeatType;
 			_description = model.Description;
-			Filling      =
-				new ObservableDictionary<DateTime, int>(
-					JsonConvert.DeserializeObject<Dictionary<DateTime, int>>(model.Filling));
+
+			if (StartDate != null && StartDate <= habitService.DateTimeProvider.Now)
+			{
+				if (string.IsNullOrWhiteSpace(model.Filling))
+					Filling = InitFilling();
+				else
+					Filling = new ObservableDictionary<DateTime, int>(
+						JsonConvert.DeserializeObject<Dictionary<DateTime, int>>(model.Filling));
+			}
+			else
+			{
+				Filling = new ObservableDictionary<DateTime, int>();
+			}
+
+
 			_habitType      = model.HabitType;
 			_daysToRepeat   = model.DaysToRepeat;
 			_startDate      = model.StartDate;
@@ -84,8 +97,9 @@ namespace TocoDo.BusinessLogic.ViewModels
 			_maxRepeatsADay = model.RepeatsADay;
 		}
 
-		private HabitViewModel(IHabitService habitService)
+		private HabitViewModel(IDateTimeProvider dateTimeProvider, IHabitService habitService)
 		{
+			_dateTimeProvider = dateTimeProvider;
 			_habitService   = habitService;
 			_scheduleHelper = new HabitScheduleHelper(_habitService.DateTimeProvider);
 		}
@@ -207,7 +221,7 @@ namespace TocoDo.BusinessLogic.ViewModels
 		}
 
 		public ICommand EditTitleCommand =>
-			_editTitleCommand ?? (_editTitleCommand = new Command(t => EditTitle((string) t)));
+			_editTitleCommand ?? (_editTitleCommand = new Command(t => EditTitle(t as string)));
 		public IAsyncCommand EditCommand => _editCommand ?? (_editCommand = new AwaitableCommand(Edit));
 		public IAsyncCommand UpdateCommand => _updateCommand ??
 		                                      (_updateCommand =
@@ -219,7 +233,7 @@ namespace TocoDo.BusinessLogic.ViewModels
 			_increaseTodayCommand ?? (_increaseTodayCommand = new Command(() => RepeatsToday++));
 		#endregion
 
-		#region  private and protected
+		#region  Private and protected
 
 		private async Task Edit()
 		{
@@ -231,10 +245,10 @@ namespace TocoDo.BusinessLogic.ViewModels
 
 		private void EditTitle(string newTitle)
 		{
-			newTitle = newTitle.Trim();
 			if (string.IsNullOrWhiteSpace(newTitle))
 				return;
 
+			newTitle = newTitle.Trim();
 			Title = newTitle;
 		}
 
@@ -252,7 +266,7 @@ namespace TocoDo.BusinessLogic.ViewModels
 			await _habitService.ConfirmCreationAsync(this);
 		}
 
-		protected override async void OnPropertyChanged(string propertyName = null)
+		protected override void OnPropertyChanged(string propertyName = null)
 		{
 			MyLogger.WriteStartMethod();
 			base.OnPropertyChanged(propertyName);
@@ -268,19 +282,13 @@ namespace TocoDo.BusinessLogic.ViewModels
 					filling[today] = RepeatsToday;
 			}
 
-			if (!IsCreateMode)
-			{
-				await _habitService.UpdateAsync(this);
-				MyLogger.WriteInMethod($"Updated habit, changed property: {propertyName}");
-			}
-
 			MyLogger.WriteEndMethod();
 		}
 
 		/// <summary>
 		///     Fills all dates when the habit will (or supposed to) be performed
 		/// </summary>
-		private void InitFilling()
+		private ObservableDictionary<DateTime, int> InitFilling()
 		{
 			var modelStartDate  = StartDate;
 			var modelRepeatType = RepeatType;
@@ -308,7 +316,8 @@ namespace TocoDo.BusinessLogic.ViewModels
 					for (var i = 0; i < DaysToRepeat * 7; i++)
 					{
 						// For every day of a week check if the day is within the ModelRepeatType
-						if (modelRepeatType.HasFlag((RepeatType) (1 << startDate.ZeroMondayBasedDay()))) newFilling.Add(startDate, 0);
+						if (modelRepeatType.HasFlag((RepeatType) (1 << startDate.ZeroMondayBasedDay())))
+							newFilling.Add(startDate, 0);
 
 						startDate = startDate.AddDays(1);
 					}
@@ -316,7 +325,7 @@ namespace TocoDo.BusinessLogic.ViewModels
 					break;
 			}
 
-			Filling = newFilling;
+			return newFilling;
 		}
 
 		private async Task DeleteAsync()

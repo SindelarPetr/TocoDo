@@ -25,6 +25,7 @@ namespace TocoDo.UI.Views
 		private static readonly BindablePropertyKey HighlightedDatePropertyKey = BindableProperty.CreateReadOnly(nameof(HighlightedDate), typeof(DateTime), typeof(DateTime), DateTime.Today);
 
 		public static BindableProperty SelectedDateProperty = BindableProperty.Create(nameof(SelectedDate), typeof(DateTime?), typeof(DateTime?));
+		public static BindableProperty IsFirstWeekVisibleProperty = BindableProperty.Create(nameof(IsFirstWeekVisible), typeof(bool), typeof(bool), true);
 		public static BindableProperty HighlightedDateProperty = HighlightedDatePropertyKey.BindableProperty;
 		public static BindableProperty HabitsSourceProperty = BindableProperty.Create(nameof(HabitsSource), typeof(ReadOnlyObservableCollection<IHabitViewModel>), typeof(ReadOnlyObservableCollection<IHabitViewModel>));
 		public static BindableProperty TasksSourceProperty = BindableProperty.Create(nameof(TasksSource), typeof(ReadOnlyObservableCollection<ITaskViewModel>), typeof(ReadOnlyObservableCollection<ITaskViewModel>));
@@ -33,8 +34,8 @@ namespace TocoDo.UI.Views
 		private IAsyncCommand _moveNextCommand;
 		private IAsyncCommand _movePrevCommand;
 		private DateTime _firstDayDate;
-		private ObservableCollection<ITaskViewModel> _selectedDayTasks;
-		private ObservableCollection<IHabitViewModel> _selectedDayHabits;
+		private readonly ObservableCollection<ITaskViewModel> _selectedDayTasks;
+		private readonly ObservableCollection<IHabitViewModel> _selectedDayHabits;
 		#endregion
 
 		#region Properties
@@ -51,6 +52,12 @@ namespace TocoDo.UI.Views
 		{
 			get => (DateTime?)GetValue(SelectedDateProperty);
 			set => SetValue(SelectedDateProperty, value?.Date);
+		}
+
+		public bool IsFirstWeekVisible
+		{
+			get => (bool) GetValue(IsFirstWeekVisibleProperty);
+			set => SetValue(IsFirstWeekVisibleProperty, value);
 		}
 
 		private DateTime LastDayDate => _firstDayDate.AddDays(3 * 7);
@@ -232,6 +239,7 @@ namespace TocoDo.UI.Views
 		{
 			// Create 3 week calendar
 			MyLogger.WriteStartMethod();
+			IsFirstWeekVisible = false;
 
 			CalendarGrid.Scale = 0.75;
 
@@ -278,18 +286,23 @@ namespace TocoDo.UI.Views
 		private void CreateCell(DateTime date, int column, int row, bool isSide)
 		{
 			var today = DateTime.Today;
+			var isToday = date == today;
+
+			if (isToday)
+				IsFirstWeekVisible = true;
+
 			if (CalendarGrid.Children.Count != 7 * 3)
 			{
 				MyLogger.WriteInMethod("Creating a new cell");
 				var cell = new CalendarCell(date)
 				{
 					TappedCommand = new TocoDo.BusinessLogic.Helpers.Commands.Command(c => { SelectedDate = ((CalendarCell)c).Date; }),
-					IsSideMonth = isSide
+					IsSideMonth = isSide,
+					IsToday = isToday
 				};
 
 				MyLogger.WriteInMethod("Before adding the cell to the children");
 				CalendarGrid.Children.Add(cell, column, row);
-				cell.IsToday = date == today;
 				MyLogger.WriteInMethod("After adding the cell to the children");
 			}
 			else
@@ -301,7 +314,7 @@ namespace TocoDo.UI.Views
 					cell.Date = date;
 					cell.Busyness = 0;
 					cell.IsSideMonth = isSide;
-					cell.IsToday = date == today;
+					cell.IsToday = isToday;
 					cell.IsSelected = false;
 				}
 			}
