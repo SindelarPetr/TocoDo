@@ -11,9 +11,11 @@ using Xamarin.Forms.Platform.Android;
 namespace TocoDo.Droid
 {
 	[Activity(Label       = "TocoDo", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true,
-		ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+		ConfigurationChanges = ConfigChanges.ScreenSize)]
 	public class MainActivity : FormsAppCompatActivity
 	{
+		private Toolbar _toolbar;
+
 		protected override void OnCreate(Bundle bundle)
 		{
 			TabLayoutResource = Resource.Layout.Tabbar;
@@ -27,17 +29,10 @@ namespace TocoDo.Droid
 
 			var app = new App();
 			LoadApplication(app);
-
-			//App.BarColorChanged += () =>
-			//{
-			var colorPrimary = (Color)App.Current.Resources["ColorPrimary"];
+			
 			var colorPrimaryDark = (Color)App.Current.Resources["ColorPrimaryDark"];
-
-			//	var multiply = 0.7;
-			//color = new Color(color.R * multiply, color.G * multiply, color.B * multiply);
+			
 			Window.SetStatusBarColor(colorPrimaryDark.ToAndroid());
-			//Window.SetNavigationBarColor(colorPrimary.ToAndroid());
-			//};
 
 			if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
 			{
@@ -58,9 +53,20 @@ namespace TocoDo.Droid
 				//Toolbar myToolbar = (Toolbar)FindViewById(ToolbarResource);
 			}
 
-			var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
-			toolbar.SetBackgroundColor(colorPrimary.ToAndroid());
-			SetSupportActionBar(toolbar);
+			_toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
+			SetSupportActionBar(_toolbar);
 		}
+
+		protected override void OnResume()
+		{
+			base.OnResume();
+
+			var colorPrimary = (Color)App.Current.Resources["ColorPrimary"];
+
+			_toolbar.SetBackgroundColor(colorPrimary.ToAndroid());
+		}
+
+
+		
 	}
 }
