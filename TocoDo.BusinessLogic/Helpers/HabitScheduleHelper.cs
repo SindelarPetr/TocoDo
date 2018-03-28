@@ -7,7 +7,6 @@ using TocoDo.BusinessLogic.ViewModels;
 
 namespace TocoDo.BusinessLogic.Helpers
 {
-	// TODO: Force RepeatType popup to synchronize repeat days with the start date (so the start date is at a selected day) - Repeat type is superior to the StartDate
 	public class HabitScheduleHelper
 	{
 		private readonly IDateTimeProvider _provider;
