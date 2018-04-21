@@ -9,8 +9,8 @@
 ## Platforms
 
 - **Android**
-- **iOS** 
-- **Windows**
+- **iOS** (comming soon)
+- **Windows** (comming soon)
 
 ## Technologies
 
