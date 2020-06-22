@@ -16,10 +16,10 @@
 </p>
 
 ## About TocoDo
-Every day there are many tasks to accomplish. By keeping all of them in our heads we get easily overwhelmed which decreases our productivity. Its important to write the tasks down and organize them properly. TocoDo is made especially for this puropse, it helps you to break down and schedule your work so instead of thinking what should you do, you can actually focus on doing that.
+Every day there are many tasks to accomplish. By keeping all of them in our heads we get easily overwhelmed which decreases our productivity. It is important to write the tasks down and organize them properly. TocoDo is made especially for this purpose, it helps you to break down and schedule your work so instead of thinking what should you do, you can actually focus on doing that.
 
 ## Features
-* Calendar with agenda
+* A calendar with agenda
 * Track of tasks
 * Track of habits
 * Setting reminder
@@ -38,7 +38,7 @@ Every day there are many tasks to accomplish. By keeping all of them in our head
 * iOS
 * Windows
 
-## About me
-I am a .NET Lead Senior Developer I have worked for couple of major Czech software companies. Programming is my passion since I was 13. This project was at that time one of my first large projects ever made (at the age of 17).
+## About the author
+In short, I have been working as a Lead .NET Developer for several major Czech software companies. Programming in .NET is my passion since I was 13. After high school, I got a degree from computer science at the top technical university in the Czech Republic.
 
 I will be happy to hear from you on [LinkedIn](https://www.linkedin.com/in/petr-sindelar), [Facebook](https://www.facebook.com/petr.sindelar) or [Instagram](https://www.instagram.com/petr_sindelar_official/)
