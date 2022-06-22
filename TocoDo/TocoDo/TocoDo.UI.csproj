@@ -11,7 +11,7 @@
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="1.1.0" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="1.1.0" />
     <PackageReference Include="Microsoft.NETCore.Portable.Compatibility" Version="1.0.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Plugin.CrossPlatformTintedImage" Version="1.0.0" />
     <PackageReference Include="Rg.Plugins.Popup" Version="1.1.3.73-pre" />
     <PackageReference Include="sqlite-net-pcl" Version="1.4.118" />
